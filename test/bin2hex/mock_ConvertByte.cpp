@@ -21,12 +21,12 @@ SCENARIO("Mock ConvertByteInterface", "[ConvertInterface]") {
     When(Method(mock, byteToHex))
         .AlwaysDo(
             [&hex](const rsi::Byte btye) {
-                return hex;
+                return rsi::Hex(btye);
             });
 
     rsi::ConvertByteInterface& i = mock.get();
     REQUIRE(i.hexToByte(hex) == btye);
-    REQUIRE(i.byteToHex(btye) == hex);
+    REQUIRE(i.byteToHex(btye) == rsi::Hex(btye));
     Verify(Method(mock, hexToByte));
     Verify(Method(mock, byteToHex));
 }
