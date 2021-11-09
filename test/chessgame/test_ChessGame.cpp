@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../include/rsi/game/ChessGame.hpp"
-#include "vendor/catch.hpp"
+#include "rsi/game/ChessGame.hpp"
+#include "../vendor/catch.hpp"
 
 using namespace std;
 

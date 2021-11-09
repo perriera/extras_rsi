@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <extras/interfaces.hpp>
-#include <extras/exceptions.hpp>
 
 /**
  * @brief ChessGameInterface

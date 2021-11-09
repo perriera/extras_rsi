@@ -61,7 +61,7 @@ Near line 57 of CMakeLists.txt you may specify a production version here:
 	# NOTE: add additional project options
 	#
 
-	option(CPP_STARTER_PRODUCTION "Production build"  OFF)
+	option(RSI_PRODUCTION "Production build"  OFF)
 	
 ## important note on using shared libraries
 After installation the **rsi** library should be found in your **/usr/local/include** and your **/usr/local/lib** directories. Also, set LD_LIBRARY_PATH, (if you haven't already done so). 
