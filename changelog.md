@@ -29,6 +29,8 @@ Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
 
+#### 0.2.0 (2021-11-08)
+- Now using perriera/extras v4.19.0
 
 #### 0.1.0 (2021-11-08)
 - rsi source code
@@ -78,13 +80,6 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v0.5.1...HEAD
-[0.5.1]: https://github.com/perriera/rsi/compare/v0.5.0...v0.5.1
-[0.5.0]: https://github.com/perriera/rsi/compare/v0.4.2...v0.5.0
-[0.4.2]: https://github.com/perriera/rsi/compare/v0.4.1...v0.4.2
-[0.4.1]: https://github.com/perriera/rsi/compare/v0.4.0...v0.4.1
-[0.4.0]: https://github.com/perriera/rsi/compare/v0.3.1...v0.4.0
-[0.3.1]: https://github.com/perriera/rsi/compare/v0.3.0...v0.3.1
-[0.3.0]: https://github.com/perriera/rsi/compare/v0.2.0...v0.3.0
+[Unreleased]: https://github.com/perriera/rsi/compare/v0.2.0...HEAD
 [0.2.0]: https://github.com/perriera/rsi/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/perriera/rsi/releases/tag/v0.1.0
