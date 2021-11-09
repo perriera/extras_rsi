@@ -1,10 +1,11 @@
 #ifndef _EXPARX_RSISOCKETSPOOL_HPP
-#define _EXPARX_RSISOCKETPOOL_HPP
+#define _EXPARX_RSISOCKETSPOOL_HPP
 
 #include <netinet/in.h>
 #include <sys/socket.h>
 
 #include <extras/interfaces.hpp>
+#include <rsi/sockets/Types.hpp>
 #include <iostream>
 #include <map>
 #include <sstream>
@@ -38,19 +39,17 @@ namespace exparx {
          *
          */
 
-        using PortNumber = int;
-        using Socket = int;
-        using PortNumberPool = std::vector<PortNumber>;
-        using SocketRequestType = std::string;
-        using SocketRequestTypeList = std::vector<SocketRequestType>;
-        using SocketRequestTypeMap = std::map<PortNumber, SocketRequestType>;
+        interface ServiceTypeCompilerInterface {
+            virtual ServiceTypeList clients(
+                const RequestTypeList& requests) const pure;
+            virtual ServiceTypeList servers(
+                const RequestTypeList& requests) const pure;
+        };
 
-        using RequestType = std::string;
-        using RequestTypeList = std::vector<RequestType>;
+        interface SocketPoolInterface {
+            virtual void transfer() const pure;
+        };
 
-        using ServiceType = std::string;
-        using ServiceTypeList = std::vector<ServiceType>;
-        using ServiceTypeMap = std::map<ServiceType, ServiceType>;
 
     }
 }

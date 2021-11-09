@@ -1,5 +1,5 @@
 
-#include <rsi/services/SocketsPool.hpp>
+#include <rsi/sockets/Pool.hpp>
 #include <iostream>
 
 #include "../vendor/catch.hpp"
