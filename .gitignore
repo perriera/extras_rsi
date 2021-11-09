@@ -18,3 +18,4 @@ data/masked
 data/ctx
 logfile.txt
 
+send_*.txt
