@@ -6,6 +6,7 @@
 
 #include <extras/interfaces.hpp>
 #include <rsi/sockets/Types.hpp>
+#include <rsi/sockets/PortAuthority.hpp>
 #include <iostream>
 #include <map>
 #include <sstream>

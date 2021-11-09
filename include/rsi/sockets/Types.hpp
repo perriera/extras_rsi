@@ -20,7 +20,7 @@ namespace exparx {
     namespace rsi {
 
         /**
-         * @brief SocketPoolInterface
+         * @brief SocketPoolInterface types
          *
          */
 
@@ -51,6 +51,17 @@ namespace exparx {
         using ServiceType = std::string;
         using ServiceTypeList = std::vector<ServiceType>;
         using ServiceTypeMap = std::map<ServiceType, ServiceType>;
+
+        /**
+         * @brief ServiceTypeCompilerInterface
+         *
+         */
+        interface ServiceTypeCompilerInterface {
+            virtual ServiceTypeList clients(
+                const RequestTypeList& requests) const pure;
+            virtual ServiceTypeList servers(
+                const RequestTypeList& requests) const pure;
+        };
 
     }
 }

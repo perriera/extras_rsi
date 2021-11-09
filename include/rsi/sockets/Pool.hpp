@@ -39,13 +39,6 @@ namespace exparx {
          *
          */
 
-        interface ServiceTypeCompilerInterface {
-            virtual ServiceTypeList clients(
-                const RequestTypeList& requests) const pure;
-            virtual ServiceTypeList servers(
-                const RequestTypeList& requests) const pure;
-        };
-
         interface SocketPoolInterface {
             virtual void transfer() const pure;
         };
