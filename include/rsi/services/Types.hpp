@@ -5,7 +5,6 @@
 #include <sys/socket.h>
 
 #include <extras/interfaces.hpp>
-#include <rsi/services/Types.hpp>
 #include <iostream>
 #include <map>
 #include <sstream>
@@ -39,17 +38,19 @@ namespace exparx {
          *
          */
 
-        interface ServiceTypeCompilerInterface {
-            virtual ServiceTypeList clients(
-                const RequestTypeList& requests) const pure;
-            virtual ServiceTypeList servers(
-                const RequestTypeList& requests) const pure;
-        };
+        using PortNumber = int;
+        using Socket = int;
+        using PortNumberPool = std::vector<PortNumber>;
+        using SocketRequestType = std::string;
+        using SocketRequestTypeList = std::vector<SocketRequestType>;
+        using SocketRequestTypeMap = std::map<PortNumber, SocketRequestType>;
 
-        interface SocketPoolInterface {
-            virtual void transfer() const pure;
-        };
+        using RequestType = std::string;
+        using RequestTypeList = std::vector<RequestType>;
 
+        using ServiceType = std::string;
+        using ServiceTypeList = std::vector<ServiceType>;
+        using ServiceTypeMap = std::map<ServiceType, ServiceType>;
 
     }
 }
