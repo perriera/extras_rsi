@@ -10,25 +10,23 @@ using namespace fakeit;
 
 SCENARIO("Mock ConvertByteInterface", "[ConvertInterface]") {
 
-    const char* argv[] = { "socketclient", "127.0.0.1", "8080",
-                            "send.txt",     "convert",   "download" };
-    rsi::Char cahr = 'A';
-    rsi::Byte btye = 0x65;
+    rsi::Hex hex = 'A';
+    rsi::Byte btye = 0;
     Mock<rsi::ConvertByteInterface> mock;
-    When(Method(mock, charToByte))
+    When(Method(mock, hexToByte))
         .AlwaysDo(
-            [&btye](rsi::Char cahr) {
+            [&btye](rsi::Hex cahr) {
                 return btye;
             });
-    When(Method(mock, byteToChar))
+    When(Method(mock, byteToHex))
         .AlwaysDo(
-            [&cahr](const rsi::Byte btye) {
-                return cahr;
+            [&hex](const rsi::Byte btye) {
+                return hex;
             });
 
     rsi::ConvertByteInterface& i = mock.get();
-    REQUIRE(i.charToByte(cahr) == btye);
-    REQUIRE(i.byteToChar(btye) == cahr);
-    Verify(Method(mock, charToByte));
-    Verify(Method(mock, byteToChar));
+    REQUIRE(i.hexToByte(hex) == btye);
+    REQUIRE(i.byteToHex(btye) == hex);
+    Verify(Method(mock, hexToByte));
+    Verify(Method(mock, byteToHex));
 }

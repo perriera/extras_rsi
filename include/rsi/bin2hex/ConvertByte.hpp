@@ -25,15 +25,48 @@ namespace extras {
          */
 
         using Byte = byte;
-        using Char = char;
+        struct Hex {
+            friend std::ostream& operator<<(std::ostream& out,
+                const Hex& obj) {
+                out << obj._hex;
+                return out;
+            }
+            friend std::istream& operator>>(std::istream& in,
+                Hex& obj) {
+                in >> obj._hex;
+                return in;
+            }
+
+            std::string _hex = "00";
+            Hex() { }
+            Hex(int decimalValue) {
+                std::stringstream ss;
+                ss << std::hex << decimalValue;
+            }
+            // Hex(Byte byteValue) {
+            //     int decimalValue = byteValue;
+            //     std::stringstream ss;
+            //     ss << std::hex << decimalValue;
+            // }
+            bool operator==(const Hex& rhs) const {
+                return _hex == rhs._hex;
+            }
+
+            bool operator!=(const Hex& rhs) const {
+                return !(*this == rhs);
+            }
+            operator const std::string& () const {
+                return _hex;
+            }
+        };
 
         /**
          * @brief ConvertLineInterface
          *
          */
         interface ConvertByteInterface {
-            virtual Byte charToByte(Char cahr) const pure;
-            virtual Char byteToChar(Byte btye) const pure;
+            virtual Byte hexToByte(Hex cahr) const pure;
+            virtual Hex byteToHex(Byte btye) const pure;
         };
 
 

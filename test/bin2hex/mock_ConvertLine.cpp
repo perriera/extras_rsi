@@ -10,8 +10,6 @@ using namespace fakeit;
 
 SCENARIO("Mock ConvertLineInterface", "[ConvertInterface]") {
 
-    const char* argv[] = { "socketclient", "127.0.0.1", "8080",
-                            "send.txt",     "convert",   "download" };
     rsi::HexLine hexLine = "this expression";
     rsi::BinLine binLine;
     Mock<rsi::ConvertLineInterface> mock;

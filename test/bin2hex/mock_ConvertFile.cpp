@@ -10,8 +10,6 @@ using namespace fakeit;
 
 SCENARIO("Mock ConvertFileInterface", "[ConvertInterface]") {
 
-    const char* argv[] = { "socketclient", "127.0.0.1", "8080",
-                            "send.txt",     "convert",   "download" };
     rsi::HexFile hexFile;
     rsi::BinFile binFile;
     Mock<rsi::ConvertFileInterface> mock;
