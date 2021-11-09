@@ -5,7 +5,10 @@
 #include <sys/socket.h>
 
 #include <extras/interfaces.hpp>
+#include <extras/strings.hpp>
 #include <rsi/sockets/Types.hpp>
+#include <rsi/sockets/Parameters.hpp>
+#include <rsi/sockets/Exceptions.hpp>
 #include <iostream>
 #include <map>
 #include <sstream>
@@ -41,6 +44,70 @@ namespace exparx {
 
         interface SocketPoolInterface {
             virtual void transfer() const pure;
+        };
+
+        abstract class SocketPool implements SocketPoolInterface with
+            SocketPoolParametersInterface with ServiceTypeCompilerInterface {
+        protected:
+            std::string _program;
+            std::string _ip;
+            std::string _port;
+            std::string _filename;
+            SocketRequestTypeList _requests;
+            SocketRequestTypeList _types;
+            SocketRequestTypeMap _lastRequest;
+
+        public:
+            virtual Parameters parameters(int argc, char const* argv[]) override;
+            virtual const Parameter& program() const override { return _program; };
+            virtual const Parameter& ip() const override { return _ip; };
+            virtual const Parameter& port() const override { return _port; };
+            virtual const Parameter& filename() const override { return _filename; };
+            virtual const SocketRequestTypeList& requests() const override {
+                return _requests;
+            };
+
+            virtual void setProgram(const Parameter& program) override {
+                _program = program;
+            }
+            virtual void setIP(const IP& ip) override { _ip = ip; }
+            virtual void setPort(const Port& port) override {
+                _port = std::to_string(port);
+            }
+            virtual void setFilename(const Filename& filename) override {
+                _filename = filename;
+            }
+            virtual void setRequests(const SocketRequestTypeList& list) override {
+                _requests = list;
+            }
+            virtual ServiceTypeList common(ServiceTypeMap& map,
+                const RequestTypeList& requests) const {
+                rsi::ServiceTypeList list;
+                for (auto request : requests) {
+                    auto parts = extras::split(request, ' ');
+                    NoTokensException::assertion(parts.size(), __INFO__);
+                    auto serviceType = map[parts[0]];
+                    UnsupportedTokenException::assertion(serviceType, __INFO__);
+                    std::string line =
+                        extras::replace_all(request, parts[0], serviceType);
+                    list.push_back(line);
+                }
+                return list;
+            }
+            virtual ServiceTypeList clients(
+                const RequestTypeList& requests) const override {
+                rsi::ServiceTypeMap forClients;
+                forClients["upload"] = "build/uploader_client";
+                forClients["download"] = "build/downloader_client";
+                return common(forClients, requests);
+            }
+            virtual ServiceTypeList servers(
+                const RequestTypeList& requests) const override {
+                rsi::ServiceTypeMap forServers;
+                forServers["upload"] = "build/uploader_server";
+                forServers["download"] = "build/downloader_server";
+                return common(forServers, requests);
+            }
         };
 
 

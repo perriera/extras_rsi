@@ -6,6 +6,7 @@
 
 #include <extras/interfaces.hpp>
 #include <rsi/sockets/Types.hpp>
+#include <rsi/sockets/Pool.hpp>
 #include <iostream>
 #include <map>
 #include <sstream>
@@ -44,6 +45,30 @@ namespace exparx {
             virtual void close() const pure;
         };
 
+        concrete class SocketPoolClient extends SocketPool with
+            SocketPoolClientInterface {
+            struct sockaddr_in _server_addr;
+            int _client_socket;
+
+        public:
+            SocketPoolClient() {}
+            SocketPoolClient(const std::string& msg) {
+                std::stringstream ss;
+                ss << msg;
+                ss >> *this;
+            }
+            operator std::string() const {
+                std::string msg;
+                std::stringstream ss;
+                ss << *this;
+                std::getline(ss, msg);
+                return msg;
+            }
+            virtual void connect() override;
+            virtual void close() const override;
+            virtual void transfer() const override;
+
+        };
 
 
     }
