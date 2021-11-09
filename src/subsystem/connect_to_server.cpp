@@ -6,7 +6,7 @@
 
 #include <rsi/subsystem.hpp>
 
-int exparx::rsi::connect_to_server(const char* ip, int port,
+int extras::rsi::connect_to_server(const char* ip, int port,
     struct sockaddr_in& server_addr) {
     int e;
 

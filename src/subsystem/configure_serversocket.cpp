@@ -10,7 +10,7 @@
 // https://cdmana.com/2021/02/20210220084428841j.html
 //
 
-int exparx::rsi::configure_serversocket(const char* ip, int port,
+int extras::rsi::configure_serversocket(const char* ip, int port,
     struct sockaddr_in& server_addr,
     bool timeoutmode) {
     int sockfd;

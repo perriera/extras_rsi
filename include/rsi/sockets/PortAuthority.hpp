@@ -16,7 +16,7 @@
  *
  */
 
-namespace exparx {
+namespace extras {
     namespace rsi {
 
         /**

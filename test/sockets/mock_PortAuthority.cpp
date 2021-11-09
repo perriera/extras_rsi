@@ -5,7 +5,7 @@
 #include "../vendor/fakeit.hpp"
 #include <rsi/sockets/PortAuthority.hpp>
 
-using namespace exparx;
+using namespace extras;
 using namespace fakeit;
 
 SCENARIO("Mock PortAuthorityInterface", "[PortAuthorityInterface]") {

@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string>
 
-namespace exparx {
+namespace extras {
 
     /**
      * @brief rsi: (remote services interface)

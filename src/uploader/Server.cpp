@@ -18,7 +18,7 @@
 
 using namespace std;
 
-namespace exparx {
+namespace extras {
 
     /**
      * @brief concrete class UploaderServer
@@ -28,7 +28,7 @@ namespace exparx {
      *
      */
     void rsi::UploaderServer::connect() {
-        this->_sockfd = exparx::rsi::configure_serversocket(
+        this->_sockfd = extras::rsi::configure_serversocket(
             ip().c_str(), stoi(port()), _server_addr);
         socklen_t addr_size = sizeof(_new_addr);
         this->_new_sock =
@@ -42,7 +42,7 @@ namespace exparx {
     void rsi::UploaderServer::transfer() const {
         auto uploaded_file =
             extras::replace_all(filename(), ".txt", "_uploaded.txt");
-        exparx::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
+        extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
         system("ls -la");
         /**
          * @brief Right here, Right now...
@@ -60,7 +60,7 @@ namespace exparx {
     }
 
     void rsi::DownloaderServer::transfer() const {
-        exparx::rsi::send_file2(filename().c_str(), this->_new_sock);
+        extras::rsi::send_file2(filename().c_str(), this->_new_sock);
     }
 
     void rsi::UploaderServer::close() const {

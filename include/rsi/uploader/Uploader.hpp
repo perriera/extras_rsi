@@ -9,7 +9,7 @@
 #include <iostream>
 #include <sstream>
 
-namespace exparx {
+namespace extras {
     namespace rsi {
         /**
          * @brief UploaderInterface

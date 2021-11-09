@@ -6,7 +6,7 @@
 
 #include <extras/interfaces.hpp>
 
-namespace exparx {
+namespace extras {
 
     namespace rsi {
 

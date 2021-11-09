@@ -11,7 +11,7 @@
 
 int main(int argc, char const* argv[]) {
     try {
-        exparx::rsi::DownloaderServer downloader;
+        extras::rsi::DownloaderServer downloader;
         downloader.parameters(argc, argv);
         downloader.connect();
         downloader.transfer();

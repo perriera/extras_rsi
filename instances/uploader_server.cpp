@@ -11,7 +11,7 @@
 
 int main(int argc, char const* argv[]) {
     try {
-        exparx::rsi::UploaderServer uploader;
+        extras::rsi::UploaderServer uploader;
         uploader.parameters(argc, argv);
         uploader.connect();
         uploader.transfer();

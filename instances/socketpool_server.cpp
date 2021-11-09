@@ -11,7 +11,7 @@
 
 int main(int argc, char const* argv[]) {
     try {
-        exparx::rsi::SocketPoolServer server;
+        extras::rsi::SocketPoolServer server;
         server.parameters(argc, argv);
         server.connect();
         while (true) {
