@@ -9,8 +9,8 @@
  * @date 2021-08-08
  */
 
-#define RSI_VER_MAJOR 0
-#define RSI_VER_MINOR 2
+#define RSI_VER_MAJOR 1
+#define RSI_VER_MINOR 0
 #define RSI_VER_PATCH 0
 
 #define RSI_VERSION \
