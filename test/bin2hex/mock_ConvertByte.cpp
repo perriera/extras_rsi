@@ -11,7 +11,7 @@ using namespace fakeit;
 SCENARIO("Mock ConvertByteInterface", "[ConvertInterface]") {
 
     rsi::Hex hex = 'A';
-    rsi::Byte btye = 0;
+    rsi::Byte btye = 'B';
     Mock<rsi::ConvertByteInterface> mock;
     When(Method(mock, hexToByte))
         .AlwaysDo(

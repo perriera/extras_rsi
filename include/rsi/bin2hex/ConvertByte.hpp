@@ -41,6 +41,7 @@ namespace extras {
             Hex(int decimalValue) {
                 std::stringstream ss;
                 ss << std::hex << decimalValue;
+                _hex = ss.str();
             }
             bool operator==(const Hex& rhs) const {
                 return _hex == rhs._hex;
