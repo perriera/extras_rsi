@@ -27,6 +27,12 @@ namespace exparx {
         using Parameter = std::string;
         using Parameters = std::deque<Parameter>;
 
+        using PortDomainName = std::string;
+        using PortNumber = int;
+        using PortServerNumber = int;
+        using PortRangeStart = int;
+        using PortRangeSize = int;
+
         using Filename = std::string;
         using IP = std::string;
         using Port = int;
