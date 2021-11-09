@@ -1,5 +1,5 @@
 function(cpp_starter_get_version)
-  file(READ "${CMAKE_CURRENT_LIST_DIR}/include/cpp_starter/version.hpp" file_contents)
+  file(READ "${CMAKE_CURRENT_LIST_DIR}/include/rsi/version.hpp" file_contents)
   string(REGEX MATCH "CPP_STARTER_VER_MAJOR ([0-9]+)" _ "${file_contents}")
   if(NOT CMAKE_MATCH_COUNT EQUAL 1)
     message(FATAL_ERROR "Could not extract the major version from version.hpp")

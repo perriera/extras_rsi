@@ -1,4 +1,4 @@
-#include "../include/cpp_starter/game/ChessGame.hpp"
+#include "../include/rsi/game/ChessGame.hpp"
 #include <extras/string_support.hpp>
 #include <iostream>
 

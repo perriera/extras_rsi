@@ -4,8 +4,8 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v0.5.1 -m "perriera/extras v3.22.0"</br>
-> > git push origin v0.5.1
+> > git tag -a v0.1.0 -m "exparx/rsi v0.1.0"</br>
+> > git push origin v0.1.0
 > 
 
 IMPORTANT: 
@@ -29,38 +29,9 @@ Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
 
-#### 0.5.1 (2021-10-17)
-### Changed 
-- Fixed Link issue 
 
-#### 0.5.0 (2021-10-17)
-### Changed 
-- Update for use with perriera/extras 3.22 
-
-#### 0.4.2 (2021-09-07)
-### Changed 
-- Added instances/ directory
-
-#### 0.4.1 (2021-09-07)
-### Changed 
-- CMakeLists.txt entry for runtime instances 
-### Removed 
-- Unnecessary file
-
-#### 0.4.0 (2021-09-03)
-### Moved 
-- Vendor files
-
-#### 0.3.1 (2021-09-03)
-### Removed 
-- Renamed identifier
-
-#### 0.3.0 (2021-09-03)
-### Removed 
-- cpp_starter source code
-
-#### 0.2.0 (2021-09-03)
-### Added
+#### 0.1.0 (2021-11-08)
+- rsi source code
 - SHARED library support
 - (perriera) extras library support, (3.11.0)
 - CPM.cmake support
@@ -79,10 +50,7 @@ Updated README.md accordinging</br>
 - spdlog is now used as a shared library, (libspdlog.so)
 - cpr is now used as a shared library, (libcpr.so)
 - placed all source into /src
-- placed all headers into /include/cpp_starter
-
-#### 0.1.0 (2021-08-26)
-### Added
+- placed all headers into /include/rsi
 - Fetch_Content support
 - changelog.md
 - Project VERSION inside CMakeLists.txt & changelog.md
@@ -110,13 +78,13 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/cpp_starter/compare/v0.5.1...HEAD
-[0.5.1]: https://github.com/perriera/cpp_starter/compare/v0.5.0...v0.5.1
-[0.5.0]: https://github.com/perriera/cpp_starter/compare/v0.4.2...v0.5.0
-[0.4.2]: https://github.com/perriera/cpp_starter/compare/v0.4.1...v0.4.2
-[0.4.1]: https://github.com/perriera/cpp_starter/compare/v0.4.0...v0.4.1
-[0.4.0]: https://github.com/perriera/cpp_starter/compare/v0.3.1...v0.4.0
-[0.3.1]: https://github.com/perriera/cpp_starter/compare/v0.3.0...v0.3.1
-[0.3.0]: https://github.com/perriera/cpp_starter/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/perriera/cpp_starter/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/perriera/cpp_starter/releases/tag/v0.1.0
+[Unreleased]: https://github.com/perriera/rsi/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/perriera/rsi/compare/v0.5.0...v0.5.1
+[0.5.0]: https://github.com/perriera/rsi/compare/v0.4.2...v0.5.0
+[0.4.2]: https://github.com/perriera/rsi/compare/v0.4.1...v0.4.2
+[0.4.1]: https://github.com/perriera/rsi/compare/v0.4.0...v0.4.1
+[0.4.0]: https://github.com/perriera/rsi/compare/v0.3.1...v0.4.0
+[0.3.1]: https://github.com/perriera/rsi/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/perriera/rsi/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/perriera/rsi/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/perriera/rsi/releases/tag/v0.1.0

@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include "../include/cpp_starter/game/ChessGame.hpp"
+#include "../include/rsi/game/ChessGame.hpp"
 
 #include "vendor/catch.hpp"
 #include "vendor/fakeit.hpp"
