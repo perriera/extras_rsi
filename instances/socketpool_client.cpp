@@ -11,7 +11,7 @@
 
 int main(int argc, char const* argv[]) {
     try {
-        exparx::rsi::SocketPoolClient client;
+        extras::rsi::SocketPoolClient client;
         client.parameters(argc, argv);
         client.connect();
         client.transfer();

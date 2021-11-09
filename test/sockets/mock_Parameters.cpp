@@ -5,7 +5,7 @@
 #include "../vendor/catch.hpp"
 #include "../vendor/fakeit.hpp"
 
-using namespace exparx;
+using namespace extras;
 using namespace fakeit;
 
 SCENARIO("Mock SocketPoolParametersInterface", "[SocketPoolParametersInterface]") {

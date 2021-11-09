@@ -17,7 +17,7 @@
 
 using namespace std;
 
-namespace exparx {
+namespace extras {
 
     /**
      * @brief abstract class Uploader

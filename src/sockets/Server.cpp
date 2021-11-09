@@ -24,7 +24,7 @@ using namespace std;
 // virtual const Parameter &filename() const pure;
 // virtual const SocketRequestTypeList &requests() const pure;
 
-namespace exparx {
+namespace extras {
     namespace rsi {
 
         void SocketPoolServer::transfer() const {

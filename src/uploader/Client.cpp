@@ -18,7 +18,7 @@
 
 using namespace std;
 
-namespace exparx {
+namespace extras {
 
     /**
      * @brief concrete class UploaderClient
@@ -28,18 +28,18 @@ namespace exparx {
      *
      */
     void rsi::UploaderClient::connect() {
-        this->_sockfd = exparx::rsi::connect_to_server(ip().c_str(), stoi(port()),
+        this->_sockfd = extras::rsi::connect_to_server(ip().c_str(), stoi(port()),
             _server_addr);
     }
 
     void rsi::UploaderClient::transfer() const {
-        exparx::rsi::send_file2(filename().c_str(), this->_sockfd);
+        extras::rsi::send_file2(filename().c_str(), this->_sockfd);
     }
 
     void rsi::DownloaderClient::transfer() const {
         auto downloaded_file =
             extras::replace_all(filename(), ".txt", "_downloaded.txt");
-        exparx::rsi::write_file(downloaded_file.c_str(), this->_sockfd);
+        extras::rsi::write_file(downloaded_file.c_str(), this->_sockfd);
     }
 
     void rsi::UploaderClient::close() const { ::close(this->_sockfd); }

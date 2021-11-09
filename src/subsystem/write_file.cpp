@@ -6,17 +6,17 @@
 
 #include <rsi/subsystem.hpp>
 
-void exparx::rsi::write_file(const char* filename, int sockfd) {
+void extras::rsi::write_file(const char* filename, int sockfd) {
     int n;
     FILE* fp;
-    char buffer[exparx::rsi::SIZE];
+    char buffer[extras::rsi::SIZE];
 
     fp = fopen(filename, "w");
     while (1) {
-        n = recv(sockfd, buffer, exparx::rsi::SIZE, 0);
+        n = recv(sockfd, buffer, extras::rsi::SIZE, 0);
         if (n <= 0) break;
         fprintf(fp, "%s", buffer);
-        bzero(buffer, exparx::rsi::SIZE);
+        bzero(buffer, extras::rsi::SIZE);
     }
     return;
 }

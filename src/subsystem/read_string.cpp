@@ -8,7 +8,7 @@
 #include <extras/strings.hpp>
 #include <string>
 
-std::string exparx::rsi::read_string(int sockfd) {
+std::string extras::rsi::read_string(int sockfd) {
     std::string result;
     char buffer[1024];
     int n;
@@ -22,12 +22,12 @@ std::string exparx::rsi::read_string(int sockfd) {
     return result;
 }
 
-int exparx::rsi::read_int(int sockfd) {
+int extras::rsi::read_int(int sockfd) {
     std::string msg = read_string(sockfd);
     return std::stoi(msg);
 }
 
-std::string exparx::rsi::read_line(int sockfd) {
+std::string extras::rsi::read_line(int sockfd) {
     std::string result;
     char buffer[1024];
     bzero(buffer, 1024);
