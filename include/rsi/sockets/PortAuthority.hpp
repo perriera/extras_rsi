@@ -77,7 +77,11 @@ namespace exparx {
                 return _port;
             };
 
-            virtual PortNumber request() override;
+            PortNumber request() override {
+                auto result = _next++;
+                _next = _next % _size;
+                return _start + result;
+            }
         };
 
 

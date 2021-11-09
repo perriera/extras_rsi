@@ -143,6 +143,19 @@ target_include_directories(main PUBLIC ${INCLUDES})
 target_link_libraries(main PRIVATE ${PROJECT_NAME} stdc++fs extras )
 
 #
+# FreeFormJS process_client / process_server
+#
+if(NOT MAKE_EXTRAS_LIBRARY_ONLY)
+add_executable(socketpool_client instances/socketpool_client.cpp) 
+target_include_directories(socketpool_client PUBLIC ${INCLUDES})
+target_link_libraries(socketpool_client PRIVATE ${PROJECT_NAME} stdc++fs extras)
+
+add_executable(socketpool_server instances/socketpool_server.cpp) 
+target_include_directories(socketpool_server PUBLIC ${INCLUDES})
+target_link_libraries(socketpool_server PRIVATE ${PROJECT_NAME} stdc++fs extras)
+endif()
+
+#
 # NOTE: Install all shared libraries
 #
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib)
