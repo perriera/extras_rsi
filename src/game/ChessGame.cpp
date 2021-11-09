@@ -1,5 +1,5 @@
-#include "../include/cpp_starter/game/ChessGame.hpp"
-#include <extras/string_support.hpp>
+#include "../include/rsi/game/ChessGame.hpp"
+#include <extras/interfaces.hpp>
 #include <iostream>
 
 using namespace std;

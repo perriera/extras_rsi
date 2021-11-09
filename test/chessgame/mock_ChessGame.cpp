@@ -1,9 +1,9 @@
 
 #include <iostream>
-#include "../include/cpp_starter/game/ChessGame.hpp"
+#include "rsi/game/ChessGame.hpp"
 
-#include "vendor/catch.hpp"
-#include "vendor/fakeit.hpp"
+#include "../vendor/catch.hpp"
+#include "../vendor/fakeit.hpp"
 
 using namespace extras;
 using namespace fakeit;
