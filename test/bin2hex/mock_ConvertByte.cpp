@@ -15,17 +15,17 @@ SCENARIO("Mock ConvertByteInterface", "[ConvertInterface]") {
     Mock<rsi::ConvertByteInterface> mock;
     When(Method(mock, hexToByte))
         .AlwaysDo(
-            [&btye](rsi::Hex cahr) {
-                return btye;
+            [](rsi::Hex cahr) {
+                return rsi::Byte(cahr);
             });
     When(Method(mock, byteToHex))
         .AlwaysDo(
-            [&hex](const rsi::Byte btye) {
+            [](const rsi::Byte btye) {
                 return rsi::Hex(btye);
             });
 
     rsi::ConvertByteInterface& i = mock.get();
-    REQUIRE(i.hexToByte(hex) == btye);
+    REQUIRE(i.hexToByte(hex) == rsi::Byte(hex));
     REQUIRE(i.byteToHex(btye) == rsi::Hex(btye));
     Verify(Method(mock, hexToByte));
     Verify(Method(mock, byteToHex));

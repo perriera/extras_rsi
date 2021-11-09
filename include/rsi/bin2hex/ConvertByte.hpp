@@ -24,7 +24,6 @@ namespace extras {
          *
          */
 
-        using Byte = byte;
         struct Hex {
             friend std::ostream& operator<<(std::ostream& out,
                 const Hex& obj) {
@@ -43,11 +42,6 @@ namespace extras {
                 std::stringstream ss;
                 ss << std::hex << decimalValue;
             }
-            // Hex(Byte byteValue) {
-            //     int decimalValue = byteValue;
-            //     std::stringstream ss;
-            //     ss << std::hex << decimalValue;
-            // }
             bool operator==(const Hex& rhs) const {
                 return _hex == rhs._hex;
             }
@@ -59,6 +53,58 @@ namespace extras {
                 return _hex;
             }
         };
+
+        /**
+         * @brief HexToBytes
+         * @ref https://stackoverflow.com/questions/17261798/converting-a-hex-string-to-a-byte-array
+         * @param hex
+         * @return std::vector<char>
+         */
+        std::vector<char> HexToBytes(const std::string& hex) {
+            std::vector<char> bytes;
+
+            for (unsigned int i = 0; i < hex.length(); i += 2) {
+                std::string byteString = hex.substr(i, 2);
+                char byte = (char)strtol(byteString.c_str(), NULL, 16);
+                bytes.push_back(byte);
+            }
+
+            return bytes;
+        }
+
+        struct Byte {
+            friend std::ostream& operator<<(std::ostream& out,
+                const Byte& obj) {
+                out << obj._byte;
+                return out;
+            }
+            friend std::istream& operator>>(std::istream& in,
+                Byte& obj) {
+                in >> obj._byte;
+                return in;
+            }
+            byte _byte;
+            Byte() { }
+            Byte(int decimalValue) {
+                _byte = (byte)decimalValue;
+            }
+            Byte(const Hex& hex) {
+                auto binary = HexToBytes(hex);
+                _byte = binary[0];
+            }
+            bool operator==(const Byte& rhs) const {
+                return _byte == rhs._byte;
+            }
+
+            bool operator!=(const Byte& rhs) const {
+                return !(*this == rhs);
+            }
+            operator const byte& () const {
+                return _byte;
+            }
+        };
+
+
 
         /**
          * @brief ConvertLineInterface
