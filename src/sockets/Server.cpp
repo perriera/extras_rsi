@@ -51,7 +51,7 @@ namespace extras {
                 _server_addr, false);
             if (this->_server_socket == -1) {
                 ::close(this->_server_socket);
-                throw RSIException("Timeout on uploader_server accept", __INFO__);
+                throw RSIException("Timeout on uploader_server connect", __INFO__);
             }
         }
 
