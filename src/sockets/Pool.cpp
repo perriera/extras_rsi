@@ -27,7 +27,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief SocketPoolParametersInterface ostream
+         * @brief ParametersInterface ostream
          *
          * @param out
          * @param obj
@@ -35,7 +35,7 @@ namespace extras {
          */
 
         std::ostream& operator<<(std::ostream& out,
-            const SocketPoolParametersInterface& obj) {
+            const ParametersInterface& obj) {
             out << obj.program() << ' ';
             out << obj.ip() << ' ';
             out << obj.port() << ' ';
@@ -45,14 +45,14 @@ namespace extras {
         }
 
         /**
-         * @brief SocketPoolParametersInterface istream
+         * @brief ParametersInterface istream
          *
          * @param in
          * @param obj
          * @return std::istream&
          */
         std::istream& operator>>(std::istream& in,
-            SocketPoolParametersInterface& obj) {
+            ParametersInterface& obj) {
             std::string program, ip, port, filename, request;
             in >> program >> ip >> port >> filename;
             SocketRequestTypeList requests;

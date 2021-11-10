@@ -47,7 +47,7 @@ namespace extras {
         };
 
         abstract class SocketPool implements SocketPoolInterface with
-            SocketPoolParametersInterface with ServiceTypeCompilerInterface {
+            ParametersInterface with ServiceTypeCompilerInterface {
         protected:
             std::string _program;
             std::string _ip;

@@ -19,11 +19,11 @@
 namespace extras {
     namespace rsi {
 
-        interface SocketPoolParametersInterface {
+        interface ParametersInterface {
             friend std::ostream& operator<<(std::ostream& out,
-                const SocketPoolParametersInterface& obj);
+                const ParametersInterface& obj);
             friend std::istream& operator>>(std::istream& in,
-                SocketPoolParametersInterface& obj);
+                ParametersInterface& obj);
             virtual Parameters parameters(int argc, char const* argv[]) pure;
             virtual const Parameter& program() const pure;
             virtual const Parameter& ip() const pure;
@@ -37,7 +37,7 @@ namespace extras {
             virtual void setFilename(const Filename& filename) pure;
             virtual void setRequests(const SocketRequestTypeList& list) pure;
 
-            bool operator==(const SocketPoolParametersInterface& rhs) const {
+            bool operator==(const ParametersInterface& rhs) const {
                 std::stringstream ssA;
                 ssA << *this;
                 std::string testA = ssA.str();
@@ -47,7 +47,7 @@ namespace extras {
                 return testB == testA;
             }
 
-            bool operator!=(const SocketPoolParametersInterface& rhs) const {
+            bool operator!=(const ParametersInterface& rhs) const {
                 return !(*this == rhs);
             }
         };
