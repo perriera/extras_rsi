@@ -8,7 +8,7 @@
 #include <extras/strings.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <rsi/sockets/Parameters.hpp>
-#include <rsi/sockets/Exceptions.hpp>
+#include <rsi/exceptions.hpp>
 #include <iostream>
 #include <map>
 #include <sstream>
