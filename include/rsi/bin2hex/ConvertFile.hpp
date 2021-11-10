@@ -35,6 +35,8 @@ namespace extras {
         interface ConvertFileInterface {
             virtual BinFile hexToBin(const HexFile& hexFile) const pure;
             virtual HexFile binToHex(const BinFile& binFile) const pure;
+            virtual BinFile loadBin(std::istream& in, int columns) const pure;
+            virtual HexFile loadHex(std::istream& in) const pure;
         };
 
         concrete class ConvertFile implements ConvertFileInterface {
@@ -57,6 +59,8 @@ namespace extras {
                 }
                 return hexFile;
             }
+            virtual BinFile loadBin(std::istream& in, int columns = 40) const override;
+            virtual HexFile loadHex(std::istream& in) const override;
         };
     }
 }
