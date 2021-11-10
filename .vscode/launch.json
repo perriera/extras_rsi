@@ -13,8 +13,10 @@
             "name": "run-unittests",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/run-unittests-${workspaceRootFolderName}",
-            "args": [],
+            "program": "${workspaceFolder}/build/run-unittests-rsi",
+            "args": [
+                "[ConvertInterface]"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

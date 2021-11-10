@@ -4,8 +4,8 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v1.0.0 -m "Changed namespace to extras::rsi"</br>
-> > git push origin v1.0.0
+> > git tag -a v1.0.1 -m "Now using extras 5.0.1"</br>
+> > git push origin v1.0.1
 > 
 
 IMPORTANT: 
@@ -28,6 +28,11 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 1.0.1 (2021-11-09)
+- Added bin2hex
+- Now using extras 5.0.1
+- RSI-4
 
 #### 1.0.0 (2021-11-09)
 - Changed namespace from exparx to extras, (aka. extras::rsi)
@@ -92,7 +97,8 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/perriera/rsi/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/perriera/rsi/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/perriera/rsi/compare/v0.3.1...v1.0.0
 [0.3.1]: https://github.com/perriera/rsi/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/perriera/rsi/compare/v0.2.0...v0.3.0
