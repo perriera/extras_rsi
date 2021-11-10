@@ -9,11 +9,18 @@ namespace extras {
     namespace rsi {
 
         /**
+         * @brief ByteArray, HexArray
+         *
+         */
+        using ByteArray = std::vector<byte>;
+        using HexArray = std::string;
+
+        /**
          * @brief hexToBytes
          * @param hex
          * @return std::vector<byte>
          */
-        std::vector<byte> hexToBytes(const std::string& hex);
+        ByteArray hexToBytes(const HexArray& hex);
 
         /**
          * @brief bytesToHex
@@ -22,8 +29,8 @@ namespace extras {
          * @param len
          * @return std::string
          */
-        std::string bytesToHex(byte* data, int len);
-        std::string bytesToHex(std::vector<byte> data);
+        HexArray bytesToHex(byte* data, int len);
+        HexArray bytesToHex(ByteArray data);
 
 
     }
