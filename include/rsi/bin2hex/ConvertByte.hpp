@@ -15,8 +15,6 @@ namespace extras {
          * @return std::vector<char>
          */
         std::vector<byte> hexToBytes(const std::string& hex);
-        constexpr char hexmap[] = { '0', '1', '2', '3', '4', '5', '6', '7',
-                                   '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
         /**
          * @brief https://codereview.stackexchange.com/questions/78535/converting-array-of-bytes-to-the-hex-string-representation

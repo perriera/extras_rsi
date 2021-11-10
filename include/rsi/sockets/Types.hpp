@@ -1,20 +1,12 @@
 #ifndef _EXPARX_RSISOCKETSTYPES_HPP
 #define _EXPARX_RSISOCKETSTYPES_HPP
 
-#include <netinet/in.h>
-#include <sys/socket.h>
-
 #include <extras/interfaces.hpp>
 #include <iostream>
+#include <sstream>
 #include <map>
 #include <deque>
-#include <sstream>
 #include <vector>
-
-/**
- * @brief
- *
- */
 
 namespace extras {
     namespace rsi {

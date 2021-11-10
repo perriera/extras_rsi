@@ -1,28 +1,18 @@
 #ifndef _EXPARX_RSISOCKETSSERVER_HPP
 #define _EXPARX_RSISOCKETSSERVER_HPP
 
+#include <extras/interfaces.hpp>
+#include <rsi/sockets/Pool.hpp>
+#include <rsi/sockets/PortAuthority.hpp>
+#include <iostream>
 #include <netinet/in.h>
 #include <sys/socket.h>
-
-#include <extras/interfaces.hpp>
-#include <rsi/sockets/Types.hpp>
-#include <rsi/sockets/PortAuthority.hpp>
-#include <rsi/sockets/Pool.hpp>
-#include <iostream>
-#include <map>
-#include <sstream>
-#include <vector>
-
-/**
- * @brief
- *
- */
 
 namespace extras {
     namespace rsi {
 
         /**
-         * @brief SocketPoolClientInterface
+         * @brief SocketPoolServerInterface
          *
          * The idea is that we assign a port to be the authority on deligating
          * available port numbers, (from a range of port numbers). At the basic

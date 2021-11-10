@@ -1,17 +1,10 @@
 #ifndef _EXPARX_RSIREQUESTTYPE_HPP
 #define _EXPARX_RSIREQUESTTYPE_HPP
 
-#include <netinet/in.h>
-#include <sys/socket.h>
-
 #include <extras/interfaces.hpp>
 #include <rsi/sockets/Types.hpp>
-#include <rsi/sockets/Pool.hpp>
 #include <rsi/sockets/PortAuthority.hpp>
 #include <iostream>
-#include <map>
-#include <sstream>
-#include <vector>
 
 /**
  * @brief
@@ -72,6 +65,11 @@ namespace extras {
                 return ss.str();
             }
         };
+
+        /**
+         * @brief RequestTypeCompilerInterface
+         *
+         */
 
         interface RequestTypeCompilerInterface {
             virtual RequestTypeCompilation compile(

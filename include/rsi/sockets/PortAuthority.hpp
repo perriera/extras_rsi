@@ -1,27 +1,15 @@
 #ifndef _EXPARX_RSISOCKETSPORTAUTHORITY_HPP
 #define _EXPARX_RSISOCKETSPORTAUTHORITY_HPP
 
-#include <netinet/in.h>
-#include <sys/socket.h>
-
 #include <extras/interfaces.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <iostream>
-#include <map>
-#include <sstream>
-#include <vector>
-
-/**
- * @brief
- *
- */
 
 namespace extras {
     namespace rsi {
 
         /**
          * @brief PortAuthorityInterface
-         *
          *
          */
 

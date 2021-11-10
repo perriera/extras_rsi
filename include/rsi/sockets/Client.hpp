@@ -1,21 +1,11 @@
 #ifndef _EXPARX_RSISOCKETSCLIENT_HPP
 #define _EXPARX_RSISOCKETSCLIENT_HPP
 
-#include <netinet/in.h>
-#include <sys/socket.h>
-
 #include <extras/interfaces.hpp>
-#include <rsi/sockets/Types.hpp>
 #include <rsi/sockets/Pool.hpp>
 #include <iostream>
-#include <map>
-#include <sstream>
-#include <vector>
-
-/**
- * @brief
- *
- */
+#include <netinet/in.h>
+#include <sys/socket.h>
 
 namespace extras {
     namespace rsi {

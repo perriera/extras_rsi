@@ -1,13 +1,12 @@
 #ifndef _EXPARX_RSISERVICES_UPLOADER_HPP
 #define _EXPARX_RSISERVICES_UPLOADER_HPP
 
-#include <netinet/in.h>
-#include <sys/socket.h>
-
 #include <extras/interfaces.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <iostream>
 #include <sstream>
+#include <netinet/in.h>
+#include <sys/socket.h>
 
 namespace extras {
     namespace rsi {

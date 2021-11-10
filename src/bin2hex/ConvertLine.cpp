@@ -8,6 +8,9 @@ using namespace std;
 namespace extras {
     namespace rsi {
 
+        constexpr char hexmap[] = { '0', '1', '2', '3', '4', '5', '6', '7',
+                                   '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
         std::vector<byte> hexToBytes(const std::string& hex) {
             std::vector<byte> bytes;
 
