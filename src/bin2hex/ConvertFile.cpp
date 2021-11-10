@@ -29,6 +29,7 @@ namespace extras {
             }
             return binFile;
         }
+
         rsi::HexFile ConvertFile::loadHex(std::istream& in) const {
             rsi::HexFile hexFile;
             rsi::ConvertLine converter;
