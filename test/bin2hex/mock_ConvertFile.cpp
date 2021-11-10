@@ -2,12 +2,14 @@
 #include <rsi/bin2hex/ConvertFile.hpp>
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
 #include "../vendor/catch.hpp"
 #include "../vendor/fakeit.hpp"
 
 using namespace extras;
 using namespace fakeit;
+namespace fs = std::filesystem;
 
 SCENARIO("Mock ConvertFileInterface: hexToBin", "[ConvertInterface]") {
 
@@ -76,6 +78,14 @@ SCENARIO("Mock ConvertFileInterface: loadBin", "[ConvertInterface]") {
                 }
                 return binFile;
             });
+    When(Method(mock, saveBin))
+        .AlwaysDo(
+            [](std::ostream& out, const rsi::BinFile& binFile) {
+                for (auto binLine : binFile) {
+                    for (auto b : binLine)
+                        out << std::skipws << b;
+                }
+            });
 
     When(Method(mock, loadHex))
         .AlwaysDo(
@@ -85,23 +95,44 @@ SCENARIO("Mock ConvertFileInterface: loadBin", "[ConvertInterface]") {
                 while (in.good()) {
                     rsi::HexLine line;
                     getline(in, line);
-                    if (in.good())
-                        hexFile.push_back(line);
+                    hexFile.push_back(line);
                 }
                 return hexFile;
+            });
+    When(Method(mock, saveHex))
+        .AlwaysDo(
+            [](std::ostream& out, const rsi::HexFile& hexFile) {
+                for (auto hexLine : hexFile) {
+                    out << hexLine << std::endl;
+                }
             });
 
     rsi::BinFile binFile;
     rsi::HexFile hexFile;
 
-    std::ifstream inBin("build/run-unittests-rsi");
+    auto b1 = "build/run-unittests-rsi";
+    auto b2 = "/tmp/run-unittests-rsi";
+    auto h1 = "send.txt";
+    auto h2 = "/tmp/send.txt";
+    std::ifstream inBin(b1);
     REQUIRE(inBin.good());
-    std::ifstream inHex("send.txt");
+    std::ifstream inHex(h1);
     REQUIRE(inHex.good());
 
     rsi::ConvertFileInterface& i = mock.get();
     binFile = i.loadBin(inBin, 40);
     hexFile = i.loadHex(inHex);
+    {
+        std::ofstream outBin(b2);
+        REQUIRE(outBin.good());
+        i.saveBin(outBin, binFile);
+        std::ofstream outHex(h2);
+        REQUIRE(outHex.good());
+        i.saveHex(outHex, hexFile);
+    }
+    REQUIRE(fs::file_size(b1) == fs::file_size(b2));
+    REQUIRE(fs::file_size(h1) + 1 == fs::file_size(h2));
     Verify(Method(mock, loadBin));
     Verify(Method(mock, loadHex));
+
 }
