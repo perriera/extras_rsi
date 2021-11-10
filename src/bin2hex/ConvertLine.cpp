@@ -5,12 +5,6 @@
 
 using namespace std;
 
-// virtual const Parameter &program() const pure;
-// virtual const Parameter &ip() const pure;
-// virtual const Parameter &port() const pure;
-// virtual const Parameter &filename() const pure;
-// virtual const SocketRequestTypeList &requests() const pure;
-
 namespace extras {
     namespace rsi {
 
@@ -39,7 +33,7 @@ namespace extras {
         std::string bytesToHex(std::vector<byte> data)
         {
             std::string s(data.size() * 2, ' ');
-            for (auto i = 0; i < data.size(); ++i) {
+            for (long unsigned int i = 0; i < data.size(); ++i) {
                 s[2 * i] = hexmap[(data[i] & 0xF0) >> 4];
                 s[2 * i + 1] = hexmap[data[i] & 0x0F];
             }

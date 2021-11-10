@@ -1,27 +1,15 @@
 #ifndef _EXPARX_RSICONVERTFILE_HPP
 #define _EXPARX_RSICONVERTFILE_HPP
 
-#include <netinet/in.h>
-#include <sys/socket.h>
-
 #include <extras/interfaces.hpp>
 #include <rsi/bin2hex/ConvertLine.hpp>
 #include <iostream>
-#include <map>
-#include <deque>
-#include <sstream>
-#include <vector>
-
-/**
- * @brief
- *
- */
 
 namespace extras {
     namespace rsi {
 
         /**
-         * @brief SocketPoolInterface types
+         * @brief HexFile, BinFile types
          *
          */
 
