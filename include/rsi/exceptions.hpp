@@ -13,7 +13,6 @@
  *
  */
 
-
 #include <extras/interfaces.hpp>
 
 namespace extras {
@@ -21,9 +20,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief SocketException
-         *
-         * To be thrown if either string or value supplied is out of range.
+         * @brief RSIException
          *
          */
         concrete class RSIException extends extras::AbstractCustomException {
@@ -35,9 +32,7 @@ namespace extras {
         };
 
         /**
-         * @brief SocketException
-         *
-         * To be thrown if either string or value supplied is out of range.
+         * @brief UnsupportedTokenException
          *
          */
         concrete class UnsupportedTokenException extends RSIException {
@@ -49,6 +44,10 @@ namespace extras {
             }
         };
 
+        /**
+         * @brief NoTokensException
+         *
+         */
         concrete class NoTokensException extends RSIException {
         public:
             NoTokensException(const extras::WhereAmI& whereAmI)

@@ -1,9 +1,6 @@
 #ifndef _EXTRA_RSISUBSYSTEM_HPP
 #define _EXTRA_RSISUBSYSTEM_HPP
 
-#include <netinet/in.h>
-#include <sys/socket.h>
-
 #include <extras/interfaces.hpp>
 #include <iostream>
 #include <string>

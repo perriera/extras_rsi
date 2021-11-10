@@ -15,7 +15,7 @@ int main(int argc, char const* argv[]) {
         downloader.parameters(argc, argv);
         downloader.connect();
         downloader.transfer();
-        printf("[+]File data received successfully.\n");
+        printf("[+]File data downloaded successfully.\n");
         downloader.close();
         printf("[+]Closed the connection.\n");
         exit(0);

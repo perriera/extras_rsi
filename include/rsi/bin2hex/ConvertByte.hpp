@@ -9,15 +9,14 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief HexToBytes
-         * @ref https://stackoverflow.com/questions/17261798/converting-a-hex-string-to-a-byte-array
+         * @brief hexToBytes
          * @param hex
-         * @return std::vector<char>
+         * @return std::vector<byte>
          */
         std::vector<byte> hexToBytes(const std::string& hex);
 
         /**
-         * @brief https://codereview.stackexchange.com/questions/78535/converting-array-of-bytes-to-the-hex-string-representation
+         * @brief bytesToHex
          *
          * @param data
          * @param len

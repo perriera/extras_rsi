@@ -19,7 +19,7 @@ int main(int argc, char const* argv[]) {
             server.transfer();
         }
         printf("[+]File data sent successfully.\n");
-        // uploader.close();
+        server.close();
         printf("[+]Closed the connection.\n");
         return 0;
     }

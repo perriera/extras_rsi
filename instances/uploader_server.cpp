@@ -15,7 +15,7 @@ int main(int argc, char const* argv[]) {
         uploader.parameters(argc, argv);
         uploader.connect();
         uploader.transfer();
-        printf("[+]File data received successfully.\n");
+        printf("[+]File data uploaded successfully.\n");
         uploader.close();
         printf("[+]Closed the connection.\n");
         exit(0);

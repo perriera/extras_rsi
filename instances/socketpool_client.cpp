@@ -15,11 +15,9 @@ int main(int argc, char const* argv[]) {
         client.parameters(argc, argv);
         client.connect();
         client.transfer();
-        // uploader.transfer();
         printf("[+]File data sent successfully.\n");
-        // uploader.close();
-        printf("[+]Closed the connection.\n");
         client.close();
+        printf("[+]Closed the connection.\n");
         return 0;
     }
     catch (std::exception& ex) {
