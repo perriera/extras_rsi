@@ -39,7 +39,7 @@ namespace extras {
         std::string bytesToHex(std::vector<byte> data)
         {
             std::string s(data.size() * 2, ' ');
-            for (int i = 0; i < data.size(); ++i) {
+            for (auto i = 0; i < data.size(); ++i) {
                 s[2 * i] = hexmap[(data[i] & 0xF0) >> 4];
                 s[2 * i + 1] = hexmap[data[i] & 0x0F];
             }
