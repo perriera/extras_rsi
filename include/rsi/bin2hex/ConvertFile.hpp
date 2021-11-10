@@ -9,17 +9,13 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief HexFile, BinFile types
+         * @brief ConvertFileInterface
          *
          */
 
         using HexFile = std::vector<HexLine>;
         using BinFile = std::vector<BinLine>;
 
-        /**
-         * @brief ConvertFileInterface
-         *
-         */
         interface ConvertFileInterface {
             virtual BinFile hexToBin(const HexFile& hexFile) const pure;
             virtual HexFile binToHex(const BinFile& binFile) const pure;

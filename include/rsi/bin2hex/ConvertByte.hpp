@@ -2,11 +2,7 @@
 #define _EXPARX_RSICONVERTBYTE_HPP
 
 #include <extras/interfaces.hpp>
-#include <extras/keywords.hpp>
 #include <iostream>
-#include <map>
-#include <deque>
-#include <sstream>
 #include <vector>
 
 namespace extras {

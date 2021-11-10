@@ -1,21 +1,9 @@
 #ifndef _EXPARX_RSICONVERTLINE_HPP
 #define _EXPARX_RSICONVERTLINE_HPP
 
-#include <netinet/in.h>
-#include <sys/socket.h>
-
 #include <extras/interfaces.hpp>
 #include <rsi/bin2hex/ConvertByte.hpp>
 #include <iostream>
-#include <map>
-#include <deque>
-#include <sstream>
-#include <vector>
-
-/**
- * @brief
- *
- */
 
 namespace extras {
     namespace rsi {
