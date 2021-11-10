@@ -17,7 +17,8 @@ Anyone wishing to keep proprietary source code and data private but allow client
      cd build
      cmake ..
      make
-     ./run-unittests-rsi
+     cd ..
+     build/run-unittests-rsi
 
 ## perriera/extras
 The **extras_rsi** package comes bundled with **perriera/extras** package and other git repositories that are downloaded automatically using the CPM/Fetch_Content construct. If you wish to install any of these sub-packages directly you will have to make changes accordingly.
