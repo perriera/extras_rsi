@@ -1,20 +1,11 @@
 #include <arpa/inet.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
-#include <rsi/sockets/Types.hpp>
-#include <rsi/sockets/Client.hpp>
-#include <rsi/sockets/RequestType.hpp>
 #include <rsi/uploader/Uploader.hpp>
 #include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
-#include <fstream>
+#include <extras/strings.hpp>
 #include <iostream>
-#include <sstream>
-#include <string>
-
 
 using namespace std;
 

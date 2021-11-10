@@ -1,4 +1,3 @@
-
 #include <rsi/sockets/Pool.hpp>
 #include <iostream>
 

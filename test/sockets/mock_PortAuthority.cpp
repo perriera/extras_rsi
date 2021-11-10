@@ -1,4 +1,3 @@
-
 #include <iostream>
 
 #include "../vendor/catch.hpp"

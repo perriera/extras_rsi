@@ -1,4 +1,3 @@
-
 #include <rsi/bin2hex/ConvertFile.hpp>
 #include <iostream>
 #include <fstream>

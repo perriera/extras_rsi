@@ -1,4 +1,3 @@
-
 #include <rsi/sockets/Parameters.hpp>
 #include <iostream>
 
@@ -16,7 +15,7 @@ SCENARIO("Mock ParametersInterface", "[ParametersInterface]") {
     Mock<rsi::ParametersInterface> mock;
     When(Method(mock, parameters))
         .AlwaysDo(
-            [](int argc, char const* argv[]) {
+            [](int, char const* []) {
                 return rsi::Parameters();
             });
 

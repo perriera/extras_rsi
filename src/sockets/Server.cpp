@@ -1,28 +1,14 @@
 #include <arpa/inet.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
-#include <rsi/sockets/Types.hpp>
 #include <rsi/sockets/Client.hpp>
 #include <rsi/sockets/Server.hpp>
 #include <rsi/sockets/RequestType.hpp>
-#include <rsi/sockets/PortAuthority.hpp>
 #include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
-#include <fstream>
 #include <iostream>
-#include <sstream>
-#include <string>
 
 using namespace std;
-
-// virtual const Parameter &program() const pure;
-// virtual const Parameter &ip() const pure;
-// virtual const Parameter &port() const pure;
-// virtual const Parameter &filename() const pure;
-// virtual const SocketRequestTypeList &requests() const pure;
 
 namespace extras {
     namespace rsi {

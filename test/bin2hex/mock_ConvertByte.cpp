@@ -1,4 +1,3 @@
-
 #include <rsi/bin2hex/ConvertByte.hpp>
 #include <iostream>
 

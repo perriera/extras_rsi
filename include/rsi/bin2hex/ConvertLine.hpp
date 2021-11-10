@@ -13,8 +13,8 @@ namespace extras {
          *
          */
 
-        using HexLine = std::string;
-        using BinLine = std::vector<byte>;
+        using HexLine = HexArray;
+        using BinLine = ByteArray;
 
         interface ConvertLineInterface {
             virtual BinLine hexToBin(const HexLine& hexLine) const pure;
