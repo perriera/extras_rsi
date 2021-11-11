@@ -9,7 +9,7 @@ This is a C++ framework for supporting distributed features, Unix Socket program
 </div>
 
 ## Who would want to use this?
-Anyone wishing to keep proprietary source code and data private but allow clients to utilize their software quickly and easily. More specifically, anyone wishing to easily coordinate multiple tasks running in the background on a remote server that can share files via Unix style sockets, will find this short little project inddespensible, (as it can easily coordinate multiple tasks on remote servers from a local client).
+Anyone wishing to keep proprietary source code and data private but allow clients to utilize their software quickly and easily. More specifically, anyone wishing to easily coordinate multiple tasks running in the background on a remote server that can share files via Unix style sockets, will find this short little project indespensible, (as it can easily coordinate multiple tasks on remote servers from a local client).
 
 >
 > Presently intended for Linux platforms only.
