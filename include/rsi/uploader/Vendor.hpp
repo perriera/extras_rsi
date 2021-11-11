@@ -45,8 +45,10 @@ namespace extras {
 
         abstract class Vendor implements VendorInterface with UploaderInterface {
 
+        protected:
+
             rsi::UploaderClient _proxy;
-            Filename _theSource;
+            Filename _theContent;
 
         public:
 
@@ -54,7 +56,7 @@ namespace extras {
              * @brief add_value()
              * @param filename
              */
-            virtual Filename theContent() const { return _theSource; };
+            virtual Filename theContent() const { return _theContent; };
             virtual Filename theCourier() const { return filename(); };
             virtual void wrapParcel() override;
             virtual void deliverParcel() override;
@@ -70,6 +72,10 @@ namespace extras {
             rsi::UploaderClient _proxy;
 
         public:
+
+            VendorClient(const Filename& theContent) {
+                _theContent = theContent;
+            }
 
             virtual Parameters parameters(int argc, char const* argv[]) override {
                 return _proxy.parameters(argc, argv);

@@ -42,8 +42,8 @@ namespace extras {
             auto delete_cmd = "rm " + theCourier();
             (void)system(delete_cmd.c_str());
             (void)system(listTransit.c_str());
-            auto copy_cmd = "mv " + uploaded_file + " " + theCourier();
-            (void)system(copy_cmd.c_str());
+            auto move_cmd = "mv " + uploaded_file + " " + theCourier();
+            (void)system(move_cmd.c_str());
             auto cat_cmd = "cat " + theCourier();
             (void)system(cat_cmd.c_str());
             (void)system(listTransit.c_str());
