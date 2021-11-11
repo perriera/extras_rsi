@@ -6,8 +6,10 @@
 #include <rsi/exceptions.hpp>
 #include <extras/strings.hpp>
 #include <iostream>
+#include <filesystem>
 
 using namespace std;
+namespace fs = std::filesystem;
 
 namespace extras {
 
@@ -52,6 +54,7 @@ namespace extras {
 
     void rsi::DownloaderServer::transfer() const {
         extras::rsi::send_file2(filename().c_str(), this->_new_sock);
+        fs::remove(filename());
     }
 
     void rsi::UploaderServer::close() const {

@@ -1,5 +1,13 @@
 # perriera/extras_rsi
 This is a C++ framework for supporting distributed features, Unix Socket programming, task management, data structures, algorithms, networking, and software design. With this framework you can easily support clients running client software on their local computers while keeping proprietary source code and data private on servers.
+
+[![CMake](https://github.com/mattcoding4days/extras/actions/workflows/cmake.yml/badge.svg?branch=dev)](https://github.com/mattcoding4days/extras/actions/workflows/cmake.yml)
+
+<div align="center">
+  <img width="442" height="320" src="assets/extras.png">
+  <br>
+</div>
+
 ## Who would want to use this?
 Anyone wishing to keep proprietary source code and data private but allow clients to utilize their software quickly and easily. 
 
