@@ -23,6 +23,8 @@ namespace extras {
             virtual HexFile loadHex(std::istream& in) const pure;
             virtual void saveBin(std::ostream& in, const BinFile& binFile) const pure;
             virtual void saveHex(std::ostream& in, const HexFile& hexFile) const pure;
+            virtual HexFile convertToHex(std::istream& inBin, std::ostream& outHex) const pure;
+            virtual BinFile convertToBin(std::istream& inBin, std::ostream& outHex) const pure;
         };
 
         concrete class ConvertFile implements ConvertFileInterface {
@@ -49,6 +51,8 @@ namespace extras {
             virtual HexFile loadHex(std::istream& in) const override;
             virtual void saveBin(std::ostream& in, const BinFile& binFile) const override;
             virtual void saveHex(std::ostream& in, const HexFile& hexFile) const override;
+            virtual HexFile convertToHex(std::istream& inBin, std::ostream& outHex) const override;
+            virtual BinFile convertToBin(std::istream& inHex, std::ostream& outBin) const override;
         };
     }
 }

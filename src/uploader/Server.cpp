@@ -32,7 +32,7 @@ namespace extras {
         }
     }
 
-    void rsi::UploaderServer::transfer() const {
+    void rsi::UploaderServer::transfer() {
         auto uploaded_file =
             extras::replace_all(filename(), ".txt", "_uploaded.txt");
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
@@ -41,23 +41,23 @@ namespace extras {
          * @brief Right here, Right now...
          *
          */
-        system("ls send* -la");
-        auto delete_cmd = "rm send.txt";
-        system(delete_cmd);
-        system("ls send* -la");
-        auto copy_cmd = "mv " + uploaded_file + " send.txt";
-        system(copy_cmd.c_str());
-        auto cat_cmd = "cat send.txt";
-        system(cat_cmd);
-        system("ls send* -la");
+         // system("ls send* -la");
+         // auto delete_cmd = "rm send.txt";
+         // system(delete_cmd);
+         // system("ls send* -la");
+         // auto copy_cmd = "mv " + uploaded_file + " send.txt";
+         // system(copy_cmd.c_str());
+         // auto cat_cmd = "cat send.txt";
+         // system(cat_cmd);
+         // system("ls send* -la");
     }
 
-    void rsi::DownloaderServer::transfer() const {
+    void rsi::DownloaderServer::transfer() {
         extras::rsi::send_file2(filename().c_str(), this->_new_sock);
         fs::remove(filename());
     }
 
-    void rsi::UploaderServer::close() const {
+    void rsi::UploaderServer::close() {
         ::close(this->_new_sock);
         ::close(this->_sockfd);
     }

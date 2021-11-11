@@ -42,13 +42,13 @@ namespace extras {
              * @note this is where the magic happens, depending what type of class you
              * are this method performs the data transfer, (or initiates it)
              */
-            virtual void transfer() const pure;
+            virtual void transfer()  pure;
 
             /**
              * @brief transfer()
              * @note safely closes all sockets
              */
-            virtual void close() const pure;
+            virtual void close()  pure;
         };
 
         /**
@@ -86,13 +86,13 @@ namespace extras {
         concrete class UploaderClient extends Uploader {
         public:
             virtual void connect() override;
-            virtual void transfer() const override;
-            virtual void close() const override;
+            virtual void transfer()  override;
+            virtual void close()  override;
         };
 
         concrete class DownloaderClient extends UploaderClient {
         public:
-            virtual void transfer() const override;
+            virtual void transfer()  override;
         };
 
         /**
@@ -109,13 +109,13 @@ namespace extras {
 
         public:
             virtual void connect() override;
-            virtual void transfer() const override;
-            virtual void close() const override;
+            virtual void transfer()  override;
+            virtual void close()  override;
         };
 
         concrete class DownloaderServer extends UploaderServer {
         public:
-            virtual void transfer() const override;
+            virtual void transfer()  override;
         };
     }  // namespace rsi
 
