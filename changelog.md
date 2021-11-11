@@ -4,8 +4,8 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v1.1.3 -m "Now using perriera/extras v5.0.4"</br>
-> > git push origin v1.1.3
+> > git tag -a v1.1.4 -m "Now using perriera/extras v5.0.8"</br>
+> > git push origin v1.1.4
 > 
 
 IMPORTANT: 
@@ -29,7 +29,11 @@ Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
 
-#### 1.1.2 (2021-11-10)
+#### 1.1.4 (2021-11-10)
+- using perriera/extras v5.0.8
+- Updated README.md 
+
+#### 1.1.3 (2021-11-10)
 - using perriera/extras v5.0.4
 - RSI-4
 
