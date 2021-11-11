@@ -1,4 +1,6 @@
 #include <rsi/bin2hex/ConvertFile.hpp>
+#include <rsi/sockets/Types.hpp>
+#include <extras/filesystem/paths.hpp>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -14,7 +16,7 @@ SCENARIO("Test ConvertFileInterface: hexToBin", "[ConvertInterface]") {
     rsi::HexFile hexFile;
     rsi::BinFile binFile;
 
-    std::ifstream in("send.txt");
+    std::ifstream in(~Paths("data/send.txt"));
     REQUIRE(in.good());
     while (in.good()) {
         std::string line;
@@ -34,9 +36,9 @@ SCENARIO("Test ConvertFileInterface: hexToBin", "[ConvertInterface]") {
 
 SCENARIO("Test ConvertFileInterface: saveHex", "[ConvertInterface]") {
 
-    auto b1 = "build/run-unittests-rsi";
+    rsi::Filename b1 = ~extras::Paths("build/run-unittests-rsi");
     auto b2 = "/tmp/run-unittests-rsi";
-    auto h1 = "send.txt";
+    rsi::Filename h1 = ~extras::Paths("data/send.txt");
     auto h2 = "/tmp/send.txt";
     std::ifstream inBin(b1);
     REQUIRE(inBin.good());

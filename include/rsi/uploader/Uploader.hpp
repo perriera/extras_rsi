@@ -2,6 +2,7 @@
 #define _EXPARX_RSISERVICES_UPLOADER_HPP
 
 #include <extras/interfaces.hpp>
+#include <extras/strings.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <iostream>
 #include <sstream>
@@ -26,7 +27,10 @@ namespace extras {
              */
             virtual Parameters parameters(int argc, char const* argv[]) pure;
             virtual const Parameter& program() const pure;
-            virtual const Parameter& filename() const pure;
+            virtual const Parameter& payload() const pure;
+            virtual Parameter parcel() const pure;
+            virtual Parameter parcel_uploaded() const pure;
+            virtual Parameter parcel_downloaded() const pure;
             virtual const Parameter& ip() const pure;
             virtual const Parameter& port() const pure;
 
@@ -69,8 +73,22 @@ namespace extras {
             virtual const Parameter& program() const override {
                 return _parameters[0];
             };
-            virtual const Parameter& filename() const override {
+            virtual const Parameter& payload() const override {
                 return _parameters[1];
+            };
+            virtual Parameter parcel() const override {
+                auto parcel_file = payload() + ".parcel.txt";
+                return parcel_file;
+            };
+            virtual Parameter parcel_uploaded() const override {
+                auto uploaded_file =
+                    extras::replace_all(parcel(), ".parcel.txt", ".parcel.uploaded.txt");
+                return uploaded_file;
+            };
+            virtual Parameter parcel_downloaded() const override {
+                auto downloaded_file =
+                    extras::replace_all(parcel(), ".parcel.txt", ".parcel.downloaded.txt");
+                return downloaded_file;
             };
             virtual const Parameter& ip() const override { return _parameters[2]; };
             virtual const Parameter& port() const override { return _parameters[3]; };

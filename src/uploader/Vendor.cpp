@@ -21,11 +21,11 @@ namespace extras {
          *
          */
         void rsi::Vendor::wrapParcel() {
-            FileNotFoundException::assertion(theContent(), __INFO__);
-            std::ifstream inBin(theContent());
-            CantOpenStreamException::assertion(inBin, theContent(), __INFO__);
-            std::ofstream outHex(theCourier());
-            CantOpenStreamException::assertion(outHex, theContent(), __INFO__);
+            FileNotFoundException::assertion(payload(), __INFO__);
+            std::ifstream inBin(payload());
+            CantOpenStreamException::assertion(inBin, payload(), __INFO__);
+            std::ofstream outHex(parcel());
+            CantOpenStreamException::assertion(outHex, parcel(), __INFO__);
             rsi::ConvertFile converter;
             converter.convertToHex(inBin, outHex);
         }
@@ -35,16 +35,14 @@ namespace extras {
          *
          */
         void rsi::Vendor::deliverParcel() {
-            auto uploaded_file =
-                extras::replace_all(theCourier(), ".txt", "_uploaded.txt");
-            auto listTransit = "ls -la " + theCourier();
+            auto listTransit = "ls -la " + parcel();
             (void)system(listTransit.c_str());
-            auto delete_cmd = "rm " + theCourier();
+            auto delete_cmd = "rm " + parcel();
             (void)system(delete_cmd.c_str());
             (void)system(listTransit.c_str());
-            auto move_cmd = "mv " + uploaded_file + " " + theCourier();
+            auto move_cmd = "mv " + parcel_uploaded() + " " + parcel();
             (void)system(move_cmd.c_str());
-            auto cat_cmd = "cat " + theCourier();
+            auto cat_cmd = "cat " + parcel();
             (void)system(cat_cmd.c_str());
             (void)system(listTransit.c_str());
         }
@@ -54,11 +52,11 @@ namespace extras {
          *
          */
         void rsi::Vendor::unwrapParcel() {
-            FileNotFoundException::assertion(theCourier(), __INFO__);
-            std::ifstream inHex(theCourier());
-            CantOpenStreamException::assertion(inHex, theCourier(), __INFO__);
-            std::ofstream outBin(theContent());
-            CantOpenStreamException::assertion(outBin, theContent(), __INFO__);
+            FileNotFoundException::assertion(parcel(), __INFO__);
+            std::ifstream inHex(parcel());
+            CantOpenStreamException::assertion(inHex, parcel(), __INFO__);
+            std::ofstream outBin(payload());
+            CantOpenStreamException::assertion(outBin, payload(), __INFO__);
             rsi::ConvertFile converter;
             converter.convertToBin(inHex, outBin);
         }

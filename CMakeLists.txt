@@ -182,6 +182,19 @@ target_link_libraries(downloader_server PRIVATE ${PROJECT_NAME} stdc++fs extras)
 endif()
 
 #
+# FreeFormJS uploader_client / uploader_server
+#
+if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY)
+add_executable(vendor_client instances/vendor_client.cpp) 
+target_include_directories(vendor_client PUBLIC ${INCLUDES})
+target_link_libraries(vendor_client PRIVATE ${PROJECT_NAME} stdc++fs extras)
+
+add_executable(vendor_server instances/vendor_server.cpp) 
+target_include_directories(vendor_server PUBLIC ${INCLUDES})
+target_link_libraries(vendor_server PRIVATE ${PROJECT_NAME} stdc++fs extras)
+endif()
+
+#
 # NOTE: Install all shared libraries
 #
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib)

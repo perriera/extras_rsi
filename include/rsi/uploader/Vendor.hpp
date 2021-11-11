@@ -30,8 +30,6 @@ namespace extras {
              * @brief add_value()
              * @param filename
              */
-            virtual Filename theContent() const pure;
-            virtual Filename theCourier() const pure;
             virtual void wrapParcel() pure;
             virtual void deliverParcel() pure;
             virtual void unwrapParcel() pure;
@@ -48,7 +46,6 @@ namespace extras {
         protected:
 
             rsi::UploaderClient _proxy;
-            Filename _theContent;
 
         public:
 
@@ -56,11 +53,35 @@ namespace extras {
              * @brief add_value()
              * @param filename
              */
-            virtual Filename theContent() const { return _theContent; };
-            virtual Filename theCourier() const { return filename(); };
             virtual void wrapParcel() override;
             virtual void deliverParcel() override;
             virtual void unwrapParcel() override;
+
+            virtual Parameters parameters(int argc, char const* argv[]) override {
+                return _proxy.parameters(argc, argv);
+            }
+            virtual const Parameter& program() const override {
+                return _proxy.program();
+            }
+            virtual const Parameter& payload() const override {
+                return _proxy.payload();
+            }
+            virtual Parameter parcel() const override {
+                return _proxy.parcel();
+            }
+            virtual Parameter parcel_uploaded() const override {
+                return _proxy.parcel_uploaded();
+            };
+            virtual Parameter parcel_downloaded() const override {
+                return _proxy.parcel_downloaded();
+            };
+            virtual const Parameter& ip() const override {
+                return _proxy.ip();
+            }
+            virtual const Parameter& port() const override {
+                return _proxy.port();
+            }
+
         };
 
         /**
@@ -69,29 +90,8 @@ namespace extras {
          */
         concrete class VendorClient extends Vendor {
 
-            rsi::UploaderClient _proxy;
-
         public:
 
-            VendorClient(const Filename& theContent) {
-                _theContent = theContent;
-            }
-
-            virtual Parameters parameters(int argc, char const* argv[]) override {
-                return _proxy.parameters(argc, argv);
-            }
-            virtual const Parameter& program() const override {
-                return _proxy.program();
-            }
-            virtual const Parameter& filename() const override {
-                return _proxy.filename();
-            }
-            virtual const Parameter& ip() const override {
-                return _proxy.ip();
-            }
-            virtual const Parameter& port() const override {
-                return _proxy.port();
-            }
             virtual void connect() override {
                 wrapParcel();
                 return _proxy.connect();
@@ -116,21 +116,6 @@ namespace extras {
 
         public:
 
-            virtual Parameters parameters(int argc, char const* argv[]) override {
-                return _proxy.parameters(argc, argv);
-            }
-            virtual const Parameter& program() const override {
-                return _proxy.program();
-            }
-            virtual const Parameter& filename() const override {
-                return _proxy.filename();
-            }
-            virtual const Parameter& ip() const override {
-                return _proxy.ip();
-            }
-            virtual const Parameter& port() const override {
-                return _proxy.port();
-            }
             virtual void connect() override {
                 _proxy.connect();
             }
@@ -141,7 +126,6 @@ namespace extras {
             virtual void close()  override {
                 _proxy.close();
             }
-
 
         };
 

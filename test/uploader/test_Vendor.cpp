@@ -12,13 +12,8 @@ namespace fs = std::filesystem;
 
 class MockedVendor extends rsi::VendorClient {
 public:
-    MockedVendor(const rsi::Filename& theContent)
-        : rsi::VendorClient(theContent) {
-    }
     virtual void transfer()  override {
-        auto uploaded_file =
-            extras::replace_all(theCourier(), ".txt", "_uploaded.txt");
-        auto copy_cmd = "cp " + theCourier() + " " + uploaded_file;
+        auto copy_cmd = "cp " + parcel() + " " + parcel_uploaded();
         (void)system(copy_cmd.c_str());
     }
 
@@ -26,26 +21,34 @@ public:
 
 SCENARIO("Test VendorInterface", "[VendorInterface]") {
 
+    rsi::Filename thePayload;
+    {
+        rsi::Filename theSource = "cplusplusorg.freeformjs.imploded.zip";
+        rsi::Filename sourceFile = ~extras::Paths("data/" + theSource);
+        REQUIRE(fs::exists(sourceFile));
+        thePayload = "/tmp/" + theSource;
+        auto setup_testdata = "cp " + sourceFile + " " + thePayload;
+        (void)system(setup_testdata.c_str());
+    }
+    rsi::Filename theParcel = "send.txt";
+    if (fs::exists(theParcel))
+        fs::remove(theParcel);
+
     const char* argv[] = {
-        "socketclient", "send.txt",  "127.0.0.1", "8080",
-        "convert",   "download" };
+        "socketclient", thePayload.c_str(),  "127.0.0.1", "8080",
+        "vendor",   "download" };
     int argc = 6;
 
-    rsi::Filename theCourier = "send_.txt";
-    rsi::Filename binaryFile = "cplusplusorg.freeformjs.imploded.zip";
-    rsi::Filename sourceFile = ~extras::Paths("data/" + binaryFile);
-    REQUIRE(fs::exists(sourceFile));
-    rsi::Filename theContent = "/tmp/" + binaryFile;
-    auto setup_testdata = "cp " + sourceFile + " " + theContent;
-    (void)system(setup_testdata.c_str());
-    REQUIRE(fs::exists(theContent));
-
-    MockedVendor testUnit(theContent);
+    MockedVendor testUnit;
     testUnit.parameters(argc, argv);
     rsi::VendorInterface& i = testUnit;
 
     i.wrapParcel();
+    REQUIRE(fs::exists(testUnit.parcel()));
     testUnit.transfer();
+    REQUIRE(fs::exists(testUnit.parcel_uploaded()));
     i.deliverParcel();
+    REQUIRE(!fs::exists(testUnit.parcel_uploaded()));
+    REQUIRE(fs::exists(testUnit.parcel()));
     i.unwrapParcel();
 }

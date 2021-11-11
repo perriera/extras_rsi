@@ -24,13 +24,11 @@ namespace extras {
     }
 
     void rsi::UploaderClient::transfer() {
-        extras::rsi::send_file2(filename().c_str(), this->_sockfd);
+        extras::rsi::send_file2(parcel().c_str(), this->_sockfd);
     }
 
     void rsi::DownloaderClient::transfer() {
-        auto downloaded_file =
-            extras::replace_all(filename(), ".txt", "_downloaded.txt");
-        extras::rsi::write_file(downloaded_file.c_str(), this->_sockfd);
+        extras::rsi::write_file(parcel_downloaded().c_str(), this->_sockfd);
     }
 
     void rsi::UploaderClient::close() { ::close(this->_sockfd); }

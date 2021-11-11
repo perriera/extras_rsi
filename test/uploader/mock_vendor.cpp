@@ -14,35 +14,36 @@ namespace fs = std::filesystem;
 
 SCENARIO("Mock VendorInterface", "[VendorInterface]") {
 
-    rsi::Filename theCourier = "send_.txt";
-    rsi::Filename binaryFile = "cplusplusorg.freeformjs.imploded.zip";
-
-    rsi::Filename sourceFile = ~extras::Paths("data/" + binaryFile);
-    REQUIRE(fs::exists(sourceFile));
-    rsi::Filename theContent = "/tmp/" + binaryFile;
-    auto setup_testdata = "cp " + sourceFile + " " + theContent;
-    (void)system(setup_testdata.c_str());
-    REQUIRE(fs::exists(theContent));
+    rsi::Filename thePayload;
+    {
+        rsi::Filename theSource = "cplusplusorg.freeformjs.imploded.zip";
+        rsi::Filename sourceFile = ~extras::Paths("data/" + theSource);
+        REQUIRE(fs::exists(sourceFile));
+        thePayload = "/tmp/" + theSource;
+        auto setup_testdata = "cp " + sourceFile + " " + thePayload;
+        (void)system(setup_testdata.c_str());
+    }
+    rsi::Filename theParcel = "send.txt";
+    if (fs::exists(theParcel))
+        fs::remove(theParcel);
 
     Mock<rsi::VendorInterface> mock;
-    When(Method(mock, theContent)).Return(theContent);
-    When(Method(mock, theCourier)).Return(theCourier);
     When(Method(mock, wrapParcel))
         .AlwaysDo(
-            [&theContent, &theCourier]() {
-                std::ifstream inBin(theContent);
+            [&thePayload, &theParcel]() {
+                std::ifstream inBin(thePayload);
                 REQUIRE(inBin.good());
-                std::ofstream outHex(theCourier);
+                std::ofstream outHex(theParcel);
                 REQUIRE(outHex.good());
                 rsi::ConvertFile converter;
                 converter.convertToHex(inBin, outHex);
             });
     When(Method(mock, deliverParcel))
         .AlwaysDo(
-            [&theCourier]() {
-                std::ifstream inHex(theCourier);
+            [&theParcel]() {
+                std::ifstream inHex(theParcel);
                 REQUIRE(inHex.good());
-                auto tmpFile = "/tmp/" + theCourier;
+                auto tmpFile = "/tmp/" + theParcel;
                 std::ofstream outHex(tmpFile);
                 REQUIRE(outHex.good());
                 while (inHex.good()) {
@@ -58,26 +59,35 @@ SCENARIO("Mock VendorInterface", "[VendorInterface]") {
                     outHex << c;
                 }
                 outHex.close();
-                auto rm_cmd = "rm " + theCourier;
+                auto rm_cmd = "rm " + theParcel;
                 (void)system(rm_cmd.c_str());
-                auto cp_cmd = "cp " + tmpFile + " " + theCourier;
+                auto cp_cmd = "cp " + tmpFile + " " + theParcel;
                 (void)system(cp_cmd.c_str());
             });
     When(Method(mock, unwrapParcel))
         .AlwaysDo(
-            [&theContent, &theCourier]() {
-                std::ifstream inHex(theCourier);
+            [&thePayload, &theParcel]() {
+                std::ifstream inHex(theParcel);
                 REQUIRE(inHex.good());
-                std::ofstream outBin(theContent);
+                std::ofstream outBin(thePayload);
                 REQUIRE(outBin.good());
                 rsi::ConvertFile converter;
                 converter.convertToBin(inHex, outBin);
+                fs::remove(theParcel);
             });
 
     rsi::VendorInterface& i = mock.get();
+
+    REQUIRE(fs::exists(thePayload));
+    REQUIRE(!fs::exists(theParcel));
     i.wrapParcel();
+    REQUIRE(fs::exists(thePayload));
+    REQUIRE(fs::exists(theParcel));
     i.deliverParcel();
     i.unwrapParcel();
+    REQUIRE(fs::exists(thePayload));
+    REQUIRE(!fs::exists(theParcel));
+
     Verify(Method(mock, wrapParcel));
     Verify(Method(mock, deliverParcel));
     Verify(Method(mock, unwrapParcel));
