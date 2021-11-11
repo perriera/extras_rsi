@@ -41,15 +41,6 @@ namespace extras {
          * @brief Right here, Right now...
          *
          */
-         // system("ls send* -la");
-         // auto delete_cmd = "rm send.txt";
-         // system(delete_cmd);
-         // system("ls send* -la");
-         // auto copy_cmd = "mv " + uploaded_file + " send.txt";
-         // system(copy_cmd.c_str());
-         // auto cat_cmd = "cat send.txt";
-         // system(cat_cmd);
-         // system("ls send* -la");
     }
 
     void rsi::DownloaderServer::transfer() {

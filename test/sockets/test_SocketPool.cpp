@@ -1,13 +1,13 @@
-// #include <rsi/uploader/Uploader.hpp>
-// #include <extras/strings.hpp>
-// #include <filesystem>
-// #include <iostream>
+#include <rsi/uploader/Uploader.hpp>
+#include <extras/strings.hpp>
+#include <filesystem>
+#include <iostream>
 
-// #include "../vendor/catch.hpp"
-// #include "../vendor/fakeit.hpp"
+#include "../vendor/catch.hpp"
+#include "../vendor/fakeit.hpp"
 
-// using namespace extras;
-// namespace fs = std::filesystem;
+using namespace extras;
+namespace fs = std::filesystem;
 
 // SCENARIO("Test SocketPoolInterface: upload", "[SocketPoolInterface]") {
 //     std::string target = "send.txt";

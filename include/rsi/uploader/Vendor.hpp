@@ -30,9 +30,11 @@ namespace extras {
              * @brief add_value()
              * @param filename
              */
-            virtual void addContent(const Filename& filename) pure;
-            virtual void changeContent(const Filename& filename) pure;
-            virtual void deleteContent(const Filename& filename) pure;
+            virtual Filename theContent() const pure;
+            virtual Filename theCourier() const pure;
+            virtual void wrapParcel() pure;
+            virtual void deliverParcel() pure;
+            virtual void unwrapParcel() pure;
 
         };
 
@@ -41,9 +43,10 @@ namespace extras {
          *
          */
 
-        concrete class Vendor implements VendorInterface {
+        abstract class Vendor implements VendorInterface with UploaderInterface {
 
             rsi::UploaderClient _proxy;
+            Filename _theSource;
 
         public:
 
@@ -51,16 +54,18 @@ namespace extras {
              * @brief add_value()
              * @param filename
              */
-            virtual void addContent(const Filename& filename) override;
-            virtual void changeContent(const Filename& filename) override;
-            virtual void deleteContent(const Filename& filename) override;
+            virtual Filename theContent() const { return _theSource; };
+            virtual Filename theCourier() const { return filename(); };
+            virtual void wrapParcel() override;
+            virtual void deliverParcel() override;
+            virtual void unwrapParcel() override;
         };
 
         /**
          * @brief VendorClient
          *
          */
-        concrete class VendorClient extends Vendor with UploaderInterface {
+        concrete class VendorClient extends Vendor {
 
             rsi::UploaderClient _proxy;
 
@@ -82,7 +87,7 @@ namespace extras {
                 return _proxy.port();
             }
             virtual void connect() override {
-                addContent(filename());
+                wrapParcel();
                 return _proxy.connect();
             }
             virtual void transfer()  override {
@@ -90,7 +95,7 @@ namespace extras {
             }
             virtual void close()  override {
                 return _proxy.close();
-                deleteContent(filename());
+                unwrapParcel();
             }
 
         };
@@ -99,7 +104,7 @@ namespace extras {
          * @brief VendorServer
          *
          */
-        concrete class VendorServer extends Vendor with UploaderInterface {
+        concrete class VendorServer extends Vendor {
 
             rsi::UploaderServer _proxy;
 
@@ -125,7 +130,7 @@ namespace extras {
             }
             virtual void transfer()  override {
                 _proxy.transfer();
-                changeContent(filename());
+                deliverParcel();
             }
             virtual void close()  override {
                 _proxy.close();
