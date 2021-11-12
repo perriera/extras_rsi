@@ -86,6 +86,7 @@ namespace extras {
                 const RequestTypeList& requests) const override {
                 rsi::ServiceTypeMap forClients;
                 forClients["upload"] = "build/uploader_client";
+                forClients["vendor"] = "build/vendor_client";
                 forClients["download"] = "build/downloader_client";
                 return common(forClients, requests);
             }
@@ -93,6 +94,7 @@ namespace extras {
                 const RequestTypeList& requests) const override {
                 rsi::ServiceTypeMap forServers;
                 forServers["upload"] = "build/uploader_server";
+                forServers["vendor"] = "build/vendor_server";
                 forServers["download"] = "build/downloader_server";
                 return common(forServers, requests);
             }

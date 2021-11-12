@@ -41,10 +41,25 @@ namespace extras {
                     out << std::skipws << b;
             }
         }
+
         void ConvertFile::saveHex(std::ostream& out, const HexFile& hexFile) const {
             for (auto hexLine : hexFile) {
                 out << hexLine << std::endl;
             }
+        }
+
+        HexFile ConvertFile::convertToHex(std::istream& inBin, std::ostream& outHex) const {
+            rsi::BinFile binFile = loadBin(inBin, 40);
+            rsi::HexFile hexFile = binToHex(binFile);
+            saveHex(outHex, hexFile);
+            return hexFile;
+        }
+
+        BinFile ConvertFile::convertToBin(std::istream& inHex, std::ostream& outBin) const {
+            rsi::HexFile hexFile = loadHex(inHex);
+            rsi::BinFile binFile = hexToBin(hexFile);
+            saveBin(outBin, binFile);
+            return binFile;
         }
 
     }

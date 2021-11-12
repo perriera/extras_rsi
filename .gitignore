@@ -18,4 +18,7 @@ data/masked
 data/ctx
 logfile.txt
 
-send_*.txt
+send.txt_*
+send.txt.txt
+
+

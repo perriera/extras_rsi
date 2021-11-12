@@ -2,6 +2,7 @@
 #define _EXPARX_RSISERVICES_UPLOADER_HPP
 
 #include <extras/interfaces.hpp>
+#include <extras/strings.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <iostream>
 #include <sstream>
@@ -26,7 +27,9 @@ namespace extras {
              */
             virtual Parameters parameters(int argc, char const* argv[]) pure;
             virtual const Parameter& program() const pure;
-            virtual const Parameter& filename() const pure;
+            virtual Parameter payload() const pure;
+            virtual Parameter payload_uploaded() const pure;
+            virtual Parameter payload_downloaded() const pure;
             virtual const Parameter& ip() const pure;
             virtual const Parameter& port() const pure;
 
@@ -42,13 +45,13 @@ namespace extras {
              * @note this is where the magic happens, depending what type of class you
              * are this method performs the data transfer, (or initiates it)
              */
-            virtual void transfer() const pure;
+            virtual void transfer()  pure;
 
             /**
              * @brief transfer()
              * @note safely closes all sockets
              */
-            virtual void close() const pure;
+            virtual void close()  pure;
         };
 
         /**
@@ -69,8 +72,14 @@ namespace extras {
             virtual const Parameter& program() const override {
                 return _parameters[0];
             };
-            virtual const Parameter& filename() const override {
+            virtual Parameter payload() const override {
                 return _parameters[1];
+            };
+            virtual Parameter payload_uploaded() const override {
+                return payload() + "_uploaded";
+            };
+            virtual Parameter payload_downloaded() const override {
+                return payload() + "_downloaded";
             };
             virtual const Parameter& ip() const override { return _parameters[2]; };
             virtual const Parameter& port() const override { return _parameters[3]; };
@@ -86,13 +95,13 @@ namespace extras {
         concrete class UploaderClient extends Uploader {
         public:
             virtual void connect() override;
-            virtual void transfer() const override;
-            virtual void close() const override;
+            virtual void transfer()  override;
+            virtual void close()  override;
         };
 
         concrete class DownloaderClient extends UploaderClient {
         public:
-            virtual void transfer() const override;
+            virtual void transfer()  override;
         };
 
         /**
@@ -109,13 +118,13 @@ namespace extras {
 
         public:
             virtual void connect() override;
-            virtual void transfer() const override;
-            virtual void close() const override;
+            virtual void transfer()  override;
+            virtual void close()  override;
         };
 
         concrete class DownloaderServer extends UploaderServer {
         public:
-            virtual void transfer() const override;
+            virtual void transfer()  override;
         };
     }  // namespace rsi
 
