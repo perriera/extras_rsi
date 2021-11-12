@@ -27,11 +27,10 @@ namespace extras {
              */
             virtual Parameters parameters(int argc, char const* argv[]) pure;
             virtual const Parameter& program() const pure;
-            virtual Parameter payload() const pure;
-            virtual Parameter payload_uploaded() const pure;
-            virtual Parameter payload_downloaded() const pure;
+            virtual const Parameter& payload() const pure;
             virtual const Parameter& ip() const pure;
             virtual const Parameter& port() const pure;
+            virtual Parameter parcel() const pure;
 
             /**
              * @brief connect()
@@ -72,17 +71,14 @@ namespace extras {
             virtual const Parameter& program() const override {
                 return _parameters[0];
             };
-            virtual Parameter payload() const override {
+            virtual const Parameter& payload() const override {
                 return _parameters[1];
-            };
-            virtual Parameter payload_uploaded() const override {
-                return payload() + "_uploaded";
-            };
-            virtual Parameter payload_downloaded() const override {
-                return payload() + "_downloaded";
             };
             virtual const Parameter& ip() const override { return _parameters[2]; };
             virtual const Parameter& port() const override { return _parameters[3]; };
+            virtual Parameter parcel() const override {
+                return payload() + "_parcel.txt";
+            };
         };
 
         /**

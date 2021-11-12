@@ -28,19 +28,19 @@ namespace extras {
      */
 
     void rsi::UploaderClient::transfer() {
-        extras::rsi::send_file2(payload().c_str(), this->_sockfd);
+        extras::rsi::send_file2(parcel().c_str(), this->_sockfd);
     }
 
     void rsi::UploaderServer::transfer() {
-        extras::rsi::write_file(payload_uploaded().c_str(), this->_new_sock);
+        extras::rsi::write_file(parcel().c_str(), this->_new_sock);
     }
 
     void rsi::DownloaderServer::transfer() {
-        extras::rsi::send_file2(payload().c_str(), this->_new_sock);
+        extras::rsi::send_file2(parcel().c_str(), this->_new_sock);
     }
 
     void rsi::DownloaderClient::transfer() {
-        extras::rsi::write_file(payload_downloaded().c_str(), this->_sockfd);
+        extras::rsi::write_file(parcel().c_str(), this->_sockfd);
     }
 
 }  // namespace extras
