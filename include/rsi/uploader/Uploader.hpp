@@ -27,10 +27,10 @@ namespace extras {
              */
             virtual Parameters parameters(int argc, char const* argv[]) pure;
             virtual const Parameter& program() const pure;
-            virtual const Parameter& payload() const pure;
-            virtual Parameter parcel() const pure;
-            virtual Parameter parcel_uploaded() const pure;
-            virtual Parameter parcel_downloaded() const pure;
+            virtual const Parameter& parcel() const pure;
+            virtual Parameter payload() const pure;
+            virtual Parameter payload_uploaded() const pure;
+            virtual Parameter payload_downloaded() const pure;
             virtual const Parameter& ip() const pure;
             virtual const Parameter& port() const pure;
 
@@ -73,21 +73,21 @@ namespace extras {
             virtual const Parameter& program() const override {
                 return _parameters[0];
             };
-            virtual const Parameter& payload() const override {
+            virtual const Parameter& parcel() const override {
                 return _parameters[1];
             };
-            virtual Parameter parcel() const override {
-                auto parcel_file = payload() + ".parcel.txt";
-                return parcel_file;
+            virtual Parameter payload() const override {
+                auto payload_file = parcel() + ".payload.txt";
+                return payload_file;
             };
-            virtual Parameter parcel_uploaded() const override {
+            virtual Parameter payload_uploaded() const override {
                 auto uploaded_file =
-                    extras::replace_all(parcel(), ".parcel.txt", ".parcel.uploaded.txt");
+                    extras::replace_all(payload(), ".payload.txt", ".payload.uploaded.txt");
                 return uploaded_file;
             };
-            virtual Parameter parcel_downloaded() const override {
+            virtual Parameter payload_downloaded() const override {
                 auto downloaded_file =
-                    extras::replace_all(parcel(), ".parcel.txt", ".parcel.downloaded.txt");
+                    extras::replace_all(payload(), ".payload.txt", ".payload.downloaded.txt");
                 return downloaded_file;
             };
             virtual const Parameter& ip() const override { return _parameters[2]; };

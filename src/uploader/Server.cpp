@@ -33,7 +33,7 @@ namespace extras {
     }
 
     void rsi::UploaderServer::transfer() {
-        extras::rsi::write_file(parcel_uploaded().c_str(), this->_new_sock);
+        extras::rsi::write_file(payload_uploaded().c_str(), this->_new_sock);
         system("ls -la");
         /**
          * @brief Right here, Right now...
@@ -42,8 +42,8 @@ namespace extras {
     }
 
     void rsi::DownloaderServer::transfer() {
-        extras::rsi::send_file2(parcel().c_str(), this->_new_sock);
-        fs::remove(parcel());
+        extras::rsi::send_file2(payload().c_str(), this->_new_sock);
+        fs::remove(payload());
     }
 
     void rsi::UploaderServer::close() {

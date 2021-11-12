@@ -13,7 +13,7 @@ namespace fs = std::filesystem;
 class MockedVendor extends rsi::VendorClient {
 public:
     virtual void transfer()  override {
-        auto copy_cmd = "cp " + parcel() + " " + parcel_uploaded();
+        auto copy_cmd = "cp " + payload() + " " + payload_uploaded();
         (void)system(copy_cmd.c_str());
     }
 
@@ -44,11 +44,11 @@ SCENARIO("Test VendorInterface", "[VendorInterface]") {
     rsi::VendorInterface& i = testUnit;
 
     i.wrapParcel();
-    REQUIRE(fs::exists(testUnit.parcel()));
+    REQUIRE(fs::exists(testUnit.payload()));
     testUnit.transfer();
-    REQUIRE(fs::exists(testUnit.parcel_uploaded()));
+    REQUIRE(fs::exists(testUnit.payload_uploaded()));
     i.deliverParcel();
-    REQUIRE(!fs::exists(testUnit.parcel_uploaded()));
-    REQUIRE(fs::exists(testUnit.parcel()));
+    REQUIRE(!fs::exists(testUnit.payload_uploaded()));
+    REQUIRE(fs::exists(testUnit.payload()));
     i.unwrapParcel();
 }

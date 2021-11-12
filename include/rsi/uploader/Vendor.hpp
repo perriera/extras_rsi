@@ -63,17 +63,17 @@ namespace extras {
             virtual const Parameter& program() const override {
                 return _proxy.program();
             }
-            virtual const Parameter& payload() const override {
-                return _proxy.payload();
-            }
-            virtual Parameter parcel() const override {
+            virtual const Parameter& parcel() const override {
                 return _proxy.parcel();
             }
-            virtual Parameter parcel_uploaded() const override {
-                return _proxy.parcel_uploaded();
+            virtual Parameter payload() const override {
+                return _proxy.payload();
+            }
+            virtual Parameter payload_uploaded() const override {
+                return _proxy.payload_uploaded();
             };
-            virtual Parameter parcel_downloaded() const override {
-                return _proxy.parcel_downloaded();
+            virtual Parameter payload_downloaded() const override {
+                return _proxy.payload_downloaded();
             };
             virtual const Parameter& ip() const override {
                 return _proxy.ip();
