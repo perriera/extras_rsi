@@ -47,7 +47,9 @@ namespace extras {
 
         protected:
 
-            rsi::UploaderClient _proxy;
+            rsi::UploaderInterface& _proxy;
+
+            Vendor(rsi::UploaderInterface& proxy) :_proxy(proxy) {}
 
         public:
 
@@ -92,19 +94,15 @@ namespace extras {
          */
         concrete class VendorClient extends Vendor {
 
+            rsi::UploaderClient _client;
+
         public:
 
-            virtual void connect() override {
-                wrapParcel();
-                return _proxy.connect();
-            }
-            virtual void transfer()  override {
-                return _proxy.transfer();
-            }
-            virtual void close()  override {
-                return _proxy.close();
-                unwrapParcel();
-            }
+            VendorClient() :Vendor(_client) {}
+
+            virtual void connect() override;
+            virtual void transfer() override;
+            virtual void close() override;
 
         };
 
@@ -114,20 +112,15 @@ namespace extras {
          */
         concrete class VendorServer extends Vendor {
 
-            rsi::UploaderServer _proxy;
+            rsi::UploaderServer _server;
 
         public:
 
-            virtual void connect() override {
-                _proxy.connect();
-            }
-            virtual void transfer()  override {
-                _proxy.transfer();
-                deliverParcel();
-            }
-            virtual void close()  override {
-                _proxy.close();
-            }
+            VendorServer() :Vendor(_server) {}
+
+            virtual void connect() override;
+            virtual void transfer() override;
+            virtual void close() override;
 
         };
 

@@ -1,15 +1,9 @@
-#include <arpa/inet.h>
-#include <unistd.h>
-
 #include <rsi/bin2hex/ConvertFile.hpp>
 #include <rsi/uploader/Vendor.hpp>
-#include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
-#include <extras/strings.hpp>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -66,24 +60,6 @@ namespace extras {
             CantOpenStreamException::assertion(outBin, payload(), __INFO__);
             rsi::ConvertFile converter;
             converter.convertToBin(inHex, outBin);
-        }
-
-        /**
-         * @brief exceptions
-         *
-         * @param filename
-         * @param ref
-         */
-        void FileNotFoundException::assertion(const Filename& filename, const extras::WhereAmI& ref) {
-            if (!fs::exists(filename)) throw FileNotFoundException(filename, ref);
-        }
-
-        void CantOpenStreamException::assertion(const std::istream& stream, const Filename& filename, const extras::WhereAmI& ref) {
-            if (!stream.good()) throw CantOpenStreamException(filename, ref);
-        }
-
-        void CantOpenStreamException::assertion(const std::ostream& stream, const Filename& filename, const extras::WhereAmI& ref) {
-            if (!stream.good()) throw CantOpenStreamException(filename, ref);
         }
 
     }
