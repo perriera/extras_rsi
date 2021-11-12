@@ -1,4 +1,4 @@
-#include <rsi/uploader/Vendor.hpp>
+#include <rsi/vendor/Vendor.hpp>
 #include <rsi/bin2hex/ConvertFile.hpp>
 #include <rsi/exceptions.hpp>
 #include <rsi/sockets/Types.hpp>
@@ -7,11 +7,12 @@
 #include <fstream>
 #include <filesystem>
 
-#include "../vendor/catch.hpp"
-#include "../vendor/fakeit.hpp"
+#include "../unittesting/catch.hpp"
+#include "../unittesting/fakeit.hpp"
 
 using namespace extras;
 namespace fs = std::filesystem;
+
 
 
 SCENARIO("Test ConvertFileInterface (accuracy)", "[Hex2Bin]") {

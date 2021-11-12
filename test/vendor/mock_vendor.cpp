@@ -1,12 +1,12 @@
-#include <rsi/uploader/Vendor.hpp>
+#include <rsi/vendor/Vendor.hpp>
 #include <rsi/bin2hex/ConvertFile.hpp>
 #include <extras/filesystem/paths.hpp>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
 
-#include "../vendor/catch.hpp"
-#include "../vendor/fakeit.hpp"
+#include "../unittesting/catch.hpp"
+#include "../unittesting/fakeit.hpp"
 
 using namespace extras;
 using namespace fakeit;
