@@ -4,8 +4,8 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v1.1.4 -m "Now using perriera/extras v5.0.8"</br>
-> > git push origin v1.1.4
+> > git tag -a v1.3.0 -m "Now using perriera/extras v5.0.8"</br>
+> > git push origin v1.3.0
 > 
 
 IMPORTANT: 
@@ -28,6 +28,15 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 1.3.0 (2021-11-11)
+- using perriera/extras v5.0.9
+- Added VendorInterface
+- RSI-5B
+
+#### 1.1.4 (2021-11-10)
+- using perriera/extras v5.0.8
+- Updated README.md 
 
 #### 1.1.4 (2021-11-10)
 - using perriera/extras v5.0.8
@@ -113,7 +122,8 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v1.1.4...HEAD
+[Unreleased]: https://github.com/perriera/rsi/compare/v1.3.0...HEAD
+[1.1.4]: https://github.com/perriera/rsi/compare/v1.1.4...v1.3.0
 [1.1.4]: https://github.com/perriera/rsi/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/perriera/rsi/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/perriera/rsi/compare/v1.1.1...v1.1.2
