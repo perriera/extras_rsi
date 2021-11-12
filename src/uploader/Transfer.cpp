@@ -14,19 +14,18 @@ namespace fs = std::filesystem;
 namespace extras {
 
     /**
-     * @brief concrete class UploaderClient
+     * @brief transfer()
      *
-     *   build/rsi_client 127.0.0.1 8080 transfer send.txt
-     *   ss >> prg >> filename >> ip >> port;
+     *   build/uploader_client send.txt 127.0.0.1 9002
+     *   build/uploader_server send.txt 127.0.0.1 9002
+     *
+     *   build/downloader_client send.txt 127.0.0.1 9002
+     *   build/downloader_server send.txt 127.0.0.1 9002
      *
      */
 
     void rsi::UploaderClient::transfer() {
         extras::rsi::send_file2(payload().c_str(), this->_sockfd);
-    }
-
-    void rsi::DownloaderClient::transfer() {
-        extras::rsi::write_file(payload_downloaded().c_str(), this->_sockfd);
     }
 
     void rsi::UploaderServer::transfer() {
@@ -35,6 +34,10 @@ namespace extras {
 
     void rsi::DownloaderServer::transfer() {
         extras::rsi::send_file2(payload().c_str(), this->_new_sock);
+    }
+
+    void rsi::DownloaderClient::transfer() {
+        extras::rsi::write_file(payload_downloaded().c_str(), this->_sockfd);
     }
 
 }  // namespace extras

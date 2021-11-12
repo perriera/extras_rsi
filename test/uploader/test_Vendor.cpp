@@ -10,15 +10,6 @@
 using namespace extras;
 namespace fs = std::filesystem;
 
-class MockedVendor extends rsi::VendorClient {
-public:
-    virtual void transfer()  override {
-        auto copy_cmd = "cp " + payload() + " " + payload_uploaded();
-        (void)system(copy_cmd.c_str());
-    }
-
-};
-
 SCENARIO("Test VendorInterface", "[VendorInterface]") {
 
     rsi::Filename thePayload;
@@ -39,16 +30,25 @@ SCENARIO("Test VendorInterface", "[VendorInterface]") {
         "vendor",   "download" };
     int argc = 6;
 
-    MockedVendor testUnit;
+    rsi::VendorClient testUnit;
     testUnit.parameters(argc, argv);
     rsi::VendorInterface& i = testUnit;
 
+    // wrap parcel
+    REQUIRE(fs::exists(testUnit.parcel()));
+    REQUIRE(fs::exists(testUnit.payload()));
     i.wrapParcel();
-    REQUIRE(fs::exists(testUnit.payload()));
-    testUnit.transfer();
-    REQUIRE(fs::exists(testUnit.payload_uploaded()));
+
+    // deliver parcel
+    REQUIRE(fs::exists(testUnit.parcel()));
+    fs::remove(testUnit.payload());
+    REQUIRE(!fs::exists(testUnit.payload()));
     i.deliverParcel();
-    REQUIRE(!fs::exists(testUnit.payload_uploaded()));
     REQUIRE(fs::exists(testUnit.payload()));
+    fs::remove(testUnit.payload());
+    REQUIRE(!fs::exists(testUnit.payload()));
+
+    // un parcel
     i.unwrapParcel();
+    REQUIRE(fs::exists(testUnit.payload()));
 }
