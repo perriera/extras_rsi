@@ -71,13 +71,13 @@ namespace extras {
                 return _proxy.payload();
             }
             virtual Parameter parcel() const override {
-                return _proxy.payload() + ".txt";
+                return  _proxy.payload_uploaded();
             }
             virtual Parameter payload_uploaded() const override {
-                return _proxy.payload_uploaded() + ".txt";
+                return _proxy.payload_uploaded();
             };
             virtual Parameter payload_downloaded() const override {
-                return _proxy.payload_downloaded() + ".txt";
+                return _proxy.payload_downloaded();
             };
             virtual const Parameter& ip() const override {
                 return _proxy.ip();

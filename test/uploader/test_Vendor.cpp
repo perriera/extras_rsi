@@ -35,9 +35,12 @@ SCENARIO("Test VendorInterface", "[VendorInterface]") {
     rsi::VendorInterface& i = testUnit;
 
     // wrap parcel
-    REQUIRE(fs::exists(testUnit.parcel()));
+    if (fs::exists(testUnit.parcel()))
+        fs::remove(testUnit.parcel());
+    REQUIRE(!fs::exists(testUnit.parcel()));
     REQUIRE(fs::exists(testUnit.payload()));
     i.wrapParcel();
+    REQUIRE(fs::exists(testUnit.parcel()));
 
     // deliver parcel
     REQUIRE(fs::exists(testUnit.parcel()));

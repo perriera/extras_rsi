@@ -1,4 +1,5 @@
 #include <rsi/bin2hex/ConvertFile.hpp>
+#include <rsi/exceptions.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
 #include <iostream>

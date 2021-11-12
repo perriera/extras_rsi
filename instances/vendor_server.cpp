@@ -7,6 +7,9 @@ namespace fs = std::filesystem;
 
 int main(int argc, char const* argv[]) {
     try {
+        system("ls -la");
+        if (fs::exists("send.txt"))
+            fs::remove("send.txt");
         if (fs::exists("send.txt.txt"))
             fs::remove("send.txt.txt");
         if (fs::exists("send.txt_uploaded"))

@@ -10,7 +10,9 @@ namespace extras {
             _proxy.connect();
         }
         void VendorServer::transfer() {
+            system("ls -la");
             _proxy.transfer();
+            system("ls -la");
             deliverParcel();
         }
         void VendorServer::close() {
