@@ -22,6 +22,9 @@ namespace extras {
      *   build/downloader_client send.txt 127.0.0.1 9002
      *   build/downloader_server send.txt 127.0.0.1 9002
      *
+     *   build/vendor_client send.txt 127.0.0.1 9002
+     *   build/vender_server send.txt 127.0.0.1 9002
+     *
      */
 
     void rsi::UploaderClient::transfer() {
