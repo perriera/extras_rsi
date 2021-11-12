@@ -30,6 +30,8 @@ namespace extras {
              * @brief add_value()
              * @param filename
              */
+            virtual Parameter parcel() const pure;
+
             virtual void wrapParcel() pure;
             virtual void deliverParcel() pure;
             virtual void unwrapParcel() pure;
@@ -63,17 +65,17 @@ namespace extras {
             virtual const Parameter& program() const override {
                 return _proxy.program();
             }
-            virtual const Parameter& parcel() const override {
-                return _proxy.parcel();
-            }
             virtual Parameter payload() const override {
                 return _proxy.payload();
             }
+            virtual Parameter parcel() const override {
+                return _proxy.payload() + ".txt";
+            }
             virtual Parameter payload_uploaded() const override {
-                return _proxy.payload_uploaded();
+                return _proxy.payload_uploaded() + ".txt";
             };
             virtual Parameter payload_downloaded() const override {
-                return _proxy.payload_downloaded();
+                return _proxy.payload_downloaded() + ".txt";
             };
             virtual const Parameter& ip() const override {
                 return _proxy.ip();

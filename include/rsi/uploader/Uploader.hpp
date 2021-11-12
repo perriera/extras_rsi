@@ -27,7 +27,6 @@ namespace extras {
              */
             virtual Parameters parameters(int argc, char const* argv[]) pure;
             virtual const Parameter& program() const pure;
-            virtual const Parameter& parcel() const pure;
             virtual Parameter payload() const pure;
             virtual Parameter payload_uploaded() const pure;
             virtual Parameter payload_downloaded() const pure;
@@ -73,22 +72,14 @@ namespace extras {
             virtual const Parameter& program() const override {
                 return _parameters[0];
             };
-            virtual const Parameter& parcel() const override {
+            virtual Parameter payload() const override {
                 return _parameters[1];
             };
-            virtual Parameter payload() const override {
-                auto payload_file = parcel() + ".payload.txt";
-                return payload_file;
-            };
             virtual Parameter payload_uploaded() const override {
-                auto uploaded_file =
-                    extras::replace_all(payload(), ".payload.txt", ".payload.uploaded.txt");
-                return uploaded_file;
+                return payload() + "_uploaded";
             };
             virtual Parameter payload_downloaded() const override {
-                auto downloaded_file =
-                    extras::replace_all(payload(), ".payload.txt", ".payload.downloaded.txt");
-                return downloaded_file;
+                return payload() + "_downloaded";
             };
             virtual const Parameter& ip() const override { return _parameters[2]; };
             virtual const Parameter& port() const override { return _parameters[3]; };
