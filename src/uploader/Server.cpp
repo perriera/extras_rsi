@@ -32,20 +32,6 @@ namespace extras {
         }
     }
 
-    void rsi::UploaderServer::transfer() {
-        extras::rsi::write_file(payload_uploaded().c_str(), this->_new_sock);
-        system("ls -la");
-        /**
-         * @brief Right here, Right now...
-         *
-         */
-    }
-
-    void rsi::DownloaderServer::transfer() {
-        extras::rsi::send_file2(payload().c_str(), this->_new_sock);
-        fs::remove(payload());
-    }
-
     void rsi::UploaderServer::close() {
         ::close(this->_new_sock);
         ::close(this->_sockfd);
