@@ -1,14 +1,7 @@
-#include <arpa/inet.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
 #include <rsi/uploader/Uploader.hpp>
 #include <rsi/exceptions.hpp>
 #include <iostream>
-#include <sstream>
-#include <string>
+#include <filesystem>
 
 int main(int argc, char const* argv[]) {
     try {

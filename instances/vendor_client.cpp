@@ -1,16 +1,16 @@
-#include <arpa/inet.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
 #include <rsi/uploader/Vendor.hpp>
+#include <rsi/exceptions.hpp>
 #include <iostream>
-#include <sstream>
-#include <string>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 int main(int argc, char const* argv[]) {
     try {
+        if (fs::exists("send.txt.txt"))
+            fs::remove("send.txt.txt");
+        if (fs::exists("send.txt_uploaded"))
+            fs::remove("send.txt_uploaded");
         extras::rsi::VendorClient vendor;
         vendor.parameters(argc, argv);
         vendor.connect();
