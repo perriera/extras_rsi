@@ -192,7 +192,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/vendor_client",
             "args": [
-                "send.txt",
+                "/tmp/cplusplusorg.freeformjs.imploded.zip",
                 "127.0.0.1",
                 "9002",
             ],
