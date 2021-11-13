@@ -12,7 +12,7 @@
 using namespace extras;
 namespace fs = std::filesystem;
 
-SCENARIO("Test ParcelInterface: hexToBin", "[ParcelInterface]") {
+SCENARIO("Test ParcelInterface: hexToBin (v1)", "[ParcelInterface]") {
 
     rsi::Parameter payloadName = ~extras::Paths("data/cplusplusorg.freeformjs.imploded.zip");
     rsi::Parameter parcelName = "/tmp/parcel.txt";
