@@ -59,15 +59,6 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
                     REQUIRE(parcelFile[i] == parcelFile2[i]);
             });
 
-    When(Method(mock, hexFile))
-        .AlwaysDo(
-            [&payload, &parcel, &parcelFile]() {
-                rsi::HexFile hexFile;
-                for (auto parcelLine : parcelFile)
-                    hexFile.push_back(parcelLine.hexLine());
-                return hexFile;
-            });
-
     When(Method(mock, unpack))
         .AlwaysDo(
             [&payload, &parcel]() {
@@ -103,7 +94,7 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
                 {
                     rsi::ConvertFile converter;
                     std::ifstream inHex(hexFilename);
-                    std::ofstream outBin(payload + "_duplicate.zip");
+                    std::ofstream outBin(payload + ".unpacked");
                     duplicate = converter.convertToBin(inHex, outBin);
                 }
                 for (long unsigned int i = 0; i < original.size(); i++)

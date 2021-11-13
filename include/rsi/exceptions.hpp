@@ -82,6 +82,14 @@ namespace extras {
                 if (delimiter != ':')
                     throw ParcelLineException("Bad delimiter:" + delimiter, ref);
             }
+            static void assertion(const ParcelLine& line1, const ParcelLine& line2, const extras::WhereAmI& ref) {
+                if (line1 != line2)
+                    throw ParcelLineException("Corrupted save on line:" + std::to_string(line1.lineNo()), ref);
+            }
+            static void assertion(const BinLine& line1, const BinLine& line2, int line, const extras::WhereAmI& ref) {
+                if (line1 != line2)
+                    throw ParcelLineException("Corrupted save on line:" + std::to_string(line), ref);
+            }
             static void assertion(int line_no, const extras::WhereAmI& ref) {
                 if (line_no < 0)
                     throw ParcelLineException("Bad line number:" + std::to_string(line_no), ref);

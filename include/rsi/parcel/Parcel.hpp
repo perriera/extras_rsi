@@ -58,14 +58,13 @@ namespace extras {
 
         interface ParcelInterface {
 
-            friend std::ostream& operator<<(std::ostream& out, const ParcelInterface& obj);
-            friend std::istream& operator>>(std::istream& in, ParcelInterface& obj);
-
             virtual const Parameter& payload() const pure;
             virtual const Parameter& parcel() const pure;
+            virtual Parameter payload_unpacked() const pure;
             virtual HexFile hexFile() const pure;
-            virtual ParcelFile parcelFile() const pure;
-            virtual void set(const ParcelFile&) pure;
+
+            // virtual const ParcelFile& parcelFile() const pure;
+            // virtual void set(const ParcelFile&) pure;
 
             /**
              * @brief connect()
@@ -81,6 +80,44 @@ namespace extras {
              */
             virtual void unpack()  pure;
 
+            virtual void check_packaging() const pure;
+            virtual void compare() const pure;
+
+
+        };
+
+        concrete class Parcel implements ParcelInterface {
+            friend std::ostream& operator<<(std::ostream& out, const Parcel& obj);
+            friend std::istream& operator>>(std::istream& in, Parcel& obj);
+
+            Parameter _payload;
+            Parameter _parcel;
+            ParcelFile _parcelFile;
+
+        public:
+            Parcel() {}
+            Parcel(const Parameter& payload, const Parameter& parcel) :_payload(payload), _parcel(parcel) {}
+            virtual const Parameter& payload() const override { return _payload; };
+            virtual const Parameter& parcel() const override { return _parcel; };
+            virtual Parameter payload_unpacked() const override { return _payload + ".unpacked"; };
+            virtual HexFile hexFile() const override;
+
+            /**
+             * @brief connect()
+             * @note do whatever socket connection is required, (using the parameters
+             * collected earlier)
+             */
+            virtual void pack() override;
+
+            /**
+             * @brief transfer()
+             * @note this is where the magic happens, depending what type of class you
+             * are this method performs the data transfer, (or initiates it)
+             */
+            virtual void unpack()  override;
+
+            virtual void check_packaging() const override;
+            virtual void compare() const override;
 
         };
 
