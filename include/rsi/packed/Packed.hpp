@@ -7,8 +7,8 @@
 #include <rsi/bin2hex/ConvertFile.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/crcs.hpp>
-#include <rsi/parcel/v2/Exceptions.hpp>
-#include <rsi/parcel/v2/Line.hpp>
+#include <rsi/packed/Exceptions.hpp>
+#include <rsi/packed/Line.hpp>
 #include <iostream>
 #include <sstream>
 #include <netinet/in.h>
@@ -25,14 +25,20 @@ namespace extras {
          */
 
 
-        interface ParcelInterface {
+        interface PackedInterface {
+
+            virtual BinFile loadBin(const Filename& filename) const pure;
+            virtual HexFile convertToHex() const pure;
+            virtual HexFile hexFile() const pure;
 
             virtual const Parameter& parcel() const pure;
+            virtual const Parameter& hexed() const pure;
             virtual const Parameter& packed() const pure;
             virtual const Parameter& unpacked() const pure;
 
-            virtual void pack() pure;
-            virtual void unpack()  pure;
+            virtual void pack() const pure;
+            virtual void unpack() const pure;
+            virtual void verify_integrity() const pure;
 
         };
 
