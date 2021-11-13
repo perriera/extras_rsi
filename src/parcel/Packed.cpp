@@ -1,4 +1,4 @@
-#include <rsi/packed/Packed.hpp>
+#include <rsi/parcel/Packed.hpp>
 #include <rsi/exceptions.hpp>
 #include <iostream>
 #include <fstream>

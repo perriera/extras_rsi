@@ -7,7 +7,7 @@
 #include <rsi/bin2hex/ConvertFile.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/crcs.hpp>
-#include <rsi/packed/Line.hpp>
+#include <rsi/parcel/Line.hpp>
 #include <iostream>
 #include <sstream>
 #include <netinet/in.h>

@@ -1,11 +1,11 @@
 #include <rsi/bin2hex/ConvertFile.hpp>
-#include <rsi/packed/Packed.hpp>
+#include <rsi/parcel/Packed.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
+#include <rsi/exceptions.hpp>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include <rsi/exceptions.hpp>
 
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
@@ -14,7 +14,7 @@ using namespace extras;
 using namespace fakeit;
 namespace fs = std::filesystem;
 
-SCENARIO("Mock PackedInterface: hexToBin", "[PackedInterface]") {
+SCENARIO("Test PackedInterface: hexToBin", "[PackedInterface]") {
 
     rsi::Parameter parcel = ~extras::Paths("data/cplusplusorg.freeformjs.imploded.zip");
     rsi::Parameter hexed = parcel + "_hexed";
