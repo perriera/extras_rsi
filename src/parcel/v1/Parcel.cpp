@@ -1,4 +1,4 @@
-#include <rsi/parcel/Parcel.hpp>
+#include <rsi/parcel/v1/Parcel.hpp>
 #include <rsi/exceptions.hpp>
 #include <iostream>
 #include <fstream>
@@ -54,6 +54,7 @@ namespace extras {
                 obj._parcelFile.push_back(line);
                 rsi::ParcelLineException::assertion(++cnt, line.lineNo(), __INFO__);
             }
+            return in;
         }
 
         /**

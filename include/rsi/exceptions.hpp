@@ -14,7 +14,6 @@
  */
 
 #include <extras/interfaces.hpp>
-#include <rsi/parcel/Parcel.hpp>
 #include <ctype.h>
 
 namespace extras {
@@ -68,47 +67,6 @@ namespace extras {
             FileNotFoundException(std::string msg, const extras::WhereAmI& whereAmI)
                 : RSIException(msg.c_str(), whereAmI) {}
             static void assertion(const std::string& filename, const extras::WhereAmI& ref);
-        };
-
-        /**
-         * @brief ParcelLineException
-         *
-         */
-        concrete class ParcelLineException extends RSIException {
-        public:
-            ParcelLineException(std::string msg, const extras::WhereAmI& whereAmI)
-                : RSIException(msg.c_str(), whereAmI) {}
-            static void assertion(char delimiter, const extras::WhereAmI& ref) {
-                if (delimiter != ':')
-                    throw ParcelLineException("Bad delimiter:" + delimiter, ref);
-            }
-            static void assertion(const ParcelLine& line1, const ParcelLine& line2, const extras::WhereAmI& ref) {
-                if (line1 != line2)
-                    throw ParcelLineException("Corrupted save on line:" + std::to_string(line1.lineNo()), ref);
-            }
-            static void assertion(const BinLine& line1, const BinLine& line2, int line, const extras::WhereAmI& ref) {
-                if (line1 != line2)
-                    throw ParcelLineException("Corrupted save on line:" + std::to_string(line), ref);
-            }
-            static void assertion(int line_no, const extras::WhereAmI& ref) {
-                if (line_no < 0)
-                    throw ParcelLineException("Bad line number:" + std::to_string(line_no), ref);
-            }
-            static void assertion(int line_no1, int line_no2, const extras::WhereAmI& ref) {
-                if (line_no1 != line_no2)
-                    throw ParcelLineException("Line number out of sync:"
-                        + std::to_string(line_no1) + std::to_string(line_no2), ref);
-            }
-            static void assertion(rsi::HexLine hexLine, const extras::WhereAmI& ref) {
-                for (auto c : hexLine)
-                    if (!isxdigit(c))
-                        throw ParcelLineException("Bad HexLine:" + hexLine, ref);
-            }
-            static void assertion(rsi::CRC crc, rsi::HexLine hexLine, const extras::WhereAmI& ref) {
-                rsi::ParcelLine check(0, hexLine);
-                if (check.checksum() != crc)
-                    throw ParcelLineException("Bad CRC:" + hexLine, ref);
-            }
         };
 
         /**
