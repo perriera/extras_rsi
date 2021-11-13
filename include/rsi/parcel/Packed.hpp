@@ -24,12 +24,11 @@ namespace extras {
          *
          */
 
-
         interface PackedInterface {
 
-            virtual BinFile loadBin(const Filename& filename) const pure;
-            virtual HexFile convertToHex() const pure;
-            virtual HexFile hexFile() const pure;
+            // virtual BinFile loadBin(const Filename& filename) const pure;
+            // virtual HexFile convertToHex() const pure;
+            // virtual HexFile hexFile() const pure;
 
             virtual const Parameter& parcel() const pure;
             virtual const Parameter& hexed() const pure;
@@ -42,7 +41,29 @@ namespace extras {
 
         };
 
+        concrete class Packed  implements PackedInterface {
 
+            Parameter _parcel;
+            Parameter _hexed;
+            Parameter _packed;
+            Parameter _unpacked;
+
+        public:
+            Packed(const Parameter& parcel) : _parcel(parcel) {
+                _hexed = _parcel + "_hexed";
+                _packed = _parcel + "_packed";
+                _unpacked = _parcel + "_unpacked";
+            }
+            virtual const Parameter& parcel() const override { return _parcel; }
+            virtual const Parameter& hexed() const override { return _hexed; }
+            virtual const Parameter& packed() const override { return _packed; }
+            virtual const Parameter& unpacked() const override { return _unpacked; }
+
+            virtual void pack() const override;
+            virtual void unpack() const override;
+            virtual void verify_integrity() const override;
+
+        };
 
     }  // namespace rsi
 
