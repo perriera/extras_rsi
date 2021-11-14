@@ -31,6 +31,8 @@ namespace extras {
      *
      */
     void rsi::UploaderServer::transfer() const {
+        cout << "\n\n\n\n\n\n" << "UploaderServer" << "\n\n\n\n\n\n";
+
         rsi::Parameter parcel = ~extras::Paths(filename());
         rsi::Parcel packed(parcel);
         std::string uploaded_file = packed.packed();
@@ -38,7 +40,7 @@ namespace extras {
         try {
             system("cat send.txt_packed   ");
             packed.unpack();
-            // system("unzip -o send.txt_unpacked -d /tmp ");
+            system("unzip -o send.txt_unpacked -d /tmp ");
         }
         catch (rsi::PackedException& ex) {
             cout << ex.what() << endl;
@@ -64,6 +66,7 @@ namespace extras {
 
     void rsi::VendorServer::transfer() const {
         try {
+            cout << "\n\n\n\n\n\n" << "VendorServer" << "\n\n\n\n\n\n";
             rsi::Parameter parameter = ~extras::Paths(filename());
             rsi::Parcel parcel(parameter);
             std::string cmd = "cat " + parcel.packed();
@@ -106,6 +109,7 @@ namespace extras {
      *
      */
     void rsi::DownloaderServer::transfer() const {
+        cout << "\n\n\n\n\n\n" << "DownloaderServer" << "\n\n\n\n\n\n";
         rsi::Parameter parcel = ~extras::Paths(filename());
         rsi::Parcel packed(parcel);
         // packed.pack();
