@@ -113,8 +113,14 @@ namespace extras {
         auto copy_cmd = "cp " + downloaded_file + " send.txt";
         system(copy_cmd.c_str());
         extras::rsi::send_file2(downloaded_file.c_str(), this->_new_sock);
-        auto msg = extras::rsi::read_line(this->_sockfd);
-        cout << msg << endl;
-    }
+        while (true) {
+            auto msg = extras::rsi::read_line(this->_sockfd);
+            if (msg.size() == 0)
+                continue;
+            cout << msg << endl;
+            break;
+        }
 
-}  // namespace extras
+    }  // namespace extras
+}
+
