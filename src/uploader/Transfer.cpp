@@ -67,6 +67,7 @@ namespace extras {
         rsi::Parcel packed(parcel);
         std::string downloaded_file = packed.packed();
         extras::rsi::write_file(downloaded_file.c_str(), this->_sockfd);
+        extras::rsi::send_line("Thank you", this->_sockfd);
         try {
             packed.unpack();
             auto cmd = "unzip " + packed.unpacked() + " -d /tmp ";
@@ -87,6 +88,8 @@ namespace extras {
         packed.pack();
         std::string downloaded_file = packed.packed();
         extras::rsi::send_file2(downloaded_file.c_str(), this->_new_sock);
+        auto msg = extras::rsi::read_line(this->_sockfd);
+        cout << msg << endl;
     }
 
 }  // namespace extras
