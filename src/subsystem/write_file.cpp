@@ -22,6 +22,10 @@ void extras::rsi::write_file(const char* filename, int sockfd) {
         if (extras::contains(msg, "done")) {
             std::cout << msg << std::endl;
             msg = extras::replace_all(msg, "done", "");
+            msg = extras::replace_all(msg, "J", "");
+            msg = extras::replace_all(msg, "U", "");
+            msg = extras::replace_all(msg, "N", "");
+            msg = extras::replace_all(msg, "K", "");
             fprintf(fp, "%s", msg.c_str());
             break;
         }

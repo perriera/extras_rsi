@@ -38,7 +38,7 @@ namespace extras {
         try {
             system("cat send.txt_packed   ");
             packed.unpack();
-            system("unzip send.txt_unpacked -d /tmp ");
+            system("unzip -o send.txt_unpacked -d /tmp ");
         }
         catch (rsi::PackedException& ex) {
             cout << ex.what() << endl;
@@ -71,7 +71,7 @@ namespace extras {
         extras::rsi::send_line("Thank you", this->_sockfd);
         try {
             packed.unpack();
-            auto cmd = "unzip " + packed.unpacked() + " -d /tmp ";
+            auto cmd = "unzip -o " + packed.unpacked() + " -d /tmp ";
             system(cmd.c_str());
         }
         catch (rsi::PackedException& ex) {
