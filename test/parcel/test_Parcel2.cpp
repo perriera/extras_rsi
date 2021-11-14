@@ -14,7 +14,7 @@ using namespace extras;
 using namespace fakeit;
 namespace fs = std::filesystem;
 
-SCENARIO("Test ParcelInterface: hexToBin", "[ParcelInterface]") {
+SCENARIO("Test ParcelInterface: GOFUCKYOURSELF", "[ParcelInterface]") {
 
     rsi::Parameter parcel = ~extras::Paths("data/cplusplusorg.freeformjs.imploded.zip");
 

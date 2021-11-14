@@ -31,6 +31,14 @@ void extras::rsi::write_file(const char* filename, int sockfd) {
         bzero(buffer, extras::rsi::SIZE);
 
     }
+
+    while (true) {
+        bzero(buffer, extras::rsi::SIZE);
+        n = recv(sockfd, buffer, extras::rsi::SIZE, 0);
+        if (n <= 0) break;
+        std::cout << buffer << std::endl;
+    }
+
     return;
 }
 
