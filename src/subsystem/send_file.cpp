@@ -29,8 +29,16 @@ void extras::rsi::send_file(FILE* fp, int sockfd) {
         bzero(data, extras::rsi::SIZE);
     }
     auto msg = "done";
+    std::cout << msg << " sent" << std::endl;
     if (send(sockfd, msg, strlen(msg), 0) == -1) {
         perror("[-]Error in sending file.");
         exit(1);
     }
+    //
+    auto junk = "JUNK";
+    for (int i = 0; i < 10000; i++)
+        if (send(sockfd, junk, strlen(junk), 0) == -1) {
+            perror("[-]Error in sending file.");
+            exit(1);
+        }
 }
