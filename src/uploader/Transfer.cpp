@@ -38,7 +38,7 @@ namespace extras {
         try {
             system("cat send.txt_packed   ");
             packed.unpack();
-            system("unzip -o send.txt_unpacked -d /tmp ");
+            // system("unzip -o send.txt_unpacked -d /tmp ");
         }
         catch (rsi::PackedException& ex) {
             cout << ex.what() << endl;
