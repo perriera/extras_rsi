@@ -74,8 +74,7 @@ namespace extras {
             // auto copy_cmd = "cp " + parcel.packed() + " send.txt";
             // system(copy_cmd.c_str());
             parcel.pack();
-            cmd = "ls " + parameter + "* -la";
-            system(cmd.c_str());
+            system("ls send* -la");
         }
         catch (rsi::PackedException& ex) {
             cout << ex.what() << endl;
