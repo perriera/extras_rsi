@@ -15,7 +15,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/run-unittests-rsi",
             "args": [
-                "[ParcelInterface]"
+                "[VendorInterface2]"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -94,7 +94,7 @@
             "args": [
                 "send.txt",
                 "127.0.0.1",
-                "9000",
+                "9002",
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -119,7 +119,7 @@
             "args": [
                 "send.txt",
                 "127.0.0.1",
-                "9000",
+                "9002",
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
