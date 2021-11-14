@@ -37,6 +37,7 @@ namespace extras {
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
         try {
             packed.unpack();
+            system("unzip send.txt_unpacked -d /tmp ");
         }
         catch (rsi::PackedException& ex) {
             cout << ex.what() << endl;
