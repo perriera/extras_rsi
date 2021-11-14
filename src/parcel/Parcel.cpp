@@ -119,6 +119,24 @@ namespace extras {
                 fs::remove(unpacked());
         }
 
+        void Parcel::cat() const {
+            rsi::FileNotFoundException::assertion(packed(), __INFO__);
+            std::string cmd = "cat " + packed();
+            system(cmd.c_str());
+        }
+
+        void Parcel::dir() const {
+            rsi::FileNotFoundException::assertion(parcel(), __INFO__);
+            std::string cmd = "ls -la " + parcel() + "*";
+            system(cmd.c_str());
+        }
+
+        void Parcel::unzip() const {
+            rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
+            string cmd = "unzip -o " + unpacked() + " -d /tmp ";
+            system(cmd.c_str());
+        }
+
 
     }  // namespace rsi
 }  // namespace extras

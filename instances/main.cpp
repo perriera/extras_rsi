@@ -29,12 +29,12 @@ int main(int argc, const char** argv)
       parcel.verify_integrity();
     if (option == "-clean")
       parcel.clean();
-    if (option == "-unzip") {
-      string cmd = "unzip -o " + parcel.unpacked() + " -d /tmp ";
-      system(cmd.c_str());
-    }
-    string cmd = "ls -la " + string(filename) + "* ";
-    system(cmd.c_str());
+    if (option == "-cat")
+      parcel.cat();
+    if (option == "-dir")
+      parcel.dir();
+    if (option == "-unzip")
+      parcel.unzip();
   }
   catch (exception& ex) {
     cout << ex.what() << endl;

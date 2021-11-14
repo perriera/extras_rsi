@@ -27,7 +27,9 @@ namespace extras {
         rsi::Parameter parcel = ~extras::Paths(filename());
         rsi::Parcel packed(parcel);
         packed.pack();
+        cout << "sending " << packed.packed() << endl;
         extras::rsi::send_file2(packed.packed().c_str(), this->_sockfd);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 
     /**
@@ -37,19 +39,21 @@ namespace extras {
     void rsi::UploaderServer::transfer() const {
         cout << "\n\n\n\n\n\n" << "UploaderServer" << "\n\n\n\n\n\n";
 
-        system("rm send* ");
-
-        rsi::Parameter parcel = ~extras::Paths(filename());
+        rsi::Parameter parcel = filename();
         rsi::Parcel packed(parcel);
-        packed.clean();
         std::string uploaded_file = packed.packed();
-        cout << uploaded_file << " written" << endl;
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-        packed.unpack();
+        cout << uploaded_file << " written" << endl;
 
+        packed.unpack();
+        cout << packed.unpacked() << " written" << endl;
+
+        packed.dir();
+        packed.verify_integrity();
+        packed.unzip();
         // try {
         //     // system("cat send.txt_packed   ");
         //     packed.unpack();
@@ -71,7 +75,7 @@ namespace extras {
         // system(copy_cmd.c_str());
         // //        // auto cat_cmd = "cat send.txt";
         //        // system(cat_cmd);
-        system("ls send* -la");
+        // system("ls send* -la");
     }
 
     void rsi::VendorClient::transfer() const {
