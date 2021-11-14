@@ -35,6 +35,7 @@ namespace extras {
 
         rsi::Parameter parcel = ~extras::Paths(filename());
         rsi::Parcel packed(parcel);
+        packed.clean();
         std::string uploaded_file = packed.packed();
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
         try {
