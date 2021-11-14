@@ -16,6 +16,7 @@ namespace extras {
             out << " : " << std::hex << obj.checksum();
             return out;
         }
+
         std::istream& operator>>(std::istream& in, PackedLine& obj) {
             std::string line;
             getline(in, line);
@@ -55,7 +56,7 @@ namespace extras {
                 outPacked << packedLine << std::endl;
             outPacked.close();
             rsi::FileNotFoundException::assertion(packed(), __INFO__);
-        };
+        }
 
         void Packed::unpack() const {
             rsi::FileNotFoundException::assertion(packed(), __INFO__);
@@ -76,13 +77,13 @@ namespace extras {
             outBin.close();
             rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
 
-        };
+        }
 
         void Packed::verify_integrity() const {
             rsi::FileNotFoundException::assertion(parcel(), __INFO__);
             rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
             rsi::PackedException::assertion(parcel(), unpacked(), __INFO__);
-        };
+        }
 
         void Packed::clean() const {
             if (fs::exists(packed()))
@@ -91,7 +92,7 @@ namespace extras {
                 fs::remove(hexed());
             if (fs::exists(unpacked()))
                 fs::remove(unpacked());
-        };
+        }
 
 
     }  // namespace rsi

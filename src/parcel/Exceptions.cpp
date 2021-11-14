@@ -10,8 +10,10 @@ namespace fs = std::filesystem;
 namespace extras {
     namespace rsi {
 
-        void PackedException::assertion(const Filename& packed, const Filename& unpacked, const extras::WhereAmI& ref) {
-            auto cmd = "xxd " + packed + " /tmp/b1.hex";
+        void PackedException::assertion(const Filename& parcel, const Filename& unpacked, const extras::WhereAmI& ref) {
+            rsi::FileNotFoundException::assertion(parcel, ref);
+            rsi::FileNotFoundException::assertion(unpacked, ref);
+            auto cmd = "xxd " + parcel + " /tmp/b1.hex";
             (void)system(cmd.c_str());
             cmd = "xxd " + unpacked + " /tmp/b2.hex";
             (void)system(cmd.c_str());

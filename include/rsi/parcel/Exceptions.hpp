@@ -57,7 +57,7 @@ namespace extras {
                     throw PackedException("Bad CRC:" + hexLine, ref);
             }
 
-            static void assertion(const Filename& packed, const Filename& unpacked, const extras::WhereAmI& ref);
+            static void assertion(const Filename& parcel, const Filename& unpacked, const extras::WhereAmI& ref);
         };
 
     }  // namespace rsi
