@@ -43,7 +43,7 @@ namespace extras {
         cout << uploaded_file << " written" << endl;
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(15000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
         // try {
         //     // system("cat send.txt_packed   ");
