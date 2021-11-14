@@ -10,6 +10,9 @@
 #include <iostream>
 #include <filesystem>
 
+#include <chrono>
+#include <thread>
+
 using namespace std;
 namespace fs = std::filesystem;
 
@@ -38,6 +41,9 @@ namespace extras {
         packed.clean();
         std::string uploaded_file = packed.packed();
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
         // try {
         //     // system("cat send.txt_packed   ");
         //     packed.unpack();
