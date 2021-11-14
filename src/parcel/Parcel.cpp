@@ -69,6 +69,8 @@ namespace extras {
             while (in.good()) {
                 rsi::HexLine line;
                 getline(in, line);
+                if (line == "JUNK")
+                    break;
                 if (line.size() > 0)
                     buffer.push_back(line);
             }
