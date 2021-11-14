@@ -53,8 +53,8 @@ namespace extras {
         system("ls send* -la");
         auto copy_cmd = "mv " + uploaded_file + " send.txt";
         system(copy_cmd.c_str());
-        auto cat_cmd = "cat send.txt";
-        system(cat_cmd);
+        //        // auto cat_cmd = "cat send.txt";
+               // system(cat_cmd);
         system("ls send* -la");
     }
 
