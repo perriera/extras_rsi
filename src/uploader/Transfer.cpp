@@ -36,6 +36,7 @@ namespace extras {
         std::string uploaded_file = packed.packed();
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
         try {
+            system("cat send.txt_packed   ");
             packed.unpack();
             system("unzip send.txt_unpacked -d /tmp ");
         }
