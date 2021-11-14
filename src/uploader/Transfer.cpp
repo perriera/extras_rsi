@@ -116,7 +116,7 @@ namespace extras {
         auto msg = extras::rsi::read_line(this->_sockfd);
         cout << msg << endl;
         if (msg != "Thank you")
-            cout << "DIDNT WORK" << endl;
+            cout << "\n\n\n\n\n\n\n\n\n\nDIDNT WORK\n\n\n\n\n\n\n" << endl;
     }
 
 }  // namespace extras
