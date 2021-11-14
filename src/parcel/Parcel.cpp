@@ -61,23 +61,33 @@ namespace extras {
         void Parcel::unpack() const {
             rsi::FileNotFoundException::assertion(packed(), __INFO__);
             std::ifstream in(packed());
+
             rsi::HexFile hexFile;
             rsi::PackedFile badCRC;
+
+            rsi::HexFile buffer;
             while (in.good()) {
+                rsi::HexLine line;
+                getline(in, line);
+                if (line.size() > 0)
+                    buffer.push_back(line);
+            }
+
+            for (auto text : buffer) {
+                std::stringstream ss;
+                ss << text;
                 rsi::PackedLine line;
                 try {
-                    in >> line;
-                    if (in.good()) {
-                        hexFile.push_back(line.hexLine());
-                        cout << line << endl;
-                    }
+                    ss >> line;
+                    hexFile.push_back(line.hexLine());
+                    cout << line << endl;
                 }
                 catch (exception& ex) {
                     cout << ex.what() << endl;
                     badCRC.push_back(line);
-                    in.clear(std::istream::failbit);
                 }
             }
+
             if (badCRC.size() > 0)
                 cout << "BadCRC count: " << badCRC.size() << endl;
             std::ofstream outHex(hexed());
