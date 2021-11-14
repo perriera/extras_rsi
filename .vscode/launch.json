@@ -38,9 +38,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/socketpool_client",
             "args": [
-                "127.0.0.1",
+                "137.184.218.130",
                 "8080",
-                "send.txt",
+                "data/cplusplusorg.freeformjs.imploded.zip",
                 "upload",
                 "download",
             ],

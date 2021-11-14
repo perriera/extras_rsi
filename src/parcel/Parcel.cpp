@@ -72,10 +72,10 @@ namespace extras {
                         cout << line << endl;
                     }
                 }
-                catch (PackedException& ex) {
+                catch (exception& ex) {
                     cout << ex.what() << endl;
                     badCRC.push_back(line);
-                    in.clear();
+                    in.clear(std::istream::failbit);
                 }
             }
             if (badCRC.size() > 0)
