@@ -5,6 +5,7 @@
 #include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/strings.hpp>
+#include <extras/filesystem/paths.hpp>
 #include <rsi/parcel/Parcel.hpp>
 #include <iostream>
 #include <filesystem>
@@ -19,7 +20,10 @@ namespace extras {
      *
      */
     void rsi::UploaderClient::transfer() const {
-        extras::rsi::send_file2(filename().c_str(), this->_sockfd);
+        rsi::Parameter parcel = ~extras::Paths(filename());
+        rsi::Parcel packed(parcel);
+        packed.pack();
+        extras::rsi::send_file2(packed.packed().c_str(), this->_sockfd);
     }
 
     /**
@@ -27,9 +31,11 @@ namespace extras {
      *
      */
     void rsi::UploaderServer::transfer() const {
-        auto uploaded_file =
-            extras::replace_all(filename(), ".txt", "_uploaded.txt");
+        rsi::Parameter parcel = ~extras::Paths(filename());
+        rsi::Parcel packed(parcel);
+        std::string uploaded_file = packed.packed();
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
+        packed.unpack();
         system("ls -la");
         /**
          * @brief Right here, Right now...
@@ -51,9 +57,11 @@ namespace extras {
      *
      */
     void rsi::DownloaderClient::transfer() const {
-        auto downloaded_file =
-            extras::replace_all(filename(), ".txt", "_downloaded.txt");
+        rsi::Parameter parcel = ~extras::Paths(filename());
+        rsi::Parcel packed(parcel);
+        std::string downloaded_file = packed.packed();
         extras::rsi::write_file(downloaded_file.c_str(), this->_sockfd);
+        packed.unpack();
     }
 
     /**
@@ -61,7 +69,11 @@ namespace extras {
      *
      */
     void rsi::DownloaderServer::transfer() const {
-        extras::rsi::send_file2(filename().c_str(), this->_new_sock);
+        rsi::Parameter parcel = ~extras::Paths(filename());
+        rsi::Parcel packed(parcel);
+        packed.pack();
+        std::string downloaded_file = packed.packed();
+        extras::rsi::send_file2(downloaded_file.c_str(), this->_new_sock);
     }
 
 }  // namespace extras
