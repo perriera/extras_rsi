@@ -75,6 +75,7 @@ namespace extras {
                 catch (PackedException& ex) {
                     cout << ex.what() << endl;
                     badCRC.push_back(line);
+                    in.clear();
                 }
             }
             if (badCRC.size() > 0)
