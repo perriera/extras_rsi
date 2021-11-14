@@ -71,7 +71,11 @@ namespace extras {
             parcel.unpack();
             cmd = "unzip -o " + parcel.unpacked() + " -d /tmp ";
             system(cmd.c_str());
-            system("ls send* -la");
+            // auto copy_cmd = "cp " + parcel.packed() + " send.txt";
+            // system(copy_cmd.c_str());
+            parcel.pack();
+            cmd = "ls " + parameter + "* -la";
+            system(cmd.c_str());
         }
         catch (rsi::PackedException& ex) {
             cout << ex.what() << endl;
@@ -105,7 +109,7 @@ namespace extras {
     void rsi::DownloaderServer::transfer() const {
         rsi::Parameter parcel = ~extras::Paths(filename());
         rsi::Parcel packed(parcel);
-        packed.pack();
+        // packed.pack();
         std::string downloaded_file = packed.packed();
         extras::rsi::send_file2(downloaded_file.c_str(), this->_new_sock);
         auto msg = extras::rsi::read_line(this->_sockfd);
