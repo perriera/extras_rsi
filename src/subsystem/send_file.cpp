@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <iostream>
 
 #include <rsi/exceptions.hpp>
 #include <rsi/subsystem.hpp>
@@ -28,6 +29,7 @@ void extras::rsi::send_file(FILE* fp, int sockfd) {
         bzero(data, extras::rsi::SIZE);
     }
     auto msg = "done";
+    std::cout << msg << " sent" << std::endl;
     if (send(sockfd, msg, strlen(msg), 0) == -1) {
         perror("[-]Error in sending file.");
         exit(1);
