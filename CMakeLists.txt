@@ -138,9 +138,9 @@ endif()
 # includes ALL headers and sources under include/ and src/. So, to keep two or more main() 
 # declarations seperate, we place any sources that have a main() in the instances/ folder
 #
-add_executable(main instances/main.cpp) 
-target_include_directories(main PUBLIC ${INCLUDES})
-target_link_libraries(main PRIVATE ${PROJECT_NAME} stdc++fs extras )
+add_executable(parcel instances/main.cpp) 
+target_include_directories(parcel PUBLIC ${INCLUDES})
+target_link_libraries(parcel PRIVATE ${PROJECT_NAME} stdc++fs extras )
 
 #
 # FreeFormJS process_client / process_server
