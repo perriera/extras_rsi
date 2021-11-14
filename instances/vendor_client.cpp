@@ -1,4 +1,4 @@
-#include <rsi/vendor/Vendor.hpp>
+#include <rsi/vendor/v1/Vendor.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/filesystem/paths.hpp>
 #include <iostream>

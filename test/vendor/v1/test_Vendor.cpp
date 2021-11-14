@@ -1,11 +1,11 @@
-#include <rsi/vendor/Vendor.hpp>
+#include <rsi/vendor/v1/Vendor.hpp>
 #include <extras/strings.hpp>
 #include <extras/filesystem/paths.hpp>
 #include <filesystem>
 #include <iostream>
 
-#include "../unittesting/catch.hpp"
-#include "../unittesting/fakeit.hpp"
+#include "../../unittesting/catch.hpp"
+#include "../../unittesting/fakeit.hpp"
 
 using namespace extras;
 namespace fs = std::filesystem;

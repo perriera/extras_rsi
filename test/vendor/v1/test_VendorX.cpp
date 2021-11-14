@@ -1,4 +1,4 @@
-// #include <rsi/vendor/Vendor.hpp>
+// #include <rsi/vendor/v1/Vendor.hpp>
 // #include <rsi/bin2hex/ConvertFile.hpp>
 // #include <rsi/exceptions.hpp>
 // #include <rsi/sockets/Types.hpp>
