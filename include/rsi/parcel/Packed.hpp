@@ -38,6 +38,7 @@ namespace extras {
             virtual void pack() const pure;
             virtual void unpack() const pure;
             virtual void verify_integrity() const pure;
+            virtual void clean() const pure;
 
         };
 
@@ -62,6 +63,7 @@ namespace extras {
             virtual void pack() const override;
             virtual void unpack() const override;
             virtual void verify_integrity() const override;
+            virtual void clean() const override;
 
         };
 

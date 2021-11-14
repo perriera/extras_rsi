@@ -2,8 +2,10 @@
 #include <rsi/exceptions.hpp>
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
 using namespace std;
+namespace fs = std::filesystem;
 
 namespace extras {
     namespace rsi {
@@ -75,10 +77,20 @@ namespace extras {
             rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
 
         };
+
         void Packed::verify_integrity() const {
             rsi::FileNotFoundException::assertion(parcel(), __INFO__);
             rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
             rsi::PackedException::assertion(parcel(), unpacked(), __INFO__);
+        };
+
+        void Packed::clean() const {
+            if (fs::exists(packed()))
+                fs::remove(packed());
+            if (fs::exists(hexed()))
+                fs::remove(hexed());
+            if (fs::exists(unpacked()))
+                fs::remove(unpacked());
         };
 
 
