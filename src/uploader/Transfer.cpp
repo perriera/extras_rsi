@@ -35,7 +35,12 @@ namespace extras {
         rsi::Parcel packed(parcel);
         std::string uploaded_file = packed.packed();
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
-        packed.unpack();
+        try {
+            packed.unpack();
+        }
+        catch (rsi::PackedException& ex) {
+            cout << ex.what() << endl;
+        }
         system("ls -la");
         /**
          * @brief Right here, Right now...
@@ -61,7 +66,12 @@ namespace extras {
         rsi::Parcel packed(parcel);
         std::string downloaded_file = packed.packed();
         extras::rsi::write_file(downloaded_file.c_str(), this->_sockfd);
-        packed.unpack();
+        try {
+            packed.unpack();
+        }
+        catch (rsi::PackedException& ex) {
+            cout << ex.what() << endl;
+        }
     }
 
     /**

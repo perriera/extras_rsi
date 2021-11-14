@@ -62,14 +62,23 @@ namespace extras {
             rsi::FileNotFoundException::assertion(packed(), __INFO__);
             std::ifstream in(packed());
             rsi::HexFile hexFile;
+            rsi::PackedFile badCRC;
             while (in.good()) {
                 rsi::PackedLine line;
-                in >> line;
-                if (in.good()) {
-                    hexFile.push_back(line.hexLine());
-                    cout << line << endl;
+                try {
+                    in >> line;
+                    if (in.good()) {
+                        hexFile.push_back(line.hexLine());
+                        cout << line << endl;
+                    }
+                }
+                catch (PackedException& ex) {
+                    cout << ex.what() << endl;
+                    badCRC.push_back(line);
                 }
             }
+            if (badCRC.size() > 0)
+                cout << "BadCRC count: " << badCRC.size() << endl;
             std::ofstream outHex(hexed());
             rsi::ConvertFile().saveHex(outHex, hexFile);
             outHex.close();
