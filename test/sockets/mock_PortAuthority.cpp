@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "../vendor/catch.hpp"
-#include "../vendor/fakeit.hpp"
+#include "../unittesting/catch.hpp"
+#include "../unittesting/fakeit.hpp"
 #include <rsi/sockets/PortAuthority.hpp>
 
 using namespace extras;

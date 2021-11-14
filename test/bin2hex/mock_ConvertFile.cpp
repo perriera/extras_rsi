@@ -3,8 +3,8 @@
 #include <fstream>
 #include <filesystem>
 
-#include "../vendor/catch.hpp"
-#include "../vendor/fakeit.hpp"
+#include "../unittesting/catch.hpp"
+#include "../unittesting/fakeit.hpp"
 
 using namespace extras;
 using namespace fakeit;

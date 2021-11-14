@@ -57,6 +57,29 @@ namespace extras {
             }
         };
 
+        /**
+         * @brief FileNotFoundException
+         *
+         */
+        concrete class FileNotFoundException extends RSIException {
+        public:
+            FileNotFoundException(std::string msg, const extras::WhereAmI& whereAmI)
+                : RSIException(msg.c_str(), whereAmI) {}
+            static void assertion(const std::string& filename, const extras::WhereAmI& ref);
+        };
+
+        /**
+         * @brief CantOpenFileException
+         *
+         */
+        concrete class CantOpenStreamException extends RSIException {
+        public:
+            CantOpenStreamException(std::string msg, const extras::WhereAmI& whereAmI)
+                : RSIException(msg.c_str(), whereAmI) {}
+            static void assertion(const std::istream& stream, const std::string& filename, const extras::WhereAmI& ref);
+            static void assertion(const std::ostream& stream, const std::string& filename, const extras::WhereAmI& ref);
+        };
+
     }  // namespace rsi
 
 }  // namespace extras
