@@ -23,7 +23,6 @@ namespace extras {
      *
      */
     void rsi::UploaderClient::transfer() const {
-        system("rm send* ");
 
         rsi::Parameter parcel = ~extras::Paths(filename());
         rsi::Parcel packed(parcel);
@@ -37,6 +36,8 @@ namespace extras {
      */
     void rsi::UploaderServer::transfer() const {
         cout << "\n\n\n\n\n\n" << "UploaderServer" << "\n\n\n\n\n\n";
+
+        system("rm send* ");
 
         rsi::Parameter parcel = ~extras::Paths(filename());
         rsi::Parcel packed(parcel);
