@@ -48,6 +48,8 @@ namespace extras {
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
+        packed.unpack();
+
         // try {
         //     // system("cat send.txt_packed   ");
         //     packed.unpack();
