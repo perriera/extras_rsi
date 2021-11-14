@@ -1,5 +1,5 @@
 #include <rsi/bin2hex/ConvertFile.hpp>
-#include <rsi/parcel/Packed.hpp>
+#include <rsi/parcel/Parcel.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
 #include <rsi/exceptions.hpp>
@@ -14,13 +14,13 @@ using namespace extras;
 using namespace fakeit;
 namespace fs = std::filesystem;
 
-SCENARIO("Mock PackedInterface: hexToBin", "[PackedInterface]") {
+SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
 
     rsi::Parameter parcel = ~extras::Paths("data/cplusplusorg.freeformjs.imploded.zip");
     rsi::Parameter hexed = parcel + "_hexed";
     rsi::Parameter packed = parcel + "_packed";
     rsi::Parameter unpacked = parcel + "_unpacked";
-    Mock<rsi::PackedInterface> mock;
+    Mock<rsi::ParcelInterface> mock;
     When(Method(mock, parcel)).AlwaysReturn(parcel);
     When(Method(mock, hexed)).AlwaysReturn(hexed);
     When(Method(mock, packed)).AlwaysReturn(packed);
@@ -119,7 +119,7 @@ SCENARIO("Mock PackedInterface: hexToBin", "[PackedInterface]") {
     if (fs::exists(unpacked))
         fs::remove(unpacked);
 
-    rsi::PackedInterface& i = mock.get();
+    rsi::ParcelInterface& i = mock.get();
     REQUIRE(i.parcel() == parcel);
     REQUIRE(i.hexed() == hexed);
     REQUIRE(i.packed() == packed);

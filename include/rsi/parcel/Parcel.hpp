@@ -24,7 +24,7 @@ namespace extras {
          *
          */
 
-        interface PackedInterface {
+        interface ParcelInterface {
 
             // virtual BinFile loadBin(const Filename& filename) const pure;
             // virtual HexFile convertToHex() const pure;
@@ -42,7 +42,7 @@ namespace extras {
 
         };
 
-        concrete class Packed  implements PackedInterface {
+        concrete class Parcel  implements ParcelInterface {
 
             Parameter _parcel;
             Parameter _hexed;
@@ -50,7 +50,7 @@ namespace extras {
             Parameter _unpacked;
 
         public:
-            Packed(const Parameter& parcel) : _parcel(parcel) {
+            Parcel(const Parameter& parcel) : _parcel(parcel) {
                 _hexed = _parcel + "_hexed";
                 _packed = _parcel + "_packed";
                 _unpacked = _parcel + "_unpacked";

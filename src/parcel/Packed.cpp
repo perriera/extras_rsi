@@ -1,4 +1,4 @@
-#include <rsi/parcel/Packed.hpp>
+#include <rsi/parcel/Parcel.hpp>
 #include <rsi/exceptions.hpp>
 #include <iostream>
 #include <fstream>
@@ -40,7 +40,7 @@ namespace extras {
             return in;
         }
 
-        void Packed::pack() const {
+        void Parcel::pack() const {
             rsi::FileNotFoundException::assertion(parcel(), __INFO__);
             std::ifstream inBin(parcel());
             std::ofstream outHex(hexed());
@@ -58,7 +58,7 @@ namespace extras {
             rsi::FileNotFoundException::assertion(packed(), __INFO__);
         }
 
-        void Packed::unpack() const {
+        void Parcel::unpack() const {
             rsi::FileNotFoundException::assertion(packed(), __INFO__);
             std::ifstream in(packed());
             rsi::HexFile hexFile;
@@ -79,13 +79,13 @@ namespace extras {
 
         }
 
-        void Packed::verify_integrity() const {
+        void Parcel::verify_integrity() const {
             rsi::FileNotFoundException::assertion(parcel(), __INFO__);
             rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
             rsi::PackedException::assertion(parcel(), unpacked(), __INFO__);
         }
 
-        void Packed::clean() const {
+        void Parcel::clean() const {
             if (fs::exists(packed()))
                 fs::remove(packed());
             if (fs::exists(hexed()))
