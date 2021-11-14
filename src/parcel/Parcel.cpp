@@ -65,9 +65,12 @@ namespace extras {
             while (in.good()) {
                 rsi::PackedLine line;
                 in >> line;
-                if (in.good())
+                if (in.good()) {
                     hexFile.push_back(line.hexLine());
+                    cout << "/r" << line;
+                }
             }
+            cout << endl;
             std::ofstream outHex(hexed());
             rsi::ConvertFile().saveHex(outHex, hexFile);
             outHex.close();
