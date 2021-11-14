@@ -36,10 +36,11 @@ namespace extras {
         rsi::Parameter parcel = ~extras::Paths(filename());
         rsi::Parcel packed(parcel);
         packed.clean();
+        system("ls send* -la");
         std::string uploaded_file = packed.packed();
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
         try {
-            system("cat send.txt_packed   ");
+            // system("cat send.txt_packed   ");
             packed.unpack();
             system("unzip -o send.txt_unpacked -d /tmp ");
         }
