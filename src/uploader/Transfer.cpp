@@ -69,6 +69,8 @@ namespace extras {
         extras::rsi::write_file(downloaded_file.c_str(), this->_sockfd);
         try {
             packed.unpack();
+            auto cmd = "unzip " + packed.unpacked() + " -d /tmp ";
+            system(cmd.c_str());
         }
         catch (rsi::PackedException& ex) {
             cout << ex.what() << endl;
