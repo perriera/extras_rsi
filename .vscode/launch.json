@@ -93,8 +93,8 @@
             "program": "${workspaceFolder}/build/uploader_client",
             "args": [
                 "send.txt",
-                "127.0.0.1",
-                "9000",
+                "137.184.218.130",
+                "9003",
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

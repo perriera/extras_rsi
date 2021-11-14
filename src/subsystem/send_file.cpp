@@ -27,9 +27,9 @@ void extras::rsi::send_file(FILE* fp, int sockfd) {
         }
         bzero(data, extras::rsi::SIZE);
     }
-    if (data[0] != 0)
-        if (send(sockfd, data, strlen(data), 0) == -1) {
-            perror("[-]Error in sending file.");
-            exit(1);
-        }
+    auto msg = "done";
+    if (send(sockfd, msg, strlen(msg), 0) == -1) {
+        perror("[-]Error in sending file.");
+        exit(1);
+    }
 }
