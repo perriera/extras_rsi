@@ -36,30 +36,29 @@ namespace extras {
         rsi::Parameter parcel = ~extras::Paths(filename());
         rsi::Parcel packed(parcel);
         packed.clean();
-        system("ls send* -la");
         std::string uploaded_file = packed.packed();
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
-        try {
-            // system("cat send.txt_packed   ");
-            packed.unpack();
-            system("unzip -o send.txt_unpacked -d /tmp ");
-        }
-        catch (rsi::PackedException& ex) {
-            cout << ex.what() << endl;
-        }
-        system("ls -la");
-        /**
-         * @brief Right here, Right now...
-         *
-         */
-        system("ls send* -la");
-        auto delete_cmd = "rm send.txt";
-        system(delete_cmd);
-        system("ls send* -la");
-        auto copy_cmd = "cp " + uploaded_file + " send.txt";
-        system(copy_cmd.c_str());
-        //        // auto cat_cmd = "cat send.txt";
-               // system(cat_cmd);
+        // try {
+        //     // system("cat send.txt_packed   ");
+        //     packed.unpack();
+        //     system("unzip -o send.txt_unpacked -d /tmp ");
+        // }
+        // catch (rsi::PackedException& ex) {
+        //     cout << ex.what() << endl;
+        // }
+        // system("ls -la");
+        // /**
+        //  * @brief Right here, Right now...
+        //  *
+        //  */
+        // system("ls send* -la");
+        // auto delete_cmd = "rm send.txt";
+        // system(delete_cmd);
+        // system("ls send* -la");
+        // auto copy_cmd = "cp " + uploaded_file + " send.txt";
+        // system(copy_cmd.c_str());
+        // //        // auto cat_cmd = "cat send.txt";
+        //        // system(cat_cmd);
         system("ls send* -la");
     }
 
