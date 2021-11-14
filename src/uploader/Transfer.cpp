@@ -40,6 +40,7 @@ namespace extras {
         rsi::Parcel packed(parcel);
         packed.clean();
         std::string uploaded_file = packed.packed();
+        cout << uploaded_file << " written" << endl;
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(5000));
