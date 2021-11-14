@@ -84,6 +84,7 @@ namespace extras {
                 }
                 catch (exception& ex) {
                     cout << ex.what() << endl;
+                    cout << line << endl;
                     badCRC.push_back(line);
                 }
             }
