@@ -3,6 +3,14 @@
 #include <filesystem>
 #include <iostream>
 
+
+// build/uploader_client data/cplusplusorg.freeformjs.imploded.zip 137.184.218.130 9003
+// build/uploader_server send.txt 137.184.218.130 9003
+
+// build/uploader_client data/cplusplusorg.freeformjs.imploded.zip 137.184.218.130 9003
+// build/uploader_server send.txt 137.184.218.130 9003
+
+
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
 
