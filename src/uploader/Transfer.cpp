@@ -47,6 +47,7 @@ namespace extras {
     }
 
     void rsi::VendorClient::transfer() const {
+        cout << "VendorClient::transfer()" << endl;
     }
 
     void rsi::VendorServer::transfer() const {
