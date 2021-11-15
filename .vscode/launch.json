@@ -15,7 +15,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/run-unittests-rsi",
             "args": [
-                "[TransmitInterface]"
+                "[BurstInterface]"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

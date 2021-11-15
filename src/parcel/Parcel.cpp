@@ -126,7 +126,6 @@ namespace extras {
         }
 
         void Parcel::dir() const {
-            rsi::FileNotFoundException::assertion(parcel(), __INFO__);
             std::string cmd = "ls -la " + parcel() + "*";
             system(cmd.c_str());
         }

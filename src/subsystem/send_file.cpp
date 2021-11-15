@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 #include <extras/interfaces.hpp>
 #include <rsi/exceptions.hpp>
@@ -12,49 +13,33 @@
 using namespace std;
 using namespace extras;
 
+static void sendIt(int sockfd, const string& buffer) {
+    const char* packet = buffer.c_str();
+    int size = buffer.size();
+    if (send(sockfd, packet, size, 0) == -1) {
+        perror("[-]Error in sending file.");
+        exit(1);
+    }
+}
+
 void extras::rsi::send_file2(const char* filename, int sockfd) {
 
     ifstream in(filename);
     while (in.good()) {
-        // byte c[1] = { 0 };
-        // in >> noskipws >> c[0];
-        // if (send(sockfd, c, 1, 0) == -1) {
-        //     perror("[-]Error in sending file.");
-        //     exit(1);
-        // }
-        std::string line;
-        getline(in, line);
-        if (line != "") {
-            for (auto v : line) {
-                byte c[1] = { v };
-                if (send(sockfd, c, 1, 0) == -1) {
-                    perror("[-]Error in sending file.");
-                    exit(1);
-                }
-            }
-            byte c[1] = { '\n' };
-            if (send(sockfd, c, 1, 0) == -1) {
-                perror("[-]Error in sending file.");
-                exit(1);
-            }
-            cout << line << endl;
+        stringstream ss;
+        while (ss.str().size() < 50 * 1024) {
+            string line;
+            getline(in, line);
+            if (line.size() == 0)
+                break;
+            if (in.good())
+                ss << line << endl;
         }
-
+        sendIt(sockfd, ss.str());
     }
-    auto msg = "done";
-    std::cout << msg << " sent" << std::endl;
-    if (send(sockfd, msg, strlen(msg), 0) == -1) {
-        perror("[-]Error in sending file.");
-        exit(1);
-    }
-
-    auto junk = "JUNK";
-    for (int i = 0; i < 10000; i++)
-        if (send(sockfd, junk, strlen(junk), 0) == -1) {
-            perror("[-]Error in sending file.");
-            exit(1);
-        }
-
+    sendIt(sockfd, "done");
+    for (int i = 0; i < 5000; i++)
+        sendIt(sockfd, "JUNK");
 
 }
 
