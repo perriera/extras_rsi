@@ -59,6 +59,7 @@ namespace extras {
         parcel.cat();
         parcel.pack();
         parcel.dir();
+        parcel.unzip();
     }
 
     /**
