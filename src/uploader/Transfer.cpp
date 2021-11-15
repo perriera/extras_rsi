@@ -39,17 +39,10 @@ namespace extras {
      */
     void rsi::UploaderServer::transfer() const {
 
-        rsi::Parameter parcel = filename();
-        rsi::Parcel packed(parcel);
-        std::string uploaded_file = packed.packed();
-        extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
-        cout << uploaded_file << " written" << endl;
-
-        packed.unpack();
-        cout << packed.unpacked() << " written" << endl;
-
-        packed.dir();
-        packed.unzip();
+        rsi::Parameter parameter = filename();
+        rsi::Parcel parcel(parameter);
+        extras::rsi::write_file(parcel.packed().c_str(), this->_new_sock);
+        cout << parcel.packed() << " written" << endl;
 
     }
 
@@ -57,22 +50,14 @@ namespace extras {
     }
 
     void rsi::VendorServer::transfer() const {
-        try {
-            rsi::Parameter parameter = ~extras::Paths(filename());
-            rsi::Parcel parcel(parameter);
-            std::string cmd = "cat " + parcel.packed();
-            system(cmd.c_str());
-            parcel.unpack();
-            cmd = "unzip -o " + parcel.unpacked() + " -d /tmp ";
-            system(cmd.c_str());
-            // auto copy_cmd = "cp " + parcel.packed() + " send.txt";
-            // system(copy_cmd.c_str());
-            parcel.pack();
-            system("ls send* -la");
-        }
-        catch (rsi::PackedException& ex) {
-            cout << ex.what() << endl;
-        }
+        rsi::Parameter parameter = ~extras::Paths(filename());
+        rsi::Parcel parcel(parameter);
+        parcel.unpack();
+        parcel.unzip();
+        parcel.dir();
+        parcel.cat();
+        parcel.pack();
+        parcel.dir();
     }
 
     /**
@@ -80,19 +65,13 @@ namespace extras {
      *
      */
     void rsi::DownloaderClient::transfer() const {
-        rsi::Parameter parcel = ~extras::Paths(filename());
-        rsi::Parcel packed(parcel);
-        std::string downloaded_file = packed.packed();
-        extras::rsi::write_file(downloaded_file.c_str(), this->_sockfd);
-        extras::rsi::send_line("Thank you", this->_sockfd);
-        try {
-            packed.unpack();
-            auto cmd = "unzip -o " + packed.unpacked() + " -d /tmp ";
-            system(cmd.c_str());
-        }
-        catch (rsi::PackedException& ex) {
-            cout << ex.what() << endl;
-        }
+        rsi::Parameter parameter = ~extras::Paths(filename());
+        rsi::Parcel parcel(parameter);
+        extras::rsi::write_file(parcel.packed().c_str(), this->_sockfd);
+        parcel.unpack();
+        parcel.cat();
+        parcel.unzip();
+        parcel.dir();
     }
 
     /**
@@ -100,18 +79,12 @@ namespace extras {
      *
      */
     void rsi::DownloaderServer::transfer() const {
-        cout << "\n\n\n\n\n\n" << "DownloaderServer" << "\n\n\n\n\n\n";
-        rsi::Parameter parcel = ~extras::Paths(filename());
-        rsi::Parcel packed(parcel);
-        // packed.pack();
-        std::string downloaded_file = packed.packed();
-        auto copy_cmd = "cp " + downloaded_file + " send.txt";
-        system(copy_cmd.c_str());
-        extras::rsi::send_file2(downloaded_file.c_str(), this->_new_sock);
-        auto msg = extras::rsi::read_line(this->_sockfd);
-        cout << msg << endl;
-        if (msg != "Thank you")
-            cout << "\n\n\n\n\n\n\n\n\n\nDIDNT WORK\n\n\n\n\n\n\n" << endl;
+        rsi::Parameter parameter = ~extras::Paths(filename());
+        rsi::Parcel parcel(parameter);
+        parcel.pack();
+        extras::rsi::send_file2(parcel.packed().c_str(), this->_new_sock);
+        parcel.clean();
+        parcel.dir();
     }
 
 }  // namespace extras
