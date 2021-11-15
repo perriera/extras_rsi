@@ -109,6 +109,7 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
                 rsi::FileNotFoundException::assertion(parcel, __INFO__);
                 rsi::FileNotFoundException::assertion(unpacked, __INFO__);
                 rsi::PackedException::assertion(parcel, unpacked, __INFO__);
+                return true;
             }
     );
 

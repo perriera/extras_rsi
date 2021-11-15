@@ -46,7 +46,7 @@ SCENARIO("Test ParcelInterface: hexToBin", "[ParcelInterface]") {
     REQUIRE(fs::exists(packed.hexed()));
     REQUIRE(fs::exists(packed.packed()));
     REQUIRE(fs::exists(packed.unpacked()));
-    i.verify_integrity();
+    REQUIRE(i.verify_integrity());
     REQUIRE(fs::exists(packed.parcel()));
     REQUIRE(fs::exists(packed.unpacked()));
     i.clean();

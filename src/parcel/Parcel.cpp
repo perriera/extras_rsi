@@ -82,7 +82,6 @@ namespace extras {
                 try {
                     ss >> line;
                     hexFile.push_back(line.hexLine());
-                    cout << line << endl;
                 }
                 catch (exception& ex) {
                     cout << ex.what() << endl;
@@ -104,10 +103,11 @@ namespace extras {
 
         }
 
-        void Parcel::verify_integrity() const {
+        bool Parcel::verify_integrity() const {
             rsi::FileNotFoundException::assertion(parcel(), __INFO__);
             rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
             rsi::PackedException::assertion(parcel(), unpacked(), __INFO__);
+            return true;
         }
 
         void Parcel::clean() const {

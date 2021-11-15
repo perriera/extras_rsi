@@ -37,7 +37,7 @@ namespace extras {
 
             virtual void pack() const pure;
             virtual void unpack() const pure;
-            virtual void verify_integrity() const pure;
+            virtual bool verify_integrity() const pure;
             virtual void clean() const pure;
             virtual void cat() const pure;
             virtual void dir() const pure;
@@ -65,7 +65,7 @@ namespace extras {
 
             virtual void pack() const override;
             virtual void unpack() const override;
-            virtual void verify_integrity() const override;
+            virtual bool verify_integrity() const override;
             virtual void clean() const override;
             virtual void cat() const override;
             virtual void dir() const override;
