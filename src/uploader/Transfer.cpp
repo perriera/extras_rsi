@@ -27,8 +27,8 @@ namespace extras {
         rsi::Parameter parcel = ~extras::Paths(filename());
         rsi::Parcel packed(parcel);
         packed.pack();
-        packed.unpack();
-        packed.unzip();
+        // packed.unpack();
+        // packed.unzip();
         extras::rsi::send_file2(packed.packed(), this->_sockfd);
         cout << packed.packed() << " uploaded" << endl;
     }
@@ -50,8 +50,8 @@ namespace extras {
         rsi::Parcel parcel(parameter);
         extras::rsi::write_file(parcel.packed(), this->_sockfd);
         parcel.unpack();
-        parcel.cat();
-        parcel.unzip();
+        // parcel.cat();
+        // parcel.unzip();
         parcel.dir();
         cout << parcel.packed() << " downloaded" << endl;
     }
@@ -75,12 +75,12 @@ namespace extras {
     void rsi::VendorServer::transfer() const {
         rsi::Parameter parameter = ~extras::Paths(filename());
         rsi::Parcel parcel(parameter);
-        parcel.unpack();
-        parcel.unzip();
-        parcel.dir();
-        parcel.cat();
-        parcel.pack();
-        parcel.dir();
+        // parcel.unpack();
+        // parcel.unzip();
+        // parcel.dir();
+        // parcel.cat();
+        // parcel.pack();
+        // parcel.dir();
         parcel.unzip();
         cout << "VendorClient::transfer()" << endl;
     }
