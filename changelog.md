@@ -4,8 +4,8 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v2.6.0 -m "Refactored unused code"</br>
-> > git push origin v2.6.0
+> > git tag -a v2.7.0 -m "Added ng-monitor"</br>
+> > git push origin v2.7.0
 > 
 
 IMPORTANT: 
@@ -28,6 +28,9 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 2.7.0 (2021-11-15)
+- Added ng-monitor
 
 #### 2.6.0 (2021-11-15)
 - Refactored unused code 
@@ -136,7 +139,8 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v2.6.0...HEAD
+[Unreleased]: https://github.com/perriera/rsi/compare/v2.7.0...HEAD
+[2.7.0]: https://github.com/perriera/rsi/compare/v2.6.0...v2.7.0
 [2.6.0]: https://github.com/perriera/rsi/compare/v2.5.0...v2.6.0
 [2.5.0]: https://github.com/perriera/rsi/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/perriera/rsi/compare/v2.3.0...v2.4.0

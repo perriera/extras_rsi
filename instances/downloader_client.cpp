@@ -9,7 +9,7 @@ int main(int argc, char const* argv[]) {
         downloader.transfer();
         printf("[+]File data downloaded successfully.\n");
         downloader.close();
-        printf("[+]Closed the connection.\n");
+        printf("[+]Closed the connection.\n\n");
         return 0;
     }
     catch (std::exception& ex) {

@@ -9,7 +9,7 @@ int main(int argc, char const* argv[]) {
         client.transfer();
         printf("[+]File data sent successfully.\n");
         client.close();
-        printf("[+]Closed the connection.\n");
+        printf("[+]Closed the connection.\n\n");
         return 0;
     }
     catch (std::exception& ex) {

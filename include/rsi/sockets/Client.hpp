@@ -2,7 +2,7 @@
 #define _EXPARX_RSISOCKETSCLIENT_HPP
 
 #include <extras/interfaces.hpp>
-#include <rsi/sockets/Pool.hpp>
+#include <rsi/sockets/SocketPool.hpp>
 #include <iostream>
 #include <netinet/in.h>
 #include <sys/socket.h>

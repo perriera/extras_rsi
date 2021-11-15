@@ -80,6 +80,7 @@ namespace extras {
             rsi::ServiceTypeMap forClients;
             forClients["upload"] = "build/uploader_client";
             forClients["vendor"] = "build/vendor_client";
+            forClients["ng_monitor"] = "build/ng_monitor";
             forClients["download"] = "build/downloader_client";
             return common(forClients, requests);
         }
@@ -89,6 +90,7 @@ namespace extras {
             rsi::ServiceTypeMap forServers;
             forServers["upload"] = "build/uploader_server";
             forServers["vendor"] = "build/vendor_server";
+            forServers["ng_monitor"] = "build/ng_server";
             forServers["download"] = "build/downloader_server";
             return common(forServers, requests);
         }

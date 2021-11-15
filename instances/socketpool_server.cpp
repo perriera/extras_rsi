@@ -13,7 +13,7 @@ int main(int argc, char const* argv[]) {
         }
         printf("[+]File data sent successfully.\n");
         server.close();
-        printf("[+]Closed the connection.\n");
+        printf("[+]Closed the connection.\n\n");
         return 0;
     }
     catch (std::exception& ex) {

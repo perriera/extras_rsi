@@ -9,7 +9,7 @@ int main(int argc, char const* argv[]) {
         uploader.transfer();
         printf("[+]File data uploaded successfully.\n");
         uploader.close();
-        printf("[+]Closed the connection.\n");
+        printf("[+]Closed the connection.\n\n");
         exit(0);
     }
     catch (std::exception& ex) {
