@@ -1,13 +1,13 @@
-// #include <rsi/uploader/Uploader.hpp>
-// #include <extras/strings.hpp>
-// #include <filesystem>
-// #include <iostream>
+#include <rsi/uploader/Uploader.hpp>
+#include <extras/strings.hpp>
+#include <filesystem>
+#include <iostream>
 
-// #include "../unittesting/catch.hpp"
-// #include "../unittesting/fakeit.hpp"
+#include "../unittesting/catch.hpp"
+#include "../unittesting/fakeit.hpp"
 
-// using namespace extras;
-// namespace fs = std::filesystem;
+using namespace extras;
+namespace fs = std::filesystem;
 
 // SCENARIO("Test UploaderInterface: download", "[UploaderInterface]") {
 //     std::string target = "send.txt";
