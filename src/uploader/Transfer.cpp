@@ -31,7 +31,6 @@ namespace extras {
         packed.unzip();
         cout << "sending " << packed.packed() << endl;
         extras::rsi::send_file2(packed.packed().c_str(), this->_sockfd);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 
     /**
@@ -39,15 +38,11 @@ namespace extras {
      *
      */
     void rsi::UploaderServer::transfer() const {
-        cout << "\n\n\n\n\n\n" << "UploaderServer" << "\n\n\n\n\n\n";
 
         rsi::Parameter parcel = filename();
         rsi::Parcel packed(parcel);
         std::string uploaded_file = packed.packed();
         extras::rsi::write_file(uploaded_file.c_str(), this->_new_sock);
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
         cout << uploaded_file << " written" << endl;
 
         packed.unpack();
@@ -63,7 +58,6 @@ namespace extras {
 
     void rsi::VendorServer::transfer() const {
         try {
-            cout << "\n\n\n\n\n\n" << "VendorServer" << "\n\n\n\n\n\n";
             rsi::Parameter parameter = ~extras::Paths(filename());
             rsi::Parcel parcel(parameter);
             std::string cmd = "cat " + parcel.packed();
