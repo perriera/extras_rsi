@@ -90,16 +90,6 @@ namespace extras {
             virtual void close() const override;
         };
 
-        concrete class DownloaderClient extends UploaderClient {
-        public:
-            virtual void transfer() const override;
-        };
-
-        concrete class VendorClient extends UploaderClient {
-        public:
-            virtual void transfer() const override;
-        };
-
         /**
          * @brief concrete class UploaderServer
          *
@@ -118,15 +108,7 @@ namespace extras {
             virtual void close() const override;
         };
 
-        concrete class DownloaderServer extends UploaderServer {
-        public:
-            virtual void transfer() const override;
-        };
 
-        concrete class VendorServer extends UploaderServer {
-        public:
-            virtual void transfer() const override;
-        };
     }  // namespace rsi
 
 }  // namespace extras

@@ -1,5 +1,5 @@
-#ifndef _EXPARX_RSISERVICES_VENDOR_HPP
-#define _EXPARX_RSISERVICES_VENDOR_HPP
+#ifndef _EXPARX_RSISERVICES_DOWNLOADER_HPP
+#define _EXPARX_RSISERVICES_DOWNLOADER_HPP
 
 #include <extras/interfaces.hpp>
 #include <rsi/uploader/Uploader.hpp>
@@ -12,25 +12,26 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief concrete class VendorClient
+         * @brief concrete class DownloaderClient
          *
          */
-        concrete class VendorClient extends UploaderClient {
+        concrete class DownloaderClient extends UploaderClient {
         public:
             virtual void transfer() const override;
         };
 
         /**
-         * @brief concrete class VendorServer
+         * @brief concrete class DownloaderServer
          *
          */
-        concrete class VendorServer extends UploaderServer {
+        concrete class DownloaderServer extends UploaderServer {
         public:
             virtual void transfer() const override;
         };
+
 
     }  // namespace rsi
 
 }  // namespace extras
 
-#endif  // _EXPARX_RSISERVICES_VENDOR_HPP
+#endif  // _EXPARX_RSISERVICES_DOWNLOADER_HPP

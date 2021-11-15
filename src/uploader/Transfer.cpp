@@ -2,6 +2,8 @@
 #include <unistd.h>
 
 #include <rsi/uploader/Uploader.hpp>
+#include <rsi/uploader/Downloader.hpp>
+#include <rsi/uploader/Vendor.hpp>
 #include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/strings.hpp>
