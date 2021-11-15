@@ -138,9 +138,9 @@ endif()
 # includes ALL headers and sources under include/ and src/. So, to keep two or more main() 
 # declarations seperate, we place any sources that have a main() in the instances/ folder
 #
-add_executable(main instances/main.cpp) 
-target_include_directories(main PUBLIC ${INCLUDES})
-target_link_libraries(main PRIVATE ${PROJECT_NAME} stdc++fs extras )
+add_executable(parcel instances/main.cpp) 
+target_include_directories(parcel PUBLIC ${INCLUDES})
+target_link_libraries(parcel PRIVATE ${PROJECT_NAME} stdc++fs extras )
 
 #
 # FreeFormJS process_client / process_server
@@ -179,6 +179,19 @@ target_link_libraries(downloader_client PRIVATE ${PROJECT_NAME} stdc++fs extras)
 add_executable(downloader_server instances/downloader_server.cpp) 
 target_include_directories(downloader_server PUBLIC ${INCLUDES})
 target_link_libraries(downloader_server PRIVATE ${PROJECT_NAME} stdc++fs extras)
+endif()
+
+#
+# FreeFormJS uploader_client / uploader_server
+#
+if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY)
+add_executable(vendor_client instances/vendor_client.cpp) 
+target_include_directories(vendor_client PUBLIC ${INCLUDES})
+target_link_libraries(vendor_client PRIVATE ${PROJECT_NAME} stdc++fs extras)
+
+add_executable(vendor_server instances/vendor_server.cpp) 
+target_include_directories(vendor_server PUBLIC ${INCLUDES})
+target_link_libraries(vendor_server PRIVATE ${PROJECT_NAME} stdc++fs extras)
 endif()
 
 #

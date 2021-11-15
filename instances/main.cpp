@@ -1,14 +1,43 @@
 #include <iostream>
 #include <filesystem>
+#include <rsi/parcel/Parcel.hpp>
+#include <rsi/exceptions.hpp>
+#include <rsi/sockets/Types.hpp>
+#include <extras/filesystem/paths.hpp>
 
-// #
-// # CMakeLists.txt uses a GLOB_RECURSE macro which automatically includes ALL headers 
-// # and sources under include/ and src/. So, to keep two or more main() declarations 
-// # seperate, we place any sources that have a main() in the instances/ folder
-// #
+using namespace extras;
+using namespace std;
+namespace fs = std::filesystem;
 
-int main(int, const char**)
+int main(int argc, const char** argv)
 {
-  std::cout << "Hello, world" << std::endl;
+  if (argc < 3) {
+    cout << "parcel [-pack|-unpack|-verify|-clean|-unzip] <filename>" << endl;
+    return 0;
+  }
+  try {
+    std::string option = argv[1];
+    auto filename = argv[2];
+    rsi::FileNotFoundException::assertion(filename, __INFO__);
+    rsi::Parameter parameter = ~extras::Paths(filename);
+    rsi::Parcel parcel(parameter);
+    if (option == "-pack")
+      parcel.pack();
+    if (option == "-unpack")
+      parcel.unpack();
+    if (option == "-verify")
+      parcel.verify_integrity();
+    if (option == "-clean")
+      parcel.clean();
+    if (option == "-cat")
+      parcel.cat();
+    if (option == "-dir")
+      parcel.dir();
+    if (option == "-unzip")
+      parcel.unzip();
+  }
+  catch (exception& ex) {
+    cout << ex.what() << endl;
+  }
   return 0;
 }

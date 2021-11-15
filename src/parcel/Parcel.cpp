@@ -61,13 +61,38 @@ namespace extras {
         void Parcel::unpack() const {
             rsi::FileNotFoundException::assertion(packed(), __INFO__);
             std::ifstream in(packed());
+
             rsi::HexFile hexFile;
+            rsi::PackedFile badCRC;
+
+            rsi::HexFile buffer;
             while (in.good()) {
-                rsi::PackedLine line;
-                in >> line;
-                if (in.good())
-                    hexFile.push_back(line.hexLine());
+                rsi::HexLine line;
+                getline(in, line);
+                if (line == "JUNK")
+                    break;
+                if (line.size() > 0)
+                    buffer.push_back(line);
             }
+
+            for (auto text : buffer) {
+                std::stringstream ss;
+                ss << text;
+                rsi::PackedLine line;
+                try {
+                    ss >> line;
+                    hexFile.push_back(line.hexLine());
+                    cout << line << endl;
+                }
+                catch (exception& ex) {
+                    cout << ex.what() << endl;
+                    cout << line << endl;
+                    badCRC.push_back(line);
+                }
+            }
+
+            if (badCRC.size() > 0)
+                cout << "BadCRC count: " << badCRC.size() << endl;
             std::ofstream outHex(hexed());
             rsi::ConvertFile().saveHex(outHex, hexFile);
             outHex.close();
@@ -92,6 +117,23 @@ namespace extras {
                 fs::remove(hexed());
             if (fs::exists(unpacked()))
                 fs::remove(unpacked());
+        }
+
+        void Parcel::cat() const {
+            rsi::FileNotFoundException::assertion(packed(), __INFO__);
+            std::string cmd = "cat " + packed();
+            system(cmd.c_str());
+        }
+
+        void Parcel::dir() const {
+            std::string cmd = "ls -la " + parcel() + "*";
+            system(cmd.c_str());
+        }
+
+        void Parcel::unzip() const {
+            rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
+            string cmd = "unzip -o " + unpacked() + " -d /tmp ";
+            system(cmd.c_str());
         }
 
 
