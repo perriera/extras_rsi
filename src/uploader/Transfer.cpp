@@ -19,7 +19,7 @@ namespace fs = std::filesystem;
 namespace extras {
 
     /**
-     * @brief UploaderClient::transfer()
+     * @brief Uploader Client/Server ::transfer()
      *
      */
     void rsi::UploaderClient::transfer() const {
@@ -29,23 +29,45 @@ namespace extras {
         packed.pack();
         packed.unpack();
         packed.unzip();
-        cout << "sending " << packed.packed() << endl;
-        extras::rsi::send_file2(packed.packed().c_str(), this->_sockfd);
+        extras::rsi::send_file2(packed.packed(), this->_sockfd);
+        cout << packed.packed() << " uploaded" << endl;
     }
 
-    /**
-     * @brief UploaderServer::transfer()
-     *
-     */
     void rsi::UploaderServer::transfer() const {
 
         rsi::Parameter parameter = filename();
         rsi::Parcel parcel(parameter);
-        extras::rsi::write_file(parcel.packed().c_str(), this->_new_sock);
-        cout << parcel.packed() << " written" << endl;
-
+        extras::rsi::write_file(parcel.packed(), this->_new_sock);
+        cout << parcel.packed() << " uploaded" << endl;
     }
 
+    /**
+     * @brief Vendor Client/Server ::transfer()
+     *
+     */
+    void rsi::DownloaderClient::transfer() const {
+        rsi::Parameter parameter = ~extras::Paths(filename());
+        rsi::Parcel parcel(parameter);
+        extras::rsi::write_file(parcel.packed(), this->_sockfd);
+        parcel.unpack();
+        parcel.cat();
+        parcel.unzip();
+        parcel.dir();
+        cout << parcel.packed() << " downloaded" << endl;
+    }
+
+    void rsi::DownloaderServer::transfer() const {
+        rsi::Parameter parameter = ~extras::Paths(filename());
+        rsi::Parcel parcel(parameter);
+        parcel.pack();
+        extras::rsi::send_file2(parcel.packed(), this->_new_sock);
+        cout << parcel.packed() << " downloaded" << endl;
+    }
+
+    /**
+     *  @brief Vendor Client/Server ::transfer()
+     *
+     */
     void rsi::VendorClient::transfer() const {
         cout << "VendorClient::transfer()" << endl;
     }
@@ -60,33 +82,8 @@ namespace extras {
         parcel.pack();
         parcel.dir();
         parcel.unzip();
+        cout << "VendorClient::transfer()" << endl;
     }
 
-    /**
-     * @brief DownloaderClient::transfer()
-     *
-     */
-    void rsi::DownloaderClient::transfer() const {
-        rsi::Parameter parameter = ~extras::Paths(filename());
-        rsi::Parcel parcel(parameter);
-        extras::rsi::write_file(parcel.packed().c_str(), this->_sockfd);
-        parcel.unpack();
-        parcel.cat();
-        parcel.unzip();
-        parcel.dir();
-    }
-
-    /**
-     * @brief DownloaderServer::transfer()
-     *
-     */
-    void rsi::DownloaderServer::transfer() const {
-        rsi::Parameter parameter = ~extras::Paths(filename());
-        rsi::Parcel parcel(parameter);
-        parcel.pack();
-        extras::rsi::send_file2(parcel.packed().c_str(), this->_new_sock);
-        // parcel.clean();
-        // parcel.dir();
-    }
 
 }  // namespace extras
