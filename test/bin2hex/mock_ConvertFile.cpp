@@ -1,6 +1,7 @@
 #include <rsi/bin2hex/ConvertFile.hpp>
 #include <iostream>
 #include <fstream>
+#include <extras/filesystem/paths.hpp>
 #include <filesystem>
 
 #include "../unittesting/catch.hpp"
@@ -39,7 +40,9 @@ SCENARIO("Mock ConvertFileInterface: hexToBin", "[ConvertInterface]") {
     rsi::HexFile hexFile;
     rsi::BinFile binFile;
 
-    std::ifstream in("send.txt");
+    std::string h1 = ~extras::Paths("data/send.txt");
+
+    std::ifstream in(h1);
     REQUIRE(in.good());
     while (in.good()) {
         std::string line;
@@ -109,10 +112,11 @@ SCENARIO("Mock ConvertFileInterface: loadBin", "[ConvertInterface]") {
     rsi::BinFile binFile;
     rsi::HexFile hexFile;
 
-    auto b1 = "build/run-unittests-rsi";
+    std::string b1 = ~extras::Paths("build/run-unittests-rsi");
     auto b2 = "/tmp/run-unittests-rsi";
-    auto h1 = "send.txt";
+    std::string h1 = ~extras::Paths("data/send.txt");
     auto h2 = "/tmp/send.txt";
+
     std::ifstream inBin(b1);
     REQUIRE(inBin.good());
     std::ifstream inHex(h1);

@@ -4,8 +4,8 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v2.1.0 -m "New branch based on RSI-6B"</br>
-> > git push origin v2.1.0
+> > git tag -a v2.2.0 -m "Operational Prototype"</br>
+> > git push origin v2.2.0
 > 
 
 IMPORTANT: 
@@ -29,10 +29,8 @@ Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
 
-#### 2.1.0 (2021-11-14)
-- New send_file.cpp
-- New write_file
-- Updated README.md 
+#### 2.2.0 (2021-11-14)
+- Operational Prototype
 
 #### 2.0.0 (2021-11-10)
 - New branch based on RSI-6B
@@ -126,7 +124,8 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/perriera/rsi/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/perriera/rsi/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/perriera/rsi/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/perriera/rsi/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/perriera/rsi/compare/v1.1.4...v1.2.0
