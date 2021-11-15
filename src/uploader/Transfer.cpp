@@ -83,8 +83,8 @@ namespace extras {
         rsi::Parcel parcel(parameter);
         parcel.pack();
         extras::rsi::send_file2(parcel.packed().c_str(), this->_new_sock);
-        parcel.clean();
-        parcel.dir();
+        // parcel.clean();
+        // parcel.dir();
     }
 
 }  // namespace extras
