@@ -22,7 +22,7 @@ static void sendIt(int sockfd, const string& buffer) {
     }
 }
 
-void extras::rsi::send_file2(const char* filename, int sockfd) {
+void extras::rsi::send_file2(const std::string& filename, int sockfd) {
 
     ifstream in(filename);
     while (in.good()) {

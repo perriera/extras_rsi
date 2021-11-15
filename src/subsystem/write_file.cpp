@@ -10,7 +10,7 @@
 #include <extras/strings.hpp>
 using namespace std;
 
-void extras::rsi::write_file(const char* filename, int sockfd) {
+void extras::rsi::write_file(const std::string& filename, int sockfd) {
     int n;
     char buffer[extras::rsi::SIZE];
 
