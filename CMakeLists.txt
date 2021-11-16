@@ -216,9 +216,17 @@ target_link_libraries(vendor_server PRIVATE ${PROJECT_NAME} stdc++fs extras)
 endif()
 
 #
-# NOTE: Install all shared libraries
+# NOTE: Install all shared libraries & executables
 #
-install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib)
+install(TARGETS 
+  parcel
+  socketpool_client socketpool_server
+  uploader_client uploader_server 
+  vendor_client vendor_server 
+  downloader_client downloader_server 
+  ${PROJECT_NAME}
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION include)
 
 #
