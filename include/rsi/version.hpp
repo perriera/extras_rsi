@@ -10,7 +10,7 @@
  */
 
 #define RSI_VER_MAJOR 2
-#define RSI_VER_MINOR 9
+#define RSI_VER_MINOR 10
 #define RSI_VER_PATCH 0
 
 #define RSI_VERSION \

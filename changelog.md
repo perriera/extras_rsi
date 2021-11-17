@@ -4,8 +4,8 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v2.9.0 -m "Using extras 5.1.1"</br>
-> > git push origin v2.9.0
+> > git tag -a v2.10.0 -m "Using extras 5.2.0"</br>
+> > git push origin v2.10.0
 > 
 
 IMPORTANT: 
@@ -28,6 +28,9 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 2.10.0 (2021-11-16)
+- Using extras 5.2.0
 
 #### 2.9.0 (2021-11-15)
 - Using extras 5.1.1
