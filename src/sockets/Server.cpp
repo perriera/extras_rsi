@@ -18,7 +18,7 @@ namespace extras {
                 string msg;
                 while (msg.size() == 0) msg = read_line(this->_client_socket);
                 if (msg.size() == 0) throw std::string("test exception");
-                SocketPoolClient client(msg);
+                SocketPoolClient client(msg, _compilerInterface);
                 cout << "msg received: " << client << endl;
                 RequestTypeCompiler compiler;
                 auto compilation = compiler.compile(client);

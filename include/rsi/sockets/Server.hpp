@@ -47,6 +47,7 @@ namespace extras {
             PortAuthority _PortAuthority;
 
         public:
+            SocketPoolServer(const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {};
             virtual PortAuthority& portAuthority() override { return _PortAuthority; }
             virtual void connect() override;
             virtual void accept() override;

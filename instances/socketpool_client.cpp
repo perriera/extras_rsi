@@ -3,7 +3,8 @@
 
 int main(int argc, char const* argv[]) {
     try {
-        extras::rsi::SocketPoolClient client;
+        extras::rsi::ServiceTypeCompilerVendor vendor;
+        extras::rsi::SocketPoolClient client(vendor);
         client.parameters(argc, argv);
         client.connect();
         client.transfer();

@@ -40,20 +40,6 @@ namespace extras {
         using RequestType = std::string;
         using RequestTypeList = std::vector<RequestType>;
 
-        using ServiceType = std::string;
-        using ServiceTypeList = std::vector<ServiceType>;
-        using ServiceTypeMap = std::map<ServiceType, ServiceType>;
-
-        /**
-         * @brief ServiceTypeCompilerInterface
-         *
-         */
-        interface ServiceTypeCompilerInterface {
-            virtual ServiceTypeList clients(
-                const RequestTypeList& requests) const pure;
-            virtual ServiceTypeList servers(
-                const RequestTypeList& requests) const pure;
-        };
 
     }
 }

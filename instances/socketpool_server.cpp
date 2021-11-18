@@ -4,7 +4,8 @@
 
 int main(int argc, char const* argv[]) {
     try {
-        extras::rsi::SocketPoolServer server;
+        extras::rsi::ServiceTypeCompilerVendor vendor;
+        extras::rsi::SocketPoolServer server(vendor);
         server.parameters(argc, argv);
         server.connect();
         while (true) {
