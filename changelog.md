@@ -29,6 +29,11 @@ Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
 
+#### 2.11.0 (2021-11-16)
+## Added ServiceTypeCompilerVendor
+- ServiceTypeCompilerVendor
+* [RSi-7]
+
 #### 2.10.0 (2021-11-16)
 - Using extras 5.2.0
 
@@ -148,7 +153,9 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v2.9.0...HEAD
+[Unreleased]: https://github.com/perriera/rsi/compare/v2.11.0...HEAD
+[2.11.0]: https://github.com/perriera/rsi/compare/v2.10.0...v2.11.0
+[2.10.0]: https://github.com/perriera/rsi/compare/v2.9.0...v2.10.0
 [2.9.0]: https://github.com/perriera/rsi/compare/v2.8.0...v2.9.0
 [2.8.0]: https://github.com/perriera/rsi/compare/v2.7.0...v2.8.0
 [2.7.0]: https://github.com/perriera/rsi/compare/v2.6.0...v2.7.0

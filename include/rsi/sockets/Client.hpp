@@ -41,8 +41,8 @@ namespace extras {
             int _client_socket;
 
         public:
-            SocketPoolClient() {}
-            SocketPoolClient(const std::string& msg) {
+            SocketPoolClient(const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {}
+            SocketPoolClient(const std::string& msg, const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {
                 std::stringstream ss;
                 ss << msg;
                 ss >> *this;

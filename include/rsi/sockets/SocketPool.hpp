@@ -45,8 +45,11 @@ namespace extras {
             SocketRequestTypeList _requests;
             SocketRequestTypeList _types;
             SocketRequestTypeMap _lastRequest;
+            const ServiceTypeCompilerInterface& _compilerInterface;
 
         public:
+            SocketPool(const ServiceTypeCompilerInterface& compilerInterface) :_compilerInterface(compilerInterface) {
+            }
             virtual Parameters parameters(int argc, char const* argv[]) override;
             virtual const Parameter& program() const override { return _program; };
             virtual const Parameter& ip() const override { return _ip; };
@@ -69,24 +72,15 @@ namespace extras {
             virtual void setRequests(const SocketRequestTypeList& list) override {
                 _requests = list;
             }
-            virtual ServiceTypeList common(ServiceTypeMap& map,
-                const RequestTypeList& requests) const {
-                rsi::ServiceTypeList list;
-                for (auto request : requests) {
-                    auto parts = extras::split(request, ' ');
-                    NoTokensException::assertion(parts.size(), __INFO__);
-                    auto serviceType = map[parts[0]];
-                    UnsupportedTokenException::assertion(serviceType, __INFO__);
-                    std::string line =
-                        extras::replace_all(request, parts[0], serviceType);
-                    list.push_back(line);
-                }
-                return list;
-            }
+
             virtual ServiceTypeList clients(
-                const RequestTypeList& requests) const override;
+                const RequestTypeList& requests) const override {
+                return _compilerInterface.clients(requests);
+            };
             virtual ServiceTypeList servers(
-                const RequestTypeList& requests) const override;
+                const RequestTypeList& requests) const override {
+                return _compilerInterface.servers(requests);
+            };
         };
 
 

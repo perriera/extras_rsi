@@ -75,25 +75,5 @@ namespace extras {
             return copy;
         }
 
-        ServiceTypeList SocketPool::clients(
-            const RequestTypeList& requests) const {
-            rsi::ServiceTypeMap forClients;
-            forClients["upload"] = "build/uploader_client";
-            forClients["vendor"] = "build/vendor_client";
-            forClients["ng_monitor"] = "build/ng_monitor";
-            forClients["download"] = "build/downloader_client";
-            return common(forClients, requests);
-        }
-
-        ServiceTypeList SocketPool::servers(
-            const RequestTypeList& requests) const {
-            rsi::ServiceTypeMap forServers;
-            forServers["upload"] = "build/uploader_server";
-            forServers["vendor"] = "build/vendor_server";
-            forServers["ng_monitor"] = "build/ng_server";
-            forServers["download"] = "build/downloader_server";
-            return common(forServers, requests);
-        }
-
     }  // namespace rsi
 }  // namespace extras
