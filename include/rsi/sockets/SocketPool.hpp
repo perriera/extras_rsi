@@ -4,6 +4,7 @@
 #include <extras/interfaces.hpp>
 #include <extras/strings.hpp>
 #include <rsi/sockets/Parameters.hpp>
+#include <rsi/sockets/ServiceType.hpp>
 #include <rsi/exceptions.hpp>
 #include <iostream>
 
