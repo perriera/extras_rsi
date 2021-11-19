@@ -1,6 +1,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <rsi/subsystem.hpp>
+#include <rsi/exceptions.hpp>
+#include <rsi/sockets/Status.hpp>
 
 int extras::rsi::connect_to_server(const char* ip, int port,
     struct sockaddr_in& server_addr) {
@@ -9,22 +11,16 @@ int extras::rsi::connect_to_server(const char* ip, int port,
     int sockfd;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) {
-        perror("[-]Error in socket");
-        exit(1);
-    }
-    printf("[+]Server socket created successfully.\n");
+    SocketException::assertionLTZero(sockfd, "Error in socket", __INFO__);
+    std::cout << rsi::pass("Server socket created successfully") << std::endl;
 
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = port;
     server_addr.sin_addr.s_addr = inet_addr(ip);
 
     e = connect(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
-    if (e == -1) {
-        perror("[-]Error in socket");
-        exit(1);
-    }
-    printf("[+]Connected to Server.\n");
+    SocketException::assertionLTMinusOne(e, "Error in socket", __INFO__);
+    std::cout << rsi::pass("Connected to Server") << std::endl;
 
     return sockfd;
 }

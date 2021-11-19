@@ -141,7 +141,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/downloader_client",
             "args": [
-                "send.txt",
+                "data/cplusplusorg.freeformjs.imploded.zip",
                 "137.184.218.130",
                 "9003",
             ],

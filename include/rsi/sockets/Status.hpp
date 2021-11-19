@@ -18,6 +18,7 @@ namespace extras {
 
         interface StatusLineInterface {
 
+            virtual StatusMsg start(const StatusMsg& msg) const pure;
             virtual StatusMsg pass(const StatusMsg& msg) const pure;
             virtual StatusMsg fail(const StatusMsg& msg) const pure;
 
@@ -26,9 +27,30 @@ namespace extras {
         concrete class StatusLine implements StatusLineInterface {
         public:
 
+            virtual StatusMsg start(const StatusMsg& msg) const override;
             virtual StatusMsg pass(const StatusMsg& msg) const override;
             virtual StatusMsg fail(const StatusMsg& msg) const override;
 
+        };
+
+        /**
+         * @brief start std::ostream& manipulator
+         *
+         */
+        class start
+        {
+            friend std::ostream& operator<<(std::ostream& out, const start& obj) {
+                out << StatusLine().start(obj._msg);
+                return out;
+            }
+        public:
+            start(const StatusMsg& msg) : _msg(msg) {}
+            std::ostream& operator()(std::ostream& out) const {
+                out << StatusLine().start(_msg);
+                return out;
+            }
+        private:
+            StatusMsg _msg;
         };
 
         /**
@@ -37,6 +59,10 @@ namespace extras {
          */
         class pass
         {
+            friend std::ostream& operator<<(std::ostream& out, const pass& obj) {
+                out << StatusLine().pass(obj._msg);
+                return out;
+            }
         public:
             pass(const StatusMsg& msg) : _msg(msg) {}
             std::ostream& operator()(std::ostream& out) const {
@@ -53,6 +79,10 @@ namespace extras {
          */
         class fail
         {
+            friend std::ostream& operator<<(std::ostream& out, const fail& obj) {
+                out << StatusLine().pass(obj._msg);
+                return out;
+            }
         public:
             fail(const StatusMsg& msg) : _msg(msg) {}
             std::ostream& operator()(std::ostream& out) const {
@@ -62,10 +92,6 @@ namespace extras {
         private:
             StatusMsg _msg;
         };
-
-
-
-
 
         /**
          * @brief PackedException
