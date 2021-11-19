@@ -10,28 +10,28 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief BurstInterface
+         * @brief StatusLineInterface
          *
          */
 
-        using StatusMsg = std::string;
+        using StatusLineMsg = std::string;
 
         interface StatusLineInterface {
 
-            virtual StatusMsg start(const StatusMsg& msg) const pure;
-            virtual StatusMsg pass(const StatusMsg& msg) const pure;
-            virtual StatusMsg fail(const StatusMsg& msg) const pure;
-            virtual StatusMsg end(const StatusMsg& msg) const pure;
+            virtual StatusLineMsg start(const StatusLineMsg& msg) const pure;
+            virtual StatusLineMsg pass(const StatusLineMsg& msg) const pure;
+            virtual StatusLineMsg fail(const StatusLineMsg& msg) const pure;
+            virtual StatusLineMsg end(const StatusLineMsg& msg) const pure;
 
         };
 
         concrete class StatusLine implements StatusLineInterface {
         public:
 
-            virtual StatusMsg start(const StatusMsg& msg) const override;
-            virtual StatusMsg pass(const StatusMsg& msg) const override;
-            virtual StatusMsg fail(const StatusMsg& msg) const override;
-            virtual StatusMsg end(const StatusMsg& msg) const override;
+            virtual StatusLineMsg start(const StatusLineMsg& msg) const override;
+            virtual StatusLineMsg pass(const StatusLineMsg& msg) const override;
+            virtual StatusLineMsg fail(const StatusLineMsg& msg) const override;
+            virtual StatusLineMsg end(const StatusLineMsg& msg) const override;
 
         };
 
@@ -46,13 +46,13 @@ namespace extras {
                 return out;
             }
         public:
-            start(const StatusMsg& msg) : _msg(msg) {}
+            start(const StatusLineMsg& msg) : _msg(msg) {}
             std::ostream& operator()(std::ostream& out) const {
                 out << StatusLine().start(_msg);
                 return out;
             }
         private:
-            StatusMsg _msg;
+            StatusLineMsg _msg;
         };
 
         /**
@@ -66,13 +66,13 @@ namespace extras {
                 return out;
             }
         public:
-            pass(const StatusMsg& msg) : _msg(msg) {}
+            pass(const StatusLineMsg& msg) : _msg(msg) {}
             std::ostream& operator()(std::ostream& out) const {
                 out << StatusLine().pass(_msg);
                 return out;
             }
         private:
-            StatusMsg _msg;
+            StatusLineMsg _msg;
         };
 
         /**
@@ -86,13 +86,13 @@ namespace extras {
                 return out;
             }
         public:
-            fail(const StatusMsg& msg) : _msg(msg) {}
+            fail(const StatusLineMsg& msg) : _msg(msg) {}
             std::ostream& operator()(std::ostream& out) const {
                 out << StatusLine().fail(_msg);
                 return out;
             }
         private:
-            StatusMsg _msg;
+            StatusLineMsg _msg;
         };
 
         /**
@@ -106,13 +106,13 @@ namespace extras {
                 return out;
             }
         public:
-            end(const StatusMsg& msg) : _msg(msg) {}
+            end(const StatusLineMsg& msg) : _msg(msg) {}
             std::ostream& operator()(std::ostream& out) const {
                 out << StatusLine().start(_msg);
                 return out;
             }
         private:
-            StatusMsg _msg;
+            StatusLineMsg _msg;
         };
 
 

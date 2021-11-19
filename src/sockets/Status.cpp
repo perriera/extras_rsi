@@ -33,28 +33,28 @@ namespace extras {
             return ss.str();
         }
 
-        StatusMsg StatusLine::start(const StatusMsg& msg) const {
+        StatusLineMsg StatusLine::start(const StatusLineMsg& msg) const {
             auto parts = extras::split(msg, '/');
             std::stringstream ss;
             ss << status('+') << extras::cyan << " " << parts[parts.size() - 1] << " started " << extras::blue;
             return ss.str();
         }
 
-        StatusMsg StatusLine::end(const StatusMsg& msg) const {
+        StatusLineMsg StatusLine::end(const StatusLineMsg& msg) const {
             auto parts = extras::split(msg, '/');
             std::stringstream ss;
             ss << status('+') << extras::cyan << " " << parts[parts.size() - 1] << " ended " << extras::blue;
             return ss.str();
         }
 
-        StatusMsg StatusLine::pass(const StatusMsg& msg) const {
+        StatusLineMsg StatusLine::pass(const StatusLineMsg& msg) const {
             std::stringstream ss;
             ss << status('+') << extras::magenta << " " << msg << "." << extras::reset;
             return ss.str();
 
         }
 
-        StatusMsg StatusLine::fail(const StatusMsg& msg) const {
+        StatusLineMsg StatusLine::fail(const StatusLineMsg& msg) const {
             std::stringstream ss;
             ss << status('-') << extras::red << " " << msg << "." << extras::reset;
             return ss.str();

@@ -1,135 +1,72 @@
-// #ifndef _EXPARX_RSISTATUSBAR_HPP
-// #define _EXPARX_RSISTATUSBAR_HPP
+#ifndef _EXPARX_RSISTATUSBAR_HPP
+#define _EXPARX_RSISTATUSBAR_HPP
 
-// #include <extras/interfaces.hpp>
-// #include <rsi/sockets/Types.hpp>
-// #include <iostream>
-// #include <rsi/exceptions.hpp>
+#include <extras/interfaces.hpp>
+#include <rsi/sockets/Types.hpp>
+#include <iostream>
+#include <rsi/exceptions.hpp>
 
-// namespace extras {
-//     namespace rsi {
+namespace extras {
+    namespace rsi {
 
-//         /**
-//          * @brief BurstInterface
-//          *
-//          */
+        /**
+         * @brief StatusBarInterface
+         *
+         */
 
-//         using StatusBarMsg = std::string;
+        using StatusBarMsg = std::string;
 
-//         interface StatusBarInterface {
+        interface StatusBarInterface {
 
-//             virtual StatusMsg start(const StatusMsg& msg) const pure;
-//             virtual StatusMsg pass(const StatusMsg& msg) const pure;
-//             virtual StatusMsg fail(const StatusMsg& msg) const pure;
-//             virtual StatusMsg end(const StatusMsg& msg) const pure;
+            virtual StatusBarMsg bar(int count, int max) const pure;
 
-//         };
+        };
 
-//         concrete class StatusBar implements StatusBarInterface {
-//         public:
+        concrete class StatusBar implements StatusBarInterface {
+        public:
 
-//             virtual StatusMsg start(const StatusMsg& msg) const override;
-//             virtual StatusMsg pass(const StatusMsg& msg) const override;
-//             virtual StatusMsg fail(const StatusMsg& msg) const override;
-//             virtual StatusMsg end(const StatusMsg& msg) const override;
+            virtual StatusBarMsg bar(int count, int max) const override;
 
-//         };
+        };
 
-//         /**
-//          * @brief start std::ostream& manipulator
-//          *
-//          */
-//         class start
-//         {
-//             friend std::ostream& operator<<(std::ostream& out, const start& obj) {
-//                 out << StatusLine().start(obj._msg);
-//                 return out;
-//             }
-//         public:
-//             start(const StatusMsg& msg) : _msg(msg) {}
-//             std::ostream& operator()(std::ostream& out) const {
-//                 out << StatusLine().start(_msg);
-//                 return out;
-//             }
-//         private:
-//             StatusMsg _msg;
-//         };
+        /**
+         * @brief start std::ostream& manipulator
+         *
+         */
+        class bar
+        {
+            friend std::ostream& operator<<(std::ostream& out, const bar& obj) {
+                out << StatusBar().bar(obj._count, obj._max);
+                return out;
+            }
+        public:
+            bar(int count, int max) : _count(count), _max(max) {}
+            std::ostream& operator()(std::ostream& out) const {
+                out << StatusBar().bar(_count, _max);
+                return out;
+            }
+            virtual int count() const { return _count; };
+            virtual int max() const { return _max; };
 
-//         /**
-//          * @brief pass std::ostream& manipulator
-//          *
-//          */
-//         class pass
-//         {
-//             friend std::ostream& operator<<(std::ostream& out, const pass& obj) {
-//                 out << StatusLine().pass(obj._msg);
-//                 return out;
-//             }
-//         public:
-//             pass(const StatusMsg& msg) : _msg(msg) {}
-//             std::ostream& operator()(std::ostream& out) const {
-//                 out << StatusLine().pass(_msg);
-//                 return out;
-//             }
-//         private:
-//             StatusMsg _msg;
-//         };
+        private:
+            int _count;
+            int _max;
+        };
 
-//         /**
-//          * @brief fail std::ostream& manipulator
-//          *
-//          */
-//         class fail
-//         {
-//             friend std::ostream& operator<<(std::ostream& out, const fail& obj) {
-//                 out << StatusLine().pass(obj._msg);
-//                 return out;
-//             }
-//         public:
-//             fail(const StatusMsg& msg) : _msg(msg) {}
-//             std::ostream& operator()(std::ostream& out) const {
-//                 out << StatusLine().fail(_msg);
-//                 return out;
-//             }
-//         private:
-//             StatusMsg _msg;
-//         };
+        /**
+         * @brief StatusBarException
+         *
+         */
+        concrete class StatusBarException extends RSIException {
+        public:
+            StatusBarException(std::string msg, const extras::WhereAmI& whereAmI)
+                : RSIException(msg.c_str(), whereAmI) {}
+            static void assertion(int status, const extras::WhereAmI& ref);
+        };
 
-//         /**
-//          * @brief start std::ostream& manipulator
-//          *
-//          */
-//         class end
-//         {
-//             friend std::ostream& operator<<(std::ostream& out, const end& obj) {
-//                 out << StatusLine().end(obj._msg);
-//                 return out;
-//             }
-//         public:
-//             end(const StatusMsg& msg) : _msg(msg) {}
-//             std::ostream& operator()(std::ostream& out) const {
-//                 out << StatusLine().start(_msg);
-//                 return out;
-//             }
-//         private:
-//             StatusMsg _msg;
-//         };
+    }
+}
 
-
-//         /**
-//          * @brief PackedException
-//          *
-//          */
-//         concrete class StatusLineException extends RSIException {
-//         public:
-//             StatusLineException(std::string msg, const extras::WhereAmI& whereAmI)
-//                 : RSIException(msg.c_str(), whereAmI) {}
-//             static void assertion(int status, const extras::WhereAmI& ref);
-//         };
-
-//     }
-// }
-
-// #endif // _EXPARX_RSISTATUSBAR_HPP
+#endif // _EXPARX_RSISTATUSBAR_HPP
 
 
