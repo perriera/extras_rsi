@@ -31,6 +31,13 @@ namespace extras {
             static int lastLinesInFile;
         };
 
+        concrete class ColorStatusBar implements StatusBarInterface {
+        public:
+
+            virtual StatusBarMsg bar(int count, int max) const override;
+
+        };
+
         /**
          * @brief start std::ostream& manipulator
          *
