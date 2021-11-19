@@ -21,6 +21,7 @@ namespace extras {
             virtual StatusMsg start(const StatusMsg& msg) const pure;
             virtual StatusMsg pass(const StatusMsg& msg) const pure;
             virtual StatusMsg fail(const StatusMsg& msg) const pure;
+            virtual StatusMsg end(const StatusMsg& msg) const pure;
 
         };
 
@@ -30,6 +31,7 @@ namespace extras {
             virtual StatusMsg start(const StatusMsg& msg) const override;
             virtual StatusMsg pass(const StatusMsg& msg) const override;
             virtual StatusMsg fail(const StatusMsg& msg) const override;
+            virtual StatusMsg end(const StatusMsg& msg) const override;
 
         };
 
@@ -92,6 +94,27 @@ namespace extras {
         private:
             StatusMsg _msg;
         };
+
+        /**
+         * @brief start std::ostream& manipulator
+         *
+         */
+        class end
+        {
+            friend std::ostream& operator<<(std::ostream& out, const end& obj) {
+                out << StatusLine().end(obj._msg);
+                return out;
+            }
+        public:
+            end(const StatusMsg& msg) : _msg(msg) {}
+            std::ostream& operator()(std::ostream& out) const {
+                out << StatusLine().start(_msg);
+                return out;
+            }
+        private:
+            StatusMsg _msg;
+        };
+
 
         /**
          * @brief PackedException

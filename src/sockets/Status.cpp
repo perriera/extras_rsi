@@ -38,7 +38,10 @@ namespace extras {
             std::stringstream ss;
             ss << status('+') << extras::cyan << " " << parts[parts.size() - 1] << " started " << extras::blue;
             return ss.str();
+        }
 
+        StatusMsg StatusLine::end(const StatusMsg& msg) const {
+            return start(msg);
         }
 
         StatusMsg StatusLine::pass(const StatusMsg& msg) const {
