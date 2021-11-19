@@ -12,6 +12,8 @@ namespace extras {
 
     namespace rsi {
 
+        int StatusBar::lastLinesInFile = 0;
+
         int StatusBar::linesInFile(const std::string& filename) {
             int count = 0;
             ifstream in(filename);
@@ -20,6 +22,7 @@ namespace extras {
                 getline(in, line);
                 count++;
             }
+            lastLinesInFile = count;
             return count;
         }
 
