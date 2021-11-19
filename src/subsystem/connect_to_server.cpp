@@ -19,7 +19,7 @@ int extras::rsi::connect_to_server(const char* ip, int port,
     server_addr.sin_addr.s_addr = inet_addr(ip);
 
     e = connect(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
-    SocketException::assertionLTMinusOne(e, "Error in socket", __INFO__);
+    SocketException::assertionEQMinusOne(e, "Error in socket", __INFO__);
     std::cout << rsi::pass("Connected to Server") << std::endl;
 
     return sockfd;

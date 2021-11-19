@@ -51,6 +51,10 @@ namespace extras {
                 if (error != -1)
                     throw SocketException(msg, ref);
             }
+            static void assertionEQMinusOne(int error, const std::string& msg, const extras::WhereAmI& ref) {
+                if (error == -1)
+                    throw SocketException(msg, ref);
+            }
         };
 
         /**
