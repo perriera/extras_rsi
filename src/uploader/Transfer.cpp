@@ -68,7 +68,7 @@ namespace extras {
         rsi::Parcel parcel(parameter);
         parcel.pack();
         extras::rsi::send_file2(parcel.packed(), this->_new_sock);
-        std::cout << rsi::pass(parcel.packed());
+        std::cout << rsi::pass(parcel.packed()) << std::endl;
         std::cout << rsi::pass(" downloaded") << std::endl;
     }
 
