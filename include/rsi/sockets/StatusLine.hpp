@@ -1,5 +1,5 @@
-#ifndef _EXPARX_RSISTATUS_HPP
-#define _EXPARX_RSISTATUS_HPP
+#ifndef _EXPARX_RSISTATUSLINE_HPP
+#define _EXPARX_RSISTATUSLINE_HPP
 
 #include <extras/interfaces.hpp>
 #include <rsi/sockets/Types.hpp>
@@ -130,6 +130,6 @@ namespace extras {
     }
 }
 
-#endif // _EXPARX_RSISUBSYSTEM_BURST_HPP
+#endif // _EXPARX_RSISTATUSLINE_HPP
 
 

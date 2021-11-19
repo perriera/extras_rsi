@@ -1,4 +1,4 @@
-#include <rsi/sockets/Status.hpp>
+#include <rsi/sockets/StatusLine.hpp>
 #include <extras/strings.hpp>
 #include <iostream>
 #include <sstream>

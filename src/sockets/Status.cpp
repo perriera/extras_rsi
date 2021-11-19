@@ -1,7 +1,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include <rsi/sockets/Status.hpp>
+#include <rsi/sockets/StatusLine.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/strings.hpp>

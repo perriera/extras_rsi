@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
-#include <rsi/sockets/Status.hpp>
+#include <rsi/sockets/StatusLine.hpp>
 
 //
 // https://cdmana.com/2021/02/20210220084428841j.html
