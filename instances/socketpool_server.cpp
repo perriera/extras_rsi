@@ -18,7 +18,7 @@ int main(int argc, char const* argv[]) {
         }
         std::cout << rsi::pass("File sockets allocated successfully") << std::endl;
         server.close();
-        std::cout << rsi::pass("Closed the connection") << std::endl << std::endl;
+        std::cout << rsi::end("Closed the connection") << std::endl << std::endl;
         return 0;
     }
     catch (std::exception& ex) {
