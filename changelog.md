@@ -4,8 +4,8 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v2.13.1 -m "Added StatusBarInterface, (fixed version.hpp)"</br>
-> > git push origin v2.13.1
+> > git tag -a v2.14.0 -m "Added maccount, (RSi-10)"</br>
+> > git push origin v2.14.0
 > 
 
 IMPORTANT: 
@@ -28,6 +28,11 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 2.14.0 (2021-11-18)
+## Added  
+- Added maxcount 
+* [RSi-9]
 
 #### 2.13.1 (2021-11-18)
 ## Added  
@@ -168,8 +173,9 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v2.13.1...HEAD
-[2.14.0]: https://github.com/perriera/rsi/compare/v2.13.0...v2.13.1
+[Unreleased]: https://github.com/perriera/rsi/compare/v2.14.0...HEAD
+[2.14.0]: https://github.com/perriera/rsi/compare/v2.13.0...v2.14.01
+[2.13.1]: https://github.com/perriera/rsi/compare/v2.13.0...v2.13.1
 [2.13.0]: https://github.com/perriera/rsi/compare/v2.12.0...v2.13.0
 [2.12.0]: https://github.com/perriera/rsi/compare/v2.11.0...v2.12.0
 [2.11.0]: https://github.com/perriera/rsi/compare/v2.10.0...v2.11.0
