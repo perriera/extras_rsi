@@ -26,6 +26,7 @@ namespace extras {
 
         interface PackedLineInterface {
             virtual  int lineNo() const pure;
+            virtual  int maxCount() const pure;
             virtual const HexLine& hexLine() const pure;
             virtual const CRC& checksum() const pure;
 
@@ -42,15 +43,17 @@ namespace extras {
             friend std::ostream& operator<<(std::ostream& out, const PackedLine& obj);
             friend std::istream& operator>>(std::istream& in, PackedLine& obj);
             int _lineNo;
+            int _maxCount;
             HexLine _hexLine;
             CRC _crc = 0;
         public:
             PackedLine() {};
-            PackedLine(int lineNo, const HexLine& hexLine) :
-                _lineNo(lineNo), _hexLine(hexLine) {
+            PackedLine(int lineNo, int maxLines, const HexLine& hexLine) :
+                _lineNo(lineNo), _maxCount(maxLines), _hexLine(hexLine) {
                 _crc = crc16().update(_hexLine);
             };
             virtual  int lineNo() const override { return _lineNo; };
+            virtual  int maxCount() const override { return _maxCount; };
             virtual const HexLine& hexLine() const override { return _hexLine; };
             virtual const CRC& checksum() const override { return _crc; };
         };
