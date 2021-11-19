@@ -27,6 +27,7 @@ namespace extras {
 
             virtual StatusBarMsg bar(int count, int max) const override;
 
+            static int linesInFile(const std::string& filename);
         };
 
         /**

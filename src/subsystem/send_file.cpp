@@ -8,6 +8,7 @@
 #include <sstream>
 
 #include <extras/interfaces.hpp>
+#include <rsi/sockets/StatusBar.hpp>
 #include <rsi/exceptions.hpp>
 #include <rsi/subsystem.hpp>
 using namespace std;
@@ -24,6 +25,8 @@ static void sendIt(int sockfd, const string& buffer) {
 
 void extras::rsi::send_file2(const std::string& filename, int sockfd) {
 
+    int count = 0;
+    int max = StatusBar::linesInFile(filename);
     ifstream in(filename);
     while (in.good()) {
         stringstream ss;
@@ -34,9 +37,11 @@ void extras::rsi::send_file2(const std::string& filename, int sockfd) {
                 break;
             if (in.good())
                 ss << line << endl;
+            std::cout << bar(count, max);
         }
         sendIt(sockfd, ss.str());
     }
+    std::cout << std::endl;
     sendIt(sockfd, "done");
     for (int i = 0; i < 5000; i++)
         sendIt(sockfd, "JUNK");
