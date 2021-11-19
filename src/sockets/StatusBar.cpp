@@ -16,7 +16,7 @@ namespace extras {
 
         StatusBarMsg StatusBar::bar(int count, int max) const {
             std::stringstream ss;
-            ss << "[+] " << count + 1 << " / " << max;
+            ss << "\r[+] " << count + 1 << " / " << max;
             return ss.str();
         }
 

@@ -13,13 +13,13 @@ using namespace extras;
 
 SCENARIO("Test StatusBarInterface", "[StatusBarInterface]") {
 
-    rsi::StatusBarMsg good = "[+] 26 / 50";
+    rsi::StatusBarMsg good = "\r[+] 26 / 50";
     rsi::StatusBar testcase;
 
     rsi::StatusBarInterface& i = testcase;
     REQUIRE(i.bar(25, 50) == good);
 
     for (int c = 0;c < 1000;c++)
-        std::cout << "\r" << i.bar(c, 1000) << std::flush;
+        std::cout << i.bar(c, 1000) << std::flush;
     std::cout << std::endl;
 }
