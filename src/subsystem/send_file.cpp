@@ -37,7 +37,7 @@ void extras::rsi::send_file2(const std::string& filename, int sockfd) {
                 break;
             if (in.good())
                 ss << line << endl;
-            std::cout << bar(count, max);
+            std::cout << bar(++count, max);
         }
         sendIt(sockfd, ss.str());
     }
