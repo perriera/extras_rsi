@@ -34,7 +34,7 @@ namespace extras {
         // packed.unpack();
         // packed.unzip();
         extras::rsi::send_file2(parcel.packed(), this->_sockfd);
-        std::cout << rsi::pass(parcel.packed());
+        std::cout << rsi::pass(parcel.packed()) << std::endl;
         std::cout << rsi::pass(" uploaded") << std::endl;
     }
 
@@ -43,7 +43,7 @@ namespace extras {
         rsi::Parameter parameter = filename();
         rsi::Parcel parcel(parameter);
         extras::rsi::write_file(parcel.packed(), this->_new_sock);
-        std::cout << rsi::pass(parcel.packed());
+        std::cout << rsi::pass(parcel.packed()) << std::endl;
         std::cout << rsi::pass(" uploaded") << std::endl;
     }
 
@@ -59,7 +59,7 @@ namespace extras {
         // parcel.cat();
         // parcel.unzip();
         parcel.dir();
-        std::cout << rsi::pass(parcel.packed());
+        std::cout << rsi::pass(parcel.packed()) << std::endl;
         std::cout << rsi::pass(" downloaded") << std::endl;
     }
 
@@ -77,7 +77,7 @@ namespace extras {
      *
      */
     void rsi::VendorClient::transfer() const {
-        std::cout << rsi::pass(filename());
+        std::cout << rsi::pass(filename()) << std::endl;
         std::cout << rsi::pass(" processed") << std::endl;
     }
 
@@ -92,7 +92,7 @@ namespace extras {
         // parcel.dir();
         std::cout << extras::cyan;
         parcel.unzip();
-        std::cout << rsi::pass(filename());
+        std::cout << rsi::pass(filename()) << std::endl;
         std::cout << rsi::pass(" processed") << std::endl;
     }
 
