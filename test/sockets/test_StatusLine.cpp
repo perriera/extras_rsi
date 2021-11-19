@@ -1,4 +1,4 @@
-#include <rsi/sockets/Status.hpp>
+#include <rsi/sockets/StatusLine.hpp>
 #include <extras/strings.hpp>
 #include <iostream>
 #include <sstream>
@@ -13,8 +13,8 @@ using namespace extras;
 
 SCENARIO("Test StatusLineInterface", "[StatusLineInterface]") {
 
-    rsi::StatusMsg good = "File data downloaded successfully";
-    rsi::StatusMsg bad = "Error in socket";
+    rsi::StatusLineMsg good = "File data downloaded successfully";
+    rsi::StatusLineMsg bad = "Error in socket";
     rsi::StatusLine testcase;
 
     rsi::StatusLineInterface& i = testcase;

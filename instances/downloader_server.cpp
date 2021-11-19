@@ -1,5 +1,5 @@
 #include <rsi/uploader/Downloader.hpp>
-#include <rsi/sockets/Status.hpp>
+#include <rsi/sockets/StatusLine.hpp>
 #include <iostream>
 
 using namespace  extras;

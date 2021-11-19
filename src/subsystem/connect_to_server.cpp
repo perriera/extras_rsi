@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
-#include <rsi/sockets/Status.hpp>
+#include <rsi/sockets/StatusLine.hpp>
 
 int extras::rsi::connect_to_server(const char* ip, int port,
     struct sockaddr_in& server_addr) {

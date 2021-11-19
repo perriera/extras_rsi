@@ -12,7 +12,7 @@
 #include <rsi/parcel/Parcel.hpp>
 #include <iostream>
 #include <filesystem>
-#include <rsi/sockets/Status.hpp>
+#include <rsi/sockets/StatusLine.hpp>
 
 #include <chrono>
 #include <thread>

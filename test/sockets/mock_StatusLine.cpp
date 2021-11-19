@@ -1,4 +1,4 @@
-#include <rsi/sockets/Status.hpp>
+#include <rsi/sockets/StatusLine.hpp>
 #include <iostream>
 #include <sstream>
 
@@ -14,21 +14,21 @@ using namespace fakeit;
 
 SCENARIO("Mock StatusLineInterface", "[StatusLineInterface]") {
 
-    rsi::StatusMsg in1 = "File data downloaded successfully";
-    rsi::StatusMsg in2 = "Error in socket";
-    rsi::StatusMsg good = "[+] File data downloaded successfully.\n";
-    rsi::StatusMsg bad = "[-] Error in socket.\n";
+    rsi::StatusLineMsg in1 = "File data downloaded successfully";
+    rsi::StatusLineMsg in2 = "Error in socket";
+    rsi::StatusLineMsg good = "[+] File data downloaded successfully.\n";
+    rsi::StatusLineMsg bad = "[-] Error in socket.\n";
     Mock<rsi::StatusLineInterface> mock;
     When(Method(mock, pass))
         .AlwaysDo(
-            [&good](const rsi::StatusMsg& msg) {
+            [&good](const rsi::StatusLineMsg& msg) {
                 std::stringstream ss;
                 ss << "[+] " << msg << "." << std::endl;
                 return ss.str();
             });
     When(Method(mock, fail))
         .AlwaysDo(
-            [&good](const rsi::StatusMsg& msg) {
+            [&good](const rsi::StatusLineMsg& msg) {
                 std::stringstream ss;
                 ss << "[-] " << msg << "." << std::endl;
                 return ss.str();

@@ -15,7 +15,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/run-unittests-rsi",
             "args": [
-                "[StatusLineInterface]"
+                "[StatusBarInterface]"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
