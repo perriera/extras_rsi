@@ -13,7 +13,7 @@ int main(int argc, char const* argv[]) {
         downloader.transfer();
         std::cout << rsi::pass("File data downloaded successfully") << std::endl;
         downloader.close();
-        std::cout << rsi::end("Closed the connection") << std::endl << std::endl;
+        std::cout << rsi::end(argv[0]) << std::endl << std::endl;
         exit(0);
     }
     catch (std::exception& ex) {

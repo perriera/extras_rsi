@@ -43,7 +43,7 @@ namespace extras {
         StatusLineMsg StatusLine::end(const StatusLineMsg& msg) const {
             auto parts = extras::split(msg, '/');
             std::stringstream ss;
-            ss << status('+') << extras::cyan << " " << parts[parts.size() - 1] << " ended " << extras::blue;
+            ss << status('+') << extras::cyan << " " << parts[parts.size() - 1] << " completed successfully " << extras::blue;
             return ss.str();
         }
 
