@@ -45,13 +45,13 @@ namespace extras {
         class bar
         {
             friend std::ostream& operator<<(std::ostream& out, const bar& obj) {
-                out << ColorStatusBar().bar(obj._count, obj._max);
+                out << StatusBar().bar(obj._count, obj._max);
                 return out;
             }
         public:
             bar(int count, int max) : _count(count), _max(max) {}
             std::ostream& operator()(std::ostream& out) const {
-                out << ColorStatusBar().bar(_count, _max);
+                out << StatusBar().bar(_count, _max);
                 return out;
             }
             virtual int count() const { return _count; };
