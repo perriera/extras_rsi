@@ -13,11 +13,11 @@ int main(int argc, char const* argv[]) {
         uploader.transfer();
         std::cout << rsi::pass("File data uploaded successfully") << std::endl;
         uploader.close();
-        std::cout << rsi::pass("Closed the connection") << std::endl;
+        std::cout << rsi::pass("Closed the connection") << std::endl << std::endl;
         exit(0);
     }
     catch (std::exception& ex) {
-        std::cout << rsi::fail(ex.what()) << std::endl;
+        std::cout << rsi::fail(ex.what()) << std::endl << std::endl;
         exit(-1);
     }
 }

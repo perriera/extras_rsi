@@ -14,11 +14,11 @@ int main(int argc, char const* argv[]) {
         client.transfer();
         std::cout << rsi::pass("File sockets allocated successfully") << std::endl;
         client.close();
-        std::cout << rsi::pass("Closed the connection") << std::endl;
+        std::cout << rsi::pass("Closed the connection") << std::endl << std::endl;
         return 0;
     }
     catch (std::exception& ex) {
-        std::cout << rsi::fail(ex.what()) << std::endl;
+        std::cout << rsi::fail(ex.what()) << std::endl << std::endl;
         return -1;
     }
 }
