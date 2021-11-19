@@ -4,8 +4,8 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v2.12.0 -m "Added StatusLineInterface"</br>
-> > git push origin v2.12.0
+> > git tag -a v2.13.0 -m "Added StatusBarInterface"</br>
+> > git push origin v2.13.0
 > 
 
 IMPORTANT: 
@@ -29,13 +29,18 @@ Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
 
+#### 2.13.0 (2021-11-18)
+## Added  
+- StatusBarInterface
+* [RSi-9]
+
 #### 2.12.0 (2021-11-16)
-## Added ServiceTypeCompilerVendor
+## Added  
 - StatusLineInterface
 * [RSi-8]
 
 #### 2.11.0 (2021-11-16)
-## Added ServiceTypeCompilerVendor
+## Added  
 - ServiceTypeCompilerVendor
 * [RSi-7]
 
@@ -158,7 +163,8 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v2.12.0...HEAD
+[Unreleased]: https://github.com/perriera/rsi/compare/v2.13.0...HEAD
+[2.13.0]: https://github.com/perriera/rsi/compare/v2.12.0...v2.13.0
 [2.12.0]: https://github.com/perriera/rsi/compare/v2.11.0...v2.12.0
 [2.11.0]: https://github.com/perriera/rsi/compare/v2.10.0...v2.11.0
 [2.10.0]: https://github.com/perriera/rsi/compare/v2.9.0...v2.10.0
