@@ -26,39 +26,6 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
     When(Method(mock, packed)).AlwaysReturn(packed);
     When(Method(mock, unpacked)).AlwaysReturn(unpacked);
 
-    // When(Method(mock, loadBin))
-    //     .AlwaysDo(
-    //         [&parcel](const rsi::Filename& filename) {
-    //             rsi::FileNotFoundException::assertion(filename, __INFO__);
-    //             std::ifstream in(filename);
-    //             rsi::ConvertFile().loadBin(in);
-    //             return rsi::ConvertFile().loadBin(in);;
-    //         });
-
-    // When(Method(mock, hexFile))
-    //     .AlwaysDo(
-    //         [&packed]() {
-    //             rsi::FileNotFoundException::assertion(packed, __INFO__);
-    //             std::ifstream in(packed);
-    //             rsi::HexFile hexFile;
-    //             while (in.good()) {
-    //                 rsi::PackedLine line;
-    //                 in >> line;
-    //                 if (in.good())
-    //                     hexFile.push_back(line.hexLine());
-    //             }
-    //             return hexFile;
-    //         });
-
-    // When(Method(mock, convertToHex))
-    //     .AlwaysDo(
-    //         [&parcel, &hexed]() {
-    //             rsi::FileNotFoundException::assertion(parcel, __INFO__);
-    //             std::ifstream inBin(parcel);
-    //             std::ofstream outHex(hexed);
-    //             return rsi::ConvertFile().convertToHex(inBin, outHex);
-    //         });
-
     When(Method(mock, pack))
         .AlwaysDo(
             [&parcel, &packed, &hexed]() {
@@ -69,7 +36,7 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
                 rsi::PackedFile packedFile;
                 int cnt = 0;
                 for (auto hexLine : hexFile) {
-                    rsi::PackedLine packedLine(++cnt, hexLine);
+                    rsi::PackedLine packedLine(++cnt, hexFile.size(), hexLine);
                     packedFile.push_back(packedLine);
                 }
                 std::ofstream outPacked(packed);
