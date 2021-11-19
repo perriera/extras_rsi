@@ -1,4 +1,4 @@
-#include <rsi/uploader/Vendor.hpp>
+#include <rsi/vendor/Vendor.hpp>
 #include <rsi/sockets/Transmit.hpp>
 #include <extras/strings.hpp>
 #include <iostream>

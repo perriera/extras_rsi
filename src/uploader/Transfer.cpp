@@ -1,9 +1,5 @@
-#include <arpa/inet.h>
-#include <unistd.h>
-
 #include <rsi/uploader/Uploader.hpp>
 #include <rsi/uploader/Downloader.hpp>
-#include <rsi/uploader/Vendor.hpp>
 #include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/strings.hpp>
@@ -13,9 +9,6 @@
 #include <iostream>
 #include <filesystem>
 #include <rsi/sockets/StatusLine.hpp>
-
-#include <chrono>
-#include <thread>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -72,29 +65,6 @@ namespace extras {
         std::cout << rsi::pass(" downloaded") << std::endl;
     }
 
-    /**
-     *  @brief Vendor Client/Server ::transfer()
-     *
-     */
-    void rsi::VendorClient::transfer() const {
-        std::cout << rsi::pass(filename()) << std::endl;
-        std::cout << rsi::pass(" processed") << std::endl;
-    }
-
-    void rsi::VendorServer::transfer() const {
-        rsi::Parameter parameter = ~extras::Paths(filename());
-        rsi::Parcel parcel(parameter);
-        // parcel.unpack();
-        // parcel.unzip();
-        // parcel.dir();
-        // parcel.cat();
-        // parcel.pack();
-        // parcel.dir();
-        std::cout << extras::cyan;
-        parcel.unzip();
-        std::cout << rsi::pass(filename()) << std::endl;
-        std::cout << rsi::pass(" processed") << std::endl;
-    }
 
 
 }  // namespace extras
