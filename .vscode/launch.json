@@ -15,7 +15,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/run-unittests-rsi",
             "args": [
-                "[ParcelInterface]"
+                "[StatusLineInterface]"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -42,6 +42,7 @@
                 "8080",
                 "data/cplusplusorg.freeformjs.imploded.zip",
                 "upload",
+                "vendor",
                 "download",
             ],
             "stopAtEntry": false,
@@ -140,8 +141,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/downloader_client",
             "args": [
-                "send.txt",
+                "data/cplusplusorg.freeformjs.imploded.zip",
                 "137.184.218.130",
+                "127.0.0.1",
                 "9003",
             ],
             "stopAtEntry": false,

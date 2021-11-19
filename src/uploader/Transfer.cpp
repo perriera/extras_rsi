@@ -7,10 +7,12 @@
 #include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/strings.hpp>
+#include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
 #include <rsi/parcel/Parcel.hpp>
 #include <iostream>
 #include <filesystem>
+#include <rsi/sockets/Status.hpp>
 
 #include <chrono>
 #include <thread>
@@ -26,13 +28,14 @@ namespace extras {
      */
     void rsi::UploaderClient::transfer() const {
 
-        rsi::Parameter parcel = ~extras::Paths(filename());
-        rsi::Parcel packed(parcel);
-        packed.pack();
+        rsi::Parameter parameter = ~extras::Paths(filename());
+        rsi::Parcel parcel(parameter);
+        parcel.pack();
         // packed.unpack();
         // packed.unzip();
-        extras::rsi::send_file2(packed.packed(), this->_sockfd);
-        cout << packed.packed() << " uploaded" << endl;
+        extras::rsi::send_file2(parcel.packed(), this->_sockfd);
+        std::cout << rsi::pass(parcel.packed()) << std::endl;
+        std::cout << rsi::pass(" uploaded") << std::endl;
     }
 
     void rsi::UploaderServer::transfer() const {
@@ -40,7 +43,8 @@ namespace extras {
         rsi::Parameter parameter = filename();
         rsi::Parcel parcel(parameter);
         extras::rsi::write_file(parcel.packed(), this->_new_sock);
-        cout << parcel.packed() << " uploaded" << endl;
+        std::cout << rsi::pass(parcel.packed()) << std::endl;
+        std::cout << rsi::pass(" uploaded") << std::endl;
     }
 
     /**
@@ -55,7 +59,8 @@ namespace extras {
         // parcel.cat();
         // parcel.unzip();
         parcel.dir();
-        cout << parcel.packed() << " downloaded" << endl;
+        std::cout << rsi::pass(parcel.packed()) << std::endl;
+        std::cout << rsi::pass(" downloaded") << std::endl;
     }
 
     void rsi::DownloaderServer::transfer() const {
@@ -63,7 +68,8 @@ namespace extras {
         rsi::Parcel parcel(parameter);
         parcel.pack();
         extras::rsi::send_file2(parcel.packed(), this->_new_sock);
-        cout << parcel.packed() << " downloaded" << endl;
+        std::cout << rsi::pass(parcel.packed()) << std::endl;
+        std::cout << rsi::pass(" downloaded") << std::endl;
     }
 
     /**
@@ -71,7 +77,8 @@ namespace extras {
      *
      */
     void rsi::VendorClient::transfer() const {
-        cout << "VendorClient::transfer()" << endl;
+        std::cout << rsi::pass(filename()) << std::endl;
+        std::cout << rsi::pass(" processed") << std::endl;
     }
 
     void rsi::VendorServer::transfer() const {
@@ -83,8 +90,10 @@ namespace extras {
         // parcel.cat();
         // parcel.pack();
         // parcel.dir();
+        std::cout << extras::cyan;
         parcel.unzip();
-        cout << "VendorClient::transfer()" << endl;
+        std::cout << rsi::pass(filename()) << std::endl;
+        std::cout << rsi::pass(" processed") << std::endl;
     }
 
 

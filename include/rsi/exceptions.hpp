@@ -31,6 +31,32 @@ namespace extras {
             static void assertion(const std::string& msg, const extras::WhereAmI& ref);
         };
 
+        concrete class SocketException extends RSIException {
+        public:
+            SocketException(std::string msg, const extras::WhereAmI& whereAmI)
+                : RSIException(msg.c_str(), whereAmI) {}
+            static void assertionLTZero(int error, const std::string& msg, const extras::WhereAmI& ref) {
+                if (error < 0)
+                    throw SocketException(msg, ref);
+            }
+            static void assertionNEZero(int error, const std::string& msg, const extras::WhereAmI& ref) {
+                if (error != 0)
+                    throw SocketException(msg, ref);
+            }
+            static void assertionLTMinusOne(int error, const std::string& msg, const extras::WhereAmI& ref) {
+                if (error < -1)
+                    throw SocketException(msg, ref);
+            }
+            static void assertionNEMinusOne(int error, const std::string& msg, const extras::WhereAmI& ref) {
+                if (error != -1)
+                    throw SocketException(msg, ref);
+            }
+            static void assertionEQMinusOne(int error, const std::string& msg, const extras::WhereAmI& ref) {
+                if (error == -1)
+                    throw SocketException(msg, ref);
+            }
+        };
+
         /**
          * @brief UnsupportedTokenException
          *

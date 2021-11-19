@@ -1,6 +1,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <rsi/subsystem.hpp>
+#include <rsi/exceptions.hpp>
+#include <rsi/sockets/Status.hpp>
 
 //
 // https://cdmana.com/2021/02/20210220084428841j.html
@@ -13,11 +15,8 @@ int extras::rsi::configure_serversocket(const char* ip, int port,
     int opt = 1;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) {
-        perror("[-]Error in socket");
-        exit(1);
-    }
-    printf("[+]Server socket created successfully.\n");
+    SocketException::assertionLTZero(sockfd, "Error in socket", __INFO__);
+    std::cout << rsi::pass("Server socket created successfully") << std::endl;
 
     if (timeoutmode) {
         // Set a 7 second timeout
@@ -25,32 +24,23 @@ int extras::rsi::configure_serversocket(const char* ip, int port,
         timeout.tv_sec = 20;  // after 7 seconds connect() will timeout
         timeout.tv_usec = 0;
         setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+        std::cout << rsi::pass("Server socket times out in 20 seconds") << std::endl;
     }
 
     // Forcefully attaching socket to the port 8080
-    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt,
-        sizeof(opt))) {
-        perror("setsockopt");
-        exit(EXIT_FAILURE);
-    }
+    auto test = setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt,
+        sizeof(opt));
+    SocketException::assertionNEZero(test, "Error in setsockopt", __INFO__);
 
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = port;
     server_addr.sin_addr.s_addr = inet_addr(ip);
 
     int e = bind(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
-    if (e < 0) {
-        perror("[-]Error in bind");
-        exit(1);
-    }
-    printf("[+]Binding successfull.\n");
+    SocketException::assertionLTZero(e, "Error in bind", __INFO__);
+    std::cout << rsi::pass("Binding successfull") << std::endl;
 
-    if (listen(sockfd, 10) == 0) {
-        printf("[+]Listening....\n");
-    }
-    else {
-        perror("[-]Error in listening");
-        exit(1);
-    }
+    SocketException::assertionNEZero(listen(sockfd, 10), "Error in listening", __INFO__);
+    std::cout << rsi::pass("Listening") << std::endl;
     return sockfd;
 }

@@ -1,19 +1,23 @@
 #include <rsi/uploader/Downloader.hpp>
+#include <rsi/sockets/Status.hpp>
 #include <iostream>
+
+using namespace  extras;
 
 int main(int argc, char const* argv[]) {
     try {
+        std::cout << rsi::start(argv[0]) << std::endl;
         extras::rsi::DownloaderClient downloader;
         downloader.parameters(argc, argv);
         downloader.connect();
         downloader.transfer();
-        printf("[+]File data downloaded successfully.\n");
+        std::cout << rsi::pass("File data downloaded successfully") << std::endl;
         downloader.close();
-        printf("[+]Closed the connection.\n\n");
+        std::cout << rsi::end("Closed the connection") << std::endl << std::endl;
         return 0;
     }
     catch (std::exception& ex) {
-        printf("[-]%s.\n", ex.what());
+        std::cout << rsi::fail(ex.what()) << std::endl << std::endl;
         return -1;
     }
 }
