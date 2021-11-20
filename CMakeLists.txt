@@ -145,7 +145,7 @@ if(RSI_TESTS)
   set(TEST_EXEC "run-unittests-${PROJECT_NAME}")
   add_executable(${TEST_EXEC} ${RSI_TESTS})
   target_include_directories(${TEST_EXEC} PUBLIC ${INCLUDES})
-  target_link_libraries(${TEST_EXEC} PRIVATE ${PROJECT_NAME} stdc++fs extras )
+  target_link_libraries(${TEST_EXEC} PRIVATE ${PROJECT_NAME} stdc++fs extras ng_imploder)
 endif()
 
 #

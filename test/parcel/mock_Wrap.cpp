@@ -14,7 +14,7 @@ using namespace extras;
 using namespace fakeit;
 namespace fs = std::filesystem;
 
-SCENARIO("Mock WrapInterface: hexToBin", "[WrapInterface]") {
+SCENARIO("Mock WrapInterface: virgin", "[WrapInterface]") {
 
     rsi::Parameter before = ~extras::Paths("data/exparx.webflow.zip");
     rsi::Parameter after = extras::replace_all(before, "webflow.zip", "webflow.imploded.zip");
