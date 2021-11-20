@@ -8,7 +8,7 @@
 #include <rsi/parcel/Parcel.hpp>
 #include <iostream>
 #include <filesystem>
-#include <rsi/sockets/StatusLine.hpp>
+#include <extras/status/StatusLine.hpp>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -27,8 +27,8 @@ namespace extras {
         // packed.unpack();
         // packed.unzip();
         extras::rsi::send_file2(parcel.packed(), this->_sockfd);
-        std::cout << rsi::pass(parcel.packed()) << std::endl;
-        std::cout << rsi::pass(" uploaded") << std::endl;
+        std::cout << extras::pass(parcel.packed()) << std::endl;
+        std::cout << extras::pass(" uploaded") << std::endl;
     }
 
     void rsi::UploaderServer::transfer() const {
@@ -36,8 +36,8 @@ namespace extras {
         rsi::Parameter parameter = filename();
         rsi::Parcel parcel(parameter);
         extras::rsi::write_file(parcel.packed(), this->_new_sock);
-        std::cout << rsi::pass(parcel.packed()) << std::endl;
-        std::cout << rsi::pass(" uploaded") << std::endl;
+        std::cout << extras::pass(parcel.packed()) << std::endl;
+        std::cout << extras::pass(" uploaded") << std::endl;
     }
 
     /**
@@ -52,8 +52,8 @@ namespace extras {
         // parcel.cat();
         // parcel.unzip();
         parcel.dir();
-        std::cout << rsi::pass(parcel.packed()) << std::endl;
-        std::cout << rsi::pass(" downloaded") << std::endl;
+        std::cout << extras::pass(parcel.packed()) << std::endl;
+        std::cout << extras::pass(" downloaded") << std::endl;
     }
 
     void rsi::DownloaderServer::transfer() const {
@@ -61,8 +61,8 @@ namespace extras {
         rsi::Parcel parcel(parameter);
         parcel.pack();
         extras::rsi::send_file2(parcel.packed(), this->_new_sock);
-        std::cout << rsi::pass(parcel.packed()) << std::endl;
-        std::cout << rsi::pass(" downloaded") << std::endl;
+        std::cout << extras::pass(parcel.packed()) << std::endl;
+        std::cout << extras::pass(" downloaded") << std::endl;
     }
 
 

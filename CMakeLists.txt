@@ -104,20 +104,21 @@ print(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 # MAKE_SPDLOG_SHARED OFF
 #
 CPMAddPackage(
-  NAME extras
-  GITHUB_REPOSITORY perriera/extras
-  VERSION 5.2.0
+  NAME ng_imploder
+  GITHUB_REPOSITORY perriera/ng_imploder
+  VERSION 0.5.0
   OPTIONS "MAKE_SPDLOG_SHARED OFF"
   OPTIONS "MAKE_EXTRAS_LIBRARY_ONLY ON"
+  OPTIONS "MAKE_NG_IMPLODER_LIBRARY_ONLY ON"
 )
-if(extras_ADDED)
+if(ng_imploder_ADDED)
   #
   # NOTE:  enable c++11 to avoid compilation errors, and force spdlog into release build
   #
-  print(STATUS "Configuring extras build properties")
-  set_target_properties(extras PROPERTIES CMAKE_BUILD_TYPE Release)
+  print(STATUS "Configuring ng_imploder build properties")
+  set_target_properties(ng_imploder PROPERTIES CMAKE_BUILD_TYPE Release)
 else()
-  print(WARNING "extras was not configured properly")
+  print(WARNING "ng_imploder was not configured properly")
 endif()
 
 #
