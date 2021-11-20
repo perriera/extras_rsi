@@ -133,7 +133,7 @@ file(GLOB_RECURSE RSI_SOURCE CONFIGURE_DEPENDS "${SOURCES}/*.cpp")
 #
 add_library(${PROJECT_NAME} SHARED ${RSI_HEADERS} ${RSI_SOURCE})
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
-target_link_libraries(${PROJECT_NAME} PRIVATE stdc++fs extras)
+target_link_libraries(${PROJECT_NAME} PRIVATE stdc++fs extras ng_imploder)
 
 #
 # NOTE: declare unit test cases here all source should have adequate test cases whether they be mock
@@ -161,7 +161,7 @@ endif()
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
 add_executable(parcel instances/main.cpp) 
 target_include_directories(parcel PUBLIC ${INCLUDES})
-target_link_libraries(parcel PRIVATE ${PROJECT_NAME} stdc++fs extras )
+target_link_libraries(parcel PRIVATE ${PROJECT_NAME} stdc++fs extras ng_imploder )
 endif()
 
 #
@@ -170,11 +170,11 @@ endif()
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
 add_executable(socketpool_client instances/socketpool_client.cpp) 
 target_include_directories(socketpool_client PUBLIC ${INCLUDES})
-target_link_libraries(socketpool_client PRIVATE ${PROJECT_NAME} stdc++fs extras)
+target_link_libraries(socketpool_client PRIVATE ${PROJECT_NAME} stdc++fs extras ng_imploder)
 
 add_executable(socketpool_server instances/socketpool_server.cpp) 
 target_include_directories(socketpool_server PUBLIC ${INCLUDES})
-target_link_libraries(socketpool_server PRIVATE ${PROJECT_NAME} stdc++fs extras)
+target_link_libraries(socketpool_server PRIVATE ${PROJECT_NAME} stdc++fs extras ng_imploder)
 endif()
 
 #
@@ -183,11 +183,11 @@ endif()
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
 add_executable(uploader_client instances/uploader_client.cpp) 
 target_include_directories(uploader_client PUBLIC ${INCLUDES})
-target_link_libraries(uploader_client PRIVATE ${PROJECT_NAME} stdc++fs extras)
+target_link_libraries(uploader_client PRIVATE ${PROJECT_NAME} stdc++fs extras ng_imploder)
 
 add_executable(uploader_server instances/uploader_server.cpp) 
 target_include_directories(uploader_server PUBLIC ${INCLUDES})
-target_link_libraries(uploader_server PRIVATE ${PROJECT_NAME} stdc++fs extras)
+target_link_libraries(uploader_server PRIVATE ${PROJECT_NAME} stdc++fs extras ng_imploder)
 endif()
 
 #
@@ -196,11 +196,11 @@ endif()
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
 add_executable(downloader_client instances/downloader_client.cpp) 
 target_include_directories(downloader_client PUBLIC ${INCLUDES})
-target_link_libraries(downloader_client PRIVATE ${PROJECT_NAME} stdc++fs extras)
+target_link_libraries(downloader_client PRIVATE ${PROJECT_NAME} stdc++fs extras ng_imploder)
 
 add_executable(downloader_server instances/downloader_server.cpp) 
 target_include_directories(downloader_server PUBLIC ${INCLUDES})
-target_link_libraries(downloader_server PRIVATE ${PROJECT_NAME} stdc++fs extras)
+target_link_libraries(downloader_server PRIVATE ${PROJECT_NAME} stdc++fs extras ng_imploder)
 endif()
 
 #
@@ -209,11 +209,11 @@ endif()
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
 add_executable(vendor_client instances/vendor_client.cpp) 
 target_include_directories(vendor_client PUBLIC ${INCLUDES})
-target_link_libraries(vendor_client PRIVATE ${PROJECT_NAME} stdc++fs extras)
+target_link_libraries(vendor_client PRIVATE ${PROJECT_NAME} stdc++fs extras ng_imploder)
 
 add_executable(vendor_server instances/vendor_server.cpp) 
 target_include_directories(vendor_server PUBLIC ${INCLUDES})
-target_link_libraries(vendor_server PRIVATE ${PROJECT_NAME} stdc++fs extras)
+target_link_libraries(vendor_server PRIVATE ${PROJECT_NAME} stdc++fs extras ng_imploder)
 endif()
 
 #
