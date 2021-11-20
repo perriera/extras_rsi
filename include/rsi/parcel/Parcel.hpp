@@ -30,10 +30,10 @@ namespace extras {
             // virtual HexFile convertToHex() const pure;
             // virtual HexFile hexFile() const pure;
 
-            virtual const Parameter& parcel() const pure;
+            virtual const Parameter& original() const pure;
             virtual const Parameter& hexed() const pure;
             virtual const Parameter& packed() const pure;
-            virtual const Parameter& unpacked() const pure;
+            virtual const Parameter& duplicate() const pure;
 
             virtual void pack() const pure;
             virtual void unpack() const pure;
@@ -54,14 +54,14 @@ namespace extras {
 
         public:
             Parcel(const Parameter& parcel) : _parcel(parcel) {
-                _hexed = _parcel + "_hexed";
-                _packed = _parcel + "_packed";
-                _unpacked = _parcel + "_unpacked";
+                _hexed = _parcel + "_hexed.txt";
+                _packed = _parcel + "_packed.txt";
+                _unpacked = _parcel + "_unpacked.bin";
             }
-            virtual const Parameter& parcel() const override { return _parcel; }
+            virtual const Parameter& original() const override { return _parcel; }
             virtual const Parameter& hexed() const override { return _hexed; }
             virtual const Parameter& packed() const override { return _packed; }
-            virtual const Parameter& unpacked() const override { return _unpacked; }
+            virtual const Parameter& duplicate() const override { return _unpacked; }
 
             virtual void pack() const override;
             virtual void unpack() const override;

@@ -40,8 +40,25 @@ SCENARIO("Mock WrapInterface: Imploder", "[WrapInterface]") {
             });
 
     rsi::WrapInterface& i = mock.get();
+
+    ng::Imploder imploder(original);
+    imploder.clean();
+
+    REQUIRE(fs::exists(imploder.original()));
+    REQUIRE(!fs::exists(imploder.imploded()));
+    REQUIRE(!fs::exists(imploder.exploded()));
     REQUIRE(i.wrap(original) == imploded);
+    REQUIRE(fs::exists(imploder.original()));
+    REQUIRE(fs::exists(imploder.imploded()));
+    REQUIRE(!fs::exists(imploder.exploded()));
     REQUIRE(i.unWrap(original) == exploded);
+    REQUIRE(fs::exists(imploder.original()));
+    REQUIRE(fs::exists(imploder.imploded()));
+    REQUIRE(fs::exists(imploder.exploded()));
+    imploder.clean();
+    REQUIRE(fs::exists(imploder.original()));
+    REQUIRE(!fs::exists(imploder.imploded()));
+    REQUIRE(!fs::exists(imploder.exploded()));
     Verify(Method(mock, wrap));
     Verify(Method(mock, unWrap));
 

@@ -41,8 +41,8 @@ namespace extras {
         }
 
         void Parcel::pack() const {
-            rsi::FileNotFoundException::assertion(parcel(), __INFO__);
-            std::ifstream inBin(parcel());
+            rsi::FileNotFoundException::assertion(original(), __INFO__);
+            std::ifstream inBin(original());
             std::ofstream outHex(hexed());
             rsi::HexFile hexFile = rsi::ConvertFile().convertToHex(inBin, outHex);
             rsi::PackedFile packedFile;
@@ -96,17 +96,17 @@ namespace extras {
             rsi::ConvertFile().saveHex(outHex, hexFile);
             outHex.close();
             std::ifstream inHex(hexed());
-            std::ofstream outBin(unpacked());
+            std::ofstream outBin(duplicate());
             rsi::ConvertFile().convertToBin(inHex, outBin);
             outBin.close();
-            rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
+            rsi::FileNotFoundException::assertion(duplicate(), __INFO__);
 
         }
 
         bool Parcel::verify_integrity() const {
-            rsi::FileNotFoundException::assertion(parcel(), __INFO__);
-            rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
-            rsi::PackedException::assertion(parcel(), unpacked(), __INFO__);
+            rsi::FileNotFoundException::assertion(original(), __INFO__);
+            rsi::FileNotFoundException::assertion(duplicate(), __INFO__);
+            rsi::PackedException::assertion(original(), duplicate(), __INFO__);
             return true;
         }
 
@@ -115,8 +115,8 @@ namespace extras {
                 fs::remove(packed());
             if (fs::exists(hexed()))
                 fs::remove(hexed());
-            if (fs::exists(unpacked()))
-                fs::remove(unpacked());
+            if (fs::exists(duplicate()))
+                fs::remove(duplicate());
         }
 
         void Parcel::cat() const {
@@ -126,13 +126,13 @@ namespace extras {
         }
 
         void Parcel::dir() const {
-            std::string cmd = "ls -la " + parcel() + "*";
+            std::string cmd = "ls -la " + original() + "*";
             system(cmd.c_str());
         }
 
         void Parcel::unzip() const {
-            rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
-            string cmd = "unzip -o " + unpacked() + " -d /tmp ";
+            rsi::FileNotFoundException::assertion(duplicate(), __INFO__);
+            string cmd = "unzip -o " + duplicate() + " -d /tmp ";
             system(cmd.c_str());
         }
 
