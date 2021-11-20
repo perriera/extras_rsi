@@ -21,7 +21,7 @@ SCENARIO("Mock WrapInterface: Parcel", "[WrapInterface]") {
 
     rsi::Parameter original = ~extras::Paths("data/exparx.webflow.zip");
     rsi::Parameter packed = extras::replace_all(original, "webflow.zip", "webflow.zip_packed.txt");
-    rsi::Parameter unpacked = extras::replace_all(original, "webflow.zip", "webflow.zip_unpacked.bin");
+    rsi::Parameter unpacked = extras::replace_all(original, "webflow.zip", "webflow.zip_duplicate.bin");
     Mock<rsi::WrapInterface> mock;
 
     When(Method(mock, wrap))

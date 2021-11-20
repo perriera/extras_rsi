@@ -111,6 +111,9 @@ namespace extras {
         }
 
         void Parcel::clean() const {
+            auto x = packed();
+            auto y = hexed();
+            auto z = duplicate();
             if (fs::exists(packed()))
                 fs::remove(packed());
             if (fs::exists(hexed()))

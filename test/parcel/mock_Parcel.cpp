@@ -80,6 +80,18 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
             }
     );
 
+    When(Method(mock, clean))
+        .AlwaysDo(
+            [&hexed, &packed, &duplicate]() {
+                if (fs::exists(hexed))
+                    fs::remove(hexed);
+                if (fs::exists(packed))
+                    fs::remove(packed);
+                if (fs::exists(duplicate))
+                    fs::remove(duplicate);
+            }
+    );
+
     if (fs::exists(packed))
         fs::remove(packed);
     if (fs::exists(hexed))
@@ -109,6 +121,11 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
     i.verify_integrity();
     REQUIRE(fs::exists(i.original()));
     REQUIRE(fs::exists(i.duplicate()));
+    i.clean();
+    REQUIRE(fs::exists(i.original()));
+    REQUIRE(!fs::exists(i.hexed()));
+    REQUIRE(!fs::exists(i.packed()));
+    REQUIRE(!fs::exists(i.duplicate()));
     Verify(Method(mock, pack));
     Verify(Method(mock, unpack));
     Verify(Method(mock, verify_integrity));

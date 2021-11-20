@@ -56,7 +56,7 @@ namespace extras {
             Parcel(const Parameter& parcel) : _parcel(parcel) {
                 _hexed = _parcel + "_hexed.txt";
                 _packed = _parcel + "_packed.txt";
-                _unpacked = _parcel + "_unpacked.bin";
+                _unpacked = _parcel + "_duplicate.bin";
             }
             virtual const Parameter& original() const override { return _parcel; }
             virtual const Parameter& hexed() const override { return _hexed; }
