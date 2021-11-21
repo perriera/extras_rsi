@@ -5,6 +5,7 @@
 #include <rsi/parcel/ParcelImploder.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
+#include <extras/devices/ansi_colors.hpp>
 #include <extras/strings.hpp>
 #include <rsi/exceptions.hpp>
 #include <ng_imploder/imploder/Imploder.hpp>
@@ -51,7 +52,7 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
                 wrapped_parcel = wrapped;
                 // extras::rsi::send_file2(wrapped, this->_sockfd);
                 std::cout << extras::pass(wrapped) << std::endl;
-                std::cout << extras::pass(" uploaded") << std::endl;
+                std::cout << extras::pass(" wrapped, uploaded") << std::endl;
             });
 
     /**
@@ -71,7 +72,7 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
                 unWrapped_parcel = original;
                 // extras::rsi::write_file(original, this->_new_sock);
                 std::cout << extras::pass(_filename) << std::endl;
-                std::cout << extras::pass(" uploaded") << std::endl;
+                std::cout << extras::pass(" uploaded, unwrapped") << std::endl;
             });
 
     /**
@@ -84,7 +85,7 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
     When(Method(vendor_client, transfer))
         .AlwaysDo(
             []() {
-                std::cout << extras::pass(" uploaded") << std::endl;
+                std::cout << extras::pass(" does nothing") << std::endl;
             });
 
     /**
@@ -100,8 +101,12 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
         .AlwaysDo(
             [&unWrapped_parcel, &original]() {
                 REQUIRE(unWrapped_parcel == original);
+                std::cout << extras::cyan << extras::pass(" processes file ");
+                std::cout << extras::blue << std::endl;
+                auto cmd = "ls -la " + original;
+                SystemException::assertion(cmd, __INFO__);
                 std::cout << extras::pass(unWrapped_parcel) << std::endl;
-                std::cout << extras::pass(" uploaded") << std::endl;
+                std::cout << extras::pass(" lists directory") << std::endl;
             });
 
     /**
@@ -142,6 +147,12 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
                 // extras::rsi::write_file(original, this->_sockfd);
                 std::cout << extras::pass(original) << std::endl;
                 std::cout << extras::pass(" downloaded") << std::endl;
+                //
+                std::cout << extras::cyan << extras::pass(" updated file ");
+                std::cout << extras::blue << std::endl;
+                auto cmd = "ls -la " + original;
+                SystemException::assertion(cmd, __INFO__);
+
             });
 
     rsi::ParcelImploder imploder;
