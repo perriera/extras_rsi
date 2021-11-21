@@ -46,7 +46,7 @@ namespace extras {
           * @brief process the file
           *
           */
-        std::cout << extras::red;
+        std::cout << extras::yellow;
         std::cout << filename();
         std::cout << extras::cyan;
         SystemException::assertion("ls -la", __INFO__);
