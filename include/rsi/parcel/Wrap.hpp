@@ -20,6 +20,7 @@ namespace extras {
 
             virtual Filename wrap(const Filename& filename) const pure;
             virtual Filename unWrap(const Filename& filename) const pure;
+            virtual Filename merge(const Filename& filename) const pure;
             virtual Filename clean(const Filename& filename) const pure;
 
             bool operator==(const WrapInterface& rhs) const;
