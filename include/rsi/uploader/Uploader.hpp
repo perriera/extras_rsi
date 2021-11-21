@@ -56,7 +56,7 @@ namespace extras {
              * @note this is where the magic happens, depending what type of class you
              * are this method performs the data transfer, (or initiates it)
              */
-            virtual void write(const Filename& filename) const pure;
+            virtual Filename write(const Filename& filename) const pure;
 
             /**
              * @brief transfer()
@@ -104,7 +104,7 @@ namespace extras {
             virtual void transfer() const override;
             virtual void close() const override;
             virtual void send(const Filename& filename) const override;
-            virtual void write(const Filename& filename) const override;
+            virtual Filename write(const Filename& filename) const override;
         };
 
         /**
@@ -124,7 +124,7 @@ namespace extras {
             virtual void transfer() const override;
             virtual void close() const override;
             virtual void send(const Filename& filename) const override;
-            virtual void write(const Filename& filename) const override;
+            virtual Filename write(const Filename& filename) const override;
         };
 
 

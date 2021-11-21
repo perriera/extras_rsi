@@ -6,6 +6,9 @@
 #include <rsi/exceptions.hpp>
 #include <extras/strings.hpp>
 #include <iostream>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 using namespace std;
 
@@ -26,11 +29,15 @@ namespace extras {
     void rsi::UploaderClient::close() const { ::close(this->_sockfd); }
 
     void rsi::UploaderClient::send(const Filename& filename) const {
+        //         ifstream in(filename);
+        // rsi::BinFile binFile = rsi::ConvertFile().loadBin(in);
+        // internet = binFile;
         extras::rsi::send_file2(filename, this->_sockfd);
     }
 
-    void rsi::UploaderClient::write(const Filename& filename) const {
+    rsi::Filename rsi::UploaderClient::write(const Filename& filename) const {
         extras::rsi::write_file(filename, this->_sockfd);
+        return filename;
     }
 
 }  // namespace extras

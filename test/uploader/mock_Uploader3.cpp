@@ -68,6 +68,7 @@ SCENARIO("Mock UploaderInterface: basic2", "[UploaderInterface]") {
     When(Method(mock, write))
         .AlwaysDo(
             [](const rsi::Filename& filename) {
+                return rsi::Filename();
             });
 
     When(Method(mock, close))

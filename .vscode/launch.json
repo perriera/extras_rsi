@@ -116,9 +116,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/uploader_server",
             "args": [
-                "send.txt",
+                "data/exparx.webflow.zip",
                 "127.0.0.1",
-                "9003",
+                "8080",
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

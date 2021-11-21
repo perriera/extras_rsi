@@ -31,13 +31,15 @@ class TestUploaderClient extends rsi::UploaderClient {
 public:
     virtual void connect() {};
     virtual void transfer() const {
+        auto fn = filename();
         rsi::FileNotFoundException::assertion(filename(), __INFO__);
-        rsi::ParcelImploder parcelImploder;
-        auto wrapped = parcelImploder.wrap(filename());
-        rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-        // wrapped_parcel = wrapped;
-        send(wrapped);
-        std::cout << extras::pass(wrapped) << std::endl;
+        send(filename());
+        // rsi::ParcelImploder parcelImploder;
+        // auto wrapped = parcelImploder.wrap(filename());
+        // rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+        // // wrapped_parcel = wrapped;
+        // send(wrapped);
+        // std::cout << extras::pass(wrapped) << std::endl;
         std::cout << extras::pass("send_file2 successful") << std::endl;
     };
     virtual void close() const {};
@@ -46,13 +48,17 @@ public:
         rsi::BinFile binFile = rsi::ConvertFile().loadBin(in);
         internet = binFile;
     };
-    virtual void write(const rsi::Filename& filename) const {
+    virtual rsi::Filename write(const rsi::Filename& filename) const {
+        if (!fs::exists(client_dir)) {
+            SystemException::assertion("mkdir " + client_dir, __INFO__);
+        }
         if (internet.size() == 0)
             throw "Nothing to save";
         auto target = extras::replace_all(filename, "data/", client_dir);
         ofstream out(target);
         rsi::ConvertFile().saveBin(out, internet);
         internet.clear();
+        return target;
     };
 };
 
@@ -60,17 +66,18 @@ class TestUploaderServer extends rsi::UploaderServer {
 public:
     virtual void connect() {};
     virtual void transfer() const {
-        rsi::ParcelImploder parcelImploder;
-        auto wrappedName = parcelImploder.wrapped(filename());
-        write(wrappedName);
-        rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
-        parcelImploder.unWrap(filename());
-        parcelImploder.merge(filename());
-        auto original = parcelImploder.clean(filename());
-        auto test = fs::exists(filename());
-        auto msg = (test ? "write_file successful" : "did not upload");
-        std::cout << extras::pass(filename()) << std::endl;
-        std::cout << extras::pass(msg) << std::endl;
+        auto fn = filename();
+        fn = write(filename());
+        rsi::FileNotFoundException::assertion(fn, __INFO__);
+        // rsi::ParcelImploder parcelImploder;
+        // auto wrappedName = parcelImploder.wrapped(filename());
+        // write(wrappedName);
+        // rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
+        // parcelImploder.unWrap(filename());
+        // parcelImploder.merge(filename());
+        // auto original = parcelImploder.clean(filename());
+        std::cout << extras::pass(fn) << std::endl;
+        std::cout << extras::pass("write_file successful") << std::endl;
     };
     virtual void close() const {};
     virtual void send(const rsi::Filename& filename) const {
@@ -78,13 +85,17 @@ public:
         rsi::BinFile binFile = rsi::ConvertFile().loadBin(in);
         internet = binFile;
     };
-    virtual void write(const rsi::Filename& filename) const {
+    virtual rsi::Filename write(const rsi::Filename& filename) const {
+        if (!fs::exists(server_dir)) {
+            SystemException::assertion("mkdir " + server_dir, __INFO__);
+        }
         if (internet.size() == 0)
             throw "Nothing to save";
         auto target = extras::replace_all(filename, "data/", server_dir);
         ofstream out(target);
         rsi::ConvertFile().saveBin(out, internet);
         internet.clear();
+        return target;
     };
 };
 
@@ -139,13 +150,26 @@ SCENARIO("Test UploaderInterface: basic4", "[UploaderInterface]") {
         REQUIRE(fs::exists(target));
     }
 
+    clean();
+
     i_client.parameters(argc, argv1);
     i_server.parameters(argc, argv2);
 
     i_client.connect();
     i_server.connect();
-    i_client.transfer();
+
+    {
+        auto target = extras::replace_all(_filename, "data/", server_dir);
+        REQUIRE(!fs::exists(target));
+        i_client.transfer();
+        REQUIRE(!fs::exists(target));
+        i_server.transfer();
+        REQUIRE(fs::exists(target));
+    }
+
     i_client.close();
+    i_server.close();
+
     REQUIRE(fs::exists(original));
 
 }
