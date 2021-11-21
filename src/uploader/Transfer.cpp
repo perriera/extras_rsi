@@ -22,6 +22,7 @@ namespace extras {
      *
      */
     void rsi::UploaderClient::transfer() const {
+        FileNotFoundException::assertion(filename(), __INFO__);
         rsi::ParcelImploder parcelImploder;
         auto wrapped = parcelImploder.wrap(filename());
         extras::rsi::send_file2(wrapped, this->_sockfd);
@@ -30,6 +31,7 @@ namespace extras {
     }
 
     void rsi::UploaderServer::transfer() const {
+        FileNotFoundException::assertion(filename(), __INFO__);
         rsi::ParcelImploder parcelImploder;
         parcelImploder.unWrap(filename());
         parcelImploder.merge(filename());
@@ -44,6 +46,7 @@ namespace extras {
      *
      */
     void rsi::DownloaderServer::transfer() const {
+        FileNotFoundException::assertion(filename(), __INFO__);
         rsi::ParcelImploder parcelImploder;
         auto wrapped = parcelImploder.wrap(filename());
         extras::rsi::send_file2(wrapped, this->_new_sock);
@@ -52,6 +55,7 @@ namespace extras {
     }
 
     void rsi::DownloaderClient::transfer() const {
+        FileNotFoundException::assertion(filename(), __INFO__);
         rsi::ParcelImploder parcelImploder;
         parcelImploder.unWrap(filename());
         parcelImploder.merge(filename());

@@ -27,6 +27,12 @@ namespace extras {
             return parcel.packed();
         }
 
+        Filename ParcelImploder::wrapped(const Filename& filename) const {
+            ng::Imploder imploder(filename);
+            rsi::Parcel parcel(imploder.imploded());
+            return parcel.packed();
+        }
+
         /**
          * @brief unWrap()
          *
@@ -40,6 +46,12 @@ namespace extras {
             parcel.merge();
             parcel.clean();
             imploder.explode();
+            return imploder.exploded();
+        }
+
+        Filename ParcelImploder::unWrapped(const Filename& filename) const {
+            ng::Imploder imploder(filename);
+            rsi::Parcel parcel(imploder.imploded());
             return imploder.exploded();
         }
 

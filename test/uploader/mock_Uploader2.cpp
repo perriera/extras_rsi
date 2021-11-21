@@ -47,8 +47,10 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
     When(Method(uploader_client, transfer))
         .AlwaysDo(
             [&_filename, &wrapped_parcel]() {
+                rsi::FileNotFoundException::assertion(_filename, __INFO__);
                 rsi::ParcelImploder parcelImploder;
                 auto wrapped = parcelImploder.wrap(_filename);
+                rsi::FileNotFoundException::assertion(wrapped, __INFO__);
                 wrapped_parcel = wrapped;
                 // extras::rsi::send_file2(wrapped, this->_sockfd);
                 std::cout << extras::pass(wrapped) << std::endl;
@@ -66,6 +68,7 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
         .AlwaysDo(
             [&_filename, &unWrapped_parcel]() {
                 rsi::ParcelImploder parcelImploder;
+                rsi::FileNotFoundException::assertion(parcelImploder.wrapped(_filename), __INFO__);
                 parcelImploder.unWrap(_filename);
                 parcelImploder.merge(_filename);
                 auto original = parcelImploder.clean(_filename);
@@ -100,6 +103,7 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
     When(Method(vendor_server, transfer))
         .AlwaysDo(
             [&unWrapped_parcel, &original]() {
+                rsi::FileNotFoundException::assertion(original, __INFO__);
                 REQUIRE(unWrapped_parcel == original);
                 std::cout << extras::cyan << extras::pass(" processes file ");
                 std::cout << extras::blue << std::endl;
@@ -120,8 +124,10 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
     When(Method(downloader_server, transfer))
         .AlwaysDo(
             [&_filename, &wrapped_parcel, &original]() {
+                rsi::FileNotFoundException::assertion(_filename, __INFO__);
                 rsi::ParcelImploder parcelImploder;
                 auto wrapped = parcelImploder.wrap(_filename);
+                rsi::FileNotFoundException::assertion(wrapped, __INFO__);
                 wrapped_parcel = wrapped;
                 // extras::rsi::send_file2(wrapped, this->_new_sock);
                 std::cout << extras::pass(wrapped) << std::endl;
@@ -139,10 +145,13 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
     When(Method(downloader_client, transfer))
         .AlwaysDo(
             [&_filename, &unWrapped_parcel]() {
+                rsi::FileNotFoundException::assertion(_filename, __INFO__);
                 rsi::ParcelImploder parcelImploder;
+                rsi::FileNotFoundException::assertion(parcelImploder.wrapped(_filename), __INFO__);
                 parcelImploder.unWrap(_filename);
                 parcelImploder.merge(_filename);
                 auto original = parcelImploder.clean(_filename);
+                rsi::FileNotFoundException::assertion(original, __INFO__);
                 unWrapped_parcel = original;
                 // extras::rsi::write_file(original, this->_sockfd);
                 std::cout << extras::pass(original) << std::endl;

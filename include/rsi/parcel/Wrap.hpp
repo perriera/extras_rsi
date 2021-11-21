@@ -22,6 +22,8 @@ namespace extras {
             virtual Filename unWrap(const Filename& filename) const pure;
             virtual Filename merge(const Filename& filename) const pure;
             virtual Filename clean(const Filename& filename) const pure;
+            virtual Filename wrapped(const Filename& filename) const pure;
+            virtual Filename unWrapped(const Filename& filename) const pure;
 
             bool operator==(const WrapInterface& rhs) const;
             bool operator!=(const WrapInterface& rhs) const {

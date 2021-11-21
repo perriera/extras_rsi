@@ -20,6 +20,8 @@ namespace extras {
             virtual Filename unWrap(const Filename& filename) const override;
             virtual Filename merge(const Filename& filename) const override;
             virtual Filename clean(const Filename& filename) const override;
+            virtual Filename wrapped(const Filename& filename) const override;
+            virtual Filename unWrapped(const Filename& filename) const override;
 
         };
 
