@@ -32,10 +32,17 @@ namespace extras {
         }
     }
 
-
     void rsi::UploaderServer::close() const {
         ::close(this->_new_sock);
         ::close(this->_sockfd);
+    }
+
+    void rsi::UploaderServer::send(const Filename& filename) const {
+        extras::rsi::send_file2(filename, this->_new_sock);
+    }
+
+    void rsi::UploaderServer::write(const Filename& filename) const {
+        extras::rsi::write_file(filename, this->_new_sock);
     }
 
 }  // namespace extras

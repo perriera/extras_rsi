@@ -45,6 +45,20 @@ namespace extras {
             virtual void transfer() const pure;
 
             /**
+             * @brief send()
+             * @note this is where the magic happens, depending what type of class you
+             * are this method performs the data transfer, (or initiates it)
+             */
+            virtual void send(const Filename& filename) const pure;
+
+            /**
+             * @brief write()
+             * @note this is where the magic happens, depending what type of class you
+             * are this method performs the data transfer, (or initiates it)
+             */
+            virtual void write(const Filename& filename) const pure;
+
+            /**
              * @brief transfer()
              * @note safely closes all sockets
              */
@@ -74,6 +88,7 @@ namespace extras {
             };
             virtual Parameter ip() const override { return _parameters[2]; };
             virtual Parameter port() const override { return _parameters[3]; };
+
         };
 
         /**
@@ -88,6 +103,8 @@ namespace extras {
             virtual void connect() override;
             virtual void transfer() const override;
             virtual void close() const override;
+            virtual void send(const Filename& filename) const override;
+            virtual void write(const Filename& filename) const override;
         };
 
         /**
@@ -106,6 +123,8 @@ namespace extras {
             virtual void connect() override;
             virtual void transfer() const override;
             virtual void close() const override;
+            virtual void send(const Filename& filename) const override;
+            virtual void write(const Filename& filename) const override;
         };
 
 

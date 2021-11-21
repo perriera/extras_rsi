@@ -25,4 +25,12 @@ namespace extras {
 
     void rsi::UploaderClient::close() const { ::close(this->_sockfd); }
 
+    void rsi::UploaderClient::send(const Filename& filename) const {
+        extras::rsi::send_file2(filename, this->_sockfd);
+    }
+
+    void rsi::UploaderClient::write(const Filename& filename) const {
+        extras::rsi::write_file(filename, this->_sockfd);
+    }
+
 }  // namespace extras
