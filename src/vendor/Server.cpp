@@ -44,26 +44,13 @@ namespace extras {
         rsi::Parcel parcel(parameter);
 
         /**
-         * @brief unpack the file
-         *
-         */
-        parcel.unpack();
-
-        /**
          * @brief process the file
          *
          */
+        std::cout << extras::cyan;
         parcel.unzip();
         parcel.dir();
         parcel.cat();
-
-        /**
-         * @brief repackage the file
-         *
-         */
-        parcel.pack();
-        parcel.dir();
-        std::cout << extras::cyan;
 
         /**
          * @brief the packaged file will now be

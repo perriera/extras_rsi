@@ -9,6 +9,7 @@
 #include <iostream>
 #include <filesystem>
 #include <extras/status/StatusLine.hpp>
+#include <rsi/parcel/ParcelImploder.hpp>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -20,23 +21,21 @@ namespace extras {
      *
      */
     void rsi::UploaderClient::transfer() const {
-
         rsi::Parameter parameter = ~extras::Paths(filename());
-        rsi::Parcel parcel(parameter);
-        parcel.pack();
-        // packed.unpack();
-        // packed.unzip();
-        extras::rsi::send_file2(parcel.packed(), this->_sockfd);
-        std::cout << extras::pass(parcel.packed()) << std::endl;
+        rsi::ParcelImploder parcelImploder;
+        auto wrapped = parcelImploder.wrap(filename());
+        extras::rsi::send_file2(wrapped, this->_sockfd);
+        std::cout << extras::pass(wrapped) << std::endl;
         std::cout << extras::pass(" uploaded") << std::endl;
     }
 
     void rsi::UploaderServer::transfer() const {
-
-        rsi::Parameter parameter = filename();
-        rsi::Parcel parcel(parameter);
-        extras::rsi::write_file(parcel.packed(), this->_new_sock);
-        std::cout << extras::pass(parcel.packed()) << std::endl;
+        rsi::ParcelImploder parcelImploder;
+        parcelImploder.unWrap(filename());
+        parcelImploder.merge(filename());
+        auto original = parcelImploder.clean(filename());
+        extras::rsi::write_file(original, this->_new_sock);
+        std::cout << extras::pass(original) << std::endl;
         std::cout << extras::pass(" uploaded") << std::endl;
     }
 
@@ -44,26 +43,25 @@ namespace extras {
      * @brief Vendor Client/Server ::transfer()
      *
      */
-    void rsi::DownloaderClient::transfer() const {
+    void rsi::DownloaderServer::transfer() const {
         rsi::Parameter parameter = ~extras::Paths(filename());
-        rsi::Parcel parcel(parameter);
-        extras::rsi::write_file(parcel.packed(), this->_sockfd);
-        parcel.unpack();
-        // parcel.cat();
-        // parcel.unzip();
-        parcel.dir();
-        std::cout << extras::pass(parcel.packed()) << std::endl;
+        rsi::ParcelImploder parcelImploder;
+        auto wrapped = parcelImploder.wrap(filename());
+        extras::rsi::send_file2(wrapped, this->_new_sock);
+        std::cout << extras::pass(wrapped) << std::endl;
         std::cout << extras::pass(" downloaded") << std::endl;
     }
 
-    void rsi::DownloaderServer::transfer() const {
-        rsi::Parameter parameter = ~extras::Paths(filename());
-        rsi::Parcel parcel(parameter);
-        parcel.pack();
-        extras::rsi::send_file2(parcel.packed(), this->_new_sock);
-        std::cout << extras::pass(parcel.packed()) << std::endl;
+    void rsi::DownloaderClient::transfer() const {
+        rsi::ParcelImploder parcelImploder;
+        parcelImploder.unWrap(filename());
+        parcelImploder.merge(filename());
+        auto original = parcelImploder.clean(filename());
+        extras::rsi::write_file(original, this->_sockfd);
+        std::cout << extras::pass(original) << std::endl;
         std::cout << extras::pass(" downloaded") << std::endl;
     }
+
 
 
 
