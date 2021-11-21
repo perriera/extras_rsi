@@ -22,23 +22,28 @@ namespace extras {
      *
      */
     void rsi::UploaderClient::transfer() const {
-        FileNotFoundException::assertion(filename(), __INFO__);
+        rsi::FileNotFoundException::assertion(filename(), __INFO__);
         rsi::ParcelImploder parcelImploder;
         auto wrapped = parcelImploder.wrap(filename());
+        rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+        // wrapped_parcel = wrapped;
         extras::rsi::send_file2(wrapped, this->_sockfd);
         std::cout << extras::pass(wrapped) << std::endl;
-        std::cout << extras::pass(" wrapped, uploaded") << std::endl;
+        std::cout << extras::pass("send_file2 successful") << std::endl;
     }
 
     void rsi::UploaderServer::transfer() const {
-        FileNotFoundException::assertion(filename(), __INFO__);
         rsi::ParcelImploder parcelImploder;
+        auto wrappedName = parcelImploder.wrapped(filename());
+        extras::rsi::write_file(wrappedName, this->_new_sock);
+        rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
         parcelImploder.unWrap(filename());
         parcelImploder.merge(filename());
         auto original = parcelImploder.clean(filename());
-        extras::rsi::write_file(original, this->_new_sock);
+        auto test = fs::exists(filename());
+        auto msg = (test ? "write_file successful" : "did not upload");
         std::cout << extras::pass(filename()) << std::endl;
-        std::cout << extras::pass(" uploaded, unwrapped") << std::endl;
+        std::cout << extras::pass(msg) << std::endl;
     }
 
     /**
@@ -46,29 +51,32 @@ namespace extras {
      *
      */
     void rsi::DownloaderServer::transfer() const {
-        FileNotFoundException::assertion(filename(), __INFO__);
+        rsi::FileNotFoundException::assertion(filename(), __INFO__);
         rsi::ParcelImploder parcelImploder;
         auto wrapped = parcelImploder.wrap(filename());
+        rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+        // wrapped_parcel = wrapped;
         extras::rsi::send_file2(wrapped, this->_new_sock);
         std::cout << extras::pass(wrapped) << std::endl;
-        std::cout << extras::pass(" downloaded") << std::endl;
+        std::cout << extras::pass("send_file2 successful") << std::endl;
     }
 
     void rsi::DownloaderClient::transfer() const {
-        FileNotFoundException::assertion(filename(), __INFO__);
         rsi::ParcelImploder parcelImploder;
+        auto check = parcelImploder.wrapped(filename());
+        extras::rsi::write_file(check, this->_sockfd);
+        rsi::FileNotFoundException::assertion(check, __INFO__);
         parcelImploder.unWrap(filename());
         parcelImploder.merge(filename());
         auto original = parcelImploder.clean(filename());
-        extras::rsi::write_file(original, this->_sockfd);
+        rsi::FileNotFoundException::assertion(original, __INFO__);
         std::cout << extras::pass(original) << std::endl;
-        std::cout << extras::pass(" downloaded") << std::endl;
+        std::cout << extras::pass("write_file successful") << std::endl;
         //
         std::cout << extras::cyan << extras::pass(" updated file ");
         std::cout << extras::blue << std::endl;
         auto cmd = "ls -la " + original;
         SystemException::assertion(cmd, __INFO__);
-
     }
 
 

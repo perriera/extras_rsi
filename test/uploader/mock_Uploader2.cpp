@@ -78,15 +78,22 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
      */
     When(Method(uploader_server, transfer))
         .AlwaysDo(
-            [&_filename_onServer, &wrapped_parcel_onServer]() {
+            [&_filename_onServer, &wrapped_parcel, &wrapped_parcel_onServer]() {
+
+                {
+                    auto copydata = "cp " + wrapped_parcel + " " + "data/server";
+                    SystemException::assertion(copydata, __INFO__);
+                    wrapped_parcel_onServer = extras::replace_all(wrapped_parcel, "data/client", "data/server");
+                }
+
                 rsi::ParcelImploder parcelImploder;
                 auto wrappedName = parcelImploder.wrapped(_filename_onServer);
+                // extras::rsi::write_file(wrappedName, this->_new_sock);
                 rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
+
                 parcelImploder.unWrap(_filename_onServer);
                 parcelImploder.merge(_filename_onServer);
                 auto original = parcelImploder.clean(_filename_onServer);
-                REQUIRE(_filename_onServer == original);
-                // extras::rsi::write_file(original, this->_new_sock);
                 auto test = fs::exists(_filename_onServer);
                 auto msg = (test ? "write_file successful" : "did not upload");
                 std::cout << extras::pass(_filename_onServer) << std::endl;
@@ -158,17 +165,27 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
      */
     When(Method(downloader_client, transfer))
         .AlwaysDo(
-            [&_filename, &unWrapped_parcel, &wrapped_parcel_onClient]() {
-                rsi::FileNotFoundException::assertion(_filename, __INFO__);
+            [&_filename, &wrapped_parcel, &wrapped_parcel_onClient]() {
+
+                {
+                    auto copydata = "cp " + wrapped_parcel + " " + "data/client";
+                    SystemException::assertion(copydata, __INFO__);
+                    wrapped_parcel_onClient = extras::replace_all(wrapped_parcel, "data/server", "data/client");
+                }
+
+                rsi::FileNotFoundException::assertion(wrapped_parcel_onClient, __INFO__);
                 rsi::ParcelImploder parcelImploder;
                 auto check = parcelImploder.wrapped(_filename);
+                // extras::rsi::write_file(check, this->_sockfd);
+                rsi::FileNotFoundException::assertion(check, __INFO__);
+
                 REQUIRE(check == wrapped_parcel_onClient);
                 rsi::FileNotFoundException::assertion(check, __INFO__);
                 parcelImploder.unWrap(_filename);
                 parcelImploder.merge(_filename);
                 auto original = parcelImploder.clean(_filename);
                 rsi::FileNotFoundException::assertion(original, __INFO__);
-                unWrapped_parcel = original;
+                // REQUIRE(wrapped_parcel_onClient == original);
                 // extras::rsi::write_file(original, this->_sockfd);
                 std::cout << extras::pass(original) << std::endl;
                 std::cout << extras::pass("write_file successful") << std::endl;
@@ -192,20 +209,11 @@ SCENARIO("Mock UploaderInterface: current", "[UploaderInterface]") {
 
     REQUIRE(fs::exists(original));
     i_uploader_client.transfer();
-    {
-        auto copydata = "cp " + wrapped_parcel + " " + "data/server";
-        SystemException::assertion(copydata, __INFO__);
-        wrapped_parcel_onServer = extras::replace_all(wrapped_parcel, "data/client", "data/server");
-    }
     i_uploader_server.transfer();
     i_vendor_client.transfer();
     i_vendor_server.transfer();
+    imploder.clean(original);
     i_downloader_server.transfer();
-    {
-        auto copydata = "cp " + wrapped_parcel + " " + "data/client";
-        SystemException::assertion(copydata, __INFO__);
-        wrapped_parcel_onClient = extras::replace_all(wrapped_parcel, "data/server", "data/client");
-    }
     i_downloader_client.transfer();
     REQUIRE(fs::exists(original));
     Verify(Method(uploader_client, transfer));

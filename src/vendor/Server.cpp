@@ -37,7 +37,8 @@ namespace extras {
 
     void rsi::VendorServer::transfer() const {
 
-        std::cout << extras::cyan << extras::pass(" processes file ");
+        rsi::FileNotFoundException::assertion(filename(), __INFO__);
+        std::cout << extras::cyan << extras::pass(" processes file ") << std::endl;
         std::cout << extras::blue << std::endl;
         auto cmd = "ls -la " + filename();
         SystemException::assertion(cmd, __INFO__);
