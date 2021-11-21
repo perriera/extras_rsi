@@ -15,7 +15,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/run-unittests-rsi",
             "args": [
-                "[WrapInterface]"
+                "[UploaderInterface]"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

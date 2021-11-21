@@ -25,10 +25,10 @@ namespace extras {
              * tradional C/C++ main() arguments.
              */
             virtual Parameters parameters(int argc, char const* argv[]) pure;
-            virtual const Parameter& program() const pure;
-            virtual const Parameter& filename() const pure;
-            virtual const Parameter& ip() const pure;
-            virtual const Parameter& port() const pure;
+            virtual Parameter program() const pure;
+            virtual Parameter filename() const pure;
+            virtual Parameter ip() const pure;
+            virtual Parameter port() const pure;
 
             /**
              * @brief connect()
@@ -66,14 +66,14 @@ namespace extras {
 
         public:
             virtual Parameters parameters(int argc, char const* argv[]) override;
-            virtual const Parameter& program() const override {
+            virtual Parameter program() const override {
                 return _parameters[0];
             };
-            virtual const Parameter& filename() const override {
+            virtual Parameter filename() const override {
                 return _parameters[1];
             };
-            virtual const Parameter& ip() const override { return _parameters[2]; };
-            virtual const Parameter& port() const override { return _parameters[3]; };
+            virtual Parameter ip() const override { return _parameters[2]; };
+            virtual Parameter port() const override { return _parameters[3]; };
         };
 
         /**
