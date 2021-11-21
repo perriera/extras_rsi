@@ -25,7 +25,7 @@ namespace fs = std::filesystem;
 static std::string client_dir = "data/client/";
 static std::string server_dir = "data/server/";
 static std::string original = ~extras::Paths("data/exparx.webflow.zip");
-static std::string packet;
+static rsi::BinFile internet;
 
 class TestUploaderClient extends rsi::UploaderClient {
 public:
@@ -42,12 +42,17 @@ public:
     };
     virtual void close() const {};
     virtual void send(const rsi::Filename& filename) const {
-        auto cp_cmd = "cp " + filename + " " + server_dir;
-        SystemException::assertion(cp_cmd, __INFO__);
+        ifstream in(filename);
+        rsi::BinFile binFile = rsi::ConvertFile().loadBin(in);
+        internet = binFile;
     };
     virtual void write(const rsi::Filename& filename) const {
-        auto cp_cmd = "cp " + filename + " " + client_dir;
-        SystemException::assertion(cp_cmd, __INFO__);
+        if (internet.size() == 0)
+            throw "Nothing to save";
+        auto target = extras::replace_all(filename, "data/", client_dir);
+        ofstream out(target);
+        rsi::ConvertFile().saveBin(out, internet);
+        internet.clear();
     };
 };
 
@@ -69,12 +74,17 @@ public:
     };
     virtual void close() const {};
     virtual void send(const rsi::Filename& filename) const {
-        auto cp_cmd = "cp " + filename + " " + client_dir;
-        SystemException::assertion(cp_cmd, __INFO__);
+        ifstream in(filename);
+        rsi::BinFile binFile = rsi::ConvertFile().loadBin(in);
+        internet = binFile;
     };
     virtual void write(const rsi::Filename& filename) const {
-        auto cp_cmd = "cp " + filename + " " + server_dir;
-        SystemException::assertion(cp_cmd, __INFO__);
+        if (internet.size() == 0)
+            throw "Nothing to save";
+        auto target = extras::replace_all(filename, "data/", server_dir);
+        ofstream out(target);
+        rsi::ConvertFile().saveBin(out, internet);
+        internet.clear();
     };
 };
 
@@ -114,29 +124,17 @@ SCENARIO("Test UploaderInterface: basic4", "[UploaderInterface]") {
     REQUIRE(fs::exists(_filename));
     clean();
     {
-        auto target = extras::replace_all(_filename, "data/", server_dir);
-        REQUIRE(!fs::exists(target));
-        i_client.send(_filename);
-        REQUIRE(fs::exists(target));
-    }
-    clean();
-    {
         auto target = extras::replace_all(_filename, "data/", client_dir);
         REQUIRE(!fs::exists(target));
+        i_client.send(_filename);
         i_client.write(_filename);
         REQUIRE(fs::exists(target));
     }
     clean();
     {
-        auto target = extras::replace_all(_filename, "data/", client_dir);
-        REQUIRE(!fs::exists(target));
-        i_server.send(_filename);
-        REQUIRE(fs::exists(target));
-    }
-    clean();
-    {
         auto target = extras::replace_all(_filename, "data/", server_dir);
         REQUIRE(!fs::exists(target));
+        i_server.send(_filename);
         i_server.write(_filename);
         REQUIRE(fs::exists(target));
     }
