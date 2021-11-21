@@ -21,7 +21,7 @@ using namespace fakeit;
 using namespace std;
 namespace fs = std::filesystem;
 
-SCENARIO("Mock UploaderInterface: ParcelImploder", "[UploaderInterface]") {
+SCENARIO("Mock UploaderInterface: basic", "[UploaderInterface]") {
 
     rsi::Parameter original = ~extras::Paths("data/exparx.webflow.zip");
     rsi::Parameter _program = "uploader_client";
