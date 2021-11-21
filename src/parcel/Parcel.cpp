@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <extras/filesystem/system.hpp>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -110,10 +111,14 @@ namespace extras {
             return true;
         }
 
+        void Parcel::merge() const {
+            rsi::FileNotFoundException::assertion(duplicate(), __INFO__);
+            auto cmd = "cp " + duplicate() + " " + original();
+            extras::SystemException(cmd, __INFO__);
+            fs::remove(duplicate());
+        }
+
         void Parcel::clean() const {
-            auto x = packed();
-            auto y = hexed();
-            auto z = duplicate();
             if (fs::exists(packed()))
                 fs::remove(packed());
             if (fs::exists(hexed()))
