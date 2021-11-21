@@ -60,8 +60,9 @@ namespace extras {
         }
 
         void Parcel::unpack() const {
-            rsi::FileNotFoundException::assertion(packed(), __INFO__);
-            std::ifstream in(packed());
+            auto name = packed();
+            rsi::FileNotFoundException::assertion(name, __INFO__);
+            std::ifstream in(name);
 
             rsi::HexFile hexFile;
             rsi::PackedFile badCRC;
@@ -113,9 +114,11 @@ namespace extras {
 
         void Parcel::merge() const {
             rsi::FileNotFoundException::assertion(duplicate(), __INFO__);
-            auto cmd = "cp " + duplicate() + " " + original();
-            extras::SystemException(cmd, __INFO__);
-            fs::remove(duplicate());
+            auto from = duplicate();
+            auto to = original();
+            auto cmd = "cp " + from + " " + to;
+            extras::SystemException::assertion(cmd, __INFO__);
+            fs::remove(from);
         }
 
         void Parcel::clean() const {

@@ -2,6 +2,8 @@
 #include <rsi/exceptions.hpp>
 #include <rsi/parcel/ParcelImploder.hpp>
 #include <ng_imploder/imploder/Imploder.hpp>
+#include <rsi/exceptions.hpp>
+#include <extras/filesystem/system.hpp>
 
 #include <iostream>
 #include <fstream>
@@ -45,8 +47,11 @@ namespace extras {
             parcel.unpack();
             parcel.merge();
             parcel.clean();
-            imploder.explode();
-            return imploder.exploded();
+            if (fs::exists(imploder.original())) {
+                imploder.explode();
+                return imploder.exploded();
+            }
+            return parcel.original();
         }
 
         Filename ParcelImploder::unWrapped(const Filename& filename) const {
@@ -63,7 +68,15 @@ namespace extras {
          */
         Filename ParcelImploder::merge(const Filename& filename) const {
             ng::Imploder imploder(filename);
-            imploder.merge();
+            if (fs::exists(imploder.original())) {
+                imploder.merge();
+                return filename;
+            }
+            rsi::FileNotFoundException::assertion(imploder.imploded(), __INFO__);
+            auto a = imploder.imploded();
+            auto b = imploder.original();
+            auto cmd = "mv " + a + " " + b;
+            SystemException::assertion(cmd, __INFO__);
             imploder.clean();
             return filename;
         }
