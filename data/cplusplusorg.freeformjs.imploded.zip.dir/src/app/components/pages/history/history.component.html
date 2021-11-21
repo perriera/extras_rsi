@@ -1,0 +1,456 @@
+<div class="wf-section"> 
+  
+  <div
+     id="SideBarMenu"
+     ng-controller="sidebarController"
+     class="sidebar-menu">
+
+   <a class="link-block w-inline-block" routerLink="/"><img src="assets/images/b57c66566dd5286a036435b570d1740f.png" alt="" class="image-logo" srcset=""></a> 
+   <div class="side-menu-div"> 
+    <a class="side-menu-link w-inline-block" routerLink="/"> <h3 class="side-menu-item">HomE</h3> </a> 
+    <a class="side-menu-link w-inline-block" routerLink="/about_cpp"> <h3 ng-click="showAbout =! showAbout" class="side-menu-item">about c++</h3> </a> 
+    <ul ng-show="showAbout" role="list" class="sub-menu"> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 ng-click="showBjarne =! showBjarne" class="side-menu-item sub-side-menu">About Bjarne Stroustrup</h3> </a> 
+      <ul ng-show="showBjarne" role="list" class="sub-menu"> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_about_bjarne_stroustrup_interviews"> 
+         <div class="sub-sub-menu-item">
+           Interviews 
+         </div> </a> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_publications"> 
+         <div class="sub-sub-menu-item">
+           Publications 
+         </div> </a> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_frequently_requested_papers"> 
+         <div ng-click="showPapers2 =! showPapers2" class="sub-sub-menu-item">
+           Frequently requested papers 
+         </div> </a> 
+        <ul ng-show="showPapers2" role="list" class="sub-menu"> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_frequently_requested_papers_1"> 
+           <div class="sub-sub-menu-item s23">
+             Software Development for Infrastructure 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_frequently_requested_papers_2"> 
+           <div class="sub-sub-menu-item s23">
+             Evolving a language in and for the real world: C++ 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_frequently_requested_papers_3"> 
+           <div class="sub-sub-menu-item s23">
+             What should we teach software developers? Why? 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_frequently_requested_papers_4"> 
+           <div class="sub-sub-menu-item s23">
+             Learning Standard C++ as a New Language 
+           </div> </a> </li> 
+        </ul> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_about_cpp_standards_committee"> 
+         <div ng-click="showCommittee =! showCommittee" class="sub-sub-menu-item">
+           C++ Standards Committee 
+         </div> </a> 
+        <ul ng-show="showCommittee" role="list" class="sub-menu"> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_c_standards_1"> 
+           <div class="sub-sub-menu-item s23">
+             My C++ Standards Committee papers 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_c_standards_2"> 
+           <div class="sub-sub-menu-item s23">
+             The Committee: WG21 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_c_standards_3"> 
+           <div class="sub-sub-menu-item s23">
+             The C++ Standards Committee - ISOCPP 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_standardization"> 
+           <div class="sub-sub-menu-item s23">
+             Standardization of C++ 
+           </div> </a> </li> 
+        </ul> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_about_cpp_wikipedia"> 
+         <div class="sub-sub-menu-item">
+           C++ Wikipedia 
+         </div> </a> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_stroustrup_home"> 
+         <div class="sub-sub-menu-item">
+           Stroustrup.com 
+         </div> </a> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_stroustrup_wiki"> 
+         <div class="sub-sub-menu-item">
+           Stroustrup Wikipedia 
+         </div> </a> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_books_by_bjarne_stroupstrup"> 
+         <div ng-click="showBooks2 =! showBooks2" class="sub-sub-menu-item">
+           Books by Bjarne Stroustrup 
+         </div> </a> 
+        <ul ng-show="showBooks2" role="list" class="sub-menu"> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_1"> 
+           <div class="sub-sub-menu-item s23">
+             Programming -- Principles and Practice Using C++ (Second Edition) 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_2"> 
+           <div class="sub-sub-menu-item s23">
+             A Tour of C++ 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_3"> 
+           <div class="sub-sub-menu-item s23">
+             The C++ Programming Language (4th Edition) 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_4"> 
+           <div class="sub-sub-menu-item s23">
+             The C++ Programming Language<br>(Third Edition and Special Edition) 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_5"> 
+           <div class="sub-sub-menu-item s23">
+             The Design and Evolution of C++ 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_6"> 
+           <div class="sub-sub-menu-item s23">
+             The C++ Programming Language (Second Edition) 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_7"> 
+           <div class="sub-sub-menu-item s23">
+             The Annotated C++ Reference Manual 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_8"> 
+           <div class="sub-sub-menu-item s23">
+             The C++ Programming Language 
+           </div> </a> </li> 
+        </ul> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_c_standards_3"> 
+         <div class="sub-sub-menu-item">
+           WG21 Technical Reports 
+         </div> </a> </li> 
+      </ul> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Dennis Ritchie</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Brian Kernighan</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Linus Torvalds</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Ken Thompson</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Ole-Johan Dahl</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Kristen Nygaard</h3> </a> </li> 
+    </ul> 
+    <a aria-current="page" class="side-menu-link w-inline-block w--current" routerLink="/pages_history"> <h3 ng-click="showHistory=!showHistory" class="side-menu-item">history</h3> </a> 
+    <ul ng-show="showHistory" role="list" class="sub-menu"> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_evolution"> <h3 ng-click="showEvolution = !showEvolution" class="side-menu-item sub-side-menu">Evolution</h3> </a> 
+      <ul ng-show="showEvolution" role="list" class="sub-menu"> 
+       <li> 
+        <div ng-click="jump('Solid')" class="sub-sub-menu-item">
+          Solid State &amp; Vacuum Tubes 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Discrete')" class="sub-sub-menu-item">
+          Discrete Transistors 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('CPU')" class="sub-sub-menu-item">
+          Central Processor Unit 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('JFK')" class="sub-sub-menu-item">
+          The Space Race 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Machine')" class="sub-sub-menu-item">
+          Machine Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Assembler')" class="sub-sub-menu-item">
+          Assembler Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Simula')" class="sub-sub-menu-item">
+          The Simula Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('C')" class="sub-sub-menu-item">
+          The C Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Cpp')" class="sub-sub-menu-item">
+          The C++ Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Java')" class="sub-sub-menu-item">
+          The Java Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Swift')" class="sub-sub-menu-item">
+          The Swift Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('CppName')" class="sub-sub-menu-item">
+          How C++ got it's name 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Inventor')" class="sub-sub-menu-item">
+          Inventor of C++ 
+        </div> </li> 
+      </ul> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_philosophy"> <h3 class="side-menu-item sub-side-menu">Philosophy</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_standardization"> <h3 class="side-menu-item sub-side-menu">Standardization</h3> </a> </li> 
+    </ul> 
+    <a class="side-menu-link w-inline-block" routerLink="/pages_language"> <h3 ng-click="showLanguage=!showLanguage" class="side-menu-item">language</h3> </a> 
+    <ul ng-show="showLanguage" role="list" class="sub-menu"> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_object_storage"> <h3 class="side-menu-item sub-side-menu">Object storage</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_templates"> <h3 class="side-menu-item sub-side-menu">Templates</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_objects"> <h3 class="side-menu-item sub-side-menu">Objects</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_operators_and_operator_overloading"> <h3 class="side-menu-item sub-side-menu">Operators / Overloading</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_polymorphism"> <h3 class="side-menu-item sub-side-menu">Polymorphism</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_lambda_expressions"> <h3 class="side-menu-item sub-side-menu">Lambda expressions</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_exception_handling"> <h3 class="side-menu-item sub-side-menu">Exception handling</h3> </a> </li> 
+    </ul> 
+    <a class="side-menu-link w-inline-block" routerLink="/pages_standard_library"> <h3 class="side-menu-item">standard library</h3> </a> 
+    <a class="side-menu-link w-inline-block" routerLink="/pages_compatibility"> <h3 class="side-menu-item">Compatibility</h3> </a> 
+    <a class="side-menu-link w-inline-block" routerLink="/pages_criticism"> <h3 class="side-menu-item">Criticism</h3> </a> 
+    <h3 class="side-menu-item side-menu-heading"><strong>projects</strong></h3> 
+    <h3 class="side-menu-item">compiler and standard library</h3> 
+    <h3 class="side-menu-item">package manager</h3> 
+    <h3 class="side-menu-item">core libraries</h3> 
+    <h3 class="side-menu-item">repl, debugger &amp; playgrounds</h3> 
+    <h3 class="side-menu-item">server apis</h3> 
+   </div> 
+  </div> 
+  
+  <div
+     id="ContentDiv"
+     class="contentdiv">
+
+   <div class="content w-richtext"> 
+    <h2><strong>History</strong> of C++</h2> 
+    <p>" <em>In 1979,</em> <a routerLink="/#"><em>Bjarne Stroustrup</em></a><em>, a Danish</em> <a routerLink="/#"><em>computer scientist</em></a><em>, began work on "C with</em> <a routerLink="/#"><em>Classes</em></a><em>", the predecessor to C++.[8] The motivation for creating a new language originated from Stroustrup's experience in programming for his Ph.D. thesis. Stroustrup found that</em> <a routerLink="/#"><em>Simula</em></a> <em>had features that were very helpful for large software development, but the language was too slow for practical use, while</em> <a routerLink="/#"><em>BCPL</em></a> <em>was fast but too low-level to be suitable for large software development. When Stroustrup started working in</em> <a routerLink="/#"><em>AT&amp;T Bell Labs</em></a><em>, he had the problem of analyzing the</em> <a routerLink="/#"><em>UNIX</em></a> <a routerLink="/#"><em>kernel</em></a> <em>with respect to</em> <a routerLink="/#"><em>distributed computing</em></a><em>. Remembering his Ph.D. experience, Stroustrup set out to enhance the</em> <a routerLink="/#"><em>C</em></a> <em>language with</em> <a routerLink="/#"><em>Simula</em></a><em>-like features.[9] C was chosen because it was general-purpose, fast, portable and widely used. As well as C and Simula's influences, other languages also influenced C++, including</em> <a routerLink="/#"><em>ALGOL 68</em></a><em>,</em> <a routerLink="/#"><em>Ada</em></a><em>,</em> <a routerLink="/#"><em>CLU</em></a> <em>and</em> <a routerLink="/#"><em>ML</em></a><em>.</em> " -- <a href="https://en.wikipedia.org/wiki/C%2B%2B#History">Wikipedia/C++</a> </p> 
+   </div> 
+   <h4>" C with Classes "</h4> 
+   <p>If they say "Necessity is the mother of invention.", then C++ is a perfect example of precisely that. You had a man that had obtained a Ph.d in computer science going into a real life situation where theory meets reality. And the reality of AT&amp;T is that there was a lot of C code that could no longer be managed properly. So, stemming from his thesis, he began experimenting with a pre-compiler, one that could take the object-oriented techniques he had learned from Simula 67 and make them possible inside the world of the C programming language. It was a simple technique, simply create some sort of 'class' structure that would be translated into proper C terminology. Hence the phrase "C with Classes" came into being. Once the magic of having a pre-compiler convert what he really wanted to do into standard C code, the race was on to put more and more object-oriented features that could be converted in C. Such features were derived classes, strong typing, inlining, default arguments, virtual functions, function name and operator overloading, references, constants, type-safe free-store memory allocation (new/delete), improved type checking, and BCPL style single-line comments.<br><br>In time, the pre-compiler became it's own stand-alone compiler known for C++ called CFront. C++ would acquire it's formal name due to a comment made by Rick Mascitti in 1983, in an effort to describe what C++ was all about with respect to C.</p> 
+   <h4>The C++ Programming Language</h4> 
+   <p>The first edition of The C++ Programming Language was released in 1985, which became the defacto reference for the language. C++ had it's first commercial implementation of C++ was released in October of the same year. C++ would become mainstream in 1990 with the release of Borland's Turbo C++ which was anticipated after the huge success of their Turbo C product.</p> 
+   <p>The Borland C++ product came with tutorial material and the effects felt by newcomers to the world of C++ over C was staggering. It revolutionized the way things were to be done in the PC software development community especially with engineering firms. Life became a lot easier with Borland's Turbo C++ on your shelf. In time, Microsoft would have a C/C++ compiler but it would take a few years before the Microsoft product could over take the Borland product in terms of quality and ease of use. But then there is a story whereby Borland accidentally laid off their chief C++ compiler architect and Microsoft swooned in on the opportunity to steal him away to the tune of a $1,000,000 signing bonus. He never looked back and soon after Microsoft's C++ compiler (Visual C++) dominated the market.</p> 
+   <p>Other compilers such as GCC and CLang were there for the Unix and Linux platforms, but if you weir part of the PC world then there were really only two choices, Borland or Microsoft when it came to C++. In the Apple world, Xcode today is the only real name when it comes to C++ but they had their initial competitor to C++ known as Objective-C which in time gave way to Swift. Swift differs from C++ such that it provides it's own garbage collection, much like Java and therefore is not like C++ because C++ gives you low level control over memory resources and other benefits necessary when programming at the machine or operating system level.</p> 
+   <h4>Why was it designed?</h4> 
+   <p>In the beginning many computer manufacturers were developing computer hardware essentially from scratch starting with the UNIVAC from the days of WWII as the forerunner. Each company manufactured their own hardware and developed their own unique software to work with it. This led to a situation where essentially the same software functionality was being re-written for different platforms. Hence the need for code portability came into being as a cost saving measure and of course, a lucrative business endeavour in it of itself.</p> 
+   <p>The early computer languages for operating systems to operate on the hardware took on the form of Machine Language first (which was really just a step above programming a computer using arrays of manual switches and vacuum tubes) and that led to a form of programming called Assembler where instructions could be more easily encoded into Machine Language (which was just a fancy name for programming a computer using only numbers as operational codes and values). Assembler was a just step above this allowing programmers to use letters to represent the codes they were programming instead of pure numbers. However, even the Assembler language was very specific to the different vendors of computer hardware. Hence a need for a way to covert software applications into Assembler independent of the hardware vendor brought about the creation of a language called 'C' compliments Dennis Ritchie between the years of 1969 and 1973 at Bell Labs. In effect, you would write your software business logic in C and the C compiler would convert your C code into Assembler which in turn 'assembled' your code into the 'Machine Language' of a particular computer of a specific computer hardware vendor. In effect, your C code could then be easily ported, without any changes to the C code, to another computer, ideally from another computer hardware vendor and your code would compile into the machine language with no more fuss to it than that. Indeed, the cost saving benefits of this brought on the need for competing computer hardware vendors to develop their own implementation of the C language to match their Assembler language specifics.</p> 
+   <div ng-controller="codeController" class="cpptoassemblerdiv"> 
+    <div ng-show="isSet(1)" ng-click="setTab(2)" class="code-block code-block-tabbed"> 
+     <div class="w-row"> 
+      <div class="w-col w-col-7"> 
+       <div class="code-text">
+         #include &lt;iostream&gt; 
+       </div> 
+       <div class="code-black-blank"></div> 
+       <div class="code-text">
+         int main(int argc, char* argv[]) 
+       </div> 
+       <div class="code-text">
+         {{"{"}} 
+       </div> 
+       <div class="code-block-indent-1">
+         std::cout &lt;&lt; "Hello, world!\n"; 
+       </div> 
+       <div>
+         {{"}"}} 
+       </div> 
+      </div> 
+      <div class="w-col w-col-5"> 
+       <p class="c3">C++ brought classes, constructors, destructors, objects, inheritance, encapsulation, polymorphism, templates, plus many other techniques making life for programmers worldwide a lot easier.</p> 
+      </div> 
+     </div> 
+    </div> 
+    <div ng-show="isSet(2)" ng-click="setTab(13)" class="code-block code-block-tabbed"> 
+     <div class="w-row"> 
+      <div class="w-col w-col-7"> 
+       <div class="code-text">
+         #include &lt;stdio.h&gt; 
+       </div> 
+       <div class="code-black-blank"></div> 
+       <div class="code-text">
+         int main(int argc, char* argv[]) 
+       </div> 
+       <div class="code-text">
+         {{"{"}} 
+       </div> 
+       <div class="code-block-indent-1">
+         printf("Hello, world!\n"); 
+       </div> 
+       <div>
+         {{"}"}} 
+       </div> 
+      </div> 
+      <div class="w-col w-col-5"> 
+       <p class="c3">C brought direct mapping of hardware features, was very efficient, had a large code base and was very portable between hardware and cpu vendors.</p> 
+      </div> 
+     </div> 
+    </div> 
+    <div ng-show="isSet(13)" ng-click="setTab(20)" class="code-block code-block-tabbed x86asm"> 
+     <div class="w-row"> 
+      <div class="w-col w-col-7"> 
+       <div class="code-text">
+         section .text 
+       </div> 
+       <div class="code-black-blank"></div> 
+       <div class="code-text">
+         _start: 
+       </div> 
+       <div class="code-text code-block-indent-1">
+         mov edx,msg ;message start 
+       </div> 
+       <div class="code-block-indent-1">
+         msg db 'Hello, world!\n',0xa ;our dear string 
+       </div> 
+       <div class="code-block-indent-1">
+         int 0x80 ;call kernel 
+       </div> 
+      </div> 
+      <div class="w-col w-col-5"> 
+       <p class="c3">Assembler was a lot easier to program in over Machine Code and could be documented but was unique to each type of hardware, cpu and vendor specifics.</p> 
+      </div> 
+     </div> 
+    </div> 
+    <div ng-show="isSet(12)" ng-click="setTab(1)" class="code-block code-block-tabbed"> 
+     <div class="w-row"> 
+      <div class="w-col w-col-7"> 
+       <div> 
+        <div class="w-clearfix"> 
+         <div ng-click="setTab(14)" class="code-text x2">
+           55 50 69 0 
+         </div> 
+         <div class="code-text">
+           F 78 E3 12 A4 B3 C1 34 67 89 23 00 A1 B3 
+         </div> 
+        </div> 
+        <div class="code-text">
+          12 78 E3 12 A4 B3 C1 34 67 89 23 00 A1 B3 98 23 56 
+        </div> 
+        <div class="code-text">
+          12 A4 B3 C1 34 67 89 23 00 A1 B3 98 23 56 12 78 E3 
+        </div> 
+        <div class="code-text">
+          78 E3 12 A4 B3 C1 34 67 89 23 00 A1 B3 98 23 56 12 
+        </div> 
+        <div class="code-text">
+          34 67 89 23 00 A1 B3 98 23 56 12 78 E3 12 A4 B3 C1 
+        </div> 
+       </div> 
+      </div> 
+      <div class="w-col w-col-5"> 
+       <p class="c3">Pure Machine Code took forever to encode by hand and was next to impossible to debug but ran like lightening when written correctly.</p> 
+      </div> 
+     </div> 
+     <div class="code-black-blank"></div> 
+    </div> 
+    <div ng-show="isSet(14)" ng-click="setTab(1)" class="code-block code-block-tabbed x5"> 
+     <div class="w-row"> 
+      <div class="w-col w-col-8"> 
+       <div> 
+        <div class="code-text machine-code"> 
+         <strong>555 0 690 </strong>F 78 E3 12 A4 B3 C1 34 67 89 23 00 A1 B3 
+        </div> 
+        <div class="code-text machine-code">
+          12 78 E3 12 A4 B3 C1 34 67 89 23 00 A1 B3 98 23 56 
+        </div> 
+        <div class="code-text machine-code">
+          12 A4 B3 C1 34 67 89 23 00 A1 B3 98 23 56 12 78 E3 
+        </div> 
+        <div class="code-text machine-code">
+          78 E3 12 A4 B3 C1 34 67 89 23 00 A1 B3 98 23 56 12 
+        </div> 
+        <div class="code-text machine-code">
+          34 67 89 23 00 A1 B3 98 23 56 12 78 E3 12 A4 B3 C1 
+        </div> 
+       </div> 
+      </div> 
+      <div class="w-col w-col-4"> 
+       <img src="assets/images/82891943_c8e9f382f5_z.jpeg" alt="" class="machine-image" srcset=""> 
+      </div> 
+     </div> 
+     <div class="code-black-blank"></div> 
+    </div> 
+    <div ng-show="isSet(20)" ng-click="setTab(12)" class="code-block code-block-tabbed"> 
+     <div class="w-row"> 
+      <div class="w-col w-col-7"> 
+       <div> 
+        <div class="code-text">
+          $ cpp main.cpp main.c 
+        </div> 
+        <div class="code-text">
+          $ cc main.c main.a 
+        </div> 
+        <div class="code-text">
+          $ asm main.a main.o &amp;&amp; link main.o main.exe 
+        </div> 
+        <div class="code-text">
+          $ ./main.exe 
+        </div> 
+        <div class="code-text">
+          Hello, world! 
+        </div> 
+       </div> 
+      </div> 
+      <div class="w-col w-col-5"> 
+       <p class="c3">Originally, C++ converted into C which converted into Assembler which assembled into Machine Code which is all the CPU understands natively.</p> 
+      </div> 
+     </div> 
+     <div class="code-black-blank"></div> 
+    </div> 
+    <div class="code-block code-block-tab"> 
+     <div ng-click="setTab(12)" ng-show="isSet(12)" class="tab-title c44">
+       Machine Code 
+     </div> 
+     <div ng-click="setTab(12)" ng-show="isNotSet(12)" class="tab-title">
+       Machine Code 
+     </div> 
+     <div ng-click="setTab(13)" ng-show="isSet(13)" class="tab-title c44">
+       Assembler 
+     </div> 
+     <div ng-click="setTab(13)" ng-show="isNotSet(13)" class="tab-title">
+       Assembler 
+     </div> 
+     <div ng-click="setTab(2)" ng-show="isSet(2)" class="tab-title c44">
+       C 
+     </div> 
+     <div ng-click="setTab(2)" ng-show="isNotSet(2)" class="tab-title">
+       C 
+     </div> 
+     <div ng-click="setTab(1)" ng-show="isSet(1)" class="tab-title c44">
+       C++ 
+     </div> 
+     <div ng-click="setTab(1)" ng-show="isNotSet(1)" class="tab-title">
+       C++ 
+     </div> 
+     <div ng-click="setTab(20)" ng-show="isSet(20)" class="tab-title c44">
+       Output 
+     </div> 
+     <div ng-click="setTab(20)" ng-show="isNotSet(20)" class="tab-title">
+       Output 
+     </div> 
+    </div> 
+   </div> 
+   <p>Once the ability to write portable code became a popular practise, the need for easier code re-use manifested itself, hence the need to write code in such a way as to make use of code that has already been written earlier for other purposes. Bjarne Stroustrup, with a background in Simula, developed in the 1960’s, was one of the first to experiment with applying some of the techniques used in that experimental “object-oriented” language with C, creating a form of C known as " C with Classes ". Which in time, because known as C++ where an emphasis on operating system software where performance, efficiency and flexibility were key. However, C++ soon found itself as the choice language for just about every type of software application. Nevertheless, when it came to infrastructure and resource-constrained applications, including desktop applications, e-commerce, web servers and performance-critical applications (e.g. telephone switches, space probes, military or medical) C++ was often the preferred language of choice. Both open source (Free Software Foundation's GCC. LLVM) and commercial companies (Microsoft, Intel and IBM) specialize in C++ compiler tools.</p> 
+   <p>C++ standards are determined by the <a href="https://isocpp.org/std/the-committee" target="_blank">ISO standard committee: WG21</a> </p> 
+   <p>The C++ programming language was designed and implemented by <a href="http://www.stroustrup.com/">Bjarne Stroustrup</a>.</p> 
+   <div class="copyright-footer"> 
+    <div class="copyright-text">
+      This page was last modified on 3 March 2017, at 08:26. 
+    </div> 
+    <div class="copyright-text">
+      Text is available under the 
+     <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" class="tos">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply. By using this site, you agree to the 
+     <a href="https://wikimediafoundation.org/wiki/Terms_of_Use" class="tos">Terms of Use</a> and 
+     <a href="https://wikimediafoundation.org/wiki/Privacy_policy" class="tos">Privacy Policy</a>. Wikipedia® is a registered trademark of the 
+     <a href="https://wikimediafoundation.org/wiki/Home" class="tos">Wikimedia Foundation, Inc</a>., a non-profit organization. 
+    </div> 
+    <div class="w-row"> 
+     <div class="w-col w-col-5"> 
+      <div class="copyright-text">
+        Site layout, design &amp; hosting by 
+       <a href="http://exparx.com/index.html" class="tos">EXPARX, Inc.</a> 
+      </div> 
+     </div> 
+     <div class="column w-col w-col-7"> 
+      <div class="copyright-text">
+        This site was designed using 
+       <a href="http://exparx.com/index.html" class="tos"></a> 
+      </div> 
+      <a href="https://www.freeformjs.org/" target="_blank" class="link-block-2 w-inline-block"><img src="assets/images/ffjslogo.png" alt="" srcset=""></a> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+ <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=56614f424faab4b202acfb5d" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+

@@ -1,0 +1,303 @@
+<div class="wf-section"> 
+  
+  <div
+     id="SideBarMenu"
+     ng-controller="sidebarController"
+     class="sidebar-menu">
+
+   <a class="link-block w-inline-block" routerLink="/"><img src="assets/images/b57c66566dd5286a036435b570d1740f.png" alt="" class="image-logo" srcset=""></a> 
+   <div class="side-menu-div"> 
+    <a class="side-menu-link w-inline-block" routerLink="/"> <h3 class="side-menu-item">HomE</h3> </a> 
+    <a class="side-menu-link w-inline-block" routerLink="/about_cpp"> <h3 ng-click="showAbout =! showAbout" class="side-menu-item">about c++</h3> </a> 
+    <ul ng-show="showAbout" role="list" class="sub-menu"> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 ng-click="showBjarne =! showBjarne" class="side-menu-item sub-side-menu">About Bjarne Stroustrup</h3> </a> 
+      <ul ng-show="showBjarne" role="list" class="sub-menu"> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_about_bjarne_stroustrup_interviews"> 
+         <div class="sub-sub-menu-item">
+           Interviews 
+         </div> </a> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_publications"> 
+         <div class="sub-sub-menu-item">
+           Publications 
+         </div> </a> </li> 
+       <li> <a aria-current="page" class="fg w-inline-block w--current" routerLink="/pages_frequently_requested_papers"> 
+         <div ng-click="showPapers2 =! showPapers2" class="sub-sub-menu-item">
+           Frequently requested papers 
+         </div> </a> 
+        <ul ng-show="showPapers2" role="list" class="sub-menu"> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_frequently_requested_papers_1"> 
+           <div class="sub-sub-menu-item s23">
+             Software Development for Infrastructure 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_frequently_requested_papers_2"> 
+           <div class="sub-sub-menu-item s23">
+             Evolving a language in and for the real world: C++ 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_frequently_requested_papers_3"> 
+           <div class="sub-sub-menu-item s23">
+             What should we teach software developers? Why? 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_frequently_requested_papers_4"> 
+           <div class="sub-sub-menu-item s23">
+             Learning Standard C++ as a New Language 
+           </div> </a> </li> 
+        </ul> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_about_cpp_standards_committee"> 
+         <div ng-click="showCommittee =! showCommittee" class="sub-sub-menu-item">
+           C++ Standards Committee 
+         </div> </a> 
+        <ul ng-show="showCommittee" role="list" class="sub-menu"> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_c_standards_1"> 
+           <div class="sub-sub-menu-item s23">
+             My C++ Standards Committee papers 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_c_standards_2"> 
+           <div class="sub-sub-menu-item s23">
+             The Committee: WG21 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_c_standards_3"> 
+           <div class="sub-sub-menu-item s23">
+             The C++ Standards Committee - ISOCPP 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_standardization"> 
+           <div class="sub-sub-menu-item s23">
+             Standardization of C++ 
+           </div> </a> </li> 
+        </ul> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_about_cpp_wikipedia"> 
+         <div class="sub-sub-menu-item">
+           C++ Wikipedia 
+         </div> </a> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_stroustrup_home"> 
+         <div class="sub-sub-menu-item">
+           Stroustrup.com 
+         </div> </a> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_stroustrup_wiki"> 
+         <div class="sub-sub-menu-item">
+           Stroustrup Wikipedia 
+         </div> </a> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_books_by_bjarne_stroupstrup"> 
+         <div ng-click="showBooks2 =! showBooks2" class="sub-sub-menu-item">
+           Books by Bjarne Stroustrup 
+         </div> </a> 
+        <ul ng-show="showBooks2" role="list" class="sub-menu"> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_1"> 
+           <div class="sub-sub-menu-item s23">
+             Programming -- Principles and Practice Using C++ (Second Edition) 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_2"> 
+           <div class="sub-sub-menu-item s23">
+             A Tour of C++ 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_3"> 
+           <div class="sub-sub-menu-item s23">
+             The C++ Programming Language (4th Edition) 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_4"> 
+           <div class="sub-sub-menu-item s23">
+             The C++ Programming Language<br>(Third Edition and Special Edition) 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_5"> 
+           <div class="sub-sub-menu-item s23">
+             The Design and Evolution of C++ 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_6"> 
+           <div class="sub-sub-menu-item s23">
+             The C++ Programming Language (Second Edition) 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_7"> 
+           <div class="sub-sub-menu-item s23">
+             The Annotated C++ Reference Manual 
+           </div> </a> </li> 
+         <li> <a class="fg w-inline-block" routerLink="/pages_books_8"> 
+           <div class="sub-sub-menu-item s23">
+             The C++ Programming Language 
+           </div> </a> </li> 
+        </ul> </li> 
+       <li> <a class="fg w-inline-block" routerLink="/pages_c_standards_3"> 
+         <div class="sub-sub-menu-item">
+           WG21 Technical Reports 
+         </div> </a> </li> 
+      </ul> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Dennis Ritchie</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Brian Kernighan</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Linus Torvalds</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Ken Thompson</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Ole-Johan Dahl</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_about_bjarne_stroustrup"> <h3 class="side-menu-item sub-side-menu">About Kristen Nygaard</h3> </a> </li> 
+    </ul> 
+    <a class="side-menu-link w-inline-block" routerLink="/pages_history"> <h3 ng-click="showHistory=!showHistory" class="side-menu-item">history</h3> </a> 
+    <ul ng-show="showHistory" role="list" class="sub-menu"> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_evolution"> <h3 ng-click="showEvolution = !showEvolution" class="side-menu-item sub-side-menu">Evolution</h3> </a> 
+      <ul ng-show="showEvolution" role="list" class="sub-menu"> 
+       <li> 
+        <div ng-click="jump('Solid')" class="sub-sub-menu-item">
+          Solid State &amp; Vacuum Tubes 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Discrete')" class="sub-sub-menu-item">
+          Discrete Transistors 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('CPU')" class="sub-sub-menu-item">
+          Central Processor Unit 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('JFK')" class="sub-sub-menu-item">
+          The Space Race 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Machine')" class="sub-sub-menu-item">
+          Machine Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Assembler')" class="sub-sub-menu-item">
+          Assembler Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Simula')" class="sub-sub-menu-item">
+          The Simula Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('C')" class="sub-sub-menu-item">
+          The C Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Cpp')" class="sub-sub-menu-item">
+          The C++ Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Java')" class="sub-sub-menu-item">
+          The Java Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Swift')" class="sub-sub-menu-item">
+          The Swift Language 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('CppName')" class="sub-sub-menu-item">
+          How C++ got it's name 
+        </div> </li> 
+       <li> 
+        <div ng-click="jump('Inventor')" class="sub-sub-menu-item">
+          Inventor of C++ 
+        </div> </li> 
+      </ul> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_philosophy"> <h3 class="side-menu-item sub-side-menu">Philosophy</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_standardization"> <h3 class="side-menu-item sub-side-menu">Standardization</h3> </a> </li> 
+    </ul> 
+    <a class="side-menu-link w-inline-block" routerLink="/pages_language"> <h3 ng-click="showLanguage=!showLanguage" class="side-menu-item">language</h3> </a> 
+    <ul ng-show="showLanguage" role="list" class="sub-menu"> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_object_storage"> <h3 class="side-menu-item sub-side-menu">Object storage</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_templates"> <h3 class="side-menu-item sub-side-menu">Templates</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_objects"> <h3 class="side-menu-item sub-side-menu">Objects</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_operators_and_operator_overloading"> <h3 class="side-menu-item sub-side-menu">Operators / Overloading</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_polymorphism"> <h3 class="side-menu-item sub-side-menu">Polymorphism</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_lambda_expressions"> <h3 class="side-menu-item sub-side-menu">Lambda expressions</h3> </a> </li> 
+     <li> <a class="side-menu-link w-inline-block" routerLink="/pages_exception_handling"> <h3 class="side-menu-item sub-side-menu">Exception handling</h3> </a> </li> 
+    </ul> 
+    <a class="side-menu-link w-inline-block" routerLink="/pages_standard_library"> <h3 class="side-menu-item">standard library</h3> </a> 
+    <a class="side-menu-link w-inline-block" routerLink="/pages_compatibility"> <h3 class="side-menu-item">Compatibility</h3> </a> 
+    <a class="side-menu-link w-inline-block" routerLink="/pages_criticism"> <h3 class="side-menu-item">Criticism</h3> </a> 
+    <h3 class="side-menu-item side-menu-heading"><strong>projects</strong></h3> 
+    <h3 class="side-menu-item">compiler and standard library</h3> 
+    <h3 class="side-menu-item">package manager</h3> 
+    <h3 class="side-menu-item">core libraries</h3> 
+    <h3 class="side-menu-item">repl, debugger &amp; playgrounds</h3> 
+    <h3 class="side-menu-item">server apis</h3> 
+   </div> 
+  </div> 
+  
+  <div
+     id="ContentDiv"
+     class="contentdiv">
+
+   <div class="corg-home w-clearfix"> 
+    <p class="paragraph p2">C++.org : The home of everything C++</p> 
+    <div class="top-right-buttons w-clearfix"> 
+     <p ng-click="toggleX()" class="paragraph p2 xyz">X</p> 
+     <div ng-controller="backController" class="backcontroller w-clearfix"> 
+      <p ng-click="$back();" class="paragraph p2 xyz">Y</p> 
+      <p ng-click="$forward();" class="paragraph p2 xyz">Z</p> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="content w-richtext"> 
+    <h2><strong>Frequently</strong> Requested Papers</h2> 
+   </div> 
+   <div class="div-block"> 
+    <div class="w-row"> 
+     <div class="w-col w-col-3"> 
+      <a class="w-inline-block" routerLink="/pages_frequently_requested_papers_1"><img src="assets/images/001.png" alt="" srcset=""></a> 
+     </div> 
+     <div class="w-col w-col-3"> 
+      <a class="w-inline-block" routerLink="/pages_frequently_requested_papers_2"><img src="assets/images/002.png" alt="" srcset=""></a> 
+     </div> 
+     <div class="w-col w-col-3"> 
+      <a class="w-inline-block" routerLink="/pages_frequently_requested_papers_3"><img src="assets/images/003.png" alt="" srcset=""></a> 
+     </div> 
+     <div class="w-col w-col-3"> 
+      <a class="w-inline-block" routerLink="/pages_frequently_requested_papers_4"><img src="assets/images/004.png" alt="" srcset=""></a> 
+     </div> 
+    </div> 
+   </div> 
+   <div> 
+    <h4>Frequently Requested Papers</h4> 
+    <p class="fp fp2"> <a class="fl" routerLink="/pages_frequently_requested_papers_1">Software Development for Infrastructure</a> </p> 
+    <p>B. Stroustrup: Computer, vol. 45, no. 1, pp. 47-58, Jan. 2012, doi:10.1109/MC.2011.353.</p> 
+    <p class="fp fp2"> <a class="fl" routerLink="/pages_frequently_requested_papers_2">Evolving a language in and for the real world: C++ 1991-2006</a> </p> 
+    <p>B. Stroustrup: ACM HOPL-III. June 2007. (incl. slides and videos).</p> 
+    <p class="fp fp2"> <a class="fl" routerLink="/pages_frequently_requested_papers_3">What should we teach software developers? Why?</a> </p> 
+    <p>B. Stroustrup: CACM. January 2010.</p> 
+    <ul role="list" class="id50"> 
+     <li class="fg"> <a href="http://k_satoda.users.sourceforge.net/translation/what-should-we-teach-new-software-developers-why-ja.html" target="_blank" class="fl w-inline-block"> 
+       <div>
+         Japanese translation by Kazutoshi Satoda 
+       </div> </a> </li> 
+     <li class="fg"> <a href="http://www.lnds.net/blogs" target="_blank" class="fl w-inline-block"> 
+       <div>
+         Spanish translation by Eduardo Diaz 
+       </div> </a> </li> 
+     <li class="fg"> <a href="http://www.stroustrup.com/teach_chinese.pdf" target="_blank" class="fl w-inline-block"> 
+       <div>
+         Chinese translation 
+       </div> </a> </li> 
+     <li class="fp"> <a href="http://www.bt4.pl/programowanie/ogolnie-o-programowaniu/ucz-mlod-progr/" target="_blank" class="fl w-inline-block"> 
+       <div>
+         Polish translation by ?ukasz Piwko. 
+       </div> </a> </li> 
+    </ul> 
+    <p class="fp fp2"> <a class="fl" routerLink="/pages_frequently_requested_papers_4">Learning Standard C++ as a New Language</a> </p> 
+    <p>B. Stroustrup: C/C++ Users Journal. pp 43-54. May 1999</p> 
+   </div> 
+   <div class="copyright-footer"> 
+    <div class="copyright-text">
+      This page was last modified on 3 March 2017, at 08:26. 
+    </div> 
+    <div class="copyright-text">
+      Text is available under the 
+     <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" class="tos">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply. By using this site, you agree to the 
+     <a href="https://wikimediafoundation.org/wiki/Terms_of_Use" class="tos">Terms of Use</a> and 
+     <a href="https://wikimediafoundation.org/wiki/Privacy_policy" class="tos">Privacy Policy</a>. Wikipedia® is a registered trademark of the 
+     <a href="https://wikimediafoundation.org/wiki/Home" class="tos">Wikimedia Foundation, Inc</a>., a non-profit organization. 
+    </div> 
+    <div class="w-row"> 
+     <div class="w-col w-col-5"> 
+      <div class="copyright-text">
+        Site layout, design &amp; hosting by 
+       <a href="http://exparx.com/index.html" class="tos">EXPARX, Inc.</a> 
+      </div> 
+     </div> 
+     <div class="column w-col w-col-7"> 
+      <div class="copyright-text">
+        This site was designed using 
+       <a href="http://exparx.com/index.html" class="tos"></a> 
+      </div> 
+      <a href="https://www.freeformjs.org/" target="_blank" class="link-block-2 w-inline-block"><img src="assets/images/ffjslogo.png" alt="" srcset=""></a> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+ <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=56614f424faab4b202acfb5d" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+

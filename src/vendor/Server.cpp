@@ -2,6 +2,7 @@
 #include <rsi/exceptions.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
+#include <extras/filesystem/system.hpp>
 #include <rsi/parcel/Parcel.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <iostream>
@@ -40,17 +41,13 @@ namespace extras {
          * @brief locate the file to be unpacked
          *
          */
-        rsi::Parameter parameter = ~extras::Paths(filename());
-        rsi::Parcel parcel(parameter);
 
-        /**
-         * @brief process the file
-         *
-         */
+         /**
+          * @brief process the file
+          *
+          */
         std::cout << extras::cyan;
-        parcel.unzip();
-        parcel.dir();
-        parcel.cat();
+        SystemException::assertion("ls -la", __INFO__);
 
         /**
          * @brief the packaged file will now be
