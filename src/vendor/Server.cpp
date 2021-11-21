@@ -37,27 +37,13 @@ namespace extras {
 
     void rsi::VendorServer::transfer() const {
 
-        /**
-         * @brief locate the file to be unpacked
-         *
-         */
-
-         /**
-          * @brief process the file
-          *
-          */
-        std::cout << extras::yellow;
-        std::cout << filename();
-        std::cout << extras::cyan;
-        SystemException::assertion("ls -la", __INFO__);
-
-        /**
-         * @brief the packaged file will now be
-         *        sent back to the client
-         *
-         */
+        std::cout << extras::cyan << extras::pass(" processes file ");
+        std::cout << extras::blue << std::endl;
+        auto cmd = "ls -la " + filename();
+        SystemException::assertion(cmd, __INFO__);
         std::cout << extras::pass(filename()) << std::endl;
-        std::cout << extras::pass(" processed") << std::endl;
+        std::cout << extras::pass(" lists directory") << std::endl;
+
     }
 
 

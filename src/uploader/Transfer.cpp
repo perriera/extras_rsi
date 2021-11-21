@@ -10,6 +10,7 @@
 #include <filesystem>
 #include <extras/status/StatusLine.hpp>
 #include <rsi/parcel/ParcelImploder.hpp>
+#include <extras/filesystem/system.hpp>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -21,12 +22,11 @@ namespace extras {
      *
      */
     void rsi::UploaderClient::transfer() const {
-        rsi::Parameter parameter = ~extras::Paths(filename());
         rsi::ParcelImploder parcelImploder;
         auto wrapped = parcelImploder.wrap(filename());
         extras::rsi::send_file2(wrapped, this->_sockfd);
         std::cout << extras::pass(wrapped) << std::endl;
-        std::cout << extras::pass(" uploaded") << std::endl;
+        std::cout << extras::pass(" wrapped, uploaded") << std::endl;
     }
 
     void rsi::UploaderServer::transfer() const {
@@ -35,8 +35,8 @@ namespace extras {
         parcelImploder.merge(filename());
         auto original = parcelImploder.clean(filename());
         extras::rsi::write_file(original, this->_new_sock);
-        std::cout << extras::pass(original) << std::endl;
-        std::cout << extras::pass(" uploaded") << std::endl;
+        std::cout << extras::pass(filename()) << std::endl;
+        std::cout << extras::pass(" uploaded, unwrapped") << std::endl;
     }
 
     /**
@@ -44,7 +44,6 @@ namespace extras {
      *
      */
     void rsi::DownloaderServer::transfer() const {
-        rsi::Parameter parameter = ~extras::Paths(filename());
         rsi::ParcelImploder parcelImploder;
         auto wrapped = parcelImploder.wrap(filename());
         extras::rsi::send_file2(wrapped, this->_new_sock);
@@ -60,6 +59,12 @@ namespace extras {
         extras::rsi::write_file(original, this->_sockfd);
         std::cout << extras::pass(original) << std::endl;
         std::cout << extras::pass(" downloaded") << std::endl;
+        //
+        std::cout << extras::cyan << extras::pass(" updated file ");
+        std::cout << extras::blue << std::endl;
+        auto cmd = "ls -la " + original;
+        SystemException::assertion(cmd, __INFO__);
+
     }
 
 
