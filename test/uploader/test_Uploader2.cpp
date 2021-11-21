@@ -78,6 +78,17 @@ public:
     };
 };
 
+static void clean() {
+    if (fs::exists(client_dir)) {
+        fs::remove_all(client_dir);
+        SystemException::assertion("mkdir " + client_dir, __INFO__);
+    }
+    if (fs::exists(server_dir)) {
+        fs::remove_all(server_dir);
+        SystemException::assertion("mkdir " + server_dir, __INFO__);
+    }
+}
+
 SCENARIO("Test UploaderInterface: basic4", "[UploaderInterface]") {
 
     rsi::Parameter _filename = original;
@@ -99,26 +110,36 @@ SCENARIO("Test UploaderInterface: basic4", "[UploaderInterface]") {
     rsi::UploaderInterface& i_client = client;
     rsi::UploaderInterface& i_server = server;
 
-    if (fs::exists(client_dir)) {
-        fs::remove_all(client_dir);
-        SystemException::assertion("mkdir " + client_dir, __INFO__);
+
+    REQUIRE(fs::exists(_filename));
+    clean();
+    {
+        auto target = extras::replace_all(_filename, "data/", server_dir);
+        REQUIRE(!fs::exists(target));
+        i_client.send(_filename);
+        REQUIRE(fs::exists(target));
     }
-    if (fs::exists(server_dir)) {
-        fs::remove_all(server_dir);
-        SystemException::assertion("mkdir " + server_dir, __INFO__);
+    clean();
+    {
+        auto target = extras::replace_all(_filename, "data/", client_dir);
+        REQUIRE(!fs::exists(target));
+        i_client.write(_filename);
+        REQUIRE(fs::exists(target));
     }
-
-    REQUIRE(fs::exists(original));
-
-    auto target1 = extras::replace_all(_filename, "data/", server_dir);
-    REQUIRE(!fs::exists(target1));
-    i_client.send(_filename);
-    REQUIRE(fs::exists(target1));
-
-    auto target2 = extras::replace_all(_filename, "data/", client_dir);
-    REQUIRE(!fs::exists(target2));
-    i_client.write(_filename);
-    REQUIRE(fs::exists(target2));
+    clean();
+    {
+        auto target = extras::replace_all(_filename, "data/", client_dir);
+        REQUIRE(!fs::exists(target));
+        i_server.send(_filename);
+        REQUIRE(fs::exists(target));
+    }
+    clean();
+    {
+        auto target = extras::replace_all(_filename, "data/", server_dir);
+        REQUIRE(!fs::exists(target));
+        i_server.write(_filename);
+        REQUIRE(fs::exists(target));
+    }
 
     i_client.parameters(argc, argv1);
     i_server.parameters(argc, argv2);
