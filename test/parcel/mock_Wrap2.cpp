@@ -47,14 +47,7 @@ SCENARIO("Mock WrapInterface: Imploder", "[WrapInterface]") {
     REQUIRE(fs::exists(imploder.original()));
     REQUIRE(!fs::exists(imploder.imploded()));
     REQUIRE(!fs::exists(imploder.exploded()));
-    cout << "HELLO JESUS" << endl;
-    cout << original << endl;
-    cout << imploded << endl;
-    cout << "HELLO JESUS" << endl;
-    auto result = i.wrap(original);
-    cout << result << endl;
-    cout << "HELLO JESUS" << endl;
-    REQUIRE(result == imploded);
+    REQUIRE(i.wrap(original) == imploded);
     REQUIRE(fs::exists(imploder.original()));
     REQUIRE(fs::exists(imploder.imploded()));
     REQUIRE(!fs::exists(imploder.exploded()));
