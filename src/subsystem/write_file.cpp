@@ -65,7 +65,7 @@ void extras::rsi::write_file(const std::string& filename, int sockfd) {
         bzero(buffer, extras::rsi::SIZE);
 
     }
-    std::cout << "\x1B[2K\r" << filename << " saved" << std::endl;
+    std::cout << "\x1B[2K\r" << filename << " received intact" << std::endl;
 
     return;
 }
