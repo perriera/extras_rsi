@@ -42,8 +42,8 @@ namespace extras {
         concrete class PackedLine implements PackedLineInterface {
             friend std::ostream& operator<<(std::ostream& out, const PackedLine& obj);
             friend std::istream& operator>>(std::istream& in, PackedLine& obj);
-            int _lineNo;
-            int _lineCount;
+            int _lineNo = 0;
+            int _lineCount = 0;
             HexLine _hexLine;
             CRC _crc = 0;
         public:
