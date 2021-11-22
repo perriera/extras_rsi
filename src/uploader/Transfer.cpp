@@ -118,6 +118,10 @@ namespace extras {
         // std::cout << extras::pass(wrapped) << std::endl;
         std::cout << extras::pass("send_file2 successful") << std::endl;
 
+        std::string line = read_line(this->_sockfd);
+        std::cout << extras::pass(filename()) << std::endl;
+        std::cout << extras::pass(line) << std::endl;
+
     }
 
     void rsi::DownloaderClient::transfer() const {
@@ -154,6 +158,10 @@ namespace extras {
         auto original = parcelImploder.clean(fn);
         std::cout << extras::pass(fn) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
+
+        std::string msg = "downloader completed";
+        send_line(msg, this->_sockfd);
+
 
     }
 
