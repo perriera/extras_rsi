@@ -41,7 +41,7 @@ void extras::rsi::send_file2(const std::string& filename, int sockfd) {
         }
         sendIt(sockfd, ss.str());
     }
-    std::cout << "\x1B[2K\r" << filename << " sent successfully" << std::endl;
+    std::cout << "\x1B[2K\r" << filename << " sent intact" << std::endl;
 
     sendIt(sockfd, "done");
     for (int i = 0; i < 5000; i++)
