@@ -28,7 +28,11 @@ namespace extras {
 
         StatusBarMsg StatusBar::bar(int count, int max) const {
             std::stringstream ss;
-            ss << "\r[+] " << count + 1 << " / " << max;
+            std::string spinner = "|/-\\";
+            char c = spinner[count % spinner.size()];
+            if (count == max)
+                c = '+';
+            ss << "\r[" << c << "] " << count + 1 << " / " << max;
             return ss.str();
         }
 
