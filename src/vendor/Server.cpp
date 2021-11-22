@@ -40,6 +40,10 @@ namespace extras {
 
     void rsi::VendorServer::transfer() const {
 
+        std::string line = read_line(this->_new_sock);
+        std::cout << extras::pass(filename()) << std::endl;
+        std::cout << extras::pass(line) << std::endl;
+
         rsi::FileNotFoundException::assertion(filename(), __INFO__);
         std::cout << extras::cyan << extras::pass(" processes file ") << std::endl;
         std::cout << extras::blue << std::endl;
