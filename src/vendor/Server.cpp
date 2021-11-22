@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <chrono>
 #include <thread>
+#include <rsi/subsystem.hpp>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -48,6 +49,9 @@ namespace extras {
         SystemException::assertion(cmd, __INFO__);
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(" lists directory") << std::endl;
+
+        std::string msg = "vendor completed";
+        send_line(msg, this->_new_sock);
 
     }
 

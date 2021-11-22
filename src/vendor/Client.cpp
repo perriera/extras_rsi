@@ -1,6 +1,7 @@
 #include <rsi/vendor/Vendor.hpp>
 #include <iostream>
 #include <extras/status/StatusLine.hpp>
+#include <rsi/subsystem.hpp>
 
 using namespace std;
 
@@ -11,8 +12,9 @@ namespace extras {
      *
      */
     void rsi::VendorClient::transfer() const {
+        std::string line = read_line(this->_sockfd);
         std::cout << extras::pass(filename()) << std::endl;
-        std::cout << extras::pass(" processed") << std::endl;
+        std::cout << extras::pass(line) << std::endl;
     }
 
 
