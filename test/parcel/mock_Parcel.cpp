@@ -37,7 +37,7 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
                 rsi::PackedFile packedFile;
                 int cnt = 0;
                 for (auto hexLine : hexFile) {
-                    rsi::PackedLine packedLine(++cnt, hexLine);
+                    rsi::PackedLine packedLine(++cnt, hexFile.size(), hexLine);
                     packedFile.push_back(packedLine);
                 }
                 std::ofstream outPacked(packed);

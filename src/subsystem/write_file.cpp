@@ -21,11 +21,13 @@ static void printStatus(const std::string& msg) {
     getline(ss, line);
     getline(ss, line);
     getline(ss, line2);
+    if (line.size() == 0)
+        return;
     stringstream ss2;
     ss2 << line;
     extras::rsi::PackedLine packed;
     ss2 >> packed;
-    // std::cout << extras::rsi::bar(packed.lineNo,packed.)
+    std::cout << extras::rsi::bar(packed.lineNo(), packed.lineCount());
 }
 
 void extras::rsi::write_file(const std::string& filename, int sockfd) {

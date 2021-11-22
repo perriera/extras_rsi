@@ -13,6 +13,7 @@ namespace extras {
 
         std::ostream& operator<<(std::ostream& out, const PackedLine& obj) {
             out << " : " << std::hex << obj.lineNo();
+            out << " / " << std::hex << obj.lineCount();
             out << " : " << obj.hexLine();
             out << " : " << std::hex << obj.checksum();
             return out;
@@ -32,6 +33,10 @@ namespace extras {
             PackedException::assertion(obj._lineNo, __INFO__);
             ss >> std::skipws >> c;
             PackedException::assertion(c, __INFO__);
+            ss >> std::hex >> obj._lineCount;
+            PackedException::assertion(obj._lineCount, __INFO__);
+            ss >> std::skipws >> c;
+            PackedException::assertion(c, __INFO__);
             ss >> obj._hexLine;
             PackedException::assertion(obj._hexLine, __INFO__);
             ss >> c;
@@ -49,7 +54,7 @@ namespace extras {
             rsi::PackedFile packedFile;
             int cnt = 0;
             for (auto hexLine : hexFile) {
-                rsi::PackedLine packedLine(++cnt, hexLine);
+                rsi::PackedLine packedLine(++cnt, hexFile.size(), hexLine);
                 packedFile.push_back(packedLine);
             }
             std::ofstream outPacked(packed());
