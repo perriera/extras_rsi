@@ -38,6 +38,10 @@ namespace extras {
         // std::cout << extras::pass(wrapped) << std::endl;
         std::cout << extras::pass("send_file2 successful") << std::endl;
 
+        std::string line = read_line(this->_sockfd);
+        std::cout << extras::pass(filename()) << std::endl;
+        std::cout << extras::pass(line) << std::endl;
+
         // rsi::FileNotFoundException::assertion(filename(), __INFO__);
         // rsi::ParcelImploder parcelImploder;
         // auto wrapped = parcelImploder.wrap(filename());
@@ -63,11 +67,17 @@ namespace extras {
         rsi::ParcelImploder parcelImploder;
         auto wrappedName = parcelImploder.wrapped(fn);
         wrappedName = write(wrappedName);
+
+
         fn = extras::replace_all(fn, "data/", server_dir);
         rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
         parcelImploder.unWrap(fn);
         parcelImploder.merge(fn);
         auto original = parcelImploder.clean(fn);
+
+        std::string msg = "uploader completed";
+        send_line(msg, this->_new_sock);
+
         std::cout << extras::pass(fn) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
 
