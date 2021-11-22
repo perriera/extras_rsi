@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <extras/filesystem/system.hpp>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -12,6 +13,7 @@ namespace extras {
 
         std::ostream& operator<<(std::ostream& out, const PackedLine& obj) {
             out << " : " << std::hex << obj.lineNo();
+            out << " / " << std::hex << obj.lineCount();
             out << " : " << obj.hexLine();
             out << " : " << std::hex << obj.checksum();
             return out;
@@ -31,6 +33,10 @@ namespace extras {
             PackedException::assertion(obj._lineNo, __INFO__);
             ss >> std::skipws >> c;
             PackedException::assertion(c, __INFO__);
+            ss >> std::hex >> obj._lineCount;
+            PackedException::assertion(obj._lineCount, __INFO__);
+            ss >> std::skipws >> c;
+            PackedException::assertion(c, __INFO__);
             ss >> obj._hexLine;
             PackedException::assertion(obj._hexLine, __INFO__);
             ss >> c;
@@ -41,14 +47,14 @@ namespace extras {
         }
 
         void Parcel::pack() const {
-            rsi::FileNotFoundException::assertion(parcel(), __INFO__);
-            std::ifstream inBin(parcel());
+            rsi::FileNotFoundException::assertion(original(), __INFO__);
+            std::ifstream inBin(original());
             std::ofstream outHex(hexed());
             rsi::HexFile hexFile = rsi::ConvertFile().convertToHex(inBin, outHex);
             rsi::PackedFile packedFile;
             int cnt = 0;
             for (auto hexLine : hexFile) {
-                rsi::PackedLine packedLine(++cnt, hexLine);
+                rsi::PackedLine packedLine(++cnt, hexFile.size(), hexLine);
                 packedFile.push_back(packedLine);
             }
             std::ofstream outPacked(packed());
@@ -59,8 +65,9 @@ namespace extras {
         }
 
         void Parcel::unpack() const {
-            rsi::FileNotFoundException::assertion(packed(), __INFO__);
-            std::ifstream in(packed());
+            auto name = packed();
+            rsi::FileNotFoundException::assertion(name, __INFO__);
+            std::ifstream in(name);
 
             rsi::HexFile hexFile;
             rsi::PackedFile badCRC;
@@ -96,18 +103,27 @@ namespace extras {
             rsi::ConvertFile().saveHex(outHex, hexFile);
             outHex.close();
             std::ifstream inHex(hexed());
-            std::ofstream outBin(unpacked());
+            std::ofstream outBin(duplicate());
             rsi::ConvertFile().convertToBin(inHex, outBin);
             outBin.close();
-            rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
+            rsi::FileNotFoundException::assertion(duplicate(), __INFO__);
 
         }
 
         bool Parcel::verify_integrity() const {
-            rsi::FileNotFoundException::assertion(parcel(), __INFO__);
-            rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
-            rsi::PackedException::assertion(parcel(), unpacked(), __INFO__);
+            rsi::FileNotFoundException::assertion(original(), __INFO__);
+            rsi::FileNotFoundException::assertion(duplicate(), __INFO__);
+            rsi::PackedException::assertion(original(), duplicate(), __INFO__);
             return true;
+        }
+
+        void Parcel::merge() const {
+            rsi::FileNotFoundException::assertion(duplicate(), __INFO__);
+            auto from = duplicate();
+            auto to = original();
+            auto cmd = "cp " + from + " " + to;
+            extras::SystemException::assertion(cmd, __INFO__);
+            fs::remove(from);
         }
 
         void Parcel::clean() const {
@@ -115,8 +131,8 @@ namespace extras {
                 fs::remove(packed());
             if (fs::exists(hexed()))
                 fs::remove(hexed());
-            if (fs::exists(unpacked()))
-                fs::remove(unpacked());
+            if (fs::exists(duplicate()))
+                fs::remove(duplicate());
         }
 
         void Parcel::cat() const {
@@ -126,13 +142,13 @@ namespace extras {
         }
 
         void Parcel::dir() const {
-            std::string cmd = "ls -la " + parcel() + "*";
+            std::string cmd = "ls -la " + original() + "*";
             system(cmd.c_str());
         }
 
         void Parcel::unzip() const {
-            rsi::FileNotFoundException::assertion(unpacked(), __INFO__);
-            string cmd = "unzip -o " + unpacked() + " -d /tmp ";
+            rsi::FileNotFoundException::assertion(duplicate(), __INFO__);
+            string cmd = "unzip -o " + duplicate() + " -d /tmp ";
             system(cmd.c_str());
         }
 

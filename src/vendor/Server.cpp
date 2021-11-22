@@ -2,10 +2,14 @@
 #include <rsi/exceptions.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
+#include <extras/filesystem/system.hpp>
 #include <rsi/parcel/Parcel.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <iostream>
 #include <filesystem>
+#include <chrono>
+#include <thread>
+#include <rsi/subsystem.hpp>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -36,42 +40,19 @@ namespace extras {
 
     void rsi::VendorServer::transfer() const {
 
-        /**
-         * @brief locate the file to be unpacked
-         *
-         */
-        rsi::Parameter parameter = ~extras::Paths(filename());
-        rsi::Parcel parcel(parameter);
-
-        /**
-         * @brief unpack the file
-         *
-         */
-        parcel.unpack();
-
-        /**
-         * @brief process the file
-         *
-         */
-        parcel.unzip();
-        parcel.dir();
-        parcel.cat();
-
-        /**
-         * @brief repackage the file
-         *
-         */
-        parcel.pack();
-        parcel.dir();
-        std::cout << extras::cyan;
-
-        /**
-         * @brief the packaged file will now be
-         *        sent back to the client
-         *
-         */
+        rsi::FileNotFoundException::assertion(filename(), __INFO__);
+        std::cout << extras::cyan << extras::pass(" processes file ") << std::endl;
+        std::cout << extras::blue << std::endl;
+        auto fn = extras::replace_all(filename(), "data/", "data/server/");
+        auto cmd = "ls -la data/server";
+        // std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+        SystemException::assertion(cmd, __INFO__);
         std::cout << extras::pass(filename()) << std::endl;
-        std::cout << extras::pass(" processed") << std::endl;
+        std::cout << extras::pass(" lists directory") << std::endl;
+
+        std::string msg = "vendor completed";
+        send_line(msg, this->_new_sock);
+
     }
 
 

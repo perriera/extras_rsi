@@ -24,34 +24,34 @@ SCENARIO("Test ParcelInterface: hexToBin", "[ParcelInterface]") {
         fs::remove(packed.packed());
     if (fs::exists(packed.hexed()))
         fs::remove(packed.hexed());
-    if (fs::exists(packed.unpacked()))
-        fs::remove(packed.unpacked());
+    if (fs::exists(packed.duplicate()))
+        fs::remove(packed.duplicate());
 
     rsi::ParcelInterface& i = packed;
-    REQUIRE(i.parcel() == packed.parcel());
+    REQUIRE(i.original() == packed.original());
     REQUIRE(i.hexed() == packed.hexed());
     REQUIRE(i.packed() == packed.packed());
-    REQUIRE(i.unpacked() == packed.unpacked());
-    REQUIRE(fs::exists(packed.parcel()));
+    REQUIRE(i.duplicate() == packed.duplicate());
+    REQUIRE(fs::exists(packed.original()));
     REQUIRE(!fs::exists(packed.hexed()));
     REQUIRE(!fs::exists(packed.packed()));
-    REQUIRE(!fs::exists(packed.unpacked()));
+    REQUIRE(!fs::exists(packed.duplicate()));
     i.pack();
-    REQUIRE(fs::exists(packed.parcel()));
+    REQUIRE(fs::exists(packed.original()));
     REQUIRE(fs::exists(packed.hexed()));
     REQUIRE(fs::exists(packed.packed()));
-    REQUIRE(!fs::exists(packed.unpacked()));
+    REQUIRE(!fs::exists(packed.duplicate()));
     i.unpack();
-    REQUIRE(fs::exists(packed.parcel()));
+    REQUIRE(fs::exists(packed.original()));
     REQUIRE(fs::exists(packed.hexed()));
     REQUIRE(fs::exists(packed.packed()));
-    REQUIRE(fs::exists(packed.unpacked()));
+    REQUIRE(fs::exists(packed.duplicate()));
     REQUIRE(i.verify_integrity());
-    REQUIRE(fs::exists(packed.parcel()));
-    REQUIRE(fs::exists(packed.unpacked()));
+    REQUIRE(fs::exists(packed.original()));
+    REQUIRE(fs::exists(packed.duplicate()));
     i.clean();
-    REQUIRE(fs::exists(packed.parcel()));
+    REQUIRE(fs::exists(packed.original()));
     REQUIRE(!fs::exists(packed.hexed()));
     REQUIRE(!fs::exists(packed.packed()));
-    REQUIRE(!fs::exists(packed.unpacked()));
+    REQUIRE(!fs::exists(packed.duplicate()));
 }

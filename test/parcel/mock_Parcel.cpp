@@ -2,6 +2,7 @@
 #include <rsi/parcel/Parcel.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
+#include <extras/filesystem/system.hpp>
 #include <rsi/exceptions.hpp>
 #include <iostream>
 #include <fstream>
@@ -16,60 +17,27 @@ namespace fs = std::filesystem;
 
 SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
 
-    rsi::Parameter parcel = ~extras::Paths("data/cplusplusorg.freeformjs.imploded.zip");
-    rsi::Parameter hexed = parcel + "_hexed";
-    rsi::Parameter packed = parcel + "_packed";
-    rsi::Parameter unpacked = parcel + "_unpacked";
+    rsi::Parameter original = ~extras::Paths("data/cplusplusorg.freeformjs.imploded.zip");
+    rsi::Parameter hexed = original + "_hexed";
+    rsi::Parameter packed = original + "_packed";
+    rsi::Parameter duplicate = original + "_unpacked";
     Mock<rsi::ParcelInterface> mock;
-    When(Method(mock, parcel)).AlwaysReturn(parcel);
+    When(Method(mock, original)).AlwaysReturn(original);
     When(Method(mock, hexed)).AlwaysReturn(hexed);
     When(Method(mock, packed)).AlwaysReturn(packed);
-    When(Method(mock, unpacked)).AlwaysReturn(unpacked);
-
-    // When(Method(mock, loadBin))
-    //     .AlwaysDo(
-    //         [&parcel](const rsi::Filename& filename) {
-    //             rsi::FileNotFoundException::assertion(filename, __INFO__);
-    //             std::ifstream in(filename);
-    //             rsi::ConvertFile().loadBin(in);
-    //             return rsi::ConvertFile().loadBin(in);;
-    //         });
-
-    // When(Method(mock, hexFile))
-    //     .AlwaysDo(
-    //         [&packed]() {
-    //             rsi::FileNotFoundException::assertion(packed, __INFO__);
-    //             std::ifstream in(packed);
-    //             rsi::HexFile hexFile;
-    //             while (in.good()) {
-    //                 rsi::PackedLine line;
-    //                 in >> line;
-    //                 if (in.good())
-    //                     hexFile.push_back(line.hexLine());
-    //             }
-    //             return hexFile;
-    //         });
-
-    // When(Method(mock, convertToHex))
-    //     .AlwaysDo(
-    //         [&parcel, &hexed]() {
-    //             rsi::FileNotFoundException::assertion(parcel, __INFO__);
-    //             std::ifstream inBin(parcel);
-    //             std::ofstream outHex(hexed);
-    //             return rsi::ConvertFile().convertToHex(inBin, outHex);
-    //         });
+    When(Method(mock, duplicate)).AlwaysReturn(duplicate);
 
     When(Method(mock, pack))
         .AlwaysDo(
-            [&parcel, &packed, &hexed]() {
-                rsi::FileNotFoundException::assertion(parcel, __INFO__);
-                std::ifstream inBin(parcel);
+            [&original, &packed, &hexed]() {
+                rsi::FileNotFoundException::assertion(original, __INFO__);
+                std::ifstream inBin(original);
                 std::ofstream outHex(hexed);
                 rsi::HexFile hexFile = rsi::ConvertFile().convertToHex(inBin, outHex);
                 rsi::PackedFile packedFile;
                 int cnt = 0;
                 for (auto hexLine : hexFile) {
-                    rsi::PackedLine packedLine(++cnt, hexLine);
+                    rsi::PackedLine packedLine(++cnt, hexFile.size(), hexLine);
                     packedFile.push_back(packedLine);
                 }
                 std::ofstream outPacked(packed);
@@ -82,7 +50,7 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
 
     When(Method(mock, unpack))
         .AlwaysDo(
-            [&packed, &unpacked, &hexed]() {
+            [&packed, &duplicate, &hexed]() {
                 rsi::FileNotFoundException::assertion(packed, __INFO__);
                 std::ifstream in(packed);
                 rsi::HexFile hexFile;
@@ -96,20 +64,42 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
                 rsi::ConvertFile().saveHex(outHex, hexFile);
                 outHex.close();
                 std::ifstream inHex(hexed);
-                std::ofstream outBin(unpacked);
+                std::ofstream outBin(duplicate);
                 rsi::ConvertFile().convertToBin(inHex, outBin);
                 outBin.close();
-                rsi::FileNotFoundException::assertion(unpacked, __INFO__);
+                rsi::FileNotFoundException::assertion(duplicate, __INFO__);
             }
     );
 
     When(Method(mock, verify_integrity))
         .AlwaysDo(
-            [&parcel, &unpacked]() {
-                rsi::FileNotFoundException::assertion(parcel, __INFO__);
-                rsi::FileNotFoundException::assertion(unpacked, __INFO__);
-                rsi::PackedException::assertion(parcel, unpacked, __INFO__);
+            [&original, &duplicate]() {
+                rsi::FileNotFoundException::assertion(original, __INFO__);
+                rsi::FileNotFoundException::assertion(duplicate, __INFO__);
+                rsi::PackedException::assertion(original, duplicate, __INFO__);
                 return true;
+            }
+    );
+
+    When(Method(mock, merge))
+        .AlwaysDo(
+            [&original, &duplicate]() {
+                rsi::FileNotFoundException::assertion(duplicate, __INFO__);
+                auto cmd = "cp " + duplicate + " " + original;
+                extras::SystemException::assertion(cmd, __INFO__);
+                fs::remove(duplicate);
+            }
+    );
+
+    When(Method(mock, clean))
+        .AlwaysDo(
+            [&hexed, &packed, &duplicate]() {
+                if (fs::exists(hexed))
+                    fs::remove(hexed);
+                if (fs::exists(packed))
+                    fs::remove(packed);
+                if (fs::exists(duplicate))
+                    fs::remove(duplicate);
             }
     );
 
@@ -117,31 +107,39 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
         fs::remove(packed);
     if (fs::exists(hexed))
         fs::remove(hexed);
-    if (fs::exists(unpacked))
-        fs::remove(unpacked);
+    if (fs::exists(duplicate))
+        fs::remove(duplicate);
 
     rsi::ParcelInterface& i = mock.get();
-    REQUIRE(i.parcel() == parcel);
+    REQUIRE(i.original() == original);
     REQUIRE(i.hexed() == hexed);
     REQUIRE(i.packed() == packed);
-    REQUIRE(i.unpacked() == unpacked);
-    REQUIRE(fs::exists(i.parcel()));
+    REQUIRE(i.duplicate() == duplicate);
+    REQUIRE(fs::exists(i.original()));
     REQUIRE(!fs::exists(i.hexed()));
     REQUIRE(!fs::exists(i.packed()));
-    REQUIRE(!fs::exists(i.unpacked()));
+    REQUIRE(!fs::exists(i.duplicate()));
     i.pack();
-    REQUIRE(fs::exists(i.parcel()));
+    REQUIRE(fs::exists(i.original()));
     REQUIRE(fs::exists(i.hexed()));
     REQUIRE(fs::exists(i.packed()));
-    REQUIRE(!fs::exists(i.unpacked()));
+    REQUIRE(!fs::exists(i.duplicate()));
     i.unpack();
-    REQUIRE(fs::exists(i.parcel()));
+    REQUIRE(fs::exists(i.original()));
     REQUIRE(fs::exists(i.hexed()));
     REQUIRE(fs::exists(i.packed()));
-    REQUIRE(fs::exists(i.unpacked()));
+    REQUIRE(fs::exists(i.duplicate()));
     i.verify_integrity();
-    REQUIRE(fs::exists(i.parcel()));
-    REQUIRE(fs::exists(i.unpacked()));
+    REQUIRE(fs::exists(i.original()));
+    REQUIRE(fs::exists(i.duplicate()));
+    i.merge();
+    REQUIRE(fs::exists(i.original()));
+    REQUIRE(!fs::exists(i.duplicate()));
+    i.clean();
+    REQUIRE(fs::exists(i.original()));
+    REQUIRE(!fs::exists(i.hexed()));
+    REQUIRE(!fs::exists(i.packed()));
+    REQUIRE(!fs::exists(i.duplicate()));
     Verify(Method(mock, pack));
     Verify(Method(mock, unpack));
     Verify(Method(mock, verify_integrity));
