@@ -26,7 +26,7 @@ static void printStatus(const std::string& msg) {
             try {
                 extras::rsi::PackedLine packed;
                 ss2 >> packed;
-                std::cout << extras::rsi::bar(packed.lineNo(), packed.lineCount());
+                std::cout << '/r' << extras::rsi::bar(packed.lineNo(), packed.lineCount());
             }
             catch (extras::rsi::PackedException& ex) {
                 break;
