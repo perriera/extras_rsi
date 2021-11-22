@@ -32,7 +32,12 @@ namespace extras {
             char c = spinner[count % spinner.size()];
             if (count > max - 2)
                 c = '+';
-            ss << "\r[" << c << "] " << count + 1 << " / " << max;
+            ss << extras::green << "\r[";
+            ss << extras::yellow << c;
+            ss << extras::green << "] ";
+            ss << extras::white << count + 1;
+            ss << extras::magenta << " / ";
+            ss << extras::white << max;
             return ss.str();
         }
 
