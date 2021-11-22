@@ -39,3 +39,15 @@ SCENARIO("Test void printStatus(const std::string& msg);", "[ConvertInterfaceX]"
     printStatus(testdata);
 
 }
+
+SCENARIO("Test void printStatus(const std::string& msg);II", "[ConvertInterfaceX]") {
+
+    std::ifstream in("data/exparx.webflow.zip_imploded.zip_packed.txt");
+    while (in.good()) {
+        std::string line;
+        getline(in, line);
+        printStatus(line);
+    }
+    std::cout << "\r\ndone" << std::endl;
+
+}

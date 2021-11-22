@@ -26,7 +26,7 @@ void printStatus(const std::string& msg) {
             try {
                 extras::rsi::PackedLine packed;
                 ss2 >> packed;
-                std::cout << '\r' << extras::rsi::bar(packed.lineNo(), packed.lineCount()) << std::flush;
+                std::cout << '\r' << extras::rsi::bar(packed.lineNo(), packed.lineCount() + 1) << std::flush;
             }
             catch (extras::rsi::PackedException& ex) {
             }
@@ -63,7 +63,7 @@ void extras::rsi::write_file(const std::string& filename, int sockfd) {
         bzero(buffer, extras::rsi::SIZE);
 
     }
-    std::cout << std::endl;
+    std::cout << "\r\ndone" << std::endl;
 
     return;
 }
