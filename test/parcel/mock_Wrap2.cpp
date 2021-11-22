@@ -18,7 +18,6 @@ namespace fs = std::filesystem;
 
 SCENARIO("Mock WrapInterface: Imploder", "[WrapInterface]") {
 
-    cout << "HELLO JESUS" << endl;
     rsi::Parameter original = ~extras::Paths("data/exparx.webflow.zip");
     rsi::Parameter imploded = extras::replace_all(original, "webflow.zip", "webflow.zip_imploded.zip");
     rsi::Parameter exploded = extras::replace_all(original, "webflow.zip", "webflow.zip_exploded.zip");
@@ -48,8 +47,10 @@ SCENARIO("Mock WrapInterface: Imploder", "[WrapInterface]") {
     REQUIRE(fs::exists(imploder.original()));
     REQUIRE(!fs::exists(imploder.imploded()));
     REQUIRE(!fs::exists(imploder.exploded()));
+    cout << "HELLO JESUS" << endl;
     cout << original << endl;
     cout << imploded << endl;
+    cout << "HELLO JESUS" << endl;
     REQUIRE(i.wrap(original) == imploded);
     REQUIRE(fs::exists(imploder.original()));
     REQUIRE(fs::exists(imploder.imploded()));
