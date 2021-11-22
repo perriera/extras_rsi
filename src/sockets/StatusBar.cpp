@@ -30,7 +30,7 @@ namespace extras {
             std::stringstream ss;
             std::string spinner = "|/-\\";
             char c = spinner[count % spinner.size()];
-            if (count == max)
+            if (count > max)
                 c = '+';
             ss << "\r[" << c << "] " << count + 1 << " / " << max;
             return ss.str();
