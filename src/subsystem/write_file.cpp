@@ -17,17 +17,23 @@ static void printStatus(const std::string& msg) {
 
     stringstream ss;
     ss << msg;
-    string line, line2;
-    getline(ss, line);
-    getline(ss, line);
-    getline(ss, line2);
-    if (line.size() == 0)
-        return;
-    stringstream ss2;
-    ss2 << line;
-    extras::rsi::PackedLine packed;
-    ss2 >> packed;
-    std::cout << extras::rsi::bar(packed.lineNo(), packed.lineCount());
+    while (ss.good()) {
+        string line;
+        getline(ss, line);
+        if (line.size() > 0) {
+            stringstream ss2;
+            ss2 << line;
+            try {
+                extras::rsi::PackedLine packed;
+                ss2 >> packed;
+                std::cout << extras::rsi::bar(packed.lineNo(), packed.lineCount());
+            }
+            catch (extras::rsi::PackedException& ex) {
+                break;
+            }
+        }
+    }
+
 }
 
 void extras::rsi::write_file(const std::string& filename, int sockfd) {
