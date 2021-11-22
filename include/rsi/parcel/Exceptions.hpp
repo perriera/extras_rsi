@@ -26,7 +26,7 @@ namespace extras {
             PackedException(std::string msg, const extras::WhereAmI& whereAmI)
                 : RSIException(msg.c_str(), whereAmI) {}
             static void assertion(char delimiter, const extras::WhereAmI& ref) {
-                if (delimiter != ':')
+                if (delimiter != ':' && delimiter != '/')
                     throw PackedException("Bad delimiter:" + delimiter, ref);
             }
             static void assertion(const PackedLine& line1, const PackedLine& line2, const extras::WhereAmI& ref) {
@@ -52,7 +52,7 @@ namespace extras {
                         throw PackedException("Bad HexLine:" + hexLine, ref);
             }
             static void assertion(rsi::CRC crc, rsi::HexLine hexLine, const extras::WhereAmI& ref) {
-                rsi::PackedLine check(0, hexLine);
+                rsi::PackedLine check(0, 0, hexLine);
                 if (check.checksum() != crc)
                     throw PackedException("Bad CRC:" + hexLine, ref);
             }

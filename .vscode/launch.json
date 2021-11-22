@@ -15,7 +15,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/run-unittests-rsi",
             "args": [
-                "[StatusBarInterface]"
+                "[DownloaderServer]"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -40,7 +40,7 @@
             "args": [
                 "137.184.218.130",
                 "8080",
-                "data/cplusplusorg.freeformjs.imploded.zip",
+                "data/exparx.webflow.zip",
                 "upload",
                 "vendor",
                 "download",
@@ -91,9 +91,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/uploader_client",
             "args": [
-                "data/cplusplusorg.freeformjs.imploded.zip",
+                "data/exparx.webflow.zip",
                 "127.0.0.1",
-                "9003",
+                "8080",
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -116,9 +116,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/uploader_server",
             "args": [
-                "send.txt",
+                "data/exparx.webflow.zip",
                 "127.0.0.1",
-                "9003",
+                "8080",
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
