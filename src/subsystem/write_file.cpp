@@ -13,7 +13,7 @@
 
 using namespace std;
 
-static void printStatus(const std::string& msg) {
+void printStatus(const std::string& msg) {
 
     stringstream ss;
     ss << msg;
@@ -26,10 +26,9 @@ static void printStatus(const std::string& msg) {
             try {
                 extras::rsi::PackedLine packed;
                 ss2 >> packed;
-                std::cout << '\r' << extras::rsi::bar(packed.lineNo(), packed.lineCount());
+                std::cout << '\r' << extras::rsi::bar(packed.lineNo(), packed.lineCount()) << std::flush;
             }
             catch (extras::rsi::PackedException& ex) {
-                break;
             }
         }
     }
