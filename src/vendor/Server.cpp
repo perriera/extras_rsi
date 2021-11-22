@@ -40,7 +40,8 @@ namespace extras {
         rsi::FileNotFoundException::assertion(filename(), __INFO__);
         std::cout << extras::cyan << extras::pass(" processes file ") << std::endl;
         std::cout << extras::blue << std::endl;
-        auto cmd = "ls -la " + filename();
+        auto fn = extras::replace_all(filename(), "data/", "data/server/");
+        auto cmd = "ls -la " + fn;
         SystemException::assertion(cmd, __INFO__);
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(" lists directory") << std::endl;
