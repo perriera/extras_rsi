@@ -1,4 +1,4 @@
-#include <rsi/uploader/Uploader.hpp>
+#include <rsi/uploader/Downloader.hpp>
 #include <extras/strings.hpp>
 #include <rsi/parcel/Wrap.hpp>
 #include <rsi/parcel/Parcel.hpp>
@@ -27,21 +27,29 @@ static std::string server_dir = "data/server/";
 static std::string original = ~extras::Paths("data/exparx.webflow.zip");
 static rsi::BinFile internet;
 
-class TestUploaderClient extends rsi::UploaderClient {
+class TestDownloaderClient extends rsi::DownloaderClient {
 public:
     virtual void connect() {};
     virtual void transfer() const {
         auto fn = filename();
-        rsi::FileNotFoundException::assertion(fn, __INFO__);
-        // send(filename());
+        // fn = write(filename());
+        // rsi::FileNotFoundException::assertion(fn, __INFO__);
         rsi::ParcelImploder parcelImploder;
-        auto wrapped = parcelImploder.wrap(fn);
-        rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-        // // wrapped_parcel = wrapped;
-        send(wrapped);
-        // std::cout << extras::pass(wrapped) << std::endl;
-        std::cout << extras::pass("send_file2 successful") << std::endl;
+        auto wrappedName = parcelImploder.wrapped(fn);
+        wrappedName = write(wrappedName);
+        auto from = fn;
+        fn = extras::replace_all(fn, "data/", client_dir);
+        rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
+        auto to = fn;
+        auto cmd = "cp " + from + " " + to;
+        SystemException::assertion(cmd, __INFO__);
+        parcelImploder.unWrap(fn);
+        parcelImploder.merge(fn);
+        auto original = parcelImploder.clean(fn);
+        std::cout << extras::pass(fn) << std::endl;
+        std::cout << extras::pass("write_file successful") << std::endl;
     };
+
     virtual void close() const {};
     virtual void send(const rsi::Filename& filename) const {
         ifstream in(filename);
@@ -62,24 +70,22 @@ public:
     };
 };
 
-class TestUploaderServer extends rsi::UploaderServer {
+class TestDownloaderServer extends rsi::DownloaderServer {
 public:
     virtual void connect() {};
     virtual void transfer() const {
         auto fn = filename();
-        // fn = write(filename());
-        // rsi::FileNotFoundException::assertion(fn, __INFO__);
+        rsi::FileNotFoundException::assertion(fn, __INFO__);
+        // send(filename());
         rsi::ParcelImploder parcelImploder;
-        auto wrappedName = parcelImploder.wrapped(fn);
-        wrappedName = write(wrappedName);
-        fn = extras::replace_all(fn, "data/", server_dir);
-        rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
-        parcelImploder.unWrap(fn);
-        parcelImploder.merge(fn);
-        auto original = parcelImploder.clean(fn);
-        std::cout << extras::pass(fn) << std::endl;
-        std::cout << extras::pass("write_file successful") << std::endl;
+        auto wrapped = parcelImploder.wrap(fn);
+        rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+        // // wrapped_parcel = wrapped;
+        send(wrapped);
+        // std::cout << extras::pass(wrapped) << std::endl;
+        std::cout << extras::pass("send_file2 successful") << std::endl;
     };
+
     virtual void close() const {};
     virtual void send(const rsi::Filename& filename) const {
         ifstream in(filename);
@@ -111,7 +117,7 @@ static void clean() {
     }
 }
 
-SCENARIO("Test UploaderInterface: basic4", "[UploaderInterface]") {
+SCENARIO("Test DownloaderServer: basic4", "[DownloaderServer]") {
 
     rsi::Parameter _filename = original;
     rsi::Parameter _ip = "127.0.0.1";
@@ -121,12 +127,12 @@ SCENARIO("Test UploaderInterface: basic4", "[UploaderInterface]") {
     //                 "127.0.0.1",
     //                 "9003",
 
-    const char* argv1[] = { "uploader_client", _filename.c_str(), _ip.c_str(), _port.c_str() };
-    const char* argv2[] = { "uploader_server", _filename.c_str(), _ip.c_str(), _port.c_str() };
+    const char* argv1[] = { "downloader_client", _filename.c_str(), _ip.c_str(), _port.c_str() };
+    const char* argv2[] = { "downloader_server", _filename.c_str(), _ip.c_str(), _port.c_str() };
     int argc = 4;
 
-    TestUploaderClient client;
-    TestUploaderServer server;
+    TestDownloaderClient client;
+    TestDownloaderServer server;
     rsi::UploaderInterface& i_client = client;
     rsi::UploaderInterface& i_server = server;
 
@@ -158,11 +164,11 @@ SCENARIO("Test UploaderInterface: basic4", "[UploaderInterface]") {
     i_server.connect();
 
     {
-        auto target = extras::replace_all(_filename, "data/", server_dir);
-        REQUIRE(!fs::exists(target));
-        i_client.transfer();
+        auto target = extras::replace_all(_filename, "data/", client_dir);
         REQUIRE(!fs::exists(target));
         i_server.transfer();
+        REQUIRE(!fs::exists(target));
+        i_client.transfer();
         REQUIRE(fs::exists(target));
     }
 

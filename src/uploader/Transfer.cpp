@@ -89,32 +89,62 @@ namespace extras {
      *
      */
     void rsi::DownloaderServer::transfer() const {
-        rsi::FileNotFoundException::assertion(filename(), __INFO__);
+        // rsi::FileNotFoundException::assertion(filename(), __INFO__);
+        // rsi::ParcelImploder parcelImploder;
+        // auto wrapped = parcelImploder.wrap(filename());
+        // rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+        // // wrapped_parcel = wrapped;
+        // extras::rsi::send_file2(wrapped, this->_new_sock);
+        // std::cout << extras::pass(wrapped) << std::endl;
+        // std::cout << extras::pass("send_file2 successful") << std::endl;
+        auto fn = filename();
+        rsi::FileNotFoundException::assertion(fn, __INFO__);
+        // send(filename());
         rsi::ParcelImploder parcelImploder;
-        auto wrapped = parcelImploder.wrap(filename());
+        auto wrapped = parcelImploder.wrap(fn);
         rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-        // wrapped_parcel = wrapped;
-        extras::rsi::send_file2(wrapped, this->_new_sock);
-        std::cout << extras::pass(wrapped) << std::endl;
+        // // wrapped_parcel = wrapped;
+        send(wrapped);
+        // std::cout << extras::pass(wrapped) << std::endl;
         std::cout << extras::pass("send_file2 successful") << std::endl;
+
     }
 
     void rsi::DownloaderClient::transfer() const {
+        // rsi::ParcelImploder parcelImploder;
+        // auto check = parcelImploder.wrapped(filename());
+        // extras::rsi::write_file(check, this->_sockfd);
+        // rsi::FileNotFoundException::assertion(check, __INFO__);
+        // parcelImploder.unWrap(filename());
+        // parcelImploder.merge(filename());
+        // auto original = parcelImploder.clean(filename());
+        // rsi::FileNotFoundException::assertion(original, __INFO__);
+        // std::cout << extras::pass(original) << std::endl;
+        // std::cout << extras::pass("write_file successful") << std::endl;
+        // //
+        // std::cout << extras::cyan << extras::pass(" updated file ");
+        // std::cout << extras::blue << std::endl;
+        // auto cmd = "ls -la " + original;
+        // SystemException::assertion(cmd, __INFO__);
+        auto fn = filename();
+        // fn = write(filename());
+        // rsi::FileNotFoundException::assertion(fn, __INFO__);
         rsi::ParcelImploder parcelImploder;
-        auto check = parcelImploder.wrapped(filename());
-        extras::rsi::write_file(check, this->_sockfd);
-        rsi::FileNotFoundException::assertion(check, __INFO__);
-        parcelImploder.unWrap(filename());
-        parcelImploder.merge(filename());
-        auto original = parcelImploder.clean(filename());
-        rsi::FileNotFoundException::assertion(original, __INFO__);
-        std::cout << extras::pass(original) << std::endl;
-        std::cout << extras::pass("write_file successful") << std::endl;
-        //
-        std::cout << extras::cyan << extras::pass(" updated file ");
-        std::cout << extras::blue << std::endl;
-        auto cmd = "ls -la " + original;
+        auto wrappedName = parcelImploder.wrapped(fn);
+        wrappedName = write(wrappedName);
+        auto from = fn;
+        static std::string client_dir = "data/client/";
+        fn = extras::replace_all(fn, "data/", client_dir);
+        rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
+        auto to = fn;
+        auto cmd = "cp " + from + " " + to;
         SystemException::assertion(cmd, __INFO__);
+        parcelImploder.unWrap(fn);
+        parcelImploder.merge(fn);
+        auto original = parcelImploder.clean(fn);
+        std::cout << extras::pass(fn) << std::endl;
+        std::cout << extras::pass("write_file successful") << std::endl;
+
     }
 
 

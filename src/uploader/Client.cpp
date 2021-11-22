@@ -7,6 +7,7 @@
 #include <extras/strings.hpp>
 #include <iostream>
 #include <filesystem>
+#include <extras/filesystem/system.hpp>
 
 namespace fs = std::filesystem;
 
@@ -36,8 +37,22 @@ namespace extras {
     }
 
     rsi::Filename rsi::UploaderClient::write(const Filename& filename) const {
-        extras::rsi::write_file(filename, this->_sockfd);
-        return filename;
+        static std::string client_dir = "data/client/";
+
+        if (fs::exists(client_dir)) {
+            fs::remove_all(client_dir);
+            SystemException::assertion("mkdir " + client_dir, __INFO__);
+        }
+        // if (internet.size() == 0)
+        //     throw "Nothing to save";
+        auto target = extras::replace_all(filename, "data/", client_dir);
+        // ofstream out(target);
+        // rsi::ConvertFile().saveBin(out, internet);
+        // internet.clear();
+        // return target;
+
+        extras::rsi::write_file(target, this->_sockfd);
+        return target;
     }
 
 }  // namespace extras
