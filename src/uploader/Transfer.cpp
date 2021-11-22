@@ -22,9 +22,20 @@ namespace extras {
      *
      */
     void rsi::UploaderClient::transfer() const {
+        // auto fn = filename();
+        // rsi::FileNotFoundException::assertion(filename(), __INFO__);
+        // send(filename());
+        // std::cout << extras::pass("send_file2 successful") << std::endl;
+
         auto fn = filename();
-        rsi::FileNotFoundException::assertion(filename(), __INFO__);
-        send(filename());
+        rsi::FileNotFoundException::assertion(fn, __INFO__);
+        // send(filename());
+        rsi::ParcelImploder parcelImploder;
+        auto wrapped = parcelImploder.wrap(fn);
+        rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+        // // wrapped_parcel = wrapped;
+        send(wrapped);
+        // std::cout << extras::pass(wrapped) << std::endl;
         std::cout << extras::pass("send_file2 successful") << std::endl;
 
         // rsi::FileNotFoundException::assertion(filename(), __INFO__);
@@ -38,9 +49,25 @@ namespace extras {
     }
 
     void rsi::UploaderServer::transfer() const {
+        // auto fn = filename();
+        // fn = write(filename());
+        // rsi::FileNotFoundException::assertion(fn, __INFO__);
+        // std::cout << extras::pass(fn) << std::endl;
+        // std::cout << extras::pass("write_file successful") << std::endl;
+
+        static std::string server_dir = "data/server/";
+
         auto fn = filename();
-        fn = write(filename());
-        rsi::FileNotFoundException::assertion(fn, __INFO__);
+        // fn = write(filename());
+        // rsi::FileNotFoundException::assertion(fn, __INFO__);
+        rsi::ParcelImploder parcelImploder;
+        auto wrappedName = parcelImploder.wrapped(fn);
+        wrappedName = write(wrappedName);
+        fn = extras::replace_all(fn, "data/", server_dir);
+        rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
+        parcelImploder.unWrap(fn);
+        parcelImploder.merge(fn);
+        auto original = parcelImploder.clean(fn);
         std::cout << extras::pass(fn) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
 

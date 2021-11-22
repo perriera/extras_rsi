@@ -91,9 +91,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/uploader_client",
             "args": [
-                "data/cplusplusorg.freeformjs.imploded.zip",
+                "data/exparx.webflow.zip",
                 "127.0.0.1",
-                "9003",
+                "8080",
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
