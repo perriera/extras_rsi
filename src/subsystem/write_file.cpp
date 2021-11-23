@@ -30,7 +30,7 @@ void printStatus(const std::string& msg) {
                 std::cout << extras::rsi::bar(packed.lineNo(), packed.lineCount() + 1);
                 std::cout << std::flush;
             }
-            catch (extras::rsi::PackedException& ex) {
+            catch (extras::rsi::ParcelException& ex) {
             }
         }
     }

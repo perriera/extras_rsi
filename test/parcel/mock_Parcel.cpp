@@ -76,7 +76,7 @@ SCENARIO("Mock ParcelInterface: hexToBin", "[ParcelInterface]") {
             [&original, &duplicate]() {
                 rsi::FileNotFoundException::assertion(original, __INFO__);
                 rsi::FileNotFoundException::assertion(duplicate, __INFO__);
-                rsi::PackedException::assertion(original, duplicate, __INFO__);
+                rsi::ParcelException::assertion(original, duplicate, __INFO__);
                 return true;
             }
     );

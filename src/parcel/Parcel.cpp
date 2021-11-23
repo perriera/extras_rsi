@@ -28,21 +28,21 @@ namespace extras {
             ss << line;
             char c;
             ss >> std::skipws >> c;
-            PackedException::assertion(c, __INFO__);
+            ParcelException::assertion(c, __INFO__);
             ss >> std::hex >> obj._lineNo;
-            PackedException::assertion(obj._lineNo, __INFO__);
+            ParcelException::assertion(obj._lineNo, __INFO__);
             ss >> std::skipws >> c;
-            PackedException::assertion(c, __INFO__);
+            ParcelException::assertion(c, __INFO__);
             ss >> std::hex >> obj._lineCount;
-            PackedException::assertion(obj._lineCount, __INFO__);
+            ParcelException::assertion(obj._lineCount, __INFO__);
             ss >> std::skipws >> c;
-            PackedException::assertion(c, __INFO__);
+            ParcelException::assertion(c, __INFO__);
             ss >> obj._hexLine;
-            PackedException::assertion(obj._hexLine, __INFO__);
+            ParcelException::assertion(obj._hexLine, __INFO__);
             ss >> c;
-            PackedException::assertion(c, __INFO__);
+            ParcelException::assertion(c, __INFO__);
             ss >> std::hex >> obj._crc;
-            PackedException::assertion(obj._crc, obj._hexLine, __INFO__);
+            ParcelException::assertion(obj._crc, obj._hexLine, __INFO__);
             return in;
         }
 
@@ -113,7 +113,7 @@ namespace extras {
         bool Parcel::verify_integrity() const {
             rsi::FileNotFoundException::assertion(original(), __INFO__);
             rsi::FileNotFoundException::assertion(duplicate(), __INFO__);
-            rsi::PackedException::assertion(original(), duplicate(), __INFO__);
+            rsi::ParcelException::assertion(original(), duplicate(), __INFO__);
             return true;
         }
 

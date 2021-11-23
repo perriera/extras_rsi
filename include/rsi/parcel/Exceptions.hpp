@@ -18,43 +18,43 @@ namespace extras {
 
 
         /**
-         * @brief PackedException
+         * @brief ParcelException
          *
          */
-        concrete class PackedException extends RSIException {
+        concrete class ParcelException extends RSIException {
         public:
-            PackedException(std::string msg, const extras::WhereAmI& whereAmI)
+            ParcelException(std::string msg, const extras::WhereAmI& whereAmI)
                 : RSIException(msg.c_str(), whereAmI) {}
             static void assertion(char delimiter, const extras::WhereAmI& ref) {
                 if (delimiter != ':' && delimiter != '/')
-                    throw PackedException("Bad delimiter:" + delimiter, ref);
+                    throw ParcelException("Bad delimiter:" + delimiter, ref);
             }
             static void assertion(const PackedLine& line1, const PackedLine& line2, const extras::WhereAmI& ref) {
                 if (line1 != line2)
-                    throw PackedException("Corrupted save on line:" + std::to_string(line1.lineNo()), ref);
+                    throw ParcelException("Corrupted save on line:" + std::to_string(line1.lineNo()), ref);
             }
             static void assertion(const BinLine& line1, const BinLine& line2, int line, const extras::WhereAmI& ref) {
                 if (line1 != line2)
-                    throw PackedException("Corrupted save on line:" + std::to_string(line), ref);
+                    throw ParcelException("Corrupted save on line:" + std::to_string(line), ref);
             }
             static void assertion(int line_no, const extras::WhereAmI& ref) {
                 if (line_no < 0)
-                    throw PackedException("Bad line number:" + std::to_string(line_no), ref);
+                    throw ParcelException("Bad line number:" + std::to_string(line_no), ref);
             }
             static void assertion(int line_no1, int line_no2, const extras::WhereAmI& ref) {
                 if (line_no1 != line_no2)
-                    throw PackedException("Line number out of sync:"
+                    throw ParcelException("Line number out of sync:"
                         + std::to_string(line_no1) + std::to_string(line_no2), ref);
             }
             static void assertion(rsi::HexLine hexLine, const extras::WhereAmI& ref) {
                 for (auto c : hexLine)
                     if (!isxdigit(c))
-                        throw PackedException("Bad HexLine:" + hexLine, ref);
+                        throw ParcelException("Bad HexLine:" + hexLine, ref);
             }
             static void assertion(rsi::CRC crc, rsi::HexLine hexLine, const extras::WhereAmI& ref) {
                 rsi::PackedLine check(0, 0, hexLine);
                 if (check.checksum() != crc)
-                    throw PackedException("Bad CRC:" + hexLine, ref);
+                    throw ParcelException("Bad CRC:" + hexLine, ref);
             }
 
             static void assertion(const Filename& parcel, const Filename& unpacked, const extras::WhereAmI& ref);

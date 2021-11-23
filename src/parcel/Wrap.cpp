@@ -1,6 +1,6 @@
 #include <rsi/parcel/Parcel.hpp>
 #include <rsi/exceptions.hpp>
-#include <rsi/parcel/ParcelImploder.hpp>
+#include <rsi/parcel/Wrap.hpp>
 #include <ng_imploder/imploder/Imploder.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/filesystem/system.hpp>

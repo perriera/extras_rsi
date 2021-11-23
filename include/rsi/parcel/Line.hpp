@@ -15,7 +15,7 @@
 namespace extras {
     namespace rsi {
         /**
-         * @brief PackedLineInterface
+         * @brief ParcelLineInterface
          *
          *   build/rsi_client 127.0.0.1 8080 transfer send.txt
          *   ss >> prg >> filename >> ip >> port;
@@ -24,22 +24,22 @@ namespace extras {
 
         using CRC = u_int16_t;
 
-        interface PackedLineInterface {
+        interface ParcelLineInterface {
             virtual  int lineNo() const pure;
             virtual  int lineCount() const pure;
             virtual const HexLine& hexLine() const pure;
             virtual const CRC& checksum() const pure;
 
-            bool operator==(const PackedLineInterface& rhs) const {
+            bool operator==(const ParcelLineInterface& rhs) const {
                 return hexLine() == rhs.hexLine() && checksum() == rhs.checksum();
             }
 
-            bool operator!=(const PackedLineInterface& rhs) const {
+            bool operator!=(const ParcelLineInterface& rhs) const {
                 return !(*this == rhs);
             }
         };
 
-        concrete class PackedLine implements PackedLineInterface {
+        concrete class PackedLine implements ParcelLineInterface {
             friend std::ostream& operator<<(std::ostream& out, const PackedLine& obj);
             friend std::istream& operator>>(std::istream& in, PackedLine& obj);
             int _lineNo = 0;
