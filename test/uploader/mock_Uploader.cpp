@@ -28,7 +28,7 @@ SCENARIO("Mock UploaderInterface: basic", "[UploaderInterface]") {
     When(Method(mock, port)).Return(_port);
     When(Method(mock, parameters))
         .AlwaysDo(
-            [](int argc, char const* argv[]) {
+            [](int, char const* []) {
                 return rsi::Parameters();
             });
 
