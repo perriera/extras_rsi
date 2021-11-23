@@ -15,7 +15,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/run-unittests-rsi",
             "args": [
-                "[DownloaderServer]"
+                "[StatusBarInterface]"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

@@ -1,4 +1,5 @@
 #include <rsi/sockets/StatusBar.hpp>
+#include <rsi/sockets/Spinner.hpp>
 #include <iostream>
 #include <sstream>
 
@@ -14,13 +15,15 @@ using namespace fakeit;
 
 SCENARIO("Mock StatusBarInterface", "[StatusBarInterface]") {
 
-    rsi::StatusBarMsg good = "[+] 25 / 50\n";
+    rsi::StatusBarMsg good = "\033[32m\r[\033[33m+\033[32m] 25 / 50\n";
     Mock<rsi::StatusBarInterface> mock;
     When(Method(mock, bar))
         .AlwaysDo(
             [](int count, int max) {
                 std::stringstream ss;
-                ss << "[+] " << count << " / " << max << std::endl;
+                ss << rsi::spinner(count) << " ";
+                ss << count << " / " << max << std::endl;
+                auto x = ss.str();
                 return ss.str();
             });
 

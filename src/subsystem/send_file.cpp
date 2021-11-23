@@ -6,11 +6,13 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-
+#include <rsi/sockets/Spinner.hpp>
 #include <extras/interfaces.hpp>
+#include <extras/devices/ansi_colors.hpp>
 #include <rsi/sockets/StatusBar.hpp>
 #include <rsi/exceptions.hpp>
 #include <rsi/subsystem.hpp>
+
 using namespace std;
 using namespace extras;
 
@@ -41,7 +43,8 @@ void extras::rsi::send_file2(const std::string& filename, int sockfd) {
         }
         sendIt(sockfd, ss.str());
     }
-    std::cout << "\x1B[2K\r" << filename << " sent intact" << std::endl;
+    std::cout << "\x1B[2K\r" << extras::rsi::spinner(0) << " ";
+    std::cout << extras::cyan << filename << " sent intact" << std::endl;
 
     sendIt(sockfd, "done");
     for (int i = 0; i < 5000; i++)

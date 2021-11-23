@@ -35,6 +35,10 @@ namespace extras {
             virtual void transfer() const pure;
         };
 
+        /**
+         * @brief class SocketPool
+         *
+         */
         abstract class SocketPool implements SocketPoolInterface with
             ParametersInterface with ServiceTypeCompilerInterface {
         protected:

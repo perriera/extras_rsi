@@ -38,6 +38,10 @@ namespace extras {
             virtual PortAuthority& portAuthority() pure;
         };
 
+        /**
+         * @brief SocketPoolServer
+         *
+         */
         concrete class SocketPoolServer extends SocketPool with
             SocketPoolServerInterface {
             struct sockaddr_in _server_addr;
