@@ -4,7 +4,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), 
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v3.0.1 -m "Added semaphores"</br>
+> > git tag -a v3.1.0 -m "Cleaned up code"</br>
 > > git push origin v3.0.1
 > 
 
@@ -28,6 +28,10 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 3.1.0 (2021-11-22)
+## Changed  
+- Cleaned up code
 
 #### 3.0.1 (2021-11-22)
 ## Changed  
@@ -195,7 +199,8 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v3.0.1...HEAD
+[Unreleased]: https://github.com/perriera/rsi/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/perriera/rsi/compare/v3.0.1...v3.1.0
 [3.0.1]: https://github.com/perriera/rsi/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/perriera/rsi/compare/v2.17.0...v3.0.0
 [2.17.0]: https://github.com/perriera/rsi/compare/v2.16.0...v2.17.0

@@ -41,7 +41,7 @@ SCENARIO("Mock UploaderInterface: basic2", "[UploaderInterface]") {
 
     When(Method(mock, parameters))
         .AlwaysDo(
-            [](int argc, char const* argv[]) {
+            [](int, char const* []) {
                 return rsi::Parameters();
             });
 
@@ -62,12 +62,12 @@ SCENARIO("Mock UploaderInterface: basic2", "[UploaderInterface]") {
 
     When(Method(mock, send))
         .AlwaysDo(
-            [](const rsi::Filename& filename) {
+            [](const rsi::Filename&) {
             });
 
     When(Method(mock, write))
         .AlwaysDo(
-            [](const rsi::Filename& filename) {
+            [](const rsi::Filename&) {
                 return rsi::Filename();
             });
 
