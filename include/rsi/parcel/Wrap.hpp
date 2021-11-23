@@ -11,10 +11,7 @@
 namespace extras {
     namespace rsi {
         /**
-         * @brief ParcelLineInterface
-         *
-         *   build/rsi_client 127.0.0.1 8080 transfer send.txt
-         *   ss >> prg >> filename >> ip >> port;
+         * @brief WrapInterface
          *
          */
 
@@ -34,9 +31,9 @@ namespace extras {
         };
 
         /**
- * @brief ParcelImploder
- *
- */
+         * @brief ParcelImploder
+         *
+         */
         concrete class ParcelImploder implements WrapInterface {
 
         public:
