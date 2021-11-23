@@ -1,16 +1,5 @@
 #include <rsi/uploader/Uploader.hpp>
-#include <extras/strings.hpp>
-#include <rsi/parcel/Wrap.hpp>
-#include <rsi/parcel/Parcel.hpp>
-#include <rsi/parcel/Wrap.hpp>
-#include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
-#include <extras/strings.hpp>
-#include <rsi/exceptions.hpp>
-#include <ng_imploder/imploder/Imploder.hpp>
-#include <iostream>
-#include <fstream>
-#include <filesystem>
 #include <extras/filesystem/system.hpp>
 
 #include "../unittesting/catch.hpp"
@@ -18,7 +7,6 @@
 
 using namespace extras;
 using namespace fakeit;
-using namespace std;
 namespace fs = std::filesystem;
 
 SCENARIO("Mock UploaderInterface: basic", "[UploaderInterface]") {
@@ -38,7 +26,6 @@ SCENARIO("Mock UploaderInterface: basic", "[UploaderInterface]") {
     When(Method(mock, filename)).Return(_filename);
     When(Method(mock, ip)).Return(_ip);
     When(Method(mock, port)).Return(_port);
-
     When(Method(mock, parameters))
         .AlwaysDo(
             [](int argc, char const* argv[]) {

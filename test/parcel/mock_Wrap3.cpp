@@ -1,12 +1,5 @@
 #include <rsi/parcel/Wrap.hpp>
-#include <rsi/parcel/Parcel.hpp>
-#include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
-#include <extras/strings.hpp>
-#include <rsi/exceptions.hpp>
-#include <ng_imploder/imploder/Imploder.hpp>
-#include <iostream>
-#include <fstream>
 #include <filesystem>
 
 #include "../unittesting/catch.hpp"
@@ -14,7 +7,6 @@
 
 using namespace extras;
 using namespace fakeit;
-using namespace std;
 namespace fs = std::filesystem;
 
 SCENARIO("Mock WrapInterface: Parcel", "[WrapInterface]") {
