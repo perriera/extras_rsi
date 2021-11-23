@@ -1,4 +1,5 @@
 #include <rsi/sockets/StatusBar.hpp>
+#include <rsi/sockets/Spinner.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/strings.hpp>
@@ -28,13 +29,7 @@ namespace extras {
 
         StatusBarMsg StatusBar::bar(int count, int max) const {
             std::stringstream ss;
-            std::string spinner = "|/-\\";
-            char c = spinner[count % spinner.size()];
-            if (count > max - 2)
-                c = '+';
-            ss << extras::green << "\r[";
-            ss << extras::yellow << c;
-            ss << extras::green << "] ";
+            ss << spinner(count) << " ";
             ss << extras::white << count + 1;
             ss << extras::magenta << " / ";
             ss << extras::white << max;
