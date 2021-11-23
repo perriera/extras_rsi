@@ -10,23 +10,52 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock SemaphoreInterface", "[SemaphoreInterface]") {
+SCENARIO("Mock SemaphoreInterface: lock/unlock", "[SemaphoreInterface]") {
 
-    Mock<rsi::SemaphoreInterface> mock;
-    When(Method(mock, lock))
+    /**
+     * @brief Mock<rsi::UploaderInterface> uploader;
+     *
+     */
+    Mock<rsi::UploaderInterface> uploader;
+    When(Method(uploader, send))
         .AlwaysDo(
-            [](const rsi::Lock& lock) {
+            [](const rsi::Filename& filename) {
+            });
+    When(Method(uploader, write))
+        .AlwaysDo(
+            [](const rsi::Filename& filename) {
+                return filename;
+            });
+
+    rsi::UploaderInterface& i_uploader = uploader.get();
+    rsi::Filename filename = "data/exparx.webflow.zip";
+    i_uploader.send(filename);
+    filename = i_uploader.write(filename);
+    Verify(Method(uploader, send));
+    Verify(Method(uploader, write));
+
+    /**
+     * @brief Mock<rsi::SemaphoreInterface> semaphore;
+     *
+     */
+    Mock<rsi::SemaphoreInterface> semaphore;
+    When(Method(semaphore, lock))
+        .AlwaysDo(
+            [&i_uploader](const rsi::Lock& lock) {
+                i_uploader.send(lock);
                 return lock;
             });
-    When(Method(mock, unlock))
+    When(Method(semaphore, unlock))
         .AlwaysDo(
-            [](const rsi::Lock& lock) {
-                return lock;
+            [&i_uploader](const rsi::Lock& lock) {
+                return i_uploader.write(lock);;
             });
 
-    rsi::SemaphoreInterface& i = mock.get();
-    i.lock(i.unlock(""));
-    i.unlock(i.lock(""));
-    Verify(Method(mock, lock));
-    Verify(Method(mock, unlock));
+    rsi::SemaphoreInterface& i_sema = semaphore.get();
+    i_sema.lock(i_sema.unlock(filename));
+    i_sema.unlock(i_sema.lock(filename));
+    Verify(Method(semaphore, lock));
+    Verify(Method(semaphore, unlock));
+
+
 }

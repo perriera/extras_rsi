@@ -10,41 +10,23 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
+SCENARIO("Mock SemaphoreInterface", "[SemaphoreInterface]") {
 
-    Mock<rsi::SemaphoreInterface> sema;
-    Mock<rsi::UploaderInterface> uploader;
-
-    rsi::Lock locked = "hello";
-
-    When(Method(sema, lock))
+    Mock<rsi::SemaphoreInterface> mock;
+    When(Method(mock, lock))
         .AlwaysDo(
             [](const rsi::Lock& lock) {
                 return lock;
             });
-    When(Method(sema, unlock))
+    When(Method(mock, unlock))
         .AlwaysDo(
             [](const rsi::Lock& lock) {
                 return lock;
             });
 
-    rsi::SemaphoreInterface& i_sema = sema.get();
-
-    When(Method(uploader, transfer))
-        .AlwaysDo(
-            [&i_sema]() {
-                rsi::Lock lock;
-                i_sema.unlock(i_sema.lock(lock));
-            });
-
-    i_sema.lock(i_sema.unlock(locked));
-    i_sema.unlock(i_sema.lock(locked));
-    Verify(Method(sema, lock));
-    Verify(Method(sema, unlock));
-
-    rsi::UploaderInterface& i_uploader = uploader.get();
-    i_uploader.transfer();
-    Verify(Method(uploader, transfer));
-
-
+    rsi::SemaphoreInterface& i = mock.get();
+    i.lock(i.unlock(""));
+    i.unlock(i.lock(""));
+    Verify(Method(mock, lock));
+    Verify(Method(mock, unlock));
 }
