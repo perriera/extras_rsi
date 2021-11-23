@@ -7,9 +7,11 @@
 #include <fstream>
 #include <sstream>
 #include <rsi/sockets/StatusBar.hpp>
+#include <rsi/sockets/Spinner.hpp>
 #include <rsi/parcel/Parcel.hpp>
 #include <rsi/subsystem.hpp>
 #include <extras/strings.hpp>
+#include <extras/devices/ansi_colors.hpp>
 
 using namespace std;
 
@@ -65,7 +67,8 @@ void extras::rsi::write_file(const std::string& filename, int sockfd) {
         bzero(buffer, extras::rsi::SIZE);
 
     }
-    std::cout << "\x1B[2K\r" << filename << " received intact" << std::endl;
+    std::cout << "\x1B[2K\r" << extras::rsi::spinner(0) << " ";
+    std::cout << extras::cyan << filename << " received intact" << std::endl;
 
     return;
 }
