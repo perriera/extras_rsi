@@ -38,7 +38,7 @@ namespace extras {
                     auto cmd = item;
                     system(cmd.c_str());
                 }
-                system("ls -la");
+                system("ls -la data/client");
             }
             catch (exception& ex) {
                 cout << ex.what() << endl;
