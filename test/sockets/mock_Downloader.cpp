@@ -96,21 +96,35 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
     When(Method(client_lock, lock))
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& filename) {
-                rsi::FileNotFoundException::assertion(filename, __INFO__);
                 rsi::ParcelImploder parcelImploder;
-                auto wrapped = parcelImploder.wrap(filename);
-                rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-                i_semaphore.send(wrapped);
-                parcelImploder.clean(filename);
+                auto wrappedName = parcelImploder.wrapped(filename);
+                wrappedName = i_semaphore.write(wrappedName);
                 return filename;
             });
     When(Method(client_lock, unlock))
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& filename) {
-                auto status = i_semaphore.read_line();
+                auto fn = filename;
+                rsi::ParcelImploder parcelImploder;
+                auto wrappedName = parcelImploder.wrapped(fn);
+                auto from = fn;
+                static std::string client_dir = "data/client/";
+                fn = extras::replace_all(fn, "data/", client_dir);
+                rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
+                auto to = fn;
+                auto cmd = "cp " + from + " " + to;
+                SystemException::assertion(cmd, __INFO__);
+                parcelImploder.unWrap(fn);
+                parcelImploder.merge(fn);
+                auto original = parcelImploder.clean(fn);
                 std::cout << extras::pass(filename) << std::endl;
-                std::cout << extras::pass(status) << std::endl;
-                std::cout << extras::pass("send_file2 successful") << std::endl;
+                std::cout << extras::pass("write_file successful") << std::endl;
+                std::string msg = "downloader completed";
+                i_semaphore.send_line(msg);
+                // auto status = i_semaphore.read_line();
+                // std::cout << extras::pass(filename) << std::endl;
+                // std::cout << extras::pass(status) << std::endl;
+                // std::cout << extras::pass("send_file2 successful") << std::endl;
                 return filename;
             });
 
@@ -122,23 +136,35 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
     When(Method(server_lock, lock))
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& filename) {
-                static std::string server_dir = "data/server/";
+                rsi::FileNotFoundException::assertion(filename, __INFO__);
                 rsi::ParcelImploder parcelImploder;
-                auto wrappedName = parcelImploder.wrapped(filename);
-                return i_semaphore.write(wrappedName);
+                auto wrapped = parcelImploder.wrap(filename);
+                rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+                i_semaphore.send(wrapped);
+                std::cout << extras::pass("send_file2 successful") << std::endl;
+                return filename;
+                // static std::string server_dir = "data/server/";
+                // rsi::ParcelImploder parcelImploder;
+                // auto wrappedName = parcelImploder.wrapped(filename);
+                // return i_semaphore.write(wrappedName);
             });
     When(Method(server_lock, unlock))
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& filename) {
-                auto fn = extras::replace_all(filename, "data/", client_dir);
-                rsi::ParcelImploder parcelImploder;
-                parcelImploder.unWrap(fn);
-                parcelImploder.merge(fn);
-                auto original = parcelImploder.clean(fn);
-                i_semaphore.send_line("uploader completed");
-                std::cout << extras::pass(fn) << std::endl;
-                std::cout << extras::pass("write_file successful") << std::endl;
-                return original;
+                std::string line = i_semaphore.read_line();
+                std::cout << extras::pass(filename) << std::endl;
+                std::cout << extras::pass(line) << std::endl;
+                return filename;
+
+                // auto fn = extras::replace_all(filename, "data/", client_dir);
+                // rsi::ParcelImploder parcelImploder;
+                // parcelImploder.unWrap(fn);
+                // parcelImploder.merge(fn);
+                // auto original = parcelImploder.clean(fn);
+                // i_semaphore.send_line("uploader completed");
+                // std::cout << extras::pass(fn) << std::endl;
+                // std::cout << extras::pass("write_file successful") << std::endl;
+                // return original;
             });
 
     /**
@@ -150,8 +176,8 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
 
     clean();
 
-    i_server.lock(i_client.lock(filename));
-    i_client.unlock(i_server.unlock(filename));
+    i_client.lock(i_server.lock(filename));
+    i_server.unlock(i_client.unlock(filename));
 
     clean();
 

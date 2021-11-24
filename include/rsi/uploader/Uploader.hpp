@@ -104,6 +104,11 @@ namespace extras {
          *
          */
         concrete class UploaderClient extends Uploader with SemaphoreInterface {
+        protected:
+            std::string client_dir = "data/client/";
+
+            virtual Lock lock(const Lock& lock) const override;
+            virtual Lock unlock(const Lock& lock) const override;
         public:
             virtual void connect() override;
             virtual void transfer() const override;
@@ -112,8 +117,6 @@ namespace extras {
             virtual Filename write(const Filename& filename) const override;
             virtual void send_line(const UploaderStatus& msg) const override;
             virtual UploaderStatus read_line() const override;
-            virtual Lock lock(const Lock& lock) const override;
-            virtual Lock unlock(const Lock& lock) const override;
         };
 
         /**
@@ -130,6 +133,8 @@ namespace extras {
             struct sockaddr_in _new_addr;
             int _new_sock;
 
+            virtual Lock lock(const Lock& lock) const override;
+            virtual Lock unlock(const Lock& lock) const override;
         public:
             virtual void connect() override;
             virtual void transfer() const override;
@@ -138,8 +143,6 @@ namespace extras {
             virtual Filename write(const Filename& filename) const override;
             virtual void send_line(const UploaderStatus& msg) const override;
             virtual UploaderStatus read_line() const override;
-            virtual Lock lock(const Lock& lock) const override;
-            virtual Lock unlock(const Lock& lock) const override;
         };
 
 
