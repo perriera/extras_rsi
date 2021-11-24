@@ -42,13 +42,13 @@ namespace extras {
         unlock(lock(filename()));
     }
 
-    rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) const {
+    rsi::Lock rsi::UploaderServer::lock(const rsi::Lock&) const {
         static std::string server_dir = "data/server/";
         rsi::ParcelImploder parcelImploder;
         auto wrappedName = parcelImploder.wrapped(filename());
         return write(wrappedName);
     }
-    rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock& lock) const {
+    rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock&) const {
         auto fn = extras::replace_all(filename(), "data/", server_dir);
         rsi::ParcelImploder parcelImploder;
         parcelImploder.unWrap(fn);
