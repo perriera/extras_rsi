@@ -3,6 +3,7 @@
 
 #include <extras/interfaces.hpp>
 #include <rsi/sockets/Types.hpp>
+#include <rsi/sockets/Semaphores.hpp>
 #include <iostream>
 #include <sstream>
 #include <netinet/in.h>
@@ -102,7 +103,7 @@ namespace extras {
          *   ss >> prg >> filename >> ip >> port;
          *
          */
-        concrete class UploaderClient extends Uploader {
+        concrete class UploaderClient extends Uploader with SemaphoreInterface {
         public:
             virtual void connect() override;
             virtual void transfer() const override;
@@ -111,6 +112,8 @@ namespace extras {
             virtual Filename write(const Filename& filename) const override;
             virtual void send_line(const UploaderStatus& msg) const override;
             virtual UploaderStatus read_line() const override;
+            virtual Lock lock(const Lock& lock) const override;
+            virtual Lock unlock(const Lock& lock) const override;
         };
 
         /**
@@ -120,8 +123,10 @@ namespace extras {
          *   ss >> prg >> filename >> ip >> port;
          *
          */
-        concrete class UploaderServer extends Uploader {
+        concrete class UploaderServer extends Uploader with SemaphoreInterface {
+
         protected:
+            std::string server_dir = "data/server/";
             struct sockaddr_in _new_addr;
             int _new_sock;
 
@@ -133,6 +138,8 @@ namespace extras {
             virtual Filename write(const Filename& filename) const override;
             virtual void send_line(const UploaderStatus& msg) const override;
             virtual UploaderStatus read_line() const override;
+            virtual Lock lock(const Lock& lock) const override;
+            virtual Lock unlock(const Lock& lock) const override;
         };
 
 
