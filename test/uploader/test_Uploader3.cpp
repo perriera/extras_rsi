@@ -149,8 +149,8 @@ SCENARIO("Test UploaderInterface: basic4", "[UploaderInterface]") {
 
     TestUploaderClient client;
     TestUploaderServer server;
-    rsi::UploaderInterface& i_client = client;
-    rsi::UploaderInterface& i_server = server;
+    // rsi::UploaderInterface& i_client = client;
+    // rsi::UploaderInterface& i_server = server;
 
 
     // REQUIRE(fs::exists(_filename));

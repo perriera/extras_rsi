@@ -32,7 +32,7 @@ namespace extras {
     }
     rsi::Lock rsi::UploaderClient::unlock(const rsi::Lock& lock) const {
         auto status = read_line();
-        std::cout << extras::pass(lock) << std::endl;
+        std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(status) << std::endl;
         std::cout << extras::pass("send_file2 successful") << std::endl;
         return lock;
@@ -45,11 +45,11 @@ namespace extras {
     rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) const {
         static std::string server_dir = "data/server/";
         rsi::ParcelImploder parcelImploder;
-        auto wrappedName = parcelImploder.wrapped(lock);
+        auto wrappedName = parcelImploder.wrapped(filename());
         return write(wrappedName);
     }
     rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock& lock) const {
-        auto fn = extras::replace_all(lock, "data/", server_dir);
+        auto fn = extras::replace_all(filename(), "data/", server_dir);
         rsi::ParcelImploder parcelImploder;
         parcelImploder.unWrap(fn);
         parcelImploder.merge(fn);
