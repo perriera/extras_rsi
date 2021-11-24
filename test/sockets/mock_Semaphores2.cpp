@@ -37,7 +37,7 @@ static void clean() {
     }
 }
 
-SCENARIO("Mock SemaphoreInterface: lock/unlock", "[SemaphoreInterface]") {
+SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
 
     /**
      * @brief Mock<rsi::UploaderInterface> uploader;

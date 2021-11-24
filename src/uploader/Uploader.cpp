@@ -40,16 +40,6 @@ namespace extras {
 
     void rsi::UploaderClient::transfer() const {
         unlock(lock(filename()));
-        // auto fn = filename();
-        // rsi::FileNotFoundException::assertion(fn, __INFO__);
-        // rsi::ParcelImploder parcelImploder;
-        // auto wrapped = parcelImploder.wrap(fn);
-        // rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-        // send(wrapped);
-        // std::cout << extras::pass("send_file2 successful") << std::endl;
-        // std::string line = read_line();
-        // std::cout << extras::pass(filename()) << std::endl;
-        // std::cout << extras::pass(line) << std::endl;
     }
 
     rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) const {
@@ -72,20 +62,6 @@ namespace extras {
 
     void rsi::UploaderServer::transfer() const {
         unlock(lock(filename()));
-        // static std::string server_dir = "data/server/";
-        // auto fn = filename();
-        // rsi::ParcelImploder parcelImploder;
-        // auto wrappedName = parcelImploder.wrapped(fn);
-        // wrappedName = write(wrappedName);
-        // fn = extras::replace_all(fn, "data/", server_dir);
-        // rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
-        // parcelImploder.unWrap(fn);
-        // parcelImploder.merge(fn);
-        // auto original = parcelImploder.clean(fn);
-        // std::string msg = "uploader completed";
-        // send_line(msg);
-        // std::cout << extras::pass(fn) << std::endl;
-        // std::cout << extras::pass("write_file successful") << std::endl;
     }
 
 }  // namespace extras

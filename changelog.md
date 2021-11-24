@@ -29,6 +29,10 @@ Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
 
+#### 3.2.0 (2021-11-24)
+## Added  
+- SemaphoreInterface
+
 #### 3.1.0 (2021-11-22)
 ## Changed  
 - Cleaned up code
