@@ -46,24 +46,24 @@ SCENARIO("Mock SemaphoreInterface: lock/unlock", "[SemaphoreInterface]") {
      */
     std::string internet;
 
-    Mock<rsi::UploaderInterface> uploader;
-    When(Method(uploader, send))
+    Mock<rsi::UploaderInterface> semaphore;
+    When(Method(semaphore, send))
         .AlwaysDo(
             [&internet](const rsi::Filename& filename) {
                 internet = filename;
             });
-    When(Method(uploader, write))
+    When(Method(semaphore, write))
         .AlwaysDo(
             [&internet](const rsi::Filename& filename) {
                 internet.clear();
                 return filename;
             });
-    When(Method(uploader, send_line))
+    When(Method(semaphore, send_line))
         .AlwaysDo(
             [&internet](const rsi::UploaderStatus& msg) {
                 internet = msg;
             });
-    When(Method(uploader, read_line))
+    When(Method(semaphore, read_line))
         .AlwaysDo(
             [&internet]() {
                 auto msg = internet;
@@ -71,42 +71,72 @@ SCENARIO("Mock SemaphoreInterface: lock/unlock", "[SemaphoreInterface]") {
                 return msg;
             });
 
-    rsi::UploaderInterface& i_uploader = uploader.get();
+    rsi::UploaderInterface& i_semaphore = semaphore.get();
     rsi::Filename filename = "data/exparx.webflow.zip";
-    i_uploader.send(filename);
-    filename = i_uploader.write(filename);
-    Verify(Method(uploader, send));
-    Verify(Method(uploader, write));
+    i_semaphore.send(filename);
+    filename = i_semaphore.write(filename);
+    Verify(Method(semaphore, send));
+    Verify(Method(semaphore, write));
 
     /**
-     * @brief Mock<rsi::SemaphoreInterface> semaphore;
+     * @brief Mock<rsi::SemaphoreInterface> uploader_lock;
      *
      */
-    Mock<rsi::SemaphoreInterface> semaphore;
-    When(Method(semaphore, lock))
+    Mock<rsi::SemaphoreInterface> uploader_lock;
+    When(Method(uploader_lock, lock))
         .AlwaysDo(
-            [&i_uploader](const rsi::Lock& filename) {
+            [&i_semaphore](const rsi::Lock& filename) {
                 rsi::FileNotFoundException::assertion(filename, __INFO__);
                 rsi::ParcelImploder parcelImploder;
                 auto wrapped = parcelImploder.wrap(filename);
                 rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-                i_uploader.send(wrapped);
+                i_semaphore.send(wrapped);
                 return wrapped;
             });
-    When(Method(semaphore, unlock))
+    When(Method(uploader_lock, unlock))
         .AlwaysDo(
-            [&i_uploader](const rsi::Lock& filename) {
-                auto status = i_uploader.read_line();
+            [&i_semaphore](const rsi::Lock& filename) {
+                auto status = i_semaphore.read_line();
                 std::cout << extras::pass(filename) << std::endl;
                 std::cout << extras::pass(status) << std::endl;
                 std::cout << extras::pass("send_file2 successful") << std::endl;
-                return i_uploader.write(filename);
+                return i_semaphore.write(filename);
             });
 
-    rsi::SemaphoreInterface& i_sema = semaphore.get();
-    i_sema.unlock(i_sema.lock(filename));
-    Verify(Method(semaphore, lock));
-    Verify(Method(semaphore, unlock));
+    rsi::SemaphoreInterface& i_uploader = uploader_lock.get();
+    i_uploader.unlock(i_uploader.lock(filename));
+    Verify(Method(uploader_lock, lock));
+    Verify(Method(uploader_lock, unlock));
+
+    /**
+     * @brief Mock<rsi::SemaphoreInterface> uploader_lock;
+     *
+     */
+    Mock<rsi::SemaphoreInterface> downloader_lock;
+    When(Method(downloader_lock, lock))
+        .AlwaysDo(
+            [&i_semaphore](const rsi::Lock& filename) {
+                rsi::FileNotFoundException::assertion(filename, __INFO__);
+                rsi::ParcelImploder parcelImploder;
+                auto wrapped = parcelImploder.wrap(filename);
+                rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+                i_semaphore.send(wrapped);
+                return wrapped;
+            });
+    When(Method(downloader_lock, unlock))
+        .AlwaysDo(
+            [&i_semaphore](const rsi::Lock& filename) {
+                auto status = i_semaphore.read_line();
+                std::cout << extras::pass(filename) << std::endl;
+                std::cout << extras::pass(status) << std::endl;
+                std::cout << extras::pass("send_file2 successful") << std::endl;
+                return i_semaphore.write(filename);
+            });
+
+    rsi::SemaphoreInterface& i_downloader = downloader_lock.get();
+    i_downloader.unlock(i_downloader.lock(filename));
+    Verify(Method(downloader_lock, lock));
+    Verify(Method(downloader_lock, unlock));
 
 
 }
