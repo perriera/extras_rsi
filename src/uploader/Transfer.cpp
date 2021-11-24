@@ -29,7 +29,7 @@ namespace extras {
         rsi::FileNotFoundException::assertion(wrapped, __INFO__);
         send(wrapped);
         std::cout << extras::pass("send_file2 successful") << std::endl;
-        std::string line = read_line(this->_sockfd);
+        std::string line = read_line();
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(line) << std::endl;
     }
@@ -46,7 +46,7 @@ namespace extras {
         parcelImploder.merge(fn);
         auto original = parcelImploder.clean(fn);
         std::string msg = "uploader completed";
-        send_line(msg, this->_new_sock);
+        send_line(msg);
         std::cout << extras::pass(fn) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
     }
@@ -63,7 +63,7 @@ namespace extras {
         rsi::FileNotFoundException::assertion(wrapped, __INFO__);
         send(wrapped);
         std::cout << extras::pass("send_file2 successful") << std::endl;
-        std::string line = read_line(this->_sockfd);
+        std::string line = read_line();
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(line) << std::endl;
     }
@@ -86,7 +86,7 @@ namespace extras {
         std::cout << extras::pass(fn) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
         std::string msg = "downloader completed";
-        send_line(msg, this->_sockfd);
+        send_line(msg);
     }
 
 

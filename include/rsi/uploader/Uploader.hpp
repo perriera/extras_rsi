@@ -18,6 +18,8 @@ namespace extras {
          *
          */
 
+        using UploaderStatus = std::string;
+
         interface UploaderInterface {
             /**
              * @brief parameters()
@@ -50,6 +52,7 @@ namespace extras {
              * are this method performs the data transfer, (or initiates it)
              */
             virtual void send(const Filename& filename) const pure;
+            virtual void send_line(const UploaderStatus& msg) const pure;
 
             /**
              * @brief write()
@@ -57,6 +60,7 @@ namespace extras {
              * are this method performs the data transfer, (or initiates it)
              */
             virtual Filename write(const Filename& filename) const pure;
+            virtual UploaderStatus read_line() const pure;
 
             /**
              * @brief transfer()
@@ -105,6 +109,8 @@ namespace extras {
             virtual void close() const override;
             virtual void send(const Filename& filename) const override;
             virtual Filename write(const Filename& filename) const override;
+            virtual void send_line(const UploaderStatus& msg) const override;
+            virtual UploaderStatus read_line() const override;
         };
 
         /**
@@ -125,6 +131,8 @@ namespace extras {
             virtual void close() const override;
             virtual void send(const Filename& filename) const override;
             virtual Filename write(const Filename& filename) const override;
+            virtual void send_line(const UploaderStatus& msg) const override;
+            virtual UploaderStatus read_line() const override;
         };
 
 

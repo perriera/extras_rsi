@@ -36,6 +36,14 @@ namespace extras {
         extras::rsi::send_file2(filename, this->_sockfd);
     }
 
+    void rsi::UploaderClient::send_line(const rsi::UploaderStatus& msg) const {
+        extras::rsi::send_line(msg, this->_sockfd);
+    }
+
+    rsi::UploaderStatus rsi::UploaderClient::read_line() const {
+        return extras::rsi::read_line(this->_sockfd);
+    }
+
     rsi::Filename rsi::UploaderClient::write(const Filename& filename) const {
         static std::string client_dir = "data/client/";
 

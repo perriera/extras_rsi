@@ -8,6 +8,7 @@
 #include <extras/filesystem/paths.hpp>
 #include <extras/strings.hpp>
 #include <rsi/exceptions.hpp>
+#include <extras/devices/ansi_colors.hpp>
 #include <ng_imploder/imploder/Imploder.hpp>
 #include <iostream>
 #include <fstream>

@@ -14,9 +14,9 @@ namespace extras {
     void rsi::VendorClient::transfer() const {
 
         std::string msg = "vendor started";
-        send_line(msg, this->_sockfd);
+        send_line(msg);
 
-        std::string line = read_line(this->_sockfd);
+        std::string line = read_line();
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(line) << std::endl;
 

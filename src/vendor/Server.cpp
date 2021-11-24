@@ -40,7 +40,7 @@ namespace extras {
 
     void rsi::VendorServer::transfer() const {
 
-        std::string line = read_line(this->_new_sock);
+        std::string line = read_line();
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(line) << std::endl;
 
@@ -55,7 +55,7 @@ namespace extras {
         std::cout << extras::pass(" lists directory") << std::endl;
 
         std::string msg = "vendor completed";
-        send_line(msg, this->_new_sock);
+        send_line(msg);
 
     }
 
