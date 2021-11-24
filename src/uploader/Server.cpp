@@ -51,20 +51,9 @@ namespace extras {
     }
 
     rsi::Filename rsi::UploaderServer::write(const Filename& filename) const {
-        static std::string server_dir = "data/server/";
-
-        if (fs::exists(server_dir)) {
-            fs::remove_all(server_dir);
+        if (!fs::exists(server_dir))
             SystemException::assertion("mkdir " + server_dir, __INFO__);
-        }
-        // if (internet.size() == 0)
-        //     throw "Nothing to save";
         auto target = extras::replace_all(filename, "data/", server_dir);
-        // ofstream out(target);
-        // rsi::ConvertFile().saveBin(out, internet);
-        // internet.clear();
-        // return target;
-
         extras::rsi::write_file(target, this->_new_sock);
         return target;
     }

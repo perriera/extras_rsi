@@ -57,7 +57,7 @@ SCENARIO("Mock SemaphoreInterface: lock/unlock", "[SemaphoreInterface]") {
     When(Method(semaphore, write))
         .AlwaysDo(
             [&internet](const rsi::Filename& filename) {
-                if (!fs::exists(client_dir)) {
+                if (!fs::exists(server_dir)) {
                     SystemException::assertion("mkdir " + server_dir, __INFO__);
                 }
                 if (internet.size() == 0)
