@@ -15,7 +15,7 @@ namespace extras {
          * @brief concrete class DownloaderClient
          *
          */
-        concrete class DownloaderClient extends UploaderClient with SemaphoreInterface {
+        concrete class DownloaderClient extends UploaderClient with virtual SemaphoreInterface {
             virtual Lock lock(const Lock& lock) const override;
             virtual Lock unlock(const Lock& lock) const override;
         public:
@@ -26,7 +26,7 @@ namespace extras {
          * @brief concrete class DownloaderServer
          *
          */
-        concrete class DownloaderServer extends UploaderServer with SemaphoreInterface {
+        concrete class DownloaderServer extends UploaderServer with virtual SemaphoreInterface {
             virtual Lock lock(const Lock& lock) const override;
             virtual Lock unlock(const Lock& lock) const override;
         public:

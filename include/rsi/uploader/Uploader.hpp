@@ -103,7 +103,7 @@ namespace extras {
          *   ss >> prg >> filename >> ip >> port;
          *
          */
-        concrete class UploaderClient extends Uploader with SemaphoreInterface {
+        concrete class UploaderClient extends Uploader with virtual SemaphoreInterface {
         protected:
             std::string client_dir = "data/client/";
 
@@ -126,7 +126,7 @@ namespace extras {
          *   ss >> prg >> filename >> ip >> port;
          *
          */
-        concrete class UploaderServer extends Uploader with SemaphoreInterface {
+        concrete class UploaderServer extends Uploader with virtual SemaphoreInterface {
 
         protected:
             std::string server_dir = "data/server/";
