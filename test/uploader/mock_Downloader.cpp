@@ -20,24 +20,27 @@ namespace fs = std::filesystem;
 
 static std::string client_dir = "data/client/";
 static std::string server_dir = "data/server/";
-static std::string original = ~extras::Paths("data/exparx.webflow.zip");
+static const std::string original = ~extras::Paths("data/exparx.webflow.zip");
 
 static void clean() {
     rsi::Parcel parcel(original);
     parcel.clean();
     rsi::ParcelImploder parcelImploder;
     parcelImploder.clean(original);
-    if (fs::exists(client_dir)) {
+    if (fs::exists(client_dir))
         fs::remove_all(client_dir);
-        SystemException::assertion("mkdir " + client_dir, __INFO__);
-    }
-    if (fs::exists(server_dir)) {
+    if (fs::exists(server_dir))
         fs::remove_all(server_dir);
-        SystemException::assertion("mkdir " + server_dir, __INFO__);
-    }
 }
 
-SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
+static void prepare() {
+    clean();
+    SystemException::assertion("mkdir " + client_dir, __INFO__);
+    SystemException::assertion("mkdir " + server_dir, __INFO__);
+    auto cp_cmd = "cp " + original + " " + server_dir;
+    SystemException::assertion(cp_cmd, __INFO__);
+}
+SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
 
     /**
      * @brief Mock<rsi::UploaderInterface> uploader;
@@ -57,12 +60,12 @@ SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
     When(Method(semaphore, write))
         .AlwaysDo(
             [&internet](const rsi::Filename& filename) {
-                if (!fs::exists(server_dir)) {
-                    SystemException::assertion("mkdir " + server_dir, __INFO__);
+                if (!fs::exists(client_dir)) {
+                    SystemException::assertion("mkdir " + client_dir, __INFO__);
                 }
                 if (internet.size() == 0)
                     throw "Nothing to save";
-                auto target = extras::replace_all(filename, "data/", server_dir);
+                auto target = extras::replace_all(filename, server_dir, client_dir);
                 ofstream out(target);
                 rsi::ConvertFile().saveBin(out, internet);
                 internet.clear();
@@ -82,11 +85,10 @@ SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
             });
 
     rsi::UploaderInterface& i_semaphore = semaphore.get();
-    rsi::Filename filename = "data/exparx.webflow.zip";
-    i_semaphore.send(filename);
-    REQUIRE(extras::contains(i_semaphore.write(filename), server_dir));
-    Verify(Method(semaphore, send));
-    Verify(Method(semaphore, write));
+    // i_semaphore.send(filename);
+    // REQUIRE(extras::contains(i_semaphore.write(filename), client_dir));
+    // Verify(Method(semaphore, send));
+    // Verify(Method(semaphore, write));
 
     /**
      * @brief Mock<rsi::SemaphoreInterface> client_lock;
@@ -95,23 +97,24 @@ SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
     Mock<rsi::SemaphoreInterface> client_lock;
     When(Method(client_lock, lock))
         .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& filename) {
-                rsi::FileNotFoundException::assertion(filename, __INFO__);
+            [&i_semaphore](const rsi::Lock& lock) {
                 rsi::ParcelImploder parcelImploder;
-                auto wrapped = parcelImploder.wrap(filename);
-                rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-                i_semaphore.send(wrapped);
-                parcelImploder.clean(filename);
-                return filename;
+                auto wrappedName = parcelImploder.wrapped(lock);
+                i_semaphore.write(wrappedName);
+                return lock;
             });
     When(Method(client_lock, unlock))
         .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& filename) {
-                auto status = i_semaphore.read_line();
-                std::cout << extras::pass(filename) << std::endl;
-                std::cout << extras::pass(status) << std::endl;
-                std::cout << extras::pass("send_file2 successful") << std::endl;
-                return filename;
+            [&i_semaphore](const rsi::Lock& lock) {
+                rsi::ParcelImploder parcelImploder;
+                parcelImploder.unWrap(lock);
+                parcelImploder.merge(lock);
+                parcelImploder.clean(lock);
+                std::cout << extras::pass(lock) << std::endl;
+                std::cout << extras::pass("write_file successful") << std::endl;
+                std::string msg = "downloader completed";
+                i_semaphore.send_line(msg);
+                return lock;
             });
 
     /**
@@ -121,24 +124,26 @@ SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
     Mock<rsi::SemaphoreInterface> server_lock;
     When(Method(server_lock, lock))
         .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& filename) {
-                static std::string server_dir = "data/server/";
+            [&i_semaphore](const rsi::Lock& lock) {
+                rsi::FileNotFoundException::assertion(lock, __INFO__);
                 rsi::ParcelImploder parcelImploder;
-                auto wrappedName = parcelImploder.wrapped(filename);
-                return i_semaphore.write(wrappedName);
+                auto wrapped = parcelImploder.wrap(lock);
+                rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+                i_semaphore.send(wrapped);
+                std::cout << extras::pass("send_file2 successful") << std::endl;
+                return lock;
             });
     When(Method(server_lock, unlock))
         .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& filename) {
-                auto fn = extras::replace_all(filename, "data/", server_dir);
+            [&i_semaphore](const rsi::Lock& lock) {
+                std::string line = i_semaphore.read_line();
                 rsi::ParcelImploder parcelImploder;
-                parcelImploder.unWrap(fn);
-                parcelImploder.merge(fn);
-                auto original = parcelImploder.clean(fn);
-                i_semaphore.send_line("uploader completed");
-                std::cout << extras::pass(fn) << std::endl;
-                std::cout << extras::pass("write_file successful") << std::endl;
-                return original;
+                parcelImploder.clean(lock);
+                auto rm_cmd = "rm " + lock;
+                SystemException::assertion(rm_cmd, __INFO__);
+                std::cout << extras::pass(lock) << std::endl;
+                std::cout << extras::pass(line) << std::endl;
+                return lock;
             });
 
     /**
@@ -148,10 +153,21 @@ SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
     rsi::SemaphoreInterface& i_client = client_lock.get();
     rsi::SemaphoreInterface& i_server = server_lock.get();
 
-    clean();
+    prepare();
 
-    i_server.lock(i_client.lock(filename));
-    i_client.unlock(i_server.unlock(filename));
+    auto client_filename = extras::replace_all(original, "data/", client_dir);
+    auto server_filename = extras::replace_all(original, "data/", server_dir);
+
+    REQUIRE(!fs::exists("data/client/exparx.webflow.zip"));
+    REQUIRE(fs::exists("data/server/exparx.webflow.zip"));
+
+    i_server.lock(server_filename);
+    i_client.lock(client_filename);
+    i_client.unlock(client_filename);
+    i_server.unlock(server_filename);
+
+    REQUIRE(fs::exists("data/client/exparx.webflow.zip"));
+    REQUIRE(!fs::exists("data/server/exparx.webflow.zip"));
 
     clean();
 
