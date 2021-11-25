@@ -7,6 +7,8 @@
 #include <extras/strings.hpp>
 #include <iostream>
 #include <filesystem>
+#include <extras/status/StatusLine.hpp>
+#include <rsi/parcel/Wrap.hpp>
 #include <extras/filesystem/system.hpp>
 
 using namespace std;
@@ -15,10 +17,7 @@ namespace fs = std::filesystem;
 namespace extras {
 
     /**
-     * @brief concrete class UploaderServer
-     *
-     *   build/rsi_client 127.0.0.1 8080 transfer send.txt
-     *   ss >> prg >> filename >> ip >> port;
+     * @brief UploaderServer::connect()
      *
      */
     void rsi::UploaderServer::connect() {
@@ -51,11 +50,44 @@ namespace extras {
     }
 
     rsi::Filename rsi::UploaderServer::write(const Filename& filename) const {
-        // if (!fs::exists(server_dir))
-        //     SystemException::assertion("mkdir " + server_dir, __INFO__);
-        // auto target = extras::replace_all(filename, "data/", server_dir);
         extras::rsi::write_file(filename, this->_new_sock);
         return filename;
+    }
+
+    /**
+     * @brief UploaderServer::lock()
+     *
+     * @param lock
+     * @return rsi::Lock
+     */
+    rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) const {
+        rsi::ParcelImploder parcelImploder;
+        auto wrappedName = parcelImploder.wrapped(lock);
+        return write(wrappedName);
+    }
+
+    /**
+     * @brief UploaderServer::unlock()
+     *
+     * @return rsi::Lock
+     */
+    rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock&) const {
+        rsi::ParcelImploder parcelImploder;
+        parcelImploder.unWrap(filename());
+        parcelImploder.merge(filename());
+        auto original = parcelImploder.clean(filename());
+        send_line("uploader completed");
+        std::cout << extras::pass(filename()) << std::endl;
+        std::cout << extras::pass("write_file successful") << std::endl;
+        return original;
+    }
+
+    /**
+     * @brief UploaderServer::transfer()
+     *
+     */
+    void rsi::UploaderServer::transfer() const {
+        unlock(lock(filename()));
     }
 
 }  // namespace extras

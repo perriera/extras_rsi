@@ -5,7 +5,10 @@
 #include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
 #include <extras/strings.hpp>
+#include <extras/status/StatusLine.hpp>
 #include <iostream>
+#include <rsi/parcel/Parcel.hpp>
+#include <rsi/parcel/Wrap.hpp>
 #include <filesystem>
 #include <extras/filesystem/system.hpp>
 
@@ -30,9 +33,6 @@ namespace extras {
     void rsi::UploaderClient::close() const { ::close(this->_sockfd); }
 
     void rsi::UploaderClient::send(const Filename& filename) const {
-        //         ifstream in(filename);
-        // rsi::BinFile binFile = rsi::ConvertFile().loadBin(in);
-        // internet = binFile;
         extras::rsi::send_file2(filename, this->_sockfd);
     }
 
@@ -45,11 +45,48 @@ namespace extras {
     }
 
     rsi::Filename rsi::UploaderClient::write(const Filename& filename) const {
-        // if (!fs::exists(client_dir))
-        //     SystemException::assertion("mkdir " + client_dir, __INFO__);
-        // auto target = extras::replace_all(filename, "data/", client_dir);
         extras::rsi::write_file(filename, this->_sockfd);
         return filename;
+    }
+
+    /**
+     * @brief UploaderClient::lock()
+     *
+     * @param lock
+     * @return rsi::Lock
+     */
+    rsi::Lock rsi::UploaderClient::lock(const rsi::Lock& lock) const {
+        rsi::FileNotFoundException::assertion(lock, __INFO__);
+        rsi::ParcelImploder parcelImploder;
+        auto wrapped = parcelImploder.wrap(lock);
+        rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+        send(wrapped);
+        return lock;
+    }
+
+    /**
+     * @brief UploaderClient::unlock()
+     *
+     * @param lock
+     * @return rsi::Lock
+     */
+    rsi::Lock rsi::UploaderClient::unlock(const rsi::Lock& lock) const {
+        auto status = read_line();
+        rsi::ParcelImploder parcelImploder;
+        parcelImploder.clean(lock);
+        RemoteDiedException::assertion(status, __INFO__);
+        std::cout << extras::pass(lock) << std::endl;
+        std::cout << extras::pass(status) << std::endl;
+        std::cout << extras::pass("send_file2 successful") << std::endl;
+        return lock;
+    }
+
+    /**
+     * @brief UploaderClient::transfer()
+     *
+     */
+    void rsi::UploaderClient::transfer() const {
+        unlock(lock(filename()));
     }
 
 }  // namespace extras
