@@ -96,7 +96,7 @@
                 "8080",
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runtime/client",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -107,7 +107,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project",
+            "preLaunchTask": "Build C++ project (for client)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -121,7 +121,7 @@
                 "8080",
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runtime/server",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -132,7 +132,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project",
+            "preLaunchTask": "Build C++ project (for server)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
