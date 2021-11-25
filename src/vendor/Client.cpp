@@ -15,10 +15,10 @@ namespace extras {
 
         std::string msg = "vendor started";
         send_line(msg);
-
-        std::string line = read_line();
+        std::string status = read_line();
+        RemoteDiedException::assertion(status, __INFO__);
         std::cout << extras::pass(filename()) << std::endl;
-        std::cout << extras::pass(line) << std::endl;
+        std::cout << extras::pass(status) << std::endl;
 
     }
 

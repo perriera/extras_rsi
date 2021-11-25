@@ -107,7 +107,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project (for client)",
+            "preLaunchTask": "Build C++ project (for uploader_client)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -132,7 +132,57 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project (for server)",
+            "preLaunchTask": "Build C++ project (for uploader_server)",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "vendor_client",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/vendor_client",
+            "args": [
+                "exparx.webflow.zip",
+                "127.0.0.1",
+                "8080",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/runtime/client",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build C++ project (for vendor_client)",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "vendor_server",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/vendor_server",
+            "args": [
+                "exparx.webflow.zip",
+                "127.0.0.1",
+                "8080",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/runtime/server",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build C++ project (for vendor_server)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {

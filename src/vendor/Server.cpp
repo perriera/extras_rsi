@@ -48,7 +48,7 @@ namespace extras {
         std::cout << extras::cyan << extras::pass(" processes file ") << std::endl;
         std::cout << extras::blue << std::endl;
         auto fn = extras::replace_all(filename(), "data/", "data/server/");
-        auto cmd = "ls -la data/server";
+        auto cmd = "ls -la";
         // std::this_thread::sleep_for(std::chrono::milliseconds(5000));
         SystemException::assertion(cmd, __INFO__);
         std::cout << extras::pass(filename()) << std::endl;
