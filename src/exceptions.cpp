@@ -36,5 +36,12 @@ namespace extras {
             if (!stream.good()) throw CantOpenStreamException(filename, ref);
         }
 
+        void RemoteDiedException::assertion(
+            const std::string& response,
+            const extras::WhereAmI& ref) {
+            if (response.size() == 0) throw RemoteDiedException("no response", ref);
+        }
+
+
     }
 }  // namespace extras

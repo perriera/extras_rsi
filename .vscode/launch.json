@@ -141,13 +141,12 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/downloader_client",
             "args": [
-                "data/cplusplusorg.freeformjs.imploded.zip",
-                "137.184.218.130",
+                "exparx.webflow.zip",
                 "127.0.0.1",
-                "9003",
+                "8080",
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runtime/client",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -158,7 +157,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project",
+            "preLaunchTask": "Build C++ project (for downloader_client)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -167,12 +166,12 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/downloader_server",
             "args": [
-                "send.txt",
-                "137.184.218.130",
-                "9000",
+                "exparx.webflow.zip",
+                "127.0.0.1",
+                "8080",
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runtime/server",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -183,7 +182,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project",
+            "preLaunchTask": "Build C++ project (for downloader_server)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
     ]
