@@ -49,7 +49,7 @@ namespace extras {
         auto wrappedName = parcelImploder.wrapped(lock);
         return write(wrappedName);
     }
-    rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock& lock) const {
+    rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock&) const {
         rsi::ParcelImploder parcelImploder;
         parcelImploder.unWrap(filename());
         parcelImploder.merge(filename());
