@@ -5,6 +5,7 @@
 #include <rsi/sockets/RequestType.hpp>
 #include <rsi/subsystem.hpp>
 #include <rsi/exceptions.hpp>
+#include <extras/filesystem/system.hpp>
 #include <iostream>
 
 using namespace std;
@@ -38,7 +39,9 @@ namespace extras {
                     auto cmd = item;
                     system(cmd.c_str());
                 }
-                // system("ls -la data/client");
+                std::string cmd = "ls -la " + filename();
+                extras::SystemException::assertion(cmd, __INFO__);
+                std::cout << std::endl;
             }
             catch (exception& ex) {
                 cout << ex.what() << endl;
