@@ -1,180 +1,102 @@
-#include <rsi/sockets/Semaphores.hpp>
 #include <rsi/uploader/Uploader.hpp>
+#include <extras/strings.hpp>
 #include <rsi/parcel/Wrap.hpp>
-#include <extras/devices/ansi_colors.hpp>
-#include <extras/status/StatusLine.hpp>
+#include <rsi/parcel/Parcel.hpp>
+#include <rsi/parcel/Wrap.hpp>
+#include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
-#include <extras/filesystem/system.hpp>
+#include <extras/strings.hpp>
+#include <rsi/exceptions.hpp>
+#include <ng_imploder/imploder/Imploder.hpp>
 #include <iostream>
-#include <sstream>
 #include <fstream>
 #include <filesystem>
+#include <extras/filesystem/system.hpp>
 
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
 
 using namespace extras;
-using namespace std;
 using namespace fakeit;
+using namespace std;
 namespace fs = std::filesystem;
 
-static std::string client_dir = "data/client/";
-static std::string server_dir = "data/server/";
-static const std::string original = ~extras::Paths("data/exparx.webflow.zip");
+SCENARIO("Mock UploaderInterface: basic2", "[UploaderInterface]") {
 
-static void clean() {
-    rsi::Parcel parcel(original);
-    parcel.clean();
-    rsi::ParcelImploder parcelImploder;
-    parcelImploder.clean(original);
-    if (fs::exists(client_dir))
-        fs::remove_all(client_dir);
-    if (fs::exists(server_dir))
-        fs::remove_all(server_dir);
-}
+    rsi::Parameter original = ~extras::Paths("data/exparx.webflow.zip");
+    rsi::Parameter _program = "uploader_client";
+    rsi::Parameter _filename = original;
+    rsi::Parameter _ip = "127.0.0.1";
+    rsi::Parameter _port = "8080";
 
-static void prepare() {
-    clean();
-    SystemException::assertion("mkdir " + client_dir, __INFO__);
-    SystemException::assertion("mkdir " + server_dir, __INFO__);
-    auto cp_cmd = "cp " + original + " " + client_dir;
-    SystemException::assertion(cp_cmd, __INFO__);
-}
+    Mock<rsi::UploaderInterface> mock;
+    const char* argv[] = { _program.c_str(), _ip.c_str(), _port.c_str(),
+                            _filename.c_str(),   "upload",  "vendor", "download" };
+    int argc = 7;
 
-SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
+    When(Method(mock, program)).Return(_program);
+    When(Method(mock, filename)).Return(_filename);
+    When(Method(mock, ip)).Return(_ip);
+    When(Method(mock, port)).Return(_port);
 
-    /**
-     * @brief Mock<rsi::UploaderInterface> uploader;
-     *
-     */
-    rsi::BinFile internet;
-    rsi::UploaderStatus status;
-
-    Mock<rsi::UploaderInterface> semaphore;
-    When(Method(semaphore, send))
+    When(Method(mock, parameters))
         .AlwaysDo(
-            [&internet](const rsi::Filename& filename) {
-                ifstream in(filename);
-                rsi::BinFile binFile = rsi::ConvertFile().loadBin(in);
-                internet = binFile;
-            });
-    When(Method(semaphore, write))
-        .AlwaysDo(
-            [&internet](const rsi::Filename& filename) {
-                if (!fs::exists(server_dir)) {
-                    SystemException::assertion("mkdir " + server_dir, __INFO__);
-                }
-                if (internet.size() == 0)
-                    throw "Nothing to save";
-                auto target = extras::replace_all(filename, client_dir, server_dir);
-                ofstream out(target);
-                rsi::ConvertFile().saveBin(out, internet);
-                internet.clear();
-                return target;
-            });
-    When(Method(semaphore, send_line))
-        .AlwaysDo(
-            [&status](const rsi::UploaderStatus& msg) {
-                status = msg;
-            });
-    When(Method(semaphore, read_line))
-        .AlwaysDo(
-            [&status]() {
-                auto msg = status;
-                status.clear();
-                return msg;
+            [](int, char const* []) {
+                return rsi::Parameters();
             });
 
-    // clean();
-    rsi::UploaderInterface& i_semaphore = semaphore.get();
-    // rsi::Filename filename = "data/exparx.webflow.zip";
-    // i_semaphore.send(filename);
-    // REQUIRE(extras::contains(i_semaphore.write(filename), client_dir));
-    // Verify(Method(semaphore, send));
-    // Verify(Method(semaphore, write));
-    // clean();
-
-    /**
-     * @brief Mock<rsi::SemaphoreInterface> client_lock;
-     *
-     */
-    Mock<rsi::SemaphoreInterface> client_lock;
-    When(Method(client_lock, lock))
+    When(Method(mock, connect))
         .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& lock) {
-                rsi::FileNotFoundException::assertion(lock, __INFO__);
-                rsi::ParcelImploder parcelImploder;
-                auto wrapped = parcelImploder.wrap(lock);
-                rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-                i_semaphore.send(wrapped);
-                return lock;
-            });
-    When(Method(client_lock, unlock))
-        .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& lock) {
-                auto status = i_semaphore.read_line();
-                rsi::ParcelImploder parcelImploder;
-                parcelImploder.clean(lock);
-                std::cout << extras::pass(lock) << std::endl;
-                std::cout << extras::pass(status) << std::endl;
-                std::cout << extras::pass("send_file2 successful") << std::endl;
-                return lock;
+            []() {
             });
 
-    /**
-     * @brief Mock<rsi::SemaphoreInterface> client_lock;
-     *
-     */
-    Mock<rsi::SemaphoreInterface> server_lock;
-    When(Method(server_lock, lock))
+    When(Method(mock, transfer))
         .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& lock) {
-                rsi::ParcelImploder parcelImploder;
-                auto wrappedName = parcelImploder.wrapped(lock);
-                return i_semaphore.write(wrappedName);
-            });
-    When(Method(server_lock, unlock))
-        .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& lock) {
-                rsi::ParcelImploder parcelImploder;
-                parcelImploder.unWrap(lock);
-                parcelImploder.merge(lock);
-                auto original = parcelImploder.clean(lock);
-                i_semaphore.send_line("uploader completed");
-                std::cout << extras::pass(lock) << std::endl;
-                std::cout << extras::pass("write_file successful") << std::endl;
-                return original;
+            []() {
             });
 
-    /**
-     * @brief Uploader Client/Server mock
-     *
-     */
-    rsi::SemaphoreInterface& i_client = client_lock.get();
-    rsi::SemaphoreInterface& i_server = server_lock.get();
+    When(Method(mock, transfer))
+        .AlwaysDo(
+            []() {
+            });
 
-    prepare();
+    When(Method(mock, send))
+        .AlwaysDo(
+            [](const rsi::Filename&) {
+            });
 
-    auto client_filename = extras::replace_all(original, "data/", client_dir);
-    auto server_filename = extras::replace_all(original, "data/", server_dir);
+    When(Method(mock, write))
+        .AlwaysDo(
+            [](const rsi::Filename&) {
+                return rsi::Filename();
+            });
 
-    REQUIRE(fs::exists("data/client/exparx.webflow.zip"));
-    REQUIRE(!fs::exists("data/server/exparx.webflow.zip"));
+    When(Method(mock, close))
+        .AlwaysDo(
+            []() {
+            });
 
-    i_client.lock(client_filename);
-    i_server.lock(server_filename);
-    i_server.unlock(server_filename);
-    i_client.unlock(client_filename);
+    rsi::UploaderInterface& i = mock.get();
 
-    REQUIRE(fs::exists("data/client/exparx.webflow.zip"));
-    REQUIRE(fs::exists("data/server/exparx.webflow.zip"));
-
-    clean();
-
-    Verify(Method(client_lock, lock));
-    Verify(Method(client_lock, unlock));
-    Verify(Method(server_lock, lock));
-    Verify(Method(server_lock, unlock));
-
-
+    REQUIRE(fs::exists(original));
+    REQUIRE(i.parameters(argc, argv) == rsi::Parameters());
+    REQUIRE(i.program() == _program);
+    REQUIRE(i.filename() == _filename);
+    REQUIRE(i.ip() == _ip);
+    REQUIRE(i.port() == _port);
+    i.connect();
+    i.transfer();
+    i.send("filename.txt");
+    i.write("filename.txt");
+    i.close();
+    REQUIRE(fs::exists(original));
+    Verify(Method(mock, parameters));
+    Verify(Method(mock, program));
+    Verify(Method(mock, filename));
+    Verify(Method(mock, ip));
+    Verify(Method(mock, connect));
+    Verify(Method(mock, transfer));
+    Verify(Method(mock, send));
+    Verify(Method(mock, write));
+    Verify(Method(mock, close));
 }
