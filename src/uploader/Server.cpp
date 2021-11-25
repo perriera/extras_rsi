@@ -51,11 +51,11 @@ namespace extras {
     }
 
     rsi::Filename rsi::UploaderServer::write(const Filename& filename) const {
-        if (!fs::exists(server_dir))
-            SystemException::assertion("mkdir " + server_dir, __INFO__);
-        auto target = extras::replace_all(filename, "data/", server_dir);
-        extras::rsi::write_file(target, this->_new_sock);
-        return target;
+        // if (!fs::exists(server_dir))
+        //     SystemException::assertion("mkdir " + server_dir, __INFO__);
+        // auto target = extras::replace_all(filename, "data/", server_dir);
+        extras::rsi::write_file(filename, this->_new_sock);
+        return filename;
     }
 
 }  // namespace extras

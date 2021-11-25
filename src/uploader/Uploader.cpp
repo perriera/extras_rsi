@@ -68,11 +68,11 @@ namespace extras {
     }
     rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock& lock) const {
         rsi::ParcelImploder parcelImploder;
-        parcelImploder.unWrap(lock);
-        parcelImploder.merge(lock);
-        auto original = parcelImploder.clean(lock);
+        parcelImploder.unWrap(filename());
+        parcelImploder.merge(filename());
+        auto original = parcelImploder.clean(filename());
         send_line("uploader completed");
-        std::cout << extras::pass(lock) << std::endl;
+        std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
         return original;
         // auto fn = extras::replace_all(filename(), "data/", server_dir);

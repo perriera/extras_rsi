@@ -26,19 +26,6 @@
         ]
       },
       {
-        "label": "Build C++ project (for server)",
-        "type": "shell",
-        "group": {
-          "kind": "build",
-          "isDefault": true
-        },
-        "command": "bash",
-        "args": [
-          "-c",
-          "install -d build; cd build; cmake ..; make; cd ..; cp data/exparx.webflow.zip runtime/server",
-        ]
-      },
-      {
         "label": "Build C++ project (for client)",
         "type": "shell",
         "group": {
@@ -48,7 +35,20 @@
         "command": "bash",
         "args": [
           "-c",
-          "install -d build; cd build; cmake ..; make; cd ..; cp data/exparx.webflow.zip runtime/client",
+          "install -d build; cd build; cmake ..; make; cd ..; rm -rf runtime/client; mkdir -p runtime/client; cp data/exparx.webflow.zip runtime/client",
+        ]
+      },
+      {
+        "label": "Build C++ project (for server)",
+        "type": "shell",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "command": "bash",
+        "args": [
+          "-c",
+          "install -d build; cd build; cmake ..; make; cd ..; rm -rf runtime/server; mkdir -p runtime/server",
         ]
       }
     ]

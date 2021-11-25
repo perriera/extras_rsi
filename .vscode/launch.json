@@ -91,7 +91,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/uploader_client",
             "args": [
-                "data/exparx.webflow.zip",
+                "exparx.webflow.zip",
                 "127.0.0.1",
                 "8080",
             ],
@@ -116,7 +116,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/uploader_server",
             "args": [
-                "data/exparx.webflow.zip",
+                "exparx.webflow.zip",
                 "127.0.0.1",
                 "8080",
             ],
