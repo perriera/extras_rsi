@@ -40,7 +40,7 @@ namespace extras {
 
     void rsi::VendorServer::transfer() const {
 
-        std::string line = read_line(this->_new_sock);
+        std::string line = read_line();
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(line) << std::endl;
 
@@ -48,14 +48,14 @@ namespace extras {
         std::cout << extras::cyan << extras::pass(" processes file ") << std::endl;
         std::cout << extras::blue << std::endl;
         auto fn = extras::replace_all(filename(), "data/", "data/server/");
-        auto cmd = "ls -la data/server";
+        auto cmd = "ls -la " + filename();
         // std::this_thread::sleep_for(std::chrono::milliseconds(5000));
         SystemException::assertion(cmd, __INFO__);
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(" lists directory") << std::endl;
 
         std::string msg = "vendor completed";
-        send_line(msg, this->_new_sock);
+        send_line(msg);
 
     }
 

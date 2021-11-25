@@ -36,23 +36,20 @@ namespace extras {
         extras::rsi::send_file2(filename, this->_sockfd);
     }
 
+    void rsi::UploaderClient::send_line(const rsi::UploaderStatus& msg) const {
+        extras::rsi::send_line(msg, this->_sockfd);
+    }
+
+    rsi::UploaderStatus rsi::UploaderClient::read_line() const {
+        return extras::rsi::read_line(this->_sockfd);
+    }
+
     rsi::Filename rsi::UploaderClient::write(const Filename& filename) const {
-        static std::string client_dir = "data/client/";
-
-        if (fs::exists(client_dir)) {
-            fs::remove_all(client_dir);
-            SystemException::assertion("mkdir " + client_dir, __INFO__);
-        }
-        // if (internet.size() == 0)
-        //     throw "Nothing to save";
-        auto target = extras::replace_all(filename, "data/", client_dir);
-        // ofstream out(target);
-        // rsi::ConvertFile().saveBin(out, internet);
-        // internet.clear();
-        // return target;
-
-        extras::rsi::write_file(target, this->_sockfd);
-        return target;
+        // if (!fs::exists(client_dir))
+        //     SystemException::assertion("mkdir " + client_dir, __INFO__);
+        // auto target = extras::replace_all(filename, "data/", client_dir);
+        extras::rsi::write_file(filename, this->_sockfd);
+        return filename;
     }
 
 }  // namespace extras

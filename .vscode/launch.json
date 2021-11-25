@@ -15,7 +15,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/run-unittests-rsi",
             "args": [
-                "[StatusBarInterface]"
+                "[SemaphoreInterface]"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -38,7 +38,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/socketpool_client",
             "args": [
-                "137.184.218.130",
+                "127.0.0.1",
                 "8080",
                 "data/exparx.webflow.zip",
                 "upload",
@@ -46,7 +46,7 @@
                 "download",
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runtime/client",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -57,7 +57,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project",
+            "preLaunchTask": "Build C++ project (for uploader_client)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -71,7 +71,7 @@
                 "send.txt",
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runtime/server",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -82,7 +82,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project",
+            "preLaunchTask": "Build C++ project (for uploader_server)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -91,12 +91,12 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/uploader_client",
             "args": [
-                "data/exparx.webflow.zip",
+                "exparx.webflow.zip",
                 "127.0.0.1",
                 "8080",
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runtime/client",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -107,7 +107,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project",
+            "preLaunchTask": "Build C++ project (for uploader_client)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -116,12 +116,12 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/uploader_server",
             "args": [
-                "data/exparx.webflow.zip",
+                "exparx.webflow.zip",
                 "127.0.0.1",
                 "8080",
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runtime/server",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -132,7 +132,57 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project",
+            "preLaunchTask": "Build C++ project (for uploader_server)",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "vendor_client",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/vendor_client",
+            "args": [
+                "exparx.webflow.zip",
+                "127.0.0.1",
+                "8080",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/runtime/client",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build C++ project (for vendor_client)",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "vendor_server",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/vendor_server",
+            "args": [
+                "exparx.webflow.zip",
+                "127.0.0.1",
+                "8080",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/runtime/server",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build C++ project (for vendor_server)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -141,13 +191,12 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/downloader_client",
             "args": [
-                "data/cplusplusorg.freeformjs.imploded.zip",
-                "137.184.218.130",
+                "exparx.webflow.zip",
                 "127.0.0.1",
-                "9003",
+                "8080",
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runtime/client",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -158,7 +207,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project",
+            "preLaunchTask": "Build C++ project (for downloader_client)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
@@ -167,12 +216,12 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/downloader_server",
             "args": [
-                "send.txt",
-                "137.184.218.130",
-                "9000",
+                "exparx.webflow.zip",
+                "127.0.0.1",
+                "8080",
             ],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/runtime/server",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -183,7 +232,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Build C++ project",
+            "preLaunchTask": "Build C++ project (for downloader_server)",
             "miDebuggerPath": "/usr/bin/gdb"
         },
     ]

@@ -19,7 +19,7 @@ int extras::rsi::configure_serversocket(const char* ip, int port,
     std::cout << extras::pass("Server socket created successfully") << std::endl;
 
     if (timeoutmode) {
-        // Set a 7 second timeout
+        // Set a timeout ...
         struct timeval timeout;
         timeout.tv_sec = 60;  // after 60 seconds connect() will timeout
         timeout.tv_usec = 0;
@@ -27,7 +27,7 @@ int extras::rsi::configure_serversocket(const char* ip, int port,
         std::cout << extras::pass("Server socket times out in 60 seconds") << std::endl;
     }
 
-    // Forcefully attaching socket to the port 8080
+    // Forcefully attaching socket to the port 
     auto test = setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt,
         sizeof(opt));
     SocketException::assertionNEZero(test, "Error in setsockopt", __INFO__);

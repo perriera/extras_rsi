@@ -106,6 +106,17 @@ namespace extras {
             static void assertion(const std::ostream& stream, const std::string& filename, const extras::WhereAmI& ref);
         };
 
+        /**
+         * @brief CantOpenFileException
+         *
+         */
+        concrete class RemoteDiedException extends RSIException {
+        public:
+            RemoteDiedException(std::string msg, const extras::WhereAmI& whereAmI)
+                : RSIException(msg.c_str(), whereAmI) {}
+            static void assertion(const std::string& response, const extras::WhereAmI& ref);
+        };
+
     }  // namespace rsi
 
 }  // namespace extras

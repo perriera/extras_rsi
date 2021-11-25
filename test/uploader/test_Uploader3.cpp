@@ -4,9 +4,11 @@
 // #include <rsi/parcel/Parcel.hpp>
 // #include <rsi/parcel/Wrap.hpp>
 // #include <rsi/sockets/Types.hpp>
+// #include <rsi/sockets/Semaphores.hpp>
 // #include <extras/filesystem/paths.hpp>
 // #include <extras/strings.hpp>
 // #include <rsi/exceptions.hpp>
+// #include <extras/devices/ansi_colors.hpp>
 // #include <ng_imploder/imploder/Imploder.hpp>
 // #include <iostream>
 // #include <fstream>
@@ -27,21 +29,34 @@
 // static std::string original = ~extras::Paths("data/exparx.webflow.zip");
 // static rsi::BinFile internet;
 
-// class TestUploaderClient extends rsi::UploaderClient {
+// class TestUploaderClient extends rsi::UploaderClient with rsi::SemaphoreInterface {
+//     std::string wrapped;
 // public:
 //     virtual void connect() {};
-//     virtual void transfer() const {
-//         auto fn = filename();
+
+//     virtual  rsi::Lock lock(const rsi::Lock& lock) const override {
+//         auto fn = lock;
 //         rsi::FileNotFoundException::assertion(fn, __INFO__);
-//         // send(filename());
 //         rsi::ParcelImploder parcelImploder;
 //         auto wrapped = parcelImploder.wrap(fn);
 //         rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-//         // // wrapped_parcel = wrapped;
 //         send(wrapped);
+//     };
+
+//     virtual  rsi::Lock unlock(const rsi::Lock& lock) const  override {
+//         // lock = read_line(this->_sockfd);
+//         auto status = "done";
+//         std::cout << extras::pass(filename()) << std::endl;
+//         std::cout << extras::pass(status) << std::endl;
 //         // std::cout << extras::pass(wrapped) << std::endl;
 //         std::cout << extras::pass("send_file2 successful") << std::endl;
+
 //     };
+
+//     virtual void transfer() const {
+//         unlock(lock(filename()));
+//     };
+
 //     virtual void close() const {};
 //     virtual void send(const rsi::Filename& filename) const {
 //         ifstream in(filename);
@@ -62,24 +77,31 @@
 //     };
 // };
 
-// class TestUploaderServer extends rsi::UploaderServer {
+// class TestUploaderServer extends rsi::UploaderServer with rsi::SemaphoreInterface {
 // public:
 //     virtual void connect() {};
-//     virtual void transfer() const {
-//         auto fn = filename();
-//         // fn = write(filename());
-//         // rsi::FileNotFoundException::assertion(fn, __INFO__);
+
+//     virtual rsi::Lock lock(const rsi::Lock& lock) const  override {
 //         rsi::ParcelImploder parcelImploder;
-//         auto wrappedName = parcelImploder.wrapped(fn);
-//         wrappedName = write(wrappedName);
-//         fn = extras::replace_all(fn, "data/", server_dir);
-//         rsi::FileNotFoundException::assertion(wrappedName, __INFO__);
-//         parcelImploder.unWrap(fn);
-//         parcelImploder.merge(fn);
-//         auto original = parcelImploder.clean(fn);
-//         std::cout << extras::pass(fn) << std::endl;
+//         auto wrappedName = parcelImploder.wrapped(lock);
+//         return write(parcelImploder.wrapped(lock));
+//     };
+
+//     virtual rsi::Lock unlock(const rsi::Lock& lock) const override {
+//         rsi::FileNotFoundException::assertion(lock, __INFO__);
+//         rsi::ParcelImploder parcelImploder;
+//         parcelImploder.unWrap(lock);
+//         parcelImploder.merge(lock);
+//         auto original = parcelImploder.clean(lock);
+//         // send_line("server completed");
+//         std::cout << extras::pass(lock) << std::endl;
 //         std::cout << extras::pass("write_file successful") << std::endl;
 //     };
+
+//     virtual void transfer() const {
+//         unlock(lock(filename()));
+//     };
+
 //     virtual void close() const {};
 //     virtual void send(const rsi::Filename& filename) const {
 //         ifstream in(filename);
@@ -96,7 +118,7 @@
 //         ofstream out(target);
 //         rsi::ConvertFile().saveBin(out, internet);
 //         internet.clear();
-//         return target;
+//         return filename;
 //     };
 // };
 
@@ -127,48 +149,48 @@
 
 //     TestUploaderClient client;
 //     TestUploaderServer server;
-//     rsi::UploaderInterface& i_client = client;
-//     rsi::UploaderInterface& i_server = server;
+//     // rsi::UploaderInterface& i_client = client;
+//     // rsi::UploaderInterface& i_server = server;
 
 
-//     REQUIRE(fs::exists(_filename));
-//     clean();
-//     {
-//         auto target = extras::replace_all(_filename, "data/", client_dir);
-//         REQUIRE(!fs::exists(target));
-//         i_client.send(_filename);
-//         i_client.write(_filename);
-//         REQUIRE(fs::exists(target));
-//     }
-//     clean();
-//     {
-//         auto target = extras::replace_all(_filename, "data/", server_dir);
-//         REQUIRE(!fs::exists(target));
-//         i_server.send(_filename);
-//         i_server.write(_filename);
-//         REQUIRE(fs::exists(target));
-//     }
+//     // REQUIRE(fs::exists(_filename));
+//     // clean();
+//     // {
+//     //     auto target = extras::replace_all(_filename, "data/", client_dir);
+//     //     REQUIRE(!fs::exists(target));
+//     //     i_client.send(_filename);
+//     //     i_client.write(_filename);
+//     //     REQUIRE(fs::exists(target));
+//     // }
+//     // clean();
+//     // {
+//     //     auto target = extras::replace_all(_filename, "data/", server_dir);
+//     //     REQUIRE(!fs::exists(target));
+//     //     i_server.send(_filename);
+//     //     i_server.write(_filename);
+//     //     REQUIRE(fs::exists(target));
+//     // }
 
-//     clean();
+//     // clean();
 
-//     i_client.parameters(argc, argv1);
-//     i_server.parameters(argc, argv2);
+//     // i_client.parameters(argc, argv1);
+//     // i_server.parameters(argc, argv2);
 
-//     i_client.connect();
-//     i_server.connect();
+//     // i_client.connect();
+//     // i_server.connect();
 
-//     {
-//         auto target = extras::replace_all(_filename, "data/", server_dir);
-//         REQUIRE(!fs::exists(target));
-//         i_client.transfer();
-//         REQUIRE(!fs::exists(target));
-//         i_server.transfer();
-//         REQUIRE(fs::exists(target));
-//     }
+//     // {
+//     //     auto target = extras::replace_all(_filename, "data/", server_dir);
+//     //     REQUIRE(!fs::exists(target));
+//     //     i_client.transfer();
+//     //     REQUIRE(!fs::exists(target));
+//     //     i_server.transfer();
+//     //     REQUIRE(fs::exists(target));
+//     // }
 
-//     i_client.close();
-//     i_server.close();
+//     // i_client.close();
+//     // i_server.close();
 
-//     REQUIRE(fs::exists(original));
+//     // REQUIRE(fs::exists(original));
 
 // }
