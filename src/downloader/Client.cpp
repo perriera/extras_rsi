@@ -12,25 +12,7 @@
  * Software  is  furnished to  do  so,  subject  to  the  following
  * conditions:
  *
- * The above copyright notice and  this permission  notice shall be
- * included in all copies or  substantial portions of the Software.
- *
- * THE SOFTWARE IS  PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESSED  OR   IMPLIED,  INCLUDING   BUT  NOT  LIMITED  TO  THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A  PARTICULAR PURPOSE
- * AND NON-INFRINGEMENT.  IN  NO  EVENT  SHALL EXPARX  INCORPORATED
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER  IN
- * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING  FROM, OUT  OF
- * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  OTHER DEALINGS
- * IN THE SOFTWARE.
- *
- * Except  as  contained  in this  notice, the  name of  the EXPARX
- * INCORPORATED shall not  be used in  advertising or  otherwise to
- * promote the sale, use or other dealings in this Software without
- * prior written authorization from EXPARX INCORPORATED.
- *
- * exparx.com and www.exparx.com  are domain names  registered with
- * EXPARX INCORPORATED, (other GPL-themed licenses are included).
+ * (See LICENSE.md for complete details)
  *
  */
 
@@ -62,7 +44,7 @@ namespace extras {
     rsi::Lock rsi::DownloaderClient::lock(const rsi::Lock& lock) const {
         rsi::ParcelImploder parcelImploder;
         auto wrappedName = parcelImploder.wrapped(lock);
-        write(wrappedName);
+        write_file_block(wrappedName);
         return lock;
     }
 
@@ -80,7 +62,7 @@ namespace extras {
         std::cout << extras::pass(lock) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
         std::string msg = "downloader completed";
-        send_line(msg);
+        send_line_block(msg);
         return lock;
     }
 

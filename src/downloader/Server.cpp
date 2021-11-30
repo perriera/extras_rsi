@@ -12,25 +12,7 @@
  * Software  is  furnished to  do  so,  subject  to  the  following
  * conditions:
  *
- * The above copyright notice and  this permission  notice shall be
- * included in all copies or  substantial portions of the Software.
- *
- * THE SOFTWARE IS  PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESSED  OR   IMPLIED,  INCLUDING   BUT  NOT  LIMITED  TO  THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A  PARTICULAR PURPOSE
- * AND NON-INFRINGEMENT.  IN  NO  EVENT  SHALL EXPARX  INCORPORATED
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER  IN
- * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING  FROM, OUT  OF
- * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  OTHER DEALINGS
- * IN THE SOFTWARE.
- *
- * Except  as  contained  in this  notice, the  name of  the EXPARX
- * INCORPORATED shall not  be used in  advertising or  otherwise to
- * promote the sale, use or other dealings in this Software without
- * prior written authorization from EXPARX INCORPORATED.
- *
- * exparx.com and www.exparx.com  are domain names  registered with
- * EXPARX INCORPORATED, (other GPL-themed licenses are included).
+ * (See LICENSE.md for complete details)
  *
  */
 
@@ -65,7 +47,7 @@ namespace extras {
         rsi::ParcelImploder parcelImploder;
         auto wrapped = parcelImploder.wrap(lock);
         rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-        send(wrapped);
+        send_file_block(wrapped);
         std::cout << extras::pass("send_file2 successful") << std::endl;
         return lock;
     }
@@ -78,7 +60,7 @@ namespace extras {
      */
 
     rsi::Lock rsi::DownloaderServer::unlock(const rsi::Lock& lock) const {
-        std::string status = read_line();
+        std::string status = read_line_block();
         rsi::ParcelImploder parcelImploder;
         parcelImploder.clean(lock);
         auto rm_cmd = "rm " + lock;
