@@ -4,8 +4,8 @@
 > The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), </br>
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v3.3.0 -m "LICENSE.md"</br>
-> > git push origin v3.3.0
+> > git tag -a v3.4.0 -m "LICENSE.md"</br>
+> > git push origin v3.4.0
 > 
 
 IMPORTANT: 
@@ -28,6 +28,14 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 3.4.0 (2021-11-30)
+## Added  
+- HOWTO.md
+## Changed
+- Using ng_monitor 0.8.0 instead
+## Merged
+- PE-35B
 
 #### 3.3.0 (2021-11-29)
 ## Added  
@@ -219,7 +227,8 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v3.3.0...HEAD
+[Unreleased]: https://github.com/perriera/rsi/compare/v3.4.0...HEAD
+[3.4.0]: https://github.com/perriera/rsi/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/perriera/rsi/compare/v3.2.1...v3.3.0
 [3.2.1]: https://github.com/perriera/rsi/compare/v3.1.0...v3.2.1
 [3.1.0]: https://github.com/perriera/rsi/compare/v3.0.1...v3.1.0
