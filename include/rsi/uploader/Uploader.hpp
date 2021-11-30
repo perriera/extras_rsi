@@ -77,19 +77,35 @@ namespace extras {
             virtual void transfer() const pure;
 
             /**
-             * @brief send()
-             * @note this is where the magic happens, depending what type of class you
-             * are this method performs the data transfer, (or initiates it)
+             * @brief send_file_block()
+             *
+             * Send a file across the socket but block until it has been received.
+             *
              */
             virtual void send_file_block(const Filename& filename) const pure;
+
+            /**
+             * @brief send_line_block()
+             *
+             * Send a line of text across the socket but block until it has been received.
+             *
+             */
             virtual void send_line_block(const UploaderStatus& msg) const pure;
 
             /**
-             * @brief write()
-             * @note this is where the magic happens, depending what type of class you
-             * are this method performs the data transfer, (or initiates it)
+             * @brief write_file_block()
+             *
+             * Write a file to the local hard disk and block until it is completely recieved.
+             *
              */
             virtual Filename write_file_block(const Filename& filename) const pure;
+
+            /**
+             * @brief read_line_block()
+             *
+             * Read a line of text from the socket and block until it is completely recieved.
+             *
+             */
             virtual UploaderStatus read_line_block() const pure;
 
             /**
