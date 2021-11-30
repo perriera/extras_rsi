@@ -32,8 +32,8 @@ namespace extras {
     void rsi::VendorClient::transfer() const {
 
         std::string msg = "vendor started";
-        send_line(msg);
-        std::string status = read_line();
+        send_line_block(msg);
+        std::string status = read_line_block();
         RemoteDiedException::assertion(status, __INFO__);
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(status) << std::endl;

@@ -58,7 +58,7 @@ namespace extras {
 
     void rsi::VendorServer::transfer() const {
 
-        std::string line = read_line();
+        std::string line = read_line_block();
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(line) << std::endl;
 
@@ -73,7 +73,7 @@ namespace extras {
         std::cout << extras::pass(" lists directory") << std::endl;
 
         std::string msg = "vendor completed";
-        send_line(msg);
+        send_line_block(msg);
 
     }
 

@@ -47,7 +47,7 @@ namespace extras {
         rsi::ParcelImploder parcelImploder;
         auto wrapped = parcelImploder.wrap(lock);
         rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-        send(wrapped);
+        send_file_block(wrapped);
         std::cout << extras::pass("send_file2 successful") << std::endl;
         return lock;
     }
@@ -60,7 +60,7 @@ namespace extras {
      */
 
     rsi::Lock rsi::DownloaderServer::unlock(const rsi::Lock& lock) const {
-        std::string status = read_line();
+        std::string status = read_line_block();
         rsi::ParcelImploder parcelImploder;
         parcelImploder.clean(lock);
         auto rm_cmd = "rm " + lock;

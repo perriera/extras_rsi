@@ -44,7 +44,7 @@ namespace extras {
     rsi::Lock rsi::DownloaderClient::lock(const rsi::Lock& lock) const {
         rsi::ParcelImploder parcelImploder;
         auto wrappedName = parcelImploder.wrapped(lock);
-        write(wrappedName);
+        write_file_block(wrappedName);
         return lock;
     }
 
@@ -62,7 +62,7 @@ namespace extras {
         std::cout << extras::pass(lock) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
         std::string msg = "downloader completed";
-        send_line(msg);
+        send_line_block(msg);
         return lock;
     }
 

@@ -78,12 +78,12 @@ SCENARIO("Mock UploaderInterface: basic2", "[UploaderInterface]") {
             []() {
             });
 
-    When(Method(mock, send))
+    When(Method(mock, send_file_block))
         .AlwaysDo(
             [](const rsi::Filename&) {
             });
 
-    When(Method(mock, write))
+    When(Method(mock, write_file_block))
         .AlwaysDo(
             [](const rsi::Filename&) {
                 return rsi::Filename();
@@ -104,8 +104,8 @@ SCENARIO("Mock UploaderInterface: basic2", "[UploaderInterface]") {
     REQUIRE(i.port() == _port);
     i.connect();
     i.transfer();
-    i.send("filename.txt");
-    i.write("filename.txt");
+    i.send_file_block("filename.txt");
+    i.write_file_block("filename.txt");
     i.close();
     REQUIRE(fs::exists(original));
     Verify(Method(mock, parameters));
@@ -114,7 +114,7 @@ SCENARIO("Mock UploaderInterface: basic2", "[UploaderInterface]") {
     Verify(Method(mock, ip));
     Verify(Method(mock, connect));
     Verify(Method(mock, transfer));
-    Verify(Method(mock, send));
-    Verify(Method(mock, write));
+    Verify(Method(mock, send_file_block));
+    Verify(Method(mock, write_file_block));
     Verify(Method(mock, close));
 }

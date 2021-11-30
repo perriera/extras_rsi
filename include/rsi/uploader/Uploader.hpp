@@ -81,16 +81,16 @@ namespace extras {
              * @note this is where the magic happens, depending what type of class you
              * are this method performs the data transfer, (or initiates it)
              */
-            virtual void send(const Filename& filename) const pure;
-            virtual void send_line(const UploaderStatus& msg) const pure;
+            virtual void send_file_block(const Filename& filename) const pure;
+            virtual void send_line_block(const UploaderStatus& msg) const pure;
 
             /**
              * @brief write()
              * @note this is where the magic happens, depending what type of class you
              * are this method performs the data transfer, (or initiates it)
              */
-            virtual Filename write(const Filename& filename) const pure;
-            virtual UploaderStatus read_line() const pure;
+            virtual Filename write_file_block(const Filename& filename) const pure;
+            virtual UploaderStatus read_line_block() const pure;
 
             /**
              * @brief transfer()
@@ -142,10 +142,10 @@ namespace extras {
             virtual void connect() override;
             virtual void transfer() const override;
             virtual void close() const override;
-            virtual void send(const Filename& filename) const override;
-            virtual Filename write(const Filename& filename) const override;
-            virtual void send_line(const UploaderStatus& msg) const override;
-            virtual UploaderStatus read_line() const override;
+            virtual void send_file_block(const Filename& filename) const override;
+            virtual Filename write_file_block(const Filename& filename) const override;
+            virtual void send_line_block(const UploaderStatus& msg) const override;
+            virtual UploaderStatus read_line_block() const override;
         };
 
         /**
@@ -168,10 +168,10 @@ namespace extras {
             virtual void connect() override;
             virtual void transfer() const override;
             virtual void close() const override;
-            virtual void send(const Filename& filename) const override;
-            virtual Filename write(const Filename& filename) const override;
-            virtual void send_line(const UploaderStatus& msg) const override;
-            virtual UploaderStatus read_line() const override;
+            virtual void send_file_block(const Filename& filename) const override;
+            virtual Filename write_file_block(const Filename& filename) const override;
+            virtual void send_line_block(const UploaderStatus& msg) const override;
+            virtual UploaderStatus read_line_block() const override;
         };
 
 

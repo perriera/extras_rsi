@@ -55,19 +55,19 @@ namespace extras {
         ::close(this->_sockfd);
     }
 
-    void rsi::UploaderServer::send(const Filename& filename) const {
+    void rsi::UploaderServer::send_file_block(const Filename& filename) const {
         extras::rsi::send_file2(filename, this->_new_sock);
     }
 
-    void rsi::UploaderServer::send_line(const rsi::UploaderStatus& msg) const {
+    void rsi::UploaderServer::send_line_block(const rsi::UploaderStatus& msg) const {
         extras::rsi::send_line(msg, this->_new_sock);
     }
 
-    rsi::UploaderStatus rsi::UploaderServer::read_line() const {
+    rsi::UploaderStatus rsi::UploaderServer::read_line_block() const {
         return extras::rsi::read_line(this->_new_sock);
     }
 
-    rsi::Filename rsi::UploaderServer::write(const Filename& filename) const {
+    rsi::Filename rsi::UploaderServer::write_file_block(const Filename& filename) const {
         extras::rsi::write_file(filename, this->_new_sock);
         return filename;
     }
@@ -81,7 +81,7 @@ namespace extras {
     rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) const {
         rsi::ParcelImploder parcelImploder;
         auto wrappedName = parcelImploder.wrapped(lock);
-        return write(wrappedName);
+        return write_file_block(wrappedName);
     }
 
     /**
@@ -94,7 +94,7 @@ namespace extras {
         parcelImploder.unWrap(filename());
         parcelImploder.merge(filename());
         auto original = parcelImploder.clean(filename());
-        send_line("uploader completed");
+        send_line_block("uploader completed");
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
         return original;
