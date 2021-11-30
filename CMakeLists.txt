@@ -97,11 +97,11 @@ print(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 print(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 
 #
-# NOTE: Include 3rd party libraries, Perry and I maintain an open-source extras C++ library, which
+# NOTE: " Include 3rd party libraries, Perry and I maintain an open-source extras C++ library, which
 # is used extensively in rsi, it comes bundled with spdlog, cpr, and nlohmann json. extras has
 # project options that allow us to control how other libraries it includes are built. for example we
 # can tell extras to build spdlog as a static library (for faster compile times) by settings
-# MAKE_SPDLOG_SHARED OFF
+# MAKE_SPDLOG_SHARED OFF " -- Matt Williams, October 2021 
 #
 CPMAddPackage(
   NAME ng_imploder
