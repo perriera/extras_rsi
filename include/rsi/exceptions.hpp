@@ -5,8 +5,7 @@
  * @version 1.2.1
  * @date 2021-07-25
  *
- * @copyright Copyright (c) 2021 Perry Anderson,
- * All Rights Reserved, MIT License.
+ * @copyright (C) November 22, 2021 EXPARX INCORPORATED
  *
  */
 

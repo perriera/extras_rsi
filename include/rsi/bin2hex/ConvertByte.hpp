@@ -1,11 +1,11 @@
 /**
  * @file ConvertByte.hpp
- * @author your name (you@domain.com)
- * @brief
+ * @author Perry Anderson (perry@exparx.com)
+ * @brief Handles the conversion of Byte to Hex format
  * @version 0.1
  * @date 2021-11-30
  *
- * @copyright Copyright (c) 2021
+ * @copyright (C) November 22, 2021 EXPARX INCORPORATED
  *
  */
 
