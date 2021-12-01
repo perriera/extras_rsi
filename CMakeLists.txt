@@ -106,7 +106,7 @@ print(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 CPMAddPackage(
   NAME extras_arc
   GITHUB_REPOSITORY perriera/extras_arc
-  VERSION 1.0.0
+  VERSION 1.0.2
   OPTIONS "MAKE_SPDLOG_SHARED OFF"
   OPTIONS "MAKE_EXTRAS_LIBRARY_ONLY ON"
   OPTIONS "MAKE_EXTRAS_ARC_LIBRARY_ONLY ON"
@@ -139,13 +139,15 @@ target_link_libraries(${PROJECT_NAME} PRIVATE stdc++fs extras extras_arc)
 # NOTE: declare unit test cases here all source should have adequate test cases whether they be mock
 # or unit tests, (or both)
 #
-if(RSI_TESTS)
-  print(STATUS "Building tests")
-  file(GLOB_RECURSE RSI_TESTS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/test/*.cpp")
-  set(TEST_EXEC "run-unittests-${PROJECT_NAME}")
-  add_executable(${TEST_EXEC} ${RSI_TESTS})
-  target_include_directories(${TEST_EXEC} PUBLIC ${INCLUDES})
-  target_link_libraries(${TEST_EXEC} PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+if (NOT MAKE_EXPARX_RSI_LIBRARY_ONLY)
+  if(RSI_TESTS)
+    print(STATUS "Building tests")
+    file(GLOB_RECURSE RSI_TESTS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/test/*.cpp")
+    set(TEST_EXEC "run-unittests-${PROJECT_NAME}")
+    add_executable(${TEST_EXEC} ${RSI_TESTS})
+    target_include_directories(${TEST_EXEC} PUBLIC ${INCLUDES})
+    target_link_libraries(${TEST_EXEC} PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+  endif()
 endif()
 
 #
