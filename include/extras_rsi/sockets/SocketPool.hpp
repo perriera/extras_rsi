@@ -32,9 +32,9 @@
 
 #include <extras/interfaces.hpp>
 #include <extras/strings.hpp>
-#include <rsi/sockets/Parameters.hpp>
-#include <rsi/sockets/ServiceType.hpp>
-#include <rsi/exceptions.hpp>
+#include <extras_rsi/sockets/Parameters.hpp>
+#include <extras_rsi/sockets/ServiceType.hpp>
+#include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
 namespace extras {

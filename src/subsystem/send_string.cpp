@@ -22,7 +22,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <rsi/subsystem.hpp>
+#include <extras_rsi/subsystem.hpp>
 #include <string>
 
 void extras::rsi::send_string(const std::string& msg, int sockfd) {

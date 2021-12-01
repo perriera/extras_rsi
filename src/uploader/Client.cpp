@@ -19,9 +19,9 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include <rsi/uploader/Uploader.hpp>
-#include <rsi/subsystem.hpp>
-#include <rsi/exceptions.hpp>
+#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/exceptions.hpp>
 #include <extras/strings.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <iostream>

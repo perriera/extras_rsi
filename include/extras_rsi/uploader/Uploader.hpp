@@ -31,8 +31,8 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <rsi/sockets/Types.hpp>
-#include <rsi/sockets/Semaphores.hpp>
+#include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/sockets/Semaphores.hpp>
 #include <iostream>
 #include <sstream>
 #include <netinet/in.h>

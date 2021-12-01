@@ -26,15 +26,15 @@ Anyone wishing to keep proprietary source code and data private but allow client
      cmake ..
      make
      cd ..
-     build/run-unittests-rsi
+     build/run-unittests-extras_rsi
 
 ## perriera/extras
 The **extras_rsi** package comes bundled with **perriera/extras** package and other git repositories that are downloaded automatically using the CPM/Fetch_Content construct. If you wish to install any of these sub-packages directly you will have to make changes accordingly.
     
 ## C++ namespace support
-As of version 0.1.0 the (perriera) **rsi** package now requires the use of the namespace **extras::rsi**
+As of version 0.1.0 the (perriera) **extras_rsi** package now requires the use of the namespace **extras::extras_rsi**
 
-    using namespace extras::rsi;
+    using namespace extras::extras_rsi;
 
 ## CPM Optimization
 > Note: Be sure to have the desired **VERSION** of perrier/extras specified in the **VERSION** keyword of the CPMAddPackage specification, (in your CMakeLists.txt). Also, to optimize CPM support on your projects be sure to set the CPM_SOURCE_CACHE environment variable for shared CPM libraries. Typically you would add this to your `.bashrc` script. With this environment variable set, the CPM package manager will not need to reload after successive build/ directory resets, (aka. `rm -rf build`). 

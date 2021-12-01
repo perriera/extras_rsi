@@ -17,8 +17,8 @@
  */
 
 #include <extras_arc/bin2hex/ConvertFile.hpp>
-#include <rsi/sockets/Types.hpp>
-#include <rsi/exceptions.hpp>
+#include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/exceptions.hpp>
 #include <iostream>
 #include <fstream>
 #include <filesystem>

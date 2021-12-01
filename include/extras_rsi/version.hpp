@@ -32,9 +32,9 @@
 
 #define RSI_VER_MAJOR 4
 #define RSI_VER_MINOR 0
-#define RSI_VER_PATCH 0
+#define RSI_VER_PATCH 1
 
-#define RSI_VERSION \
+#define EXTRAS_RSI_VERSION \
   (RSI_VER_MAJOR * 10000 + RSI_VER_MINOR * 100 + RSI_VER_PATCH)
 
 #endif// _RSI_VERSION_HPP

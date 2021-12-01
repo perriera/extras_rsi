@@ -23,7 +23,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <rsi/subsystem.hpp>
+#include <extras_rsi/subsystem.hpp>
 #include <extras/strings.hpp>
 #include <string>
 

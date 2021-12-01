@@ -16,8 +16,8 @@
  *
  */
 
-#include <rsi/vendor/Vendor.hpp>
-#include <rsi/exceptions.hpp>
+#include <extras_rsi/vendor/Vendor.hpp>
+#include <extras_rsi/exceptions.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
 #include <extras/filesystem/system.hpp>
@@ -27,7 +27,7 @@
 #include <filesystem>
 #include <chrono>
 #include <thread>
-#include <rsi/subsystem.hpp>
+#include <extras_rsi/subsystem.hpp>
 
 using namespace std;
 namespace fs = std::filesystem;

@@ -120,7 +120,7 @@ Where as the client will see the following:
 
 
 
-This project was inspired by the requirements of `ng-monitor 2.0` of `FreeFormJS.org` whereby it was necessary to strip a zip archive of all the unnecessary image and script files, upload the remaining HTML/CSS, have that HTML/CSS processed with custom Angular html tags, then finally downloaded again. All in the span of just a few moments. However, the `(perriera) extras-rsi` package can be easily adapted to any application needing to protect proprietary code.
+This project was inspired by the requirements of `ng-monitor 2.0` of `FreeFormJS.org` whereby it was necessary to strip a zip archive of all the unnecessary image and script files, upload the remaining HTML/CSS, have that HTML/CSS processed with custom Angular html tags, then finally downloaded again. All in the span of just a few moments. However, the `(perriera) extras-extras_rsi` package can be easily adapted to any application needing to protect proprietary code.
  
  # Installation
  See Installation details on  [perriera/extras_rsi](https://github.com/perriera/extras_rsi.git) package.
@@ -134,15 +134,15 @@ This project was inspired by the requirements of `ng-monitor 2.0` of `FreeFormJS
      cmake ..
      make
      cd ..
-     build/run-unittests-rsi
+     build/run-unittests-extras_rsi
 
 ## perriera/extras
 The **extras_rsi** package comes bundled with **perriera/extras** package and other git repositories that are downloaded automatically using the CPM/Fetch_Content construct. If you wish to install any of these sub-packages directly you will have to make changes accordingly.
     
 ## C++ namespace support
-As of version 0.1.0 the (perriera) **rsi** package now requires the use of the namespace **extras::rsi**
+As of version 0.1.0 the (perriera) **extras_rsi** package now requires the use of the namespace **extras::extras_rsi**
 
-    using namespace extras::rsi;
+    using namespace extras::extras_rsi;
 
 ## CPM Optimization
 > Note: Be sure to have the desired **VERSION** of perrier/extras specified in the **VERSION** keyword of the CPMAddPackage specification, (in your CMakeLists.txt). Also, to optimize CPM support on your projects be sure to set the CPM_SOURCE_CACHE environment variable for shared CPM libraries. Typically you would add this to your `.bashrc` script. With this environment variable set, the CPM package manager will not need to reload after successive build/ directory resets, (aka. `rm -rf build`). 

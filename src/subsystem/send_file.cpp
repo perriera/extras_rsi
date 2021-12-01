@@ -24,12 +24,12 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <rsi/sockets/Spinner.hpp>
+#include <extras_rsi/sockets/Spinner.hpp>
 #include <extras/interfaces.hpp>
 #include <extras/devices/ansi_colors.hpp>
-#include <rsi/sockets/StatusBar.hpp>
-#include <rsi/exceptions.hpp>
-#include <rsi/subsystem.hpp>
+#include <extras_rsi/sockets/StatusBar.hpp>
+#include <extras_rsi/exceptions.hpp>
+#include <extras_rsi/subsystem.hpp>
 
 using namespace std;
 using namespace extras;

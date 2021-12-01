@@ -18,8 +18,8 @@
 
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <rsi/subsystem.hpp>
-#include <rsi/exceptions.hpp>
+#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/exceptions.hpp>
 #include <extras/status/StatusLine.hpp>
 
 int extras::rsi::connect_to_server(const char* ip, int port,

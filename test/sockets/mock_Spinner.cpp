@@ -16,7 +16,7 @@
  *
  */
 
-#include <rsi/sockets/Spinner.hpp>
+#include <extras_rsi/sockets/Spinner.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <iostream>
 #include <sstream>

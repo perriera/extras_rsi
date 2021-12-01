@@ -16,10 +16,10 @@
  *
  */
 
-#include <rsi/uploader/Uploader.hpp>
-#include <rsi/uploader/Downloader.hpp>
-#include <rsi/subsystem.hpp>
-#include <rsi/exceptions.hpp>
+#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/uploader/Downloader.hpp>
+#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/exceptions.hpp>
 #include <extras/strings.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>

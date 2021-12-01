@@ -16,9 +16,9 @@
  *
  */
 
-#include <rsi/sockets/StatusBar.hpp>
+#include <extras_rsi/sockets/StatusBar.hpp>
 #include <extras/devices/ansi_colors.hpp>
-#include <rsi/exceptions.hpp>
+#include <extras_rsi/exceptions.hpp>
 #include <extras/strings.hpp>
 #include <iostream>
 #include <fstream>

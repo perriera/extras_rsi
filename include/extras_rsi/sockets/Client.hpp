@@ -1,7 +1,7 @@
 /**
- * @file Server.hpp
+ * @file Client.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief SocketPoolServerInterface
+ * @brief SocketPoolClientInterface, SocketPoolClient class
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSISOCKETSSERVER_HPP
-#define _EXPARX_RSISOCKETSSERVER_HPP
+#ifndef _EXPARX_RSISOCKETSCLIENT_HPP
+#define _EXPARX_RSISOCKETSCLIENT_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,8 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <rsi/sockets/SocketPool.hpp>
-#include <rsi/sockets/PortAuthority.hpp>
+#include <extras_rsi/sockets/SocketPool.hpp>
 #include <iostream>
 #include <netinet/in.h>
 #include <sys/socket.h>
@@ -41,7 +40,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief SocketPoolServerInterface
+         * @brief SocketPoolClientInterface
          *
          * The idea is that we assign a port to be the authority on deligating
          * available port numbers, (from a range of port numbers). At the basic
@@ -60,38 +59,40 @@ namespace extras {
          *
          */
 
-        interface SocketPoolServerInterface {
+        interface SocketPoolClientInterface {
             virtual void connect() pure;
-            virtual void accept() pure;
             virtual void close() const pure;
-            virtual PortAuthority& portAuthority() pure;
         };
 
-        /**
-         * @brief SocketPoolServer
-         *
-         */
-        concrete class SocketPoolServer extends SocketPool with
-            SocketPoolServerInterface {
+        concrete class SocketPoolClient extends SocketPool with
+            SocketPoolClientInterface {
             struct sockaddr_in _server_addr;
-            struct sockaddr_in _new_addr;
-            int _server_socket;
             int _client_socket;
-            PortAuthority _PortAuthority;
 
         public:
-            SocketPoolServer(const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {};
-            virtual PortAuthority& portAuthority() override { return _PortAuthority; }
+            SocketPoolClient(const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {}
+            SocketPoolClient(const std::string& msg, const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {
+                std::stringstream ss;
+                ss << msg;
+                ss >> *this;
+            }
+            operator std::string() const {
+                std::string msg;
+                std::stringstream ss;
+                ss << *this;
+                std::getline(ss, msg);
+                return msg;
+            }
             virtual void connect() override;
-            virtual void accept() override;
             virtual void close() const override;
             virtual void transfer() const override;
 
         };
 
+
     }
 }
 
-#endif // _EXPARX_RSISOCKETSSERVER_HPP
+#endif // _EXPARX_RSISOCKETSCLIENT_HPP
 
 

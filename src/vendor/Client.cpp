@@ -16,10 +16,10 @@
  *
  */
 
-#include <rsi/vendor/Vendor.hpp>
+#include <extras_rsi/vendor/Vendor.hpp>
 #include <iostream>
 #include <extras/status/StatusLine.hpp>
-#include <rsi/subsystem.hpp>
+#include <extras_rsi/subsystem.hpp>
 
 using namespace std;
 

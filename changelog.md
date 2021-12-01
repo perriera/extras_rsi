@@ -4,8 +4,8 @@
 > The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), </br>
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v4.0.0 -m "Using extras_arc v1.0.0"</br>
-> > git push origin v4.0.0
+> > git tag -a v4.0.1 -m "Corrected identifiers"</br>
+> > git push origin v4.0.1
 > 
 
 IMPORTANT: 
@@ -28,6 +28,10 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 4.0.1 (2021-11-30)
+## Refactored  
+- Corrected identifiers
 
 #### 4.0.0 (2021-11-30)
 ## Refactored  
@@ -173,7 +177,7 @@ Updated README.md accordinging</br>
 - RSI-4
 
 #### 1.0.0 (2021-11-09)
-- Changed namespace from exparx to extras, (aka. extras::rsi)
+- Changed namespace from exparx to extras, (aka. extras::extras_rsi)
 - RSI-3
 
 #### 0.3.1 (2021-11-08)
@@ -188,7 +192,7 @@ Updated README.md accordinging</br>
 - Now using perriera/extras v4.19.0
 
 #### 0.1.0 (2021-11-08)
-- rsi source code
+- extras_rsi source code
 - SHARED library support
 - (perriera) extras library support, (3.11.0)
 - CPM.cmake support
@@ -207,7 +211,7 @@ Updated README.md accordinging</br>
 - spdlog is now used as a shared library, (libspdlog.so)
 - cpr is now used as a shared library, (libcpr.so)
 - placed all source into /src
-- placed all headers into /include/rsi
+- placed all headers into /include/extras_rsi
 - Fetch_Content support
 - changelog.md
 - Project VERSION inside CMakeLists.txt & changelog.md
@@ -235,43 +239,44 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/rsi/compare/v4.0.0...HEAD
-[4.0.0]: https://github.com/perriera/rsi/compare/v3.6.0...v4.0.0
-[3.6.0]: https://github.com/perriera/rsi/compare/v3.5.0...v3.6.0
-[3.5.0]: https://github.com/perriera/rsi/compare/v3.4.0...v3.5.0
-[3.4.0]: https://github.com/perriera/rsi/compare/v3.3.0...v3.4.0
-[3.3.0]: https://github.com/perriera/rsi/compare/v3.2.1...v3.3.0
-[3.2.1]: https://github.com/perriera/rsi/compare/v3.1.0...v3.2.1
-[3.1.0]: https://github.com/perriera/rsi/compare/v3.0.1...v3.1.0
-[3.0.1]: https://github.com/perriera/rsi/compare/v3.0.0...v3.0.1
-[3.0.0]: https://github.com/perriera/rsi/compare/v2.17.0...v3.0.0
-[2.17.0]: https://github.com/perriera/rsi/compare/v2.16.0...v2.17.0
-[2.16.0]: https://github.com/perriera/rsi/compare/v2.15.0...v2.16.0
-[2.15.0]: https://github.com/perriera/rsi/compare/v2.14.0...v2.15.0
-[2.14.0]: https://github.com/perriera/rsi/compare/v2.13.0...v2.14.0
-[2.13.1]: https://github.com/perriera/rsi/compare/v2.13.0...v2.13.1
-[2.13.0]: https://github.com/perriera/rsi/compare/v2.12.0...v2.13.0
-[2.12.0]: https://github.com/perriera/rsi/compare/v2.11.0...v2.12.0
-[2.11.0]: https://github.com/perriera/rsi/compare/v2.10.0...v2.11.0
-[2.10.0]: https://github.com/perriera/rsi/compare/v2.9.0...v2.10.0
-[2.9.0]: https://github.com/perriera/rsi/compare/v2.8.0...v2.9.0
-[2.8.0]: https://github.com/perriera/rsi/compare/v2.7.0...v2.8.0
-[2.7.0]: https://github.com/perriera/rsi/compare/v2.6.0...v2.7.0
-[2.6.0]: https://github.com/perriera/rsi/compare/v2.5.0...v2.6.0
-[2.5.0]: https://github.com/perriera/rsi/compare/v2.4.0...v2.5.0
-[2.4.0]: https://github.com/perriera/rsi/compare/v2.3.0...v2.4.0
-[2.3.0]: https://github.com/perriera/rsi/compare/v2.2.0...v2.3.0
-[2.2.0]: https://github.com/perriera/rsi/compare/v2.1.0...v2.2.0
-[2.1.0]: https://github.com/perriera/rsi/compare/v2.0.0...v2.1.0
-[2.0.0]: https://github.com/perriera/rsi/compare/v1.2.0...v2.0.0
-[1.2.0]: https://github.com/perriera/rsi/compare/v1.1.4...v1.2.0
-[1.1.4]: https://github.com/perriera/rsi/compare/v1.1.3...v1.1.4
-[1.1.3]: https://github.com/perriera/rsi/compare/v1.1.2...v1.1.3
-[1.1.2]: https://github.com/perriera/rsi/compare/v1.1.1...v1.1.2
-[1.1.1]: https://github.com/perriera/rsi/compare/v1.0.1...v1.1.1
-[1.0.1]: https://github.com/perriera/rsi/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/perriera/rsi/compare/v0.3.1...v1.0.0
-[0.3.1]: https://github.com/perriera/rsi/compare/v0.3.0...v0.3.1
-[0.3.0]: https://github.com/perriera/rsi/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/perriera/rsi/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/perriera/rsi/releases/tag/v0.1.0
+[Unreleased]: https://github.com/perriera/extras_rsi/compare/v4.0.1...HEAD
+[4.0.1]: https://github.com/perriera/extras_rsi/compare/v4.0.0...v4.0.1
+[4.0.0]: https://github.com/perriera/extras_rsi/compare/v3.6.0...v4.0.0
+[3.6.0]: https://github.com/perriera/extras_rsi/compare/v3.5.0...v3.6.0
+[3.5.0]: https://github.com/perriera/extras_rsi/compare/v3.4.0...v3.5.0
+[3.4.0]: https://github.com/perriera/extras_rsi/compare/v3.3.0...v3.4.0
+[3.3.0]: https://github.com/perriera/extras_rsi/compare/v3.2.1...v3.3.0
+[3.2.1]: https://github.com/perriera/extras_rsi/compare/v3.1.0...v3.2.1
+[3.1.0]: https://github.com/perriera/extras_rsi/compare/v3.0.1...v3.1.0
+[3.0.1]: https://github.com/perriera/extras_rsi/compare/v3.0.0...v3.0.1
+[3.0.0]: https://github.com/perriera/extras_rsi/compare/v2.17.0...v3.0.0
+[2.17.0]: https://github.com/perriera/extras_rsi/compare/v2.16.0...v2.17.0
+[2.16.0]: https://github.com/perriera/extras_rsi/compare/v2.15.0...v2.16.0
+[2.15.0]: https://github.com/perriera/extras_rsi/compare/v2.14.0...v2.15.0
+[2.14.0]: https://github.com/perriera/extras_rsi/compare/v2.13.0...v2.14.0
+[2.13.1]: https://github.com/perriera/extras_rsi/compare/v2.13.0...v2.13.1
+[2.13.0]: https://github.com/perriera/extras_rsi/compare/v2.12.0...v2.13.0
+[2.12.0]: https://github.com/perriera/extras_rsi/compare/v2.11.0...v2.12.0
+[2.11.0]: https://github.com/perriera/extras_rsi/compare/v2.10.0...v2.11.0
+[2.10.0]: https://github.com/perriera/extras_rsi/compare/v2.9.0...v2.10.0
+[2.9.0]: https://github.com/perriera/extras_rsi/compare/v2.8.0...v2.9.0
+[2.8.0]: https://github.com/perriera/extras_rsi/compare/v2.7.0...v2.8.0
+[2.7.0]: https://github.com/perriera/extras_rsi/compare/v2.6.0...v2.7.0
+[2.6.0]: https://github.com/perriera/extras_rsi/compare/v2.5.0...v2.6.0
+[2.5.0]: https://github.com/perriera/extras_rsi/compare/v2.4.0...v2.5.0
+[2.4.0]: https://github.com/perriera/extras_rsi/compare/v2.3.0...v2.4.0
+[2.3.0]: https://github.com/perriera/extras_rsi/compare/v2.2.0...v2.3.0
+[2.2.0]: https://github.com/perriera/extras_rsi/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/perriera/extras_rsi/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/perriera/extras_rsi/compare/v1.2.0...v2.0.0
+[1.2.0]: https://github.com/perriera/extras_rsi/compare/v1.1.4...v1.2.0
+[1.1.4]: https://github.com/perriera/extras_rsi/compare/v1.1.3...v1.1.4
+[1.1.3]: https://github.com/perriera/extras_rsi/compare/v1.1.2...v1.1.3
+[1.1.2]: https://github.com/perriera/extras_rsi/compare/v1.1.1...v1.1.2
+[1.1.1]: https://github.com/perriera/extras_rsi/compare/v1.0.1...v1.1.1
+[1.0.1]: https://github.com/perriera/extras_rsi/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/perriera/extras_rsi/compare/v0.3.1...v1.0.0
+[0.3.1]: https://github.com/perriera/extras_rsi/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/perriera/extras_rsi/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/perriera/extras_rsi/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/perriera/extras_rsi/releases/tag/v0.1.0
