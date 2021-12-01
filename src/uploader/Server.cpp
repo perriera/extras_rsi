@@ -26,7 +26,7 @@
 #include <iostream>
 #include <filesystem>
 #include <extras/status/StatusLine.hpp>
-#include <rsi/parcel/Wrap.hpp>
+#include <ng_imploder/parcel/Wrap.hpp>
 #include <extras/filesystem/system.hpp>
 
 using namespace std;
@@ -79,7 +79,7 @@ namespace extras {
      * @return rsi::Lock
      */
     rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) const {
-        rsi::ParcelImploder parcelImploder;
+        imploder::ParcelImploder parcelImploder;
         auto wrappedName = parcelImploder.wrapped(lock);
         return write_file_block(wrappedName);
     }
@@ -90,7 +90,7 @@ namespace extras {
      * @return rsi::Lock
      */
     rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock&) const {
-        rsi::ParcelImploder parcelImploder;
+        imploder::ParcelImploder parcelImploder;
         parcelImploder.unWrap(filename());
         parcelImploder.merge(filename());
         auto original = parcelImploder.clean(filename());

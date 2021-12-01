@@ -31,7 +31,7 @@
  */
 
 #define RSI_VER_MAJOR 3
-#define RSI_VER_MINOR 4
+#define RSI_VER_MINOR 5
 #define RSI_VER_PATCH 0
 
 #define RSI_VERSION \

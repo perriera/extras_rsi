@@ -18,7 +18,7 @@
 
 #include <iostream>
 #include <filesystem>
-#include <rsi/parcel/Parcel.hpp>
+#include <ng_imploder/parcel/Parcel.hpp>
 #include <rsi/exceptions.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
@@ -38,7 +38,7 @@ int main(int argc, const char** argv)
     auto filename = argv[2];
     rsi::FileNotFoundException::assertion(filename, __INFO__);
     rsi::Parameter parameter = ~extras::Paths(filename);
-    rsi::Parcel parcel(parameter);
+    imploder::Parcel parcel(parameter);
     if (option == "-pack")
       parcel.pack();
     if (option == "-unpack")

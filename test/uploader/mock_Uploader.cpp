@@ -18,9 +18,9 @@
 
 #include <rsi/uploader/Uploader.hpp>
 #include <extras/strings.hpp>
-#include <rsi/parcel/Wrap.hpp>
-#include <rsi/parcel/Parcel.hpp>
-#include <rsi/parcel/Wrap.hpp>
+#include <ng_imploder/parcel/Wrap.hpp>
+#include <ng_imploder/parcel/Parcel.hpp>
+#include <ng_imploder/parcel/Wrap.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
 #include <extras/strings.hpp>

@@ -16,8 +16,8 @@
  *
  */
 
-#include <rsi/bin2hex/ConvertFile.hpp>
-#include <rsi/parcel/Parcel.hpp>
+#include <ng_imploder/bin2hex/ConvertFile.hpp>
+#include <ng_imploder/parcel/Parcel.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
 #include <rsi/exceptions.hpp>

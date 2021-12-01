@@ -16,7 +16,7 @@
  *
  */
 
-#include <rsi/bin2hex/ConvertFile.hpp>
+#include <ng_imploder/bin2hex/ConvertFile.hpp>
 #include <rsi/sockets/Types.hpp>
 #include <rsi/exceptions.hpp>
 #include <iostream>

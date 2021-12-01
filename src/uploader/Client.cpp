@@ -25,8 +25,8 @@
 #include <extras/strings.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <iostream>
-#include <rsi/parcel/Parcel.hpp>
-#include <rsi/parcel/Wrap.hpp>
+#include <ng_imploder/parcel/Parcel.hpp>
+#include <ng_imploder/parcel/Wrap.hpp>
 #include <filesystem>
 #include <extras/filesystem/system.hpp>
 
@@ -75,7 +75,7 @@ namespace extras {
      */
     rsi::Lock rsi::UploaderClient::lock(const rsi::Lock& lock) const {
         rsi::FileNotFoundException::assertion(lock, __INFO__);
-        rsi::ParcelImploder parcelImploder;
+        imploder::ParcelImploder parcelImploder;
         auto wrapped = parcelImploder.wrap(lock);
         rsi::FileNotFoundException::assertion(wrapped, __INFO__);
         send_file_block(wrapped);
@@ -90,7 +90,7 @@ namespace extras {
      */
     rsi::Lock rsi::UploaderClient::unlock(const rsi::Lock& lock) const {
         auto status = read_line_block();
-        rsi::ParcelImploder parcelImploder;
+        imploder::ParcelImploder parcelImploder;
         parcelImploder.clean(lock);
         RemoteDiedException::assertion(status, __INFO__);
         std::cout << extras::pass(lock) << std::endl;
