@@ -92,7 +92,7 @@ namespace extras {
         auto status = read_line_block();
         arc::ParcelImploder parcelImploder;
         parcelImploder.clean(lock);
-        RemoteDiedException::assertion(status, __INFO__);
+        RemoteBlockException::assertion(status, __INFO__);
         std::cout << extras::pass(lock) << std::endl;
         std::cout << extras::pass(status) << std::endl;
         std::cout << extras::pass("send_file2 successful") << std::endl;

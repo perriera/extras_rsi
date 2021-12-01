@@ -65,7 +65,7 @@ namespace extras {
         parcelImploder.clean(lock);
         auto rm_cmd = "rm " + lock;
         SystemException::assertion(rm_cmd, __INFO__);
-        RemoteDiedException::assertion(status, __INFO__);
+        RemoteBlockException::assertion(status, __INFO__);
         std::cout << extras::pass(lock) << std::endl;
         std::cout << extras::pass(status) << std::endl;
         return lock;
