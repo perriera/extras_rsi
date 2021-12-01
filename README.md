@@ -18,6 +18,8 @@ Anyone wishing to keep proprietary source code and data private but allow client
 
 This framework is intended to allow developers to maintain proprietary code on servers but make it easy for clients to access those services. For example, in the case of FreeFormJS.org we would allow the Angular developer to download, compile and run their version of the extras_rsi library but the server portion of that library would remain in the server. 
 
+[Video Demo here](https://github.com/perriera/extras_rsi/assets)
+
 The general idea is to upload a file from the client to the server, process that file and then download it again.
 
 	build/socketpool_client 137.184.218.130 8080 data/exparx.webflow.zip upload vendor download 
