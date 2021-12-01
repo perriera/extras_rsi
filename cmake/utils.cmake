@@ -31,7 +31,7 @@ function(extras_rsi_get_version)
       PARENT_SCOPE
   )
 
-  set(RSI_VERSION
+  set(EXTRAS_RSI_VERSION
       "${ver_major}.${ver_minor}.${ver_patch}"
       PARENT_SCOPE
   )

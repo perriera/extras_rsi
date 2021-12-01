@@ -12,7 +12,7 @@ include(cmake/utils.cmake)
 extras_rsi_get_version()
 project(
   extras_rsi
-  VERSION ${RSI_VERSION}
+  VERSION ${EXTRAS_RSI_VERSION}
   LANGUAGES CXX
 )
 
