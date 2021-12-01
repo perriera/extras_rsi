@@ -26,7 +26,7 @@
 #include <sstream>
 #include <rsi/sockets/StatusBar.hpp>
 #include <rsi/sockets/Spinner.hpp>
-#include <ng_imploder/parcel/Parcel.hpp>
+#include <extras_arc/parcel/Parcel.hpp>
 #include <rsi/subsystem.hpp>
 #include <extras/strings.hpp>
 #include <extras/devices/ansi_colors.hpp>
@@ -44,13 +44,13 @@ void printStatus(const std::string& msg) {
             stringstream ss2;
             ss2 << line;
             try {
-                extras::imploder::ParcelLine packed;
+                extras::arc::ParcelLine packed;
                 ss2 >> packed;
                 std::cout << "\x1B[2K\r";
                 std::cout << extras::rsi::bar(packed.lineNo(), packed.lineCount() + 1);
                 std::cout << std::flush;
             }
-            catch (extras::imploder::ParcelException& ex) {
+            catch (extras::arc::ParcelException& ex) {
             }
         }
     }

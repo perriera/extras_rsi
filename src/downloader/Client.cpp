@@ -23,11 +23,11 @@
 #include <extras/strings.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
-#include <ng_imploder/parcel/Parcel.hpp>
+#include <extras_arc/parcel/Parcel.hpp>
 #include <iostream>
 #include <filesystem>
 #include <extras/status/StatusLine.hpp>
-#include <ng_imploder/parcel/Wrap.hpp>
+#include <extras_arc/parcel/Wrap.hpp>
 #include <extras/filesystem/system.hpp>
 
 using namespace std;
@@ -42,7 +42,7 @@ namespace extras {
      * @return rsi::Lock
      */
     rsi::Lock rsi::DownloaderClient::lock(const rsi::Lock& lock) const {
-        imploder::ParcelImploder parcelImploder;
+        arc::ParcelImploder parcelImploder;
         auto wrappedName = parcelImploder.wrapped(lock);
         write_file_block(wrappedName);
         return lock;
@@ -55,7 +55,7 @@ namespace extras {
      * @return rsi::Lock
      */
     rsi::Lock rsi::DownloaderClient::unlock(const rsi::Lock& lock) const {
-        imploder::ParcelImploder parcelImploder;
+        arc::ParcelImploder parcelImploder;
         parcelImploder.unWrap(lock);
         parcelImploder.merge(lock);
         parcelImploder.clean(lock);

@@ -19,8 +19,8 @@
 
 #include <rsi/sockets/Semaphores.hpp>
 #include <rsi/uploader/Uploader.hpp>
-#include <ng_imploder/parcel/Wrap.hpp>
-#include <ng_imploder/bin2hex/ConvertFile.hpp>
+#include <extras_arc/parcel/Wrap.hpp>
+#include <extras_arc/bin2hex/ConvertFile.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras/filesystem/paths.hpp>
@@ -43,9 +43,9 @@ static std::string server_dir = "data/server/";
 static const std::string original = ~extras::Paths("data/exparx.webflow.zip");
 
 static void clean() {
-    imploder::Parcel parcel(original);
+    arc::Parcel parcel(original);
     parcel.clean();
-    imploder::ParcelImploder parcelImploder;
+    arc::ParcelImploder parcelImploder;
     parcelImploder.clean(original);
     if (fs::exists(client_dir))
         fs::remove_all(client_dir);
@@ -67,7 +67,7 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
      * @brief Mock<rsi::UploaderInterface> uploader;
      *
      */
-    imploder::BinFile internet;
+    arc::BinFile internet;
     rsi::UploaderStatus status;
 
     Mock<rsi::UploaderInterface> semaphore;
@@ -75,7 +75,7 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
         .AlwaysDo(
             [&internet](const rsi::Filename& filename) {
                 ifstream in(filename);
-                imploder::BinFile binFile = imploder::ConvertFile().loadBin(in);
+                arc::BinFile binFile = arc::ConvertFile().loadBin(in);
                 internet = binFile;
             });
     When(Method(semaphore, write_file_block))
@@ -88,7 +88,7 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
                     throw "Nothing to save";
                 auto target = extras::replace_all(filename, server_dir, client_dir);
                 ofstream out(target);
-                imploder::ConvertFile().saveBin(out, internet);
+                arc::ConvertFile().saveBin(out, internet);
                 internet.clear();
                 return target;
             });
@@ -119,7 +119,7 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
     When(Method(client_lock, lock))
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& lock) {
-                imploder::ParcelImploder parcelImploder;
+                arc::ParcelImploder parcelImploder;
                 auto wrappedName = parcelImploder.wrapped(lock);
                 i_semaphore.write_file_block(wrappedName);
                 return lock;
@@ -127,7 +127,7 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
     When(Method(client_lock, unlock))
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& lock) {
-                imploder::ParcelImploder parcelImploder;
+                arc::ParcelImploder parcelImploder;
                 parcelImploder.unWrap(lock);
                 parcelImploder.merge(lock);
                 parcelImploder.clean(lock);
@@ -147,7 +147,7 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& lock) {
                 rsi::FileNotFoundException::assertion(lock, __INFO__);
-                imploder::ParcelImploder parcelImploder;
+                arc::ParcelImploder parcelImploder;
                 auto wrapped = parcelImploder.wrap(lock);
                 rsi::FileNotFoundException::assertion(wrapped, __INFO__);
                 i_semaphore.send_file_block(wrapped);
@@ -158,7 +158,7 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& lock) {
                 std::string line = i_semaphore.read_line_block();
-                imploder::ParcelImploder parcelImploder;
+                arc::ParcelImploder parcelImploder;
                 parcelImploder.clean(lock);
                 auto rm_cmd = "rm " + lock;
                 SystemException::assertion(rm_cmd, __INFO__);
