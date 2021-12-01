@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.21)
 include(cmake/CPM.cmake)
 include(cmake/print.cmake)
 include(cmake/utils.cmake)
-rsi_get_version()
+extras_rsi_get_version()
 project(
   extras_rsi
   VERSION ${RSI_VERSION}
