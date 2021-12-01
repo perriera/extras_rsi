@@ -23,11 +23,11 @@
 #include <extras/strings.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
-#include <rsi/parcel/Parcel.hpp>
+#include <ng_imploder/parcel/Parcel.hpp>
 #include <iostream>
 #include <filesystem>
 #include <extras/status/StatusLine.hpp>
-#include <rsi/parcel/Wrap.hpp>
+#include <ng_imploder/parcel/Wrap.hpp>
 #include <extras/filesystem/system.hpp>
 
 using namespace std;
@@ -44,7 +44,7 @@ namespace extras {
 
     rsi::Lock rsi::DownloaderServer::lock(const rsi::Lock& lock) const {
         rsi::FileNotFoundException::assertion(lock, __INFO__);
-        rsi::ParcelImploder parcelImploder;
+        imploder::ParcelImploder parcelImploder;
         auto wrapped = parcelImploder.wrap(lock);
         rsi::FileNotFoundException::assertion(wrapped, __INFO__);
         send_file_block(wrapped);
@@ -61,7 +61,7 @@ namespace extras {
 
     rsi::Lock rsi::DownloaderServer::unlock(const rsi::Lock& lock) const {
         std::string status = read_line_block();
-        rsi::ParcelImploder parcelImploder;
+        imploder::ParcelImploder parcelImploder;
         parcelImploder.clean(lock);
         auto rm_cmd = "rm " + lock;
         SystemException::assertion(rm_cmd, __INFO__);
