@@ -19,8 +19,8 @@
 #include <iostream>
 #include <filesystem>
 #include <extras_arc/parcel/Parcel.hpp>
-#include <rsi/exceptions.hpp>
-#include <rsi/sockets/Types.hpp>
+#include <extras_rsi/exceptions.hpp>
+#include <extras_rsi/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
 
 using namespace extras;

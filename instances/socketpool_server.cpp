@@ -16,10 +16,10 @@
  *
  */
 
-#include <rsi/sockets/Server.hpp>
+#include <extras_rsi/sockets/Server.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <iostream>
-#include <rsi/exceptions.hpp>
+#include <extras_rsi/exceptions.hpp>
 
 using namespace  extras;
 

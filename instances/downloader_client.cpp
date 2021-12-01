@@ -16,8 +16,8 @@
  *
  */
 
-#include <rsi/uploader/Downloader.hpp>
-#include <rsi/exceptions.hpp>
+#include <extras_rsi/uploader/Downloader.hpp>
+#include <extras_rsi/exceptions.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <iostream>
 

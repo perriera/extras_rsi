@@ -16,7 +16,7 @@
  *
  */
 
-#include <rsi/sockets/Parameters.hpp>
+#include <extras_rsi/sockets/Parameters.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"

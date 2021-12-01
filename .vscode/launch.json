@@ -13,7 +13,7 @@
             "name": "run-unittests",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/run-unittests-rsi",
+            "program": "${workspaceFolder}/build/run-unittests-extras_rsi",
             "args": [
                 "[SemaphoreInterface]"
             ],

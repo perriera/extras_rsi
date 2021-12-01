@@ -37,7 +37,7 @@
 namespace extras {
 
     /**
-     * @brief rsi: (remote services interface)
+     * @brief extras_rsi: (remote services interface)
      *
      * The following code has been plagerized from other authors
      * and placed here, (where is/as is) as it is code that works

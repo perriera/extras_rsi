@@ -1,7 +1,7 @@
 /**
- * @file Vendor.hpp
+ * @file Downloader.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief VendorClient, VendorServer
+ * @brief DownloaderClient class, DownloaderServer class
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSISERVICES_VENDOR_HPP
-#define _EXPARX_RSISERVICES_VENDOR_HPP
+#ifndef _EXPARX_RSISERVICES_DOWNLOADER_HPP
+#define _EXPARX_RSISERVICES_DOWNLOADER_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,7 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <rsi/uploader/Uploader.hpp>
+#include <extras_rsi/uploader/Uploader.hpp>
 #include <iostream>
 #include <sstream>
 #include <netinet/in.h>
@@ -41,25 +41,30 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief concrete class VendorClient
+         * @brief concrete class DownloaderClient
          *
          */
-        concrete class VendorClient extends UploaderClient {
+        concrete class DownloaderClient extends UploaderClient with virtual SemaphoreInterface {
+            virtual Lock lock(const Lock& lock) const override;
+            virtual Lock unlock(const Lock& lock) const override;
         public:
             virtual void transfer() const override;
         };
 
         /**
-         * @brief concrete class VendorServer
+         * @brief concrete class DownloaderServer
          *
          */
-        concrete class VendorServer extends UploaderServer {
+        concrete class DownloaderServer extends UploaderServer with virtual SemaphoreInterface {
+            virtual Lock lock(const Lock& lock) const override;
+            virtual Lock unlock(const Lock& lock) const override;
         public:
             virtual void transfer() const override;
         };
+
 
     }  // namespace rsi
 
 }  // namespace extras
 
-#endif  // _EXPARX_RSISERVICES_VENDOR_HPP
+#endif  // _EXPARX_RSISERVICES_DOWNLOADER_HPP

@@ -31,8 +31,8 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <rsi/sockets/SocketPool.hpp>
-#include <rsi/sockets/PortAuthority.hpp>
+#include <extras_rsi/sockets/SocketPool.hpp>
+#include <extras_rsi/sockets/PortAuthority.hpp>
 #include <iostream>
 #include <netinet/in.h>
 #include <sys/socket.h>

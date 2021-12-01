@@ -17,8 +17,8 @@
  */
 
 
-#include <rsi/sockets/Semaphores.hpp>
-#include <rsi/uploader/Uploader.hpp>
+#include <extras_rsi/sockets/Semaphores.hpp>
+#include <extras_rsi/uploader/Uploader.hpp>
 #include <extras_arc/parcel/Wrap.hpp>
 #include <extras_arc/bin2hex/ConvertFile.hpp>
 #include <extras/devices/ansi_colors.hpp>

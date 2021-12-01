@@ -31,9 +31,9 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <rsi/sockets/Types.hpp>
-#include <rsi/exceptions.hpp>
-#include <rsi/sockets/PortAuthority.hpp>
+#include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/exceptions.hpp>
+#include <extras_rsi/sockets/PortAuthority.hpp>
 #include <iostream>
 
 namespace extras {
