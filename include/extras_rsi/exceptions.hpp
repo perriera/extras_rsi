@@ -127,9 +127,9 @@ namespace extras {
          * @brief CantOpenFileException
          *
          */
-        concrete class RemoteDiedException extends RSIException {
+        concrete class RemoteBlockException extends RSIException {
         public:
-            RemoteDiedException(std::string msg, const extras::WhereAmI& whereAmI)
+            RemoteBlockException(std::string msg, const extras::WhereAmI& whereAmI)
                 : RSIException(msg.c_str(), whereAmI) {}
             static void assertion(const std::string& response, const extras::WhereAmI& ref);
         };

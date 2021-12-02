@@ -26,7 +26,7 @@
 #include <sstream>
 #include <extras_rsi/sockets/StatusBar.hpp>
 #include <extras_rsi/sockets/Spinner.hpp>
-#include <extras_arc/parcel/Parcel.hpp>
+#include <extras_arc/parcel.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras/strings.hpp>
 #include <extras/devices/ansi_colors.hpp>

@@ -23,7 +23,7 @@
 #include <extras/strings.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
-#include <extras_arc/parcel/Parcel.hpp>
+#include <extras_arc/parcel.hpp>
 #include <iostream>
 #include <filesystem>
 #include <extras/status/StatusLine.hpp>
@@ -65,7 +65,7 @@ namespace extras {
         parcelImploder.clean(lock);
         auto rm_cmd = "rm " + lock;
         SystemException::assertion(rm_cmd, __INFO__);
-        RemoteDiedException::assertion(status, __INFO__);
+        RemoteBlockException::assertion(status, __INFO__);
         std::cout << extras::pass(lock) << std::endl;
         std::cout << extras::pass(status) << std::endl;
         return lock;

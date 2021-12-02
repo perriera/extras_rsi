@@ -34,7 +34,7 @@ namespace extras {
         std::string msg = "vendor started";
         send_line_block(msg);
         std::string status = read_line_block();
-        RemoteDiedException::assertion(status, __INFO__);
+        RemoteBlockException::assertion(status, __INFO__);
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(status) << std::endl;
 
