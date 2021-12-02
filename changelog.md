@@ -4,8 +4,8 @@
 > The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), </br>
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v4.0.3 -m "Using extras_arc v1.1.3"</br>
-> > git push origin v4.0.2
+> > git tag -a v4.0.4 -m "Using extras_arc v1.2.0"</br>
+> > git push origin v4.0.4
 > 
 
 IMPORTANT: 
@@ -28,6 +28,11 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 4.0.4 (2021-12-01)
+## Refactored  
+- Using extras_arc v1.2.0
+- Added directive
 
 #### 4.0.3 (2021-11-30)
 ## Refactored  
@@ -249,7 +254,8 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/extras_rsi/compare/v4.0.3...HEAD
+[Unreleased]: https://github.com/perriera/extras_rsi/compare/v4.0.4...HEAD
+[4.0.4]: https://github.com/perriera/extras_rsi/compare/v4.0.3...v4.0.4
 [4.0.3]: https://github.com/perriera/extras_rsi/compare/v4.0.2...v4.0.3
 [4.0.2]: https://github.com/perriera/extras_rsi/compare/v4.0.1...v4.0.2
 [4.0.1]: https://github.com/perriera/extras_rsi/compare/v4.0.0...v4.0.1
