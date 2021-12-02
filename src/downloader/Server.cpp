@@ -23,7 +23,7 @@
 #include <extras/strings.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
-#include <extras_arc/parcel/Parcel.hpp>
+#include <extras_arc/parcel.hpp>
 #include <iostream>
 #include <filesystem>
 #include <extras/status/StatusLine.hpp>
