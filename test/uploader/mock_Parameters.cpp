@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/sockets/Parameters.hpp>
+#include <extras_rsi/uploader/Parameters.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"
@@ -25,19 +25,19 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock ParametersInterface: basic upload/vendor/download", "[ParametersInterface]") {
+SCENARIO("Mock ParametersInterface: uploader parameters", "[UploaderParameters]") {
 
-    const char* argv[] = { "socketclient", "127.0.0.1", "8080",
-                            "send.txt",     "convert",   "download" };
+    const char* argv[] = {
+         "build/uploader_client", "data/exparx.webflow.zip", "137.184.218.130", "8080" };
     int argc = 6;
-    Mock<rsi::ParametersInterface> mock;
+    Mock<rsi::uploader::ParametersInterface> mock;
     When(Method(mock, parameters))
         .AlwaysDo(
             [](int, char const* []) {
                 return rsi::Parameters();
             });
 
-    rsi::ParametersInterface& i = mock.get();
+    rsi::uploader::ParametersInterface& i = mock.get();
     REQUIRE(i.parameters(argc, argv) == rsi::Parameters());
     Verify(Method(mock, parameters));
 }
