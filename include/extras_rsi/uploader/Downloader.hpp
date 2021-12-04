@@ -49,6 +49,9 @@ namespace extras {
             virtual Lock unlock(const Lock& lock) const override;
         public:
             virtual void transfer() const override;
+            virtual void help() const override {
+                getHelp("HOWTO-download.md");
+            };
         };
 
         /**
@@ -60,6 +63,9 @@ namespace extras {
             virtual Lock unlock(const Lock& lock) const override;
         public:
             virtual void transfer() const override;
+            virtual void help() const override {
+                getHelp("HOWTO-download.md");
+            };
         };
 
 
