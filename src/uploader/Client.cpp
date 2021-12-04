@@ -26,7 +26,7 @@
 #include <extras/status/StatusLine.hpp>
 #include <iostream>
 #include <extras_arc/parcel.hpp>
-#include <extras_arc/parcel/Wrap.hpp>
+#include <extras_arc/wrap.hpp>
 #include <filesystem>
 #include <extras/filesystem/system.hpp>
 
@@ -75,8 +75,8 @@ namespace extras {
      */
     rsi::Lock rsi::UploaderClient::lock(const rsi::Lock& lock) const {
         rsi::FileNotFoundException::assertion(lock, __INFO__);
-        arc::ParcelImploder parcelImploder;
-        auto wrapped = parcelImploder.wrap(lock);
+        arc::ParcelImploder parcelImploder(lock);
+        auto wrapped = parcelImploder.wrap();
         rsi::FileNotFoundException::assertion(wrapped, __INFO__);
         send_file_block(wrapped);
         return lock;
@@ -90,8 +90,8 @@ namespace extras {
      */
     rsi::Lock rsi::UploaderClient::unlock(const rsi::Lock& lock) const {
         auto status = read_line_block();
-        arc::ParcelImploder parcelImploder;
-        parcelImploder.clean(lock);
+        arc::ParcelImploder parcelImploder(lock);;
+        parcelImploder.clean();
         RemoteBlockException::assertion(status, __INFO__);
         std::cout << extras::pass(lock) << std::endl;
         std::cout << extras::pass(status) << std::endl;

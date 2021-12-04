@@ -19,7 +19,7 @@
 
 #include <extras_rsi/sockets/Semaphores.hpp>
 #include <extras_rsi/uploader/Uploader.hpp>
-#include <extras_arc/parcel/Wrap.hpp>
+#include <extras_arc/wrap.hpp>
 #include <extras_arc/bin2hex/ConvertFile.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/status/StatusLine.hpp>
@@ -45,8 +45,8 @@ static const std::string original = ~extras::Paths("data/exparx.webflow.zip");
 static void clean() {
     arc::Parcel parcel(original);
     parcel.clean();
-    arc::ParcelImploder parcelImploder;
-    parcelImploder.clean(original);
+    arc::ParcelImploder parcelImploder(original);
+    parcelImploder.clean();
     if (fs::exists(client_dir))
         fs::remove_all(client_dir);
     if (fs::exists(server_dir))
@@ -119,18 +119,18 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
     When(Method(client_lock, lock))
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& lock) {
-                arc::ParcelImploder parcelImploder;
-                auto wrappedName = parcelImploder.wrapped(lock);
+                arc::ParcelImploder parcelImploder(lock);
+                auto wrappedName = parcelImploder.wrapped();
                 i_semaphore.write_file_block(wrappedName);
                 return lock;
             });
     When(Method(client_lock, unlock))
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& lock) {
-                arc::ParcelImploder parcelImploder;
-                parcelImploder.unWrap(lock);
-                parcelImploder.merge(lock);
-                parcelImploder.clean(lock);
+                arc::ParcelImploder parcelImploder(lock);
+                parcelImploder.unWrap();
+                parcelImploder.merge();
+                parcelImploder.clean();
                 std::cout << extras::pass(lock) << std::endl;
                 std::cout << extras::pass("write_file successful") << std::endl;
                 std::string msg = "downloader completed";
@@ -147,8 +147,8 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& lock) {
                 rsi::FileNotFoundException::assertion(lock, __INFO__);
-                arc::ParcelImploder parcelImploder;
-                auto wrapped = parcelImploder.wrap(lock);
+                arc::ParcelImploder parcelImploder(lock);
+                auto wrapped = parcelImploder.wrap();
                 rsi::FileNotFoundException::assertion(wrapped, __INFO__);
                 i_semaphore.send_file_block(wrapped);
                 std::cout << extras::pass("send_file2 successful") << std::endl;
@@ -158,8 +158,8 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
         .AlwaysDo(
             [&i_semaphore](const rsi::Lock& lock) {
                 std::string line = i_semaphore.read_line_block();
-                arc::ParcelImploder parcelImploder;
-                parcelImploder.clean(lock);
+                arc::ParcelImploder parcelImploder(lock);
+                parcelImploder.clean();
                 auto rm_cmd = "rm " + lock;
                 SystemException::assertion(rm_cmd, __INFO__);
                 std::cout << extras::pass(lock) << std::endl;
