@@ -23,6 +23,7 @@
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/strings.hpp>
+#include <extras/status/StatusLine.hpp>
 #include <iostream>
 
 using namespace std;
@@ -49,9 +50,9 @@ namespace extras {
         return _parameters;
     }
 
-    void rsi::Uploader::help() const {
-        FileNotFoundException::assertion("HOWTO-upload.md", __INFO__);
-        string cmd = "cat HOWTO-upload.md | less ";
+    void rsi::Uploader::getHelp(Parameter howto_filename) const {
+        FileNotFoundException::assertion(howto_filename, __INFO__);
+        string cmd = "cat " + howto_filename + " | less ";
         SystemException::assertion(cmd.c_str(), __INFO__);
     }
 
