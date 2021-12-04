@@ -33,6 +33,7 @@
 #include <extras/interfaces.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/Semaphores.hpp>
+#include <extras/status/help.hpp>
 #include <iostream>
 #include <sstream>
 #include <netinet/in.h>
@@ -122,7 +123,8 @@ namespace extras {
          *   ss >> prg >> filename >> ip >> port;
          *
          */
-        abstract class Uploader implements UploaderInterface {
+        abstract class Uploader implements UploaderInterface
+            with HelpInterface {
         protected:
             Parameters _parameters;
             struct sockaddr_in _server_addr;
@@ -139,6 +141,7 @@ namespace extras {
             virtual Parameter ip() const override { return _parameters[2]; };
             virtual Parameter port() const override { return _parameters[3]; };
 
+            virtual void help() const override;
         };
 
         /**
