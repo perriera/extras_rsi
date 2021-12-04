@@ -27,7 +27,7 @@
 #include <iostream>
 #include <filesystem>
 #include <extras/status/StatusLine.hpp>
-#include <extras_arc/parcel/Wrap.hpp>
+#include <extras_arc/wrap.hpp>
 #include <extras/filesystem/system.hpp>
 
 using namespace std;
@@ -42,8 +42,8 @@ namespace extras {
      * @return rsi::Lock
      */
     rsi::Lock rsi::DownloaderClient::lock(const rsi::Lock& lock) const {
-        arc::ParcelImploder parcelImploder;
-        auto wrappedName = parcelImploder.wrapped(lock);
+        arc::ParcelImploder parcelImploder(lock);
+        auto wrappedName = parcelImploder.wrapped();
         write_file_block(wrappedName);
         return lock;
     }
@@ -55,10 +55,10 @@ namespace extras {
      * @return rsi::Lock
      */
     rsi::Lock rsi::DownloaderClient::unlock(const rsi::Lock& lock) const {
-        arc::ParcelImploder parcelImploder;
-        parcelImploder.unWrap(lock);
-        parcelImploder.merge(lock);
-        parcelImploder.clean(lock);
+        arc::ParcelImploder parcelImploder(lock);;
+        parcelImploder.unWrap();
+        parcelImploder.merge();
+        parcelImploder.clean();
         std::cout << extras::pass(lock) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
         std::string msg = "downloader completed";

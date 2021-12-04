@@ -26,7 +26,7 @@
 #include <iostream>
 #include <filesystem>
 #include <extras/status/StatusLine.hpp>
-#include <extras_arc/parcel/Wrap.hpp>
+#include <extras_arc/wrap.hpp>
 #include <extras/filesystem/system.hpp>
 
 using namespace std;
@@ -79,8 +79,8 @@ namespace extras {
      * @return rsi::Lock
      */
     rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) const {
-        arc::ParcelImploder parcelImploder;
-        auto wrappedName = parcelImploder.wrapped(lock);
+        arc::ParcelImploder parcelImploder(lock);;
+        auto wrappedName = parcelImploder.wrapped();
         return write_file_block(wrappedName);
     }
 
@@ -90,10 +90,10 @@ namespace extras {
      * @return rsi::Lock
      */
     rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock&) const {
-        arc::ParcelImploder parcelImploder;
-        parcelImploder.unWrap(filename());
-        parcelImploder.merge(filename());
-        auto original = parcelImploder.clean(filename());
+        arc::ParcelImploder parcelImploder(filename());;
+        parcelImploder.unWrap();
+        parcelImploder.merge();
+        auto original = parcelImploder.clean();
         send_line_block("uploader completed");
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
