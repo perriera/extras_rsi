@@ -1,94 +1,29 @@
-## HOWTO-parcel.md
-This package provides a convenient method of converting a binary into it's hexadecimal equivalent. This is ideal for managing files over a socket connection as more often than not issues arise with sending/receiving pure binary files over a socket connection. By converting to text/hexadecimal format first, a lot of errors can be isolated but being able to see just what is transpiring over a socket connection. There maybe other applications for this utility as well. 
+## HOWTO-vendor.md
+This vendor utility allows the developer to quickly vendor a file, (binary or otherwise) over a socket connection. By **vendor** we mean it will perform whatever changes are necessary while the file is on the server. See the VendorServer::transfer() method for more on this. When the vendor portion is completed the updates to the file must be saved to the same file, (this allows the download_server to safely assume the filename). To make this work, the vendor utility is divided into two parts, one for the client and one for the server, (known as the **vendor_client** and **vendor_server**, respectively), (See **HOWTO-socketpool.md** for more on port allocation, synchronization and locks). 
 
-## Parcel
-The parcel utility manages a hexadecimal version of a given binary file. 
+**Note:** This utility is part of a upload/vendor/download trio of utilities that are designed to allow the client of a particular website to be able to upload only those files necessary for processing. Then when the vendor processing is completed the download portion of the trio will automatically restore the contents of the original zip archive with only those files that were sent for processing being altered. This ensures that client specific files, (that may contain sensitive information such sources files, SSL certificates or other files of a sensitive nature) are never uploaded to the server. In this way both the client's and the server's proprietary information is preserved and protected. It is up to the client however to verify, (and/or alter) the **isImplodable** method of the **UploaderInterface** to ensure which files will be uploaded for processing. Further, the **transfer** method of the **VendorServer** for the server portion might need customization as it will be the code running on the server itself. 
 
-	parcel <filename> [-pack|-unpack|-verify|-clean|-unzip|-merge|-help] 
+## vendor_client
+The **vendor_client** utility requires the following parameters:
 
-The operations are placed at the end of the command as a convenience.
+	vendor_client <filename> <ip> <port> | -help
 
-### -pack
-> This parameter creates a hexadecimal version of a given binary file. 
+Where:
 
-	build/parcel data/exparx.webflow.zip -pack 
+ - **filename** usually refers to a zip file
+ - **ip** usually refers an ip address, (in numeric IP format, not DNS format)
+ - **port** is a number between 0-65535
 
-> In the same directory that the file exists two more files will be created:      
+## vendor_server
+The **vendor_client** utility requires the following parameters:
 
-	data/exparx.webflow.zip
-	data/exparx.webflow.zip_packed.txt
-	data/exparx.webflow.zip_hexed.txt   
+	vendor_server <filename> <ip> <port> | -help
 
-### -cat
-> To see the content of the packed file you can use the -cat parameter
+Where:
 
-	build/parcel data/exparx.webflow.zip -cat
-Only the contents of the **_packed.txt** are displayed
-
-
-	 : 1 / 11072 : 504b03040a0000000000d9866153000000000000000000000000040000006373732f504b03040a00 : 243d
-	 : 2 / 11072 : 00000000d9866153570e66405c1e00005c1e0000110000006373732f6e6f726d616c697a652e6373 : 11d1
-	 : 3 / 11072 : 732f2a21206e6f726d616c697a652e6373732076332e302e33207c204d4954204c6963656e736520 : 3b27
-	 : 4 / 11072 : 7c206769746875622e636f6d2f6e65636f6c61732f6e6f726d616c697a652e637373202a2f0a2f2a : e3c
-	 : 5 / 11072 : 2a0a202a20312e205365742064656661756c7420666f6e742066616d696c7920746f2073616e732d : a5e1
-	 : 6 / 11072 : 73657269662e0a202a20322e2050726576656e7420694f5320616e6420494520746578742073697a : dbe7
-	 : 7 / 11072 : 652061646a75737420616674657220646576696365206f7269656e746174696f6e206368616e6765 : 7804
-
-### -unpack
-> To convert the **_packed.txt** file back into it's original binary format:
-
-	build/parcel data/exparx.webflow.zip -unpack
-
-Results in:
-
-	data/exparx.webflow.zip_packed.txt
-	data/exparx.webflow.zip_duplicate.bin
-
-As a precaution the original file is not overwritten, (to do that use the -merge command below)
-
-### -verify
-> To make sure the duplicate and the original are identical use the -verify option
-
-	build/parcel data/exparx.webflow.zip -verify
-
-Results in:
-
-	No differences detected
-	data/exparx.webflow.zip_packed.txt
-	data/exparx.webflow.zip_duplicate.bin
-
-### -merge
-> This operation will remove the original and replace it with the duplicate.
-
-	build/parcel data/exparx.webflow.zip -merge
-
-Results in:
-
-	build/parcel data/exparx.webflow.zip
-
-### -clean
-> This operation will remove the hex, packed and duplicate versions of the original.
-
-	build/parcel data/exparx.webflow.zip -clean
-
-Results in:
-
-	build/parcel data/exparx.webflow.zip
-
-### -unzip
-> This operation will unzip the contents of the duplicate file but do it into the /tmp directory. It's purpose is just to save you a step when making sure that the file was sent over the socket that it arrived as expected.
-
-	build/parcel data/exparx.webflow.zip -unzip
-
-Results in:
-
-	 creating: /tmp/css/
-	 extracting: /tmp/css/normalize.css  
-	 extracting: /tmp/css/webflow.css    
-	 extracting: /tmp/css/exparx.webflow.css  
-	 creating: /tmp/js/
-	 extracting: /tmp/js/webflow.js   
-	  etc etc ...  
+ - **filename** usually refers to a zip file
+ - **ip** usually refers an ip address, (in numeric IP format, not DNS format)
+ - **port** is a number between 0-65535
 
 ### -help
 > Displays this help text, (provided this file is in the same directory).
