@@ -25,19 +25,45 @@
 
 using namespace extras;
 using namespace fakeit;
-
+// 
 SCENARIO("Test SocketPoolInterface: new script", "[SocketPoolParameters]") {
 
-    rsi::SocketRequestTypeList _requests = {
-        "upload", "data/exparx.webflow.zip",
-        "vendor",
-        "download", "data/exparx.webflow.zip" };
+    // "/home/perry/Projects/extras_rsi/build/socketpool_client 137.184.218.130 8080 data/exparx.webflow.zip upload vendor download "
 
+    rsi::SocketRequestTypeList _requests = {
+        "/home/perry/Projects/extras_rsi/build/socketpool_client",
+        "137.184.218.130",
+        "8080",
+        "data/exparx.webflow.zip",
+        "upload",
+        "vendor",
+        "download"
+    };
+
+    rsi::LinePacket linePacket = "upload data/exparx.webflow.zip";
+    rsi::LinePacket _sentLine;
+
+    Mock<rsi::LineBlockInterface> lineBlock;
+    When(Method(lineBlock, send_line_block))
+        .AlwaysDo(
+            [&_sentLine](const rsi::LinePacket& linePacket) {
+                _sentLine = linePacket;
+            });
+    When(Method(lineBlock, read_line_block))
+        .AlwaysDo(
+            [&_sentLine]() {
+                return _sentLine;
+            });
+
+    rsi::LineBlockInterface& i_lineBlock = lineBlock.get();
 
     Mock<rsi::SocketPoolInterface> mock;
     When(Method(mock, transfer))
         .AlwaysDo(
-            [&_requests]() {
+            [&_requests, &i_lineBlock]() {
+
+
+                // i_lineBlock.send_line_block();
                 // std::string msg = *this;
                 // send_line(msg, this->_client_socket);
                 // RequestTypeCompilation compilation;

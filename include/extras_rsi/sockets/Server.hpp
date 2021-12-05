@@ -86,6 +86,8 @@ namespace extras {
             virtual void accept() override;
             virtual void close() const override;
             virtual void transfer() const override;
+            virtual void send_line_block(const LinePacket& msg) const override;
+            virtual LinePacket read_line_block() const override;
 
         };
 

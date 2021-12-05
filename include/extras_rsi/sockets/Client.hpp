@@ -74,12 +74,12 @@ namespace extras {
             SocketPoolClient(const std::string& msg, const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {
                 std::stringstream ss;
                 ss << msg;
-                ss >> *this;
+                ss >> _socketParaneters;
             }
             operator std::string() const {
                 std::string msg;
                 std::stringstream ss;
-                ss << *this;
+                ss << _socketParaneters;
                 std::getline(ss, msg);
                 return msg;
             }
@@ -87,6 +87,8 @@ namespace extras {
             virtual void close() const override;
             virtual void transfer() const override;
 
+            virtual void send_line_block(const LinePacket& msg) const override;
+            virtual LinePacket read_line_block() const override;
         };
 
 

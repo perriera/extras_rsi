@@ -4,8 +4,8 @@
 > The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), </br>
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v4.5.0 -m "Added LineBlockInterface/FileBlockInterface"</br>
-> > git push origin v4.5.0
+> > git tag -a v4.6.0 -m "Added SocketParaneters"</br>
+> > git push origin v4.6.0
 > 
 
 IMPORTANT: 
@@ -28,6 +28,10 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 4.6.0 (2021-12-05)
+## Refactored  
+- Added SocketParaneters
 
 #### 4.5.0 (2021-12-04)
 ## Refactored  
@@ -277,7 +281,8 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/extras_rsi/compare/v4.5.0...HEAD
+[Unreleased]: https://github.com/perriera/extras_rsi/compare/v4.6.0...HEAD
+[4.6.0]: https://github.com/perriera/extras_rsi/compare/v4.5.0...v4.6.0
 [4.5.0]: https://github.com/perriera/extras_rsi/compare/v4.4.0...v4.5.0
 [4.4.0]: https://github.com/perriera/extras_rsi/compare/v4.3.0...v4.4.0
 [4.3.0]: https://github.com/perriera/extras_rsi/compare/v4.2.0...v4.3.0

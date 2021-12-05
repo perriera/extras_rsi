@@ -45,10 +45,14 @@ namespace extras {
 
         void SocketPoolClient::close() const { ::close(this->_client_socket); }
 
+        /**
+         * @brief SocketPoolClient::transfer()
+         *
+         */
         void SocketPoolClient::transfer() const {
             try {
                 std::string msg = *this;
-                send_line(msg, this->_client_socket);
+                send_line_block(msg);
                 RequestTypeCompilation compilation;
                 compilation.readSocket(this->_client_socket);
                 auto list = compilation.compilation();
@@ -66,6 +70,23 @@ namespace extras {
             }
         }
 
+        /**
+         * @brief send_line_block()
+         *
+         * @param msg
+         */
+        void  SocketPoolClient::send_line_block(const rsi::LinePacket& msg) const {
+            extras::rsi::send_line(msg, this->_client_socket);
+        }
+
+        /**
+         * @brief read_line_block()
+         *
+         * @return LinePacket
+         */
+        LinePacket  SocketPoolClient::read_line_block() const {
+            return extras::rsi::read_line(this->_client_socket);
+        }
 
     }  // namespace rsi
 }  // namespace extras
