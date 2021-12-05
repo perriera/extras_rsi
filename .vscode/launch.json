@@ -15,7 +15,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/run-unittests-extras_rsi",
             "args": [
-                "[UploaderParameters]"
+                "[SocketPoolParameters]"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

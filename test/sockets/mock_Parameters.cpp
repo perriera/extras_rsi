@@ -25,10 +25,12 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock ParametersInterface: basic upload/vendor/download", "[ParametersInterface]") {
+SCENARIO("Mock ParametersInterface: basic upload/vendor/download", "[SocketPoolParameters]") {
 
-    const char* argv[] = { "socketclient", "127.0.0.1", "8080",
-                            "send.txt",     "convert",   "download" };
+    const char* argv[] = {
+        "build/socketpool_client", "137.184.218.130", "8080",
+        "data/exparx.webflow.zip", "upload", "vendor", "download"
+    };
     int argc = sizeof(argv) / sizeof(argv[0]);
     Mock<rsi::sockets::ParametersInterface> mock;
     When(Method(mock, parameters))
