@@ -48,20 +48,9 @@ SCENARIO("Mock UploaderInterface: basic2", "[UploaderInterface]") {
     rsi::Parameter _port = "8080";
 
     Mock<rsi::UploaderInterface> mock;
-    const char* argv[] = { _program.c_str(), _ip.c_str(), _port.c_str(),
-                            _filename.c_str(),   "upload",  "vendor", "download" };
-    int argc = sizeof(argv) / sizeof(argv[0]);
-
-    When(Method(mock, program)).Return(_program);
-    When(Method(mock, filename)).Return(_filename);
-    When(Method(mock, ip)).Return(_ip);
-    When(Method(mock, port)).Return(_port);
-
-    When(Method(mock, parameters))
-        .AlwaysDo(
-            [](int, char const* []) {
-                return rsi::Parameters();
-            });
+    // const char* argv[] = { _program.c_str(), _ip.c_str(), _port.c_str(),
+    //                         _filename.c_str(),   "upload",  "vendor", "download" };
+    // int argc = sizeof(argv) / sizeof(argv[0]);
 
     When(Method(mock, connect))
         .AlwaysDo(
@@ -97,21 +86,12 @@ SCENARIO("Mock UploaderInterface: basic2", "[UploaderInterface]") {
     rsi::UploaderInterface& i = mock.get();
 
     REQUIRE(fs::exists(original));
-    REQUIRE(i.parameters(argc, argv) == rsi::Parameters());
-    REQUIRE(i.program() == _program);
-    REQUIRE(i.filename() == _filename);
-    REQUIRE(i.ip() == _ip);
-    REQUIRE(i.port() == _port);
     i.connect();
     i.transfer();
     i.send_file_block("filename.txt");
     i.write_file_block("filename.txt");
     i.close();
     REQUIRE(fs::exists(original));
-    Verify(Method(mock, parameters));
-    Verify(Method(mock, program));
-    Verify(Method(mock, filename));
-    Verify(Method(mock, ip));
     Verify(Method(mock, connect));
     Verify(Method(mock, transfer));
     Verify(Method(mock, send_file_block));
