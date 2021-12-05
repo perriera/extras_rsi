@@ -38,13 +38,13 @@ SCENARIO("Test FileBlockInterface: new script2", "[SocketPoolParameters]") {
             });
     When(Method(mock, write_file_block))
         .AlwaysDo(
-            [&_sentFile]() {
+            [&_sentFile](const rsi::FilePacket&) {
                 return _sentFile;
             });
 
     rsi::FileBlockInterface& i = mock.get();
     i.send_file_block(filePacket);
-    REQUIRE(i.write_file_block() == filePacket);
+    REQUIRE(i.write_file_block(filePacket) == filePacket);
     Verify(Method(mock, send_file_block));
     Verify(Method(mock, write_file_block));
 }

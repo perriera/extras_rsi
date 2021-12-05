@@ -61,7 +61,7 @@ namespace extras {
              *
              * @return FilePacket
              */
-            virtual FilePacket write_file_block() const pure;
+            virtual FilePacket write_file_block(const FilePacket& msg) const pure;
         };
 
 

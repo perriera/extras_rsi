@@ -69,17 +69,17 @@ SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
     arc::BinFile internet;
     rsi::UploaderStatus status;
 
-    Mock<rsi::UploaderInterface> uploader;
     Mock<rsi::LineBlockInterface> lineBlock;
+    Mock<rsi::FileBlockInterface> fileBlock;
 
-    When(Method(uploader, send_file_block))
+    When(Method(fileBlock, send_file_block))
         .AlwaysDo(
             [&internet](const rsi::Filename& filename) {
                 ifstream in(filename);
                 arc::BinFile binFile = arc::ConvertFile().loadBin(in);
                 internet = binFile;
             });
-    When(Method(uploader, write_file_block))
+    When(Method(fileBlock, write_file_block))
         .AlwaysDo(
             [&internet](const rsi::Filename& filename) {
                 if (!fs::exists(server_dir)) {
@@ -107,8 +107,8 @@ SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
             });
 
     // clean();
-    rsi::UploaderInterface& i_uploader = uploader.get();
     rsi::LineBlockInterface& i_lineBlock = lineBlock.get();
+    rsi::FileBlockInterface& i_fileBlock = fileBlock.get();
 
     /**
      * @brief Mock<rsi::SemaphoreInterface> client_lock;
@@ -117,12 +117,12 @@ SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
     Mock<rsi::SemaphoreInterface> client_lock;
     When(Method(client_lock, lock))
         .AlwaysDo(
-            [&i_uploader](const rsi::Lock& lock) {
+            [&i_fileBlock](const rsi::Lock& lock) {
                 rsi::FileNotFoundException::assertion(lock, __INFO__);
                 arc::ParcelImploder parcelImploder(lock);
                 auto wrapped = parcelImploder.wrap();
                 rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-                i_uploader.send_file_block(wrapped);
+                i_fileBlock.send_file_block(wrapped);
                 return lock;
             });
     When(Method(client_lock, unlock))
@@ -144,10 +144,10 @@ SCENARIO("Mock SemaphoreInterface: Uploader", "[SemaphoreInterface]") {
     Mock<rsi::SemaphoreInterface> server_lock;
     When(Method(server_lock, lock))
         .AlwaysDo(
-            [&i_uploader](const rsi::Lock& lock) {
+            [&i_fileBlock](const rsi::Lock& lock) {
                 arc::ParcelImploder parcelImploder(lock);
                 auto wrappedName = parcelImploder.wrapped();
-                return i_uploader.write_file_block(wrappedName);
+                return i_fileBlock.write_file_block(wrappedName);
             });
     When(Method(server_lock, unlock))
         .AlwaysDo(

@@ -32,6 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
+#include <extras_rsi/sockets/FileBlock.hpp>
 #include <extras_rsi/uploader/Parameters.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/Semaphores.hpp>
@@ -70,22 +71,6 @@ namespace extras {
             virtual void transfer() const pure;
 
             /**
-             * @brief send_file_block()
-             *
-             * Send a file across the socket but block until it has been received.
-             *
-             */
-            virtual void send_file_block(const Filename& filename) const pure;
-
-            /**
-             * @brief write_file_block()
-             *
-             * Write a file to the local hard disk and block until it is completely recieved.
-             *
-             */
-            virtual Filename write_file_block(const Filename& filename) const pure;
-
-            /**
              * @brief transfer()
              * @note safely closes all sockets
              */
@@ -103,6 +88,7 @@ namespace extras {
         abstract class Uploader implements UploaderInterface
             with uploader::ParametersInterface
             with LineBlockInterface
+            with FileBlockInterface
             with HelpInterface {
         protected:
             Parameters _parameters;
@@ -174,8 +160,8 @@ namespace extras {
             virtual void connect() override;
             virtual void transfer() const override;
             virtual void close() const override;
-            virtual void send_file_block(const Filename& filename) const override;
-            virtual Filename write_file_block(const Filename& filename) const override;
+            virtual void send_file_block(const FilePacket& filename) const override;
+            virtual FilePacket write_file_block(const FilePacket& filename) const override;
             virtual void send_line_block(const UploaderStatus& msg) const override;
             virtual UploaderStatus read_line_block() const override;
         };
