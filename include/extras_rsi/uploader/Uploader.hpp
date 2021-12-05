@@ -31,6 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
+#include <extras_rsi/uploader/Parameters.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/Semaphores.hpp>
 #include <extras/status/help.hpp>
@@ -52,16 +53,6 @@ namespace extras {
         using UploaderStatus = std::string;
 
         interface UploaderInterface {
-            /**
-             * @brief parameters()
-             * @note collect the parameters required for the Uploader from the
-             * tradional C/C++ main() arguments.
-             */
-            virtual Parameters parameters(int argc, char const* argv[]) pure;
-            virtual Parameter program() const pure;
-            virtual Parameter filename() const pure;
-            virtual Parameter ip() const pure;
-            virtual Parameter port() const pure;
 
             /**
              * @brief connect()
@@ -119,11 +110,13 @@ namespace extras {
         /**
          * @brief abstract class Uploader
          *
-         *   build/rsi_client 127.0.0.1 8080 transfer send.txt
+         * ex.
+         *   build/uploader_client data/exparx.webflow.zip 137.184.218.130 8080
          *   ss >> prg >> filename >> ip >> port;
          *
          */
         abstract class Uploader implements UploaderInterface
+            with uploader::ParametersInterface
             with HelpInterface {
         protected:
             Parameters _parameters;
@@ -139,8 +132,12 @@ namespace extras {
             virtual Parameter filename() const override {
                 return _parameters[1];
             };
-            virtual Parameter ip() const override { return _parameters[2]; };
-            virtual Parameter port() const override { return _parameters[3]; };
+            virtual Parameter ip() const override {
+                return _parameters[2];
+            };
+            virtual Parameter port() const override {
+                return _parameters[3];
+            };
 
             virtual void  help() const {
                 getHelp("HOWTO-upload.md");
