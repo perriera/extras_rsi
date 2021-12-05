@@ -50,7 +50,7 @@ SCENARIO("Mock UploaderInterface: basic2", "[UploaderInterface]") {
     Mock<rsi::UploaderInterface> mock;
     const char* argv[] = { _program.c_str(), _ip.c_str(), _port.c_str(),
                             _filename.c_str(),   "upload",  "vendor", "download" };
-    int argc = 7;
+    int argc = sizeof(argv) / sizeof(argv[0]);
 
     When(Method(mock, program)).Return(_program);
     When(Method(mock, filename)).Return(_filename);

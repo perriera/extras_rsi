@@ -49,10 +49,10 @@ namespace extras {
                 friend std::istream& operator>>(std::istream& in,
                     ParametersInterface& obj);
                 virtual Parameters parameters(int argc, char const* argv[]) pure;
-                virtual const Parameter& program() const pure;
-                virtual const Parameter& ip() const pure;
-                virtual const Parameter& port() const pure;
-                virtual const Parameter& filename() const pure;
+                virtual  Parameter program() const pure;
+                virtual  Parameter ip() const pure;
+                virtual  Parameter port() const pure;
+                virtual  Parameter filename() const pure;
                 virtual const SocketRequestTypeList& requests() const pure;
 
                 virtual void setProgram(const Parameter& program) pure;

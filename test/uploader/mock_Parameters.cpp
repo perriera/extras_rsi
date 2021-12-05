@@ -27,17 +27,42 @@ using namespace fakeit;
 
 SCENARIO("Mock ParametersInterface: uploader parameters", "[UploaderParameters]") {
 
+    // define the parameters 
     const char* argv[] = {
          "build/uploader_client", "data/exparx.webflow.zip", "137.184.218.130", "8080" };
-    int argc = 6;
+    int argc = sizeof(argv) / sizeof(argv[0]);
+    Parameters _parameters;
+
+    // define the mock 
     Mock<rsi::uploader::ParametersInterface> mock;
     When(Method(mock, parameters))
         .AlwaysDo(
-            [](int, char const* []) {
-                return rsi::Parameters();
+            [&_parameters](int argc, char const* argv[]) {
+                rsi::Parameters result;
+                for (int i = 0; i < argc; i++) {
+                    auto arg = argv[i];
+                    result.push_back(arg);
+                }
+                _parameters = result;
+                return _parameters;
             });
 
+    // define the instance 
     rsi::uploader::ParametersInterface& i = mock.get();
-    REQUIRE(i.parameters(argc, argv) == rsi::Parameters());
+
+    // test the expected results
+    REQUIRE(i.parameters(argc, argv) == _parameters);
+    When(Method(mock, program)).AlwaysReturn(_parameters[0]);
+    When(Method(mock, ip)).AlwaysReturn(_parameters[1]);
+    When(Method(mock, port)).AlwaysReturn(_parameters[2]);
+    When(Method(mock, filename)).AlwaysReturn(_parameters[3]);
+    REQUIRE(i.program() == _parameters[0]);
+    REQUIRE(i.ip() == _parameters[1]);
+    REQUIRE(i.port() == _parameters[2]);
+    REQUIRE(i.filename() == _parameters[3]);
     Verify(Method(mock, parameters));
+    Verify(Method(mock, program));
+    Verify(Method(mock, ip));
+    Verify(Method(mock, port));
+    Verify(Method(mock, filename));
 }

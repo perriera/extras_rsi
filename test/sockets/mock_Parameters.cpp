@@ -29,7 +29,7 @@ SCENARIO("Mock ParametersInterface: basic upload/vendor/download", "[ParametersI
 
     const char* argv[] = { "socketclient", "127.0.0.1", "8080",
                             "send.txt",     "convert",   "download" };
-    int argc = 6;
+    int argc = sizeof(argv) / sizeof(argv[0]);
     Mock<rsi::ParametersInterface> mock;
     When(Method(mock, parameters))
         .AlwaysDo(
