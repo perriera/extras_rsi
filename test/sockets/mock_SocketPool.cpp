@@ -31,9 +31,14 @@ SCENARIO("Test SocketPoolInterface: new script", "[SocketPoolParameters]") {
     // "/home/perry/Projects/extras_rsi/build/socketpool_client 137.184.218.130 8080 data/exparx.webflow.zip upload vendor download "
 
     rsi::SocketRequestTypeList _requests = {
-        "upload", "data/exparx.webflow.zip",
+        "/home/perry/Projects/extras_rsi/build/socketpool_client",
+        "137.184.218.130",
+        "8080",
+        "data/exparx.webflow.zip",
+        "upload",
         "vendor",
-        "download", "data/exparx.webflow.zip" };
+        "download"
+    };
 
     rsi::LinePacket linePacket = "upload data/exparx.webflow.zip";
     rsi::LinePacket _sentLine;
