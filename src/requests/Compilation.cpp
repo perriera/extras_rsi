@@ -20,7 +20,7 @@
 #include <unistd.h>
 
 #include <extras_rsi/sockets/Client.hpp>
-#include <extras_rsi/sockets/RequestType.hpp>
+#include <extras_rsi/requests/RequestType.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
@@ -30,6 +30,13 @@ using namespace std;
 namespace extras {
     namespace rsi {
 
+        /**
+         * @brief RequestTypeCompilation ostream
+         *
+         * @param out
+         * @param obj
+         * @return std::ostream&
+         */
         std::ostream& operator<<(std::ostream& out, const RequestTypeCompilation& obj) {
             RequestTypeList list = obj.compilation();
             out << list.size() << endl;
@@ -39,6 +46,13 @@ namespace extras {
             return out;
         }
 
+        /**
+         * @brief RequestTypeCompilation istream
+         *
+         * @param out
+         * @param obj
+         * @return std::ostream&
+         */
         std::istream& operator>>(std::istream& in, RequestTypeCompilation& obj) {
             int size = 0;
             in >> size;
@@ -54,6 +68,10 @@ namespace extras {
             return in;
         }
 
+        /**
+         * @brief RequestTypeCompilation::send_line_block
+         *
+         */
         void RequestTypeCompilation::send_line_block(const LinePacket&) const {
             std::stringstream ss;
             ss << *this;
@@ -61,6 +79,10 @@ namespace extras {
             send_line(line, _socket);
         }
 
+        /**
+         * @brief RequestTypeCompilation::read_line_block
+         *
+         */
         LinePacket RequestTypeCompilation::read_line_block() {
             std::string line = read_line(_socket);
             line = extras::replace_all(line, ";", "\n");
@@ -68,23 +90,6 @@ namespace extras {
             ss << line;
             ss >> *this;
             return ss.str();
-        }
-
-        RequestTypeCompilation RequestTypeCompiler::compile(
-            const sockets::ParametersInterface& client,
-            PortAuthorityInterface& portAuthority) const {
-            rsi::RequestTypeList list;
-            for (auto request : client.requests()) {
-                auto port = portAuthority.request();
-                std::stringstream ss;
-                ss << request << ' ';
-                ss << client.filename() << ' ';
-                ss << client.ip() << ' ';
-                ss << port;
-                std::string line = ss.str();
-                list.push_back(line);
-            }
-            return rsi::RequestTypeCompilation(list, _socket);
         }
 
     }  // namespace rsi

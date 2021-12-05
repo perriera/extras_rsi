@@ -20,7 +20,7 @@
 #include <unistd.h>
 
 #include <extras_rsi/sockets/Client.hpp>
-#include <extras_rsi/sockets/RequestType.hpp>
+#include <extras_rsi/requests/RequestType.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
