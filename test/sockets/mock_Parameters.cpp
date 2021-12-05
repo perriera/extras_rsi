@@ -54,5 +54,17 @@ SCENARIO("Mock ParametersInterface: basic upload/vendor/download", "[SocketPoolP
 
     rsi::sockets::ParametersInterface& i = mock.get();
     REQUIRE(i.parameters(argc, argv) == _parameters);
+    When(Method(mock, program)).AlwaysReturn(_parameters[0]);
+    When(Method(mock, ip)).AlwaysReturn(_parameters[1]);
+    When(Method(mock, port)).AlwaysReturn(_parameters[2]);
+    When(Method(mock, requests)).AlwaysReturn(_requests);
+    REQUIRE(i.program() == _parameters[0]);
+    REQUIRE(i.ip() == _parameters[1]);
+    REQUIRE(i.port() == _parameters[2]);
+    REQUIRE(i.requests() == _requests);
     Verify(Method(mock, parameters));
+    Verify(Method(mock, program));
+    Verify(Method(mock, ip));
+    Verify(Method(mock, port));
+    Verify(Method(mock, requests));
 }
