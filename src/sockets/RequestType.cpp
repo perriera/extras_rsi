@@ -30,8 +30,7 @@ using namespace std;
 namespace extras {
     namespace rsi {
 
-        std::ostream& operator<<(std::ostream& out,
-            const RequestTypeCompilation& obj) {
+        std::ostream& operator<<(std::ostream& out, const RequestTypeCompilation& obj) {
             RequestTypeList list = obj.compilation();
             out << list.size() << endl;
             for (auto line : list) {
@@ -40,8 +39,7 @@ namespace extras {
             return out;
         }
 
-        std::istream& operator>>(std::istream& in,
-            RequestTypeCompilation& obj) {
+        std::istream& operator>>(std::istream& in, RequestTypeCompilation& obj) {
             int size = 0;
             in >> size;
             RequestType line;
