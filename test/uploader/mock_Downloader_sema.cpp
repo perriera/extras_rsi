@@ -70,15 +70,16 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
     arc::BinFile internet;
     rsi::UploaderStatus status;
 
-    Mock<rsi::UploaderInterface> semaphore;
-    When(Method(semaphore, send_file_block))
+    Mock<rsi::UploaderInterface> uploader;
+    Mock<rsi::LineBlockInterface> lineBlock;
+    When(Method(uploader, send_file_block))
         .AlwaysDo(
             [&internet](const rsi::Filename& filename) {
                 ifstream in(filename);
                 arc::BinFile binFile = arc::ConvertFile().loadBin(in);
                 internet = binFile;
             });
-    When(Method(semaphore, write_file_block))
+    When(Method(uploader, write_file_block))
         .AlwaysDo(
             [&internet](const rsi::Filename& filename) {
                 if (!fs::exists(client_dir)) {
@@ -92,12 +93,12 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
                 internet.clear();
                 return target;
             });
-    When(Method(semaphore, send_line_block))
+    When(Method(lineBlock, send_line_block))
         .AlwaysDo(
             [&status](const rsi::UploaderStatus& msg) {
                 status = msg;
             });
-    When(Method(semaphore, read_line_block))
+    When(Method(lineBlock, read_line_block))
         .AlwaysDo(
             [&status]() {
                 auto msg = status;
@@ -105,11 +106,8 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
                 return msg;
             });
 
-    rsi::UploaderInterface& i_semaphore = semaphore.get();
-    // i_semaphore.send(filename);
-    // REQUIRE(extras::contains(i_semaphore.write(filename), client_dir));
-    // Verify(Method(semaphore, send));
-    // Verify(Method(semaphore, write));
+    rsi::UploaderInterface& i_uploader = uploader.get();
+    rsi::LineBlockInterface& i_lineBlock = lineBlock.get();
 
     /**
      * @brief Mock<rsi::SemaphoreInterface> client_lock;
@@ -118,15 +116,15 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
     Mock<rsi::SemaphoreInterface> client_lock;
     When(Method(client_lock, lock))
         .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& lock) {
+            [&i_uploader](const rsi::Lock& lock) {
                 arc::ParcelImploder parcelImploder(lock);
                 auto wrappedName = parcelImploder.wrapped();
-                i_semaphore.write_file_block(wrappedName);
+                i_uploader.write_file_block(wrappedName);
                 return lock;
             });
     When(Method(client_lock, unlock))
         .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& lock) {
+            [&i_lineBlock](const rsi::Lock& lock) {
                 arc::ParcelImploder parcelImploder(lock);
                 parcelImploder.unWrap();
                 parcelImploder.merge();
@@ -134,7 +132,7 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
                 std::cout << extras::pass(lock) << std::endl;
                 std::cout << extras::pass("write_file successful") << std::endl;
                 std::string msg = "downloader completed";
-                i_semaphore.send_line_block(msg);
+                i_lineBlock.send_line_block(msg);
                 return lock;
             });
 
@@ -145,19 +143,19 @@ SCENARIO("Mock SemaphoreInterface: Downloader", "[SemaphoreInterface]") {
     Mock<rsi::SemaphoreInterface> server_lock;
     When(Method(server_lock, lock))
         .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& lock) {
+            [&i_uploader](const rsi::Lock& lock) {
                 rsi::FileNotFoundException::assertion(lock, __INFO__);
                 arc::ParcelImploder parcelImploder(lock);
                 auto wrapped = parcelImploder.wrap();
                 rsi::FileNotFoundException::assertion(wrapped, __INFO__);
-                i_semaphore.send_file_block(wrapped);
+                i_uploader.send_file_block(wrapped);
                 std::cout << extras::pass("send_file2 successful") << std::endl;
                 return lock;
             });
     When(Method(server_lock, unlock))
         .AlwaysDo(
-            [&i_semaphore](const rsi::Lock& lock) {
-                std::string line = i_semaphore.read_line_block();
+            [&i_lineBlock](const rsi::Lock& lock) {
+                std::string line = i_lineBlock.read_line_block();
                 arc::ParcelImploder parcelImploder(lock);
                 parcelImploder.clean();
                 auto rm_cmd = "rm " + lock;

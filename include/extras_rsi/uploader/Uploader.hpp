@@ -31,6 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
+#include <extras_rsi/sockets/LineBlock.hpp>
 #include <extras_rsi/uploader/Parameters.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/Semaphores.hpp>
@@ -77,28 +78,12 @@ namespace extras {
             virtual void send_file_block(const Filename& filename) const pure;
 
             /**
-             * @brief send_line_block()
-             *
-             * Send a line of text across the socket but block until it has been received.
-             *
-             */
-            virtual void send_line_block(const UploaderStatus& msg) const pure;
-
-            /**
              * @brief write_file_block()
              *
              * Write a file to the local hard disk and block until it is completely recieved.
              *
              */
             virtual Filename write_file_block(const Filename& filename) const pure;
-
-            /**
-             * @brief read_line_block()
-             *
-             * Read a line of text from the socket and block until it is completely recieved.
-             *
-             */
-            virtual UploaderStatus read_line_block() const pure;
 
             /**
              * @brief transfer()
@@ -117,6 +102,7 @@ namespace extras {
          */
         abstract class Uploader implements UploaderInterface
             with uploader::ParametersInterface
+            with LineBlockInterface
             with HelpInterface {
         protected:
             Parameters _parameters;
@@ -164,8 +150,8 @@ namespace extras {
             virtual void close() const override;
             virtual void send_file_block(const Filename& filename) const override;
             virtual Filename write_file_block(const Filename& filename) const override;
-            virtual void send_line_block(const UploaderStatus& msg) const override;
-            virtual UploaderStatus read_line_block() const override;
+            virtual void send_line_block(const LinePacket& msg) const override;
+            virtual LinePacket read_line_block() const override;
         };
 
         /**
