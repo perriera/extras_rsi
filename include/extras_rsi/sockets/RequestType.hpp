@@ -51,25 +51,21 @@ namespace extras {
          */
 
         interface RequestTypeCompilationInterface {
-            friend std::ostream& operator<<(
-                std::ostream& out, const RequestTypeCompilationInterface& obj);
-            friend std::istream& operator>>(std::istream& in,
-                RequestTypeCompilationInterface& obj);
             virtual void setCompilation(const RequestTypeList& list) pure;
             virtual RequestTypeList compilation() const pure;
             virtual void writeSocket(int socket) const pure;
             virtual void readSocket(int socket) pure;
-            bool operator==(const RequestTypeCompilationInterface& rhs) const {
-                return compilation() == rhs.compilation();
-            }
-
-            bool operator!=(const RequestTypeCompilationInterface& rhs) const {
-                return !(*this == rhs);
-            }
         };
 
+        /**
+         * @brief RequestTypeCompilation
+         *
+         */
         concrete class RequestTypeCompilation implements
             RequestTypeCompilationInterface {
+            friend std::ostream& operator<<(std::ostream& out, const RequestTypeCompilation& obj);
+            friend std::istream& operator>>(std::istream& in, RequestTypeCompilation& obj);
+
             RequestTypeList _requestTypeList;
 
         public:
@@ -93,6 +89,13 @@ namespace extras {
                 ss << *this;
                 return ss.str();
             }
+            bool operator==(const RequestTypeCompilation& rhs) const {
+                return compilation() == rhs.compilation();
+            }
+
+            bool operator!=(const RequestTypeCompilation& rhs) const {
+                return !(*this == rhs);
+            }
         };
 
         /**
@@ -106,6 +109,10 @@ namespace extras {
                 PortAuthorityInterface& portAuthority) const pure;
         };
 
+        /**
+         * @brief RequestTypeCompiler
+         *
+         */
         concrete class RequestTypeCompiler implements RequestTypeCompilerInterface {
         public:
             virtual RequestTypeCompilation compile(

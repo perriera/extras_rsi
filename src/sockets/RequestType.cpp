@@ -31,7 +31,7 @@ namespace extras {
     namespace rsi {
 
         std::ostream& operator<<(std::ostream& out,
-            const RequestTypeCompilationInterface& obj) {
+            const RequestTypeCompilation& obj) {
             RequestTypeList list = obj.compilation();
             out << list.size() << endl;
             for (auto line : list) {
@@ -41,7 +41,7 @@ namespace extras {
         }
 
         std::istream& operator>>(std::istream& in,
-            RequestTypeCompilationInterface& obj) {
+            RequestTypeCompilation& obj) {
             int size = 0;
             in >> size;
             RequestType line;
