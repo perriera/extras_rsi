@@ -58,7 +58,7 @@ namespace extras {
         extras::rsi::send_line(msg, this->_sockfd);
     }
 
-    rsi::UploaderStatus rsi::UploaderClient::read_line_block() const {
+    rsi::UploaderStatus rsi::UploaderClient::read_line_block() {
         return extras::rsi::read_line(this->_sockfd);
     }
 
@@ -73,7 +73,7 @@ namespace extras {
      * @param lock
      * @return rsi::Lock
      */
-    rsi::Lock rsi::UploaderClient::lock(const rsi::Lock& lock) const {
+    rsi::Lock rsi::UploaderClient::lock(const rsi::Lock& lock) {
         rsi::FileNotFoundException::assertion(lock, __INFO__);
         arc::ParcelImploder parcelImploder(lock);
         auto wrapped = parcelImploder.wrap();
@@ -88,7 +88,7 @@ namespace extras {
      * @param lock
      * @return rsi::Lock
      */
-    rsi::Lock rsi::UploaderClient::unlock(const rsi::Lock& lock) const {
+    rsi::Lock rsi::UploaderClient::unlock(const rsi::Lock& lock) {
         auto status = read_line_block();
         arc::ParcelImploder parcelImploder(lock);;
         parcelImploder.clean();
@@ -103,7 +103,7 @@ namespace extras {
      * @brief UploaderClient::transfer()
      *
      */
-    void rsi::UploaderClient::transfer() const {
+    void rsi::UploaderClient::transfer() {
         unlock(lock(filename()));
     }
 

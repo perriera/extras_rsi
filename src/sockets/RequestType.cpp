@@ -56,18 +56,20 @@ namespace extras {
             return in;
         }
 
-        void RequestTypeCompilation::writeSocket(int socket) const {
+        void RequestTypeCompilation::send_line_block(const LinePacket&) const {
             std::stringstream ss;
             ss << *this;
             std::string line = extras::replace_all(ss.str(), "\n", ";");
-            send_line(line, socket);
+            send_line(line, _socket);
         }
-        void RequestTypeCompilation::readSocket(int socket) {
-            std::string line = read_line(socket);
+
+        LinePacket RequestTypeCompilation::read_line_block() {
+            std::string line = read_line(_socket);
             line = extras::replace_all(line, ";", "\n");
             std::stringstream ss;
             ss << line;
             ss >> *this;
+            return ss.str();
         }
 
         RequestTypeCompilation RequestTypeCompiler::compile(
@@ -84,7 +86,7 @@ namespace extras {
                 std::string line = ss.str();
                 list.push_back(line);
             }
-            return rsi::RequestTypeCompilation(list);
+            return rsi::RequestTypeCompilation(list, _socket);
         }
 
     }  // namespace rsi

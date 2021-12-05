@@ -49,12 +49,12 @@ namespace extras {
          * @brief SocketPoolClient::transfer()
          *
          */
-        void SocketPoolClient::transfer() const {
+        void SocketPoolClient::transfer() {
             try {
                 std::string msg = *this;
                 send_line_block(msg);
-                RequestTypeCompilation compilation;
-                compilation.readSocket(this->_client_socket);
+                RequestTypeCompilation compilation(this->_client_socket);
+                compilation.read_line_block();
                 auto list = compilation.compilation();
                 for (auto item : clients(list)) {
                     // cout << "msg received: " << item << endl;
@@ -84,7 +84,7 @@ namespace extras {
          *
          * @return LinePacket
          */
-        LinePacket  SocketPoolClient::read_line_block() const {
+        LinePacket  SocketPoolClient::read_line_block() {
             return extras::rsi::read_line(this->_client_socket);
         }
 

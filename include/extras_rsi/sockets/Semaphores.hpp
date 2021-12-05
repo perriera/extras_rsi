@@ -48,8 +48,8 @@ namespace extras {
         using Lock = std::string;
 
         interface SemaphoreInterface {
-            virtual Lock lock(const Lock& lock) const pure;
-            virtual Lock unlock(const Lock& lock) const pure;
+            virtual Lock lock(const Lock& lock)  pure;
+            virtual Lock unlock(const Lock& lock)  pure;
         };
 
 

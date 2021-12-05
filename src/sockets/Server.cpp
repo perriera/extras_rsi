@@ -66,16 +66,16 @@ namespace extras {
          * @brief SocketPoolServer::transfer()
          *
          */
-        void SocketPoolServer::transfer() const {
+        void SocketPoolServer::transfer() {
             try {
                 string msg;
                 while (msg.size() == 0) msg = read_line_block();
                 if (msg.size() == 0) throw std::string("test exception");
                 SocketPoolClient client(msg, _compilerInterface);
                 // cout << "msg received: " << client << endl;
-                RequestTypeCompiler compiler;
+                RequestTypeCompiler compiler(this->_client_socket);
                 auto compilation = compiler.compile(client);
-                compilation.writeSocket(this->_client_socket);
+                compilation.send_line_block("");
                 auto list = compilation.compilation();
                 for (auto item : servers(list)) {
                     // cout << "msg received: " << item << endl;
@@ -106,7 +106,7 @@ namespace extras {
          *
          * @return LinePacket
          */
-        LinePacket  SocketPoolServer::read_line_block() const {
+        LinePacket  SocketPoolServer::read_line_block() {
             return extras::rsi::read_line(this->_client_socket);
         }
 

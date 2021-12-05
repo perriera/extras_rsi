@@ -56,7 +56,7 @@ namespace extras {
      *
      */
 
-    void rsi::VendorServer::transfer() const {
+    void rsi::VendorServer::transfer() {
 
         std::string line = read_line_block();
         std::cout << extras::pass(filename()) << std::endl;

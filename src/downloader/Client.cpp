@@ -41,7 +41,7 @@ namespace extras {
      * @param lock
      * @return rsi::Lock
      */
-    rsi::Lock rsi::DownloaderClient::lock(const rsi::Lock& lock) const {
+    rsi::Lock rsi::DownloaderClient::lock(const rsi::Lock& lock) {
         arc::ParcelImploder parcelImploder(lock);
         auto wrappedName = parcelImploder.wrapped();
         write_file_block(wrappedName);
@@ -54,7 +54,7 @@ namespace extras {
      * @param lock
      * @return rsi::Lock
      */
-    rsi::Lock rsi::DownloaderClient::unlock(const rsi::Lock& lock) const {
+    rsi::Lock rsi::DownloaderClient::unlock(const rsi::Lock& lock) {
         arc::ParcelImploder parcelImploder(lock);;
         parcelImploder.unWrap();
         parcelImploder.merge();
@@ -70,7 +70,7 @@ namespace extras {
      * @brief DownloaderClient::transfer()
      *
      */
-    void rsi::DownloaderClient::transfer() const {
+    void rsi::DownloaderClient::transfer() {
         unlock(lock(filename()));
     }
 

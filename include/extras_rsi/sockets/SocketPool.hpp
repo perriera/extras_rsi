@@ -62,7 +62,7 @@ namespace extras {
          */
 
         interface SocketPoolInterface {
-            virtual void transfer() const pure;
+            virtual void transfer() pure;
         };
 
         /**

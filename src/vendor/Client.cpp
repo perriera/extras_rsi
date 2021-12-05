@@ -29,7 +29,7 @@ namespace extras {
      *  @brief Vendor Client/Server ::transfer()
      *
      */
-    void rsi::VendorClient::transfer() const {
+    void rsi::VendorClient::transfer() {
 
         std::string msg = "vendor started";
         send_line_block(msg);

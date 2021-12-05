@@ -45,10 +45,10 @@ namespace extras {
          *
          */
         concrete class DownloaderClient extends UploaderClient with virtual SemaphoreInterface {
-            virtual Lock lock(const Lock& lock) const override;
-            virtual Lock unlock(const Lock& lock) const override;
+            virtual Lock lock(const Lock& lock)  override;
+            virtual Lock unlock(const Lock& lock)  override;
         public:
-            virtual void transfer() const override;
+            virtual void transfer() override;
             virtual void help() const override {
                 getHelp("HOWTO-download.md");
             };
@@ -59,10 +59,10 @@ namespace extras {
          *
          */
         concrete class DownloaderServer extends UploaderServer with virtual SemaphoreInterface {
-            virtual Lock lock(const Lock& lock) const override;
-            virtual Lock unlock(const Lock& lock) const override;
+            virtual Lock lock(const Lock& lock)  override;
+            virtual Lock unlock(const Lock& lock)  override;
         public:
-            virtual void transfer() const override;
+            virtual void transfer() override;
             virtual void help() const override {
                 getHelp("HOWTO-download.md");
             };

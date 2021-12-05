@@ -46,7 +46,7 @@ namespace extras {
          */
         concrete class VendorClient extends UploaderClient {
         public:
-            virtual void transfer() const override;
+            virtual void transfer() override;
             virtual void help() const override {
                 getHelp("HOWTO-vendor.md");
             };
@@ -58,7 +58,7 @@ namespace extras {
          */
         concrete class VendorServer extends UploaderServer {
         public:
-            virtual void transfer() const override;
+            virtual void transfer() override;
             virtual void help() const override {
                 getHelp("HOWTO-vendor.md");
             };
