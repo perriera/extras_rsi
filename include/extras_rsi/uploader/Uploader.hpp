@@ -110,7 +110,8 @@ namespace extras {
         /**
          * @brief abstract class Uploader
          *
-         *   build/rsi_client 127.0.0.1 8080 transfer send.txt
+         * ex.
+         *   build/uploader_client data/exparx.webflow.zip 137.184.218.130 8080
          *   ss >> prg >> filename >> ip >> port;
          *
          */

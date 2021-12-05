@@ -30,14 +30,14 @@ SCENARIO("Mock ParametersInterface: basic upload/vendor/download", "[ParametersI
     const char* argv[] = { "socketclient", "127.0.0.1", "8080",
                             "send.txt",     "convert",   "download" };
     int argc = sizeof(argv) / sizeof(argv[0]);
-    Mock<rsi::ParametersInterface> mock;
+    Mock<rsi::sockets::ParametersInterface> mock;
     When(Method(mock, parameters))
         .AlwaysDo(
             [](int, char const* []) {
                 return rsi::Parameters();
             });
 
-    rsi::ParametersInterface& i = mock.get();
+    rsi::sockets::ParametersInterface& i = mock.get();
     REQUIRE(i.parameters(argc, argv) == rsi::Parameters());
     Verify(Method(mock, parameters));
 }

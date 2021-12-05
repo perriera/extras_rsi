@@ -102,17 +102,17 @@ namespace extras {
 
         interface RequestTypeCompilerInterface {
             virtual RequestTypeCompilation compile(
-                const ParametersInterface& client,
+                const sockets::ParametersInterface& client,
                 PortAuthorityInterface& portAuthority) const pure;
         };
 
         concrete class RequestTypeCompiler implements RequestTypeCompilerInterface {
         public:
             virtual RequestTypeCompilation compile(
-                const ParametersInterface& client,
+                const sockets::ParametersInterface& client,
                 PortAuthorityInterface& portAuthority) const override;
             virtual RequestTypeCompilation compile(
-                const ParametersInterface& client) const {
+                const sockets::ParametersInterface& client) const {
                 return compile(client, PortAuthority::instance());
             }
         };

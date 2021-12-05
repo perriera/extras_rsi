@@ -29,48 +29,52 @@ using namespace std;
 
 namespace extras {
     namespace rsi {
+        namespace sockets {
 
-        /**
-         * @brief ParametersInterface ostream
-         *
-         * @param out
-         * @param obj
-         * @return std::ostream&
-         */
+            /**
+             * @brief ParametersInterface ostream
+             *
+             * @param out
+             * @param obj
+             * @return std::ostream&
+             */
 
-        std::ostream& operator<<(std::ostream& out,
-            const ParametersInterface& obj) {
-            out << obj.program() << ' ';
-            out << obj.ip() << ' ';
-            out << obj.port() << ' ';
-            out << obj.filename() << ' ';
-            for (auto request : obj.requests()) out << request << ' ';
-            return out;
-        }
-
-        /**
-         * @brief ParametersInterface istream
-         *
-         * @param in
-         * @param obj
-         * @return std::istream&
-         */
-        std::istream& operator>>(std::istream& in,
-            ParametersInterface& obj) {
-            std::string program, ip, port, filename, request;
-            in >> program >> ip >> port >> filename;
-            SocketRequestTypeList requests;
-            while (in.good()) {
-                in >> request;
-                if (in.good()) requests.push_back(request);
+            std::ostream& operator<<(std::ostream& out,
+                const sockets::ParametersInterface& obj) {
+                out << obj.program() << ' ';
+                out << obj.ip() << ' ';
+                out << obj.port() << ' ';
+                out << obj.filename() << ' ';
+                for (auto request : obj.requests()) out << request << ' ';
+                return out;
             }
-            obj.setProgram(program);
-            obj.setIP(ip);
-            obj.setPort(stoi(port));
-            obj.setFilename(filename);
-            obj.setRequests(requests);
-            return in;
+
+            /**
+             * @brief ParametersInterface istream
+             *
+             * @param in
+             * @param obj
+             * @return std::istream&
+             */
+            std::istream& operator>>(std::istream& in,
+                sockets::ParametersInterface& obj) {
+                std::string program, ip, port, filename, request;
+                in >> program >> ip >> port >> filename;
+                SocketRequestTypeList requests;
+                while (in.good()) {
+                    in >> request;
+                    if (in.good()) requests.push_back(request);
+                }
+                obj.setProgram(program);
+                obj.setIP(ip);
+                obj.setPort(stoi(port));
+                obj.setFilename(filename);
+                obj.setRequests(requests);
+                return in;
+            }
+
         }
+
         /**
          * @brief abstract class SocketPool
          *
