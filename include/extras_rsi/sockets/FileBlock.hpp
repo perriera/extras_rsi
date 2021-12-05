@@ -1,7 +1,7 @@
 /**
- * @file LineBlock.hpp
+ * @file FileBlock.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief LineBlockInterface
+ * @brief FileBlockInterface
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSILINEBLOCK_HPP
-#define _EXPARX_RSILINEBLOCK_HPP
+#ifndef _EXPARX_RSIFILEBLOCK_HPP
+#define _EXPARX_RSIFILEBLOCK_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -37,37 +37,37 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief LineBlockInterface
+         * @brief FileBlockInterface
          *
          */
 
-        using LinePacket = std::string;
+        using FilePacket = std::string;
 
-        interface LineBlockInterface {
+        interface FileBlockInterface {
 
             /**
-             * @brief send_line_block
+             * @brief send_file_block
              *
-             * Send a line of text and block until has been received.
+             * Send a file of text and block until has been received.
              *
              * @param msg
              */
-            virtual void send_line_block(const LinePacket& msg) const pure;
+            virtual void send_file_block(const FilePacket& msg) const pure;
 
             /**
-             * @brief read_line_block
+             * @brief write_file_block
              *
-             * Block until a line of text has been received.
+             * Block until a file of text has been received.
              *
-             * @return LinePacket
+             * @return FilePacket
              */
-            virtual LinePacket read_line_block() const pure;
+            virtual FilePacket write_file_block() const pure;
         };
 
 
     }
 }
 
-#endif // _EXPARX_RSILINEBLOCK_HPP
+#endif // _EXPARX_RSIFILEBLOCK_HPP
 
 
