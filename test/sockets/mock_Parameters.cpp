@@ -29,7 +29,7 @@ SCENARIO("Mock ParametersInterface: basic upload/vendor/download", "[SocketPoolP
 
     const char* argv[] = {
         "build/socketpool_client", "137.184.218.130", "8080",
-        "data/exparx.webflow.zip", "upload", "vendor", "download"
+         "upload", "data/exparx.webflow.zip", "vendor", "download", "data/exparx.webflow.zip"
     };
     int argc = sizeof(argv) / sizeof(argv[0]);
     Parameters _parameters;
