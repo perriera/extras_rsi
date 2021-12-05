@@ -68,18 +68,19 @@ namespace extras {
             SocketPoolClientInterface {
             struct sockaddr_in _server_addr;
             int _client_socket;
+            SocketParaneters _socketParaneters;
 
         public:
             SocketPoolClient(const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {}
             SocketPoolClient(const std::string& msg, const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {
                 std::stringstream ss;
                 ss << msg;
-                ss >> *this;
+                ss >> _socketParaneters;
             }
             operator std::string() const {
                 std::string msg;
                 std::stringstream ss;
-                ss << *this;
+                ss << _socketParaneters;
                 std::getline(ss, msg);
                 return msg;
             }

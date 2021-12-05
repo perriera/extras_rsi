@@ -73,49 +73,36 @@ namespace extras {
             sockets::ParametersInterface with ServiceTypeCompilerInterface
             with LineBlockInterface {
         protected:
-            std::string _program;
-            std::string _ip;
-            std::string _port;
-            std::string _filename;
-            SocketRequestTypeList _requests;
+
+            SocketParaneters _socketParaneters;
             SocketRequestTypeList _types;
             SocketRequestTypeMap _lastRequest;
             const ServiceTypeCompilerInterface& _compilerInterface;
 
         public:
-            SocketPool(const ServiceTypeCompilerInterface& compilerInterface) :_compilerInterface(compilerInterface) {
-            }
-            virtual Parameters parameters(int argc, char const* argv[]) override;
-            virtual  Parameter program() const override { return _program; };
-            virtual  Parameter ip() const override { return _ip; };
-            virtual  Parameter port() const override { return _port; };
-            virtual  Parameter filename() const override { return _filename; };
-            virtual  SocketRequestTypeList requests() const override {
-                return _requests;
-            };
 
-            virtual void setProgram(const Parameter& program) override {
-                _program = program;
+            SocketPool(const ServiceTypeCompilerInterface& compilerInterface)
+                :_compilerInterface(compilerInterface) {}
+
+            virtual Parameters parameters(int argc, char const* argv[]) override {
+                return _socketParaneters.parameters(argc, argv);
             }
-            virtual void setIP(const IP& ip) override { _ip = ip; }
-            virtual void setPort(const Port& port) override {
-                _port = std::to_string(port);
-            }
-            virtual void setFilename(const Filename& filename) override {
-                _filename = filename;
-            }
-            virtual void setRequests(const SocketRequestTypeList& list) override {
-                _requests = list;
+            virtual  Parameter program() const override { return _socketParaneters.program(); }
+            virtual  Parameter ip() const override { return _socketParaneters.ip(); }
+            virtual  Parameter port() const override { return _socketParaneters.port(); }
+            virtual  Parameter filename() const override { return _socketParaneters.filename(); }
+            virtual  SocketRequestTypeList requests() const override {
+                return _socketParaneters.requests();
             }
 
             virtual ServiceTypeList clients(
                 const RequestTypeList& requests) const override {
                 return _compilerInterface.clients(requests);
-            };
+            }
             virtual ServiceTypeList servers(
                 const RequestTypeList& requests) const override {
                 return _compilerInterface.servers(requests);
-            };
+            }
         };
 
 

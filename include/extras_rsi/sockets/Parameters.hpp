@@ -44,39 +44,57 @@ namespace extras {
              */
 
             interface ParametersInterface {
-                friend std::ostream& operator<<(std::ostream& out,
-                    const ParametersInterface& obj);
-                friend std::istream& operator>>(std::istream& in,
-                    ParametersInterface& obj);
                 virtual Parameters parameters(int argc, char const* argv[]) pure;
                 virtual  Parameter program() const pure;
                 virtual  Parameter ip() const pure;
                 virtual  Parameter port() const pure;
                 virtual  Parameter filename() const pure;
                 virtual  SocketRequestTypeList requests() const pure;
-
-                virtual void setProgram(const Parameter& program) pure;
-                virtual void setIP(const IP& ip) pure;
-                virtual void setPort(const Port& port) pure;
-                virtual void setFilename(const Filename& filename) pure;
-                virtual void setRequests(const SocketRequestTypeList& list) pure;
-
-                bool operator==(const ParametersInterface& rhs) const {
-                    std::stringstream ssA;
-                    ssA << *this;
-                    std::string testA = ssA.str();
-                    std::stringstream ssB;
-                    ssB << rhs;
-                    std::string testB = ssB.str();
-                    return testB == testA;
-                }
-
-                bool operator!=(const ParametersInterface& rhs) const {
-                    return !(*this == rhs);
-                }
             };
 
         }
+
+        /**
+         * @brief class SocketParaneters
+         *
+         */
+        concrete class SocketParaneters implements sockets::ParametersInterface {
+            friend std::ostream& operator<<(std::ostream& out,
+                const SocketParaneters& obj);
+            friend std::istream& operator>>(std::istream& in,
+                SocketParaneters& obj);
+
+            Parameters _parameters;
+            Parameter _program;
+            Parameter _ip;
+            Parameter _port;
+            Parameter _filename;
+            SocketRequestTypeList _requests;
+
+        public:
+
+            virtual Parameters parameters(int argc, char const* argv[]) override;
+            virtual  Parameter program() const override { return _program; };
+            virtual  Parameter ip() const override { return _ip; };
+            virtual  Parameter port() const override { return _port; };
+            virtual  Parameter filename() const override { return _filename; };
+            virtual  SocketRequestTypeList requests() const override { return _requests; };
+
+            bool operator==(const SocketParaneters& rhs) const {
+                std::stringstream ssA;
+                ssA << *this;
+                std::string testA = ssA.str();
+                std::stringstream ssB;
+                ssB << rhs;
+                std::string testB = ssB.str();
+                return testB == testA;
+            }
+
+            bool operator!=(const SocketParaneters& rhs) const {
+                return !(*this == rhs);
+            }
+
+        };
     }
 }
 
