@@ -69,7 +69,7 @@ namespace extras {
          *
          */
         abstract class SocketPool implements SocketPoolInterface with
-            ParametersInterface with ServiceTypeCompilerInterface {
+            sockets::ParametersInterface with ServiceTypeCompilerInterface {
         protected:
             std::string _program;
             std::string _ip;
@@ -84,11 +84,11 @@ namespace extras {
             SocketPool(const ServiceTypeCompilerInterface& compilerInterface) :_compilerInterface(compilerInterface) {
             }
             virtual Parameters parameters(int argc, char const* argv[]) override;
-            virtual const Parameter& program() const override { return _program; };
-            virtual const Parameter& ip() const override { return _ip; };
-            virtual const Parameter& port() const override { return _port; };
-            virtual const Parameter& filename() const override { return _filename; };
-            virtual const SocketRequestTypeList& requests() const override {
+            virtual  Parameter program() const override { return _program; };
+            virtual  Parameter ip() const override { return _ip; };
+            virtual  Parameter port() const override { return _port; };
+            virtual  Parameter filename() const override { return _filename; };
+            virtual  SocketRequestTypeList requests() const override {
                 return _requests;
             };
 

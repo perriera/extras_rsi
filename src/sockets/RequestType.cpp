@@ -71,7 +71,7 @@ namespace extras {
         }
 
         RequestTypeCompilation RequestTypeCompiler::compile(
-            const ParametersInterface& client,
+            const sockets::ParametersInterface& client,
             PortAuthorityInterface& portAuthority) const {
             rsi::RequestTypeList list;
             for (auto request : client.requests()) {
