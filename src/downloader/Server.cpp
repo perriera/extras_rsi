@@ -42,7 +42,7 @@ namespace extras {
      * @return rsi::Lock
      */
 
-    rsi::Lock rsi::DownloaderServer::lock(const rsi::Lock& lock) const {
+    rsi::Lock rsi::DownloaderServer::lock(const rsi::Lock& lock) {
         rsi::FileNotFoundException::assertion(lock, __INFO__);
         arc::ParcelImploder parcelImploder(lock);
         auto wrapped = parcelImploder.wrap();
@@ -59,7 +59,7 @@ namespace extras {
      * @return rsi::Lock
      */
 
-    rsi::Lock rsi::DownloaderServer::unlock(const rsi::Lock& lock) const {
+    rsi::Lock rsi::DownloaderServer::unlock(const rsi::Lock& lock) {
         std::string status = read_line_block();
         arc::ParcelImploder parcelImploder(lock);
         parcelImploder.clean();
@@ -75,7 +75,7 @@ namespace extras {
      * @brief DownloaderServer::transfer()
      *
      */
-    void rsi::DownloaderServer::transfer() const {
+    void rsi::DownloaderServer::transfer() {
         unlock(lock(filename()));
     }
 

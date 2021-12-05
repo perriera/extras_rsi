@@ -61,7 +61,7 @@ namespace extras {
              *
              * @return LinePacket
              */
-            virtual LinePacket read_line_block() const pure;
+            virtual LinePacket read_line_block() pure;
         };
 
 

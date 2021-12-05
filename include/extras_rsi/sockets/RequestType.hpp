@@ -33,6 +33,7 @@
 #include <extras/interfaces.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
+#include <extras_rsi/sockets/LineBlock.hpp>
 #include <iostream>
 
   /**
@@ -51,47 +52,55 @@ namespace extras {
          */
 
         interface RequestTypeCompilationInterface {
-            friend std::ostream& operator<<(
-                std::ostream& out, const RequestTypeCompilationInterface& obj);
-            friend std::istream& operator>>(std::istream& in,
-                RequestTypeCompilationInterface& obj);
             virtual void setCompilation(const RequestTypeList& list) pure;
             virtual RequestTypeList compilation() const pure;
-            virtual void writeSocket(int socket) const pure;
-            virtual void readSocket(int socket) pure;
-            bool operator==(const RequestTypeCompilationInterface& rhs) const {
-                return compilation() == rhs.compilation();
-            }
-
-            bool operator!=(const RequestTypeCompilationInterface& rhs) const {
-                return !(*this == rhs);
-            }
         };
 
+        /**
+         * @brief RequestTypeCompilation
+         *
+         */
         concrete class RequestTypeCompilation implements
-            RequestTypeCompilationInterface {
+            RequestTypeCompilationInterface with LineBlockInterface {
+            friend std::ostream& operator<<(std::ostream& out, const RequestTypeCompilation& obj);
+            friend std::istream& operator>>(std::istream& in, RequestTypeCompilation& obj);
+
             RequestTypeList _requestTypeList;
+            int _socket = -1;
 
         public:
-            RequestTypeCompilation(const RequestTypeList requestTypeList)
-                : _requestTypeList(requestTypeList) {}
-            RequestTypeCompilation(const std::string& rawString) {
+            RequestTypeCompilation(const RequestTypeList requestTypeList, int socket)
+                : _requestTypeList(requestTypeList), _socket(socket) {}
+
+            RequestTypeCompilation(const std::string& rawString, int socket) : _socket(socket) {
                 std::stringstream ss;
                 ss << rawString;
             }
-            RequestTypeCompilation() {}
+            RequestTypeCompilation(int socket) : _socket(socket) {}
+
             virtual void setCompilation(const RequestTypeList& list) override {
                 _requestTypeList = list;
             };
+
             virtual RequestTypeList compilation() const override {
                 return _requestTypeList;
             };
-            virtual void writeSocket(int socket) const override;
-            virtual void readSocket(int socket) override;
+
+            virtual void send_line_block(const LinePacket& msg) const override;
+            virtual LinePacket read_line_block() override;
+
             operator std::string() {
                 std::stringstream ss;
                 ss << *this;
                 return ss.str();
+            }
+
+            bool operator==(const RequestTypeCompilation& rhs) const {
+                return compilation() == rhs.compilation();
+            }
+
+            bool operator!=(const RequestTypeCompilation& rhs) const {
+                return !(*this == rhs);
             }
         };
 
@@ -106,8 +115,14 @@ namespace extras {
                 PortAuthorityInterface& portAuthority) const pure;
         };
 
+        /**
+         * @brief RequestTypeCompiler
+         *
+         */
         concrete class RequestTypeCompiler implements RequestTypeCompilerInterface {
+            int _socket = -1;
         public:
+            RequestTypeCompiler(int socket) : _socket(socket) {}
             virtual RequestTypeCompilation compile(
                 const sockets::ParametersInterface& client,
                 PortAuthorityInterface& portAuthority) const override;

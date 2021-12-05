@@ -63,7 +63,7 @@ namespace extras {
         extras::rsi::send_line(msg, this->_new_sock);
     }
 
-    rsi::UploaderStatus rsi::UploaderServer::read_line_block() const {
+    rsi::UploaderStatus rsi::UploaderServer::read_line_block() {
         return extras::rsi::read_line(this->_new_sock);
     }
 
@@ -78,7 +78,7 @@ namespace extras {
      * @param lock
      * @return rsi::Lock
      */
-    rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) const {
+    rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) {
         arc::ParcelImploder parcelImploder(lock);;
         auto wrappedName = parcelImploder.wrapped();
         return write_file_block(wrappedName);
@@ -89,7 +89,7 @@ namespace extras {
      *
      * @return rsi::Lock
      */
-    rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock&) const {
+    rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock&) {
         arc::ParcelImploder parcelImploder(filename());;
         parcelImploder.unWrap();
         parcelImploder.merge();
@@ -104,7 +104,7 @@ namespace extras {
      * @brief UploaderServer::transfer()
      *
      */
-    void rsi::UploaderServer::transfer() const {
+    void rsi::UploaderServer::transfer() {
         unlock(lock(filename()));
     }
 

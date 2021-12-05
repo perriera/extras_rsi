@@ -68,7 +68,7 @@ namespace extras {
              * @note this is where the magic happens, depending what type of class you
              * are this method performs the data transfer, (or initiates it)
              */
-            virtual void transfer() const pure;
+            virtual void transfer() pure;
 
             /**
              * @brief transfer()
@@ -128,16 +128,16 @@ namespace extras {
         protected:
             std::string client_dir = "data/client/";
 
-            virtual Lock lock(const Lock& lock) const override;
-            virtual Lock unlock(const Lock& lock) const override;
+            virtual Lock lock(const Lock& lock)  override;
+            virtual Lock unlock(const Lock& lock)  override;
         public:
             virtual void connect() override;
-            virtual void transfer() const override;
+            virtual void transfer() override;
             virtual void close() const override;
             virtual void send_file_block(const Filename& filename) const override;
             virtual Filename write_file_block(const Filename& filename) const override;
             virtual void send_line_block(const LinePacket& msg) const override;
-            virtual LinePacket read_line_block() const override;
+            virtual LinePacket read_line_block() override;
         };
 
         /**
@@ -154,16 +154,16 @@ namespace extras {
             struct sockaddr_in _new_addr;
             int _new_sock;
 
-            virtual Lock lock(const Lock& lock) const override;
-            virtual Lock unlock(const Lock& lock) const override;
+            virtual Lock lock(const Lock& lock)  override;
+            virtual Lock unlock(const Lock& lock)  override;
         public:
             virtual void connect() override;
-            virtual void transfer() const override;
+            virtual void transfer() override;
             virtual void close() const override;
             virtual void send_file_block(const FilePacket& filename) const override;
             virtual FilePacket write_file_block(const FilePacket& filename) const override;
             virtual void send_line_block(const UploaderStatus& msg) const override;
-            virtual UploaderStatus read_line_block() const override;
+            virtual UploaderStatus read_line_block()  override;
         };
 
 
