@@ -40,10 +40,11 @@
             "args": [
                 "127.0.0.1",
                 "8080",
-                "data/exparx.webflow.zip",
                 "upload",
+                "data/exparx.webflow.zip",
                 "vendor",
                 "download",
+                "data/exparx.webflow.zip",
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/runtime/client",
