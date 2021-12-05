@@ -68,7 +68,6 @@ namespace extras {
             SocketPoolClientInterface {
             struct sockaddr_in _server_addr;
             int _client_socket;
-            SocketParaneters _socketParaneters;
 
         public:
             SocketPoolClient(const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {}
