@@ -33,6 +33,7 @@
 #include <extras/interfaces.hpp>
 #include <extras/strings.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
+#include <extras_rsi/sockets/LineBlock.hpp>
 #include <extras_rsi/sockets/ServiceType.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
@@ -69,7 +70,8 @@ namespace extras {
          *
          */
         abstract class SocketPool implements SocketPoolInterface with
-            sockets::ParametersInterface with ServiceTypeCompilerInterface {
+            sockets::ParametersInterface with ServiceTypeCompilerInterface
+            with LineBlockInterface {
         protected:
             std::string _program;
             std::string _ip;

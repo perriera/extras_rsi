@@ -31,32 +31,6 @@ using namespace std;
 namespace extras {
     namespace rsi {
 
-        void SocketPoolServer::transfer() const {
-            try {
-                string msg;
-                while (msg.size() == 0) msg = read_line(this->_client_socket);
-                if (msg.size() == 0) throw std::string("test exception");
-                SocketPoolClient client(msg, _compilerInterface);
-                // cout << "msg received: " << client << endl;
-                RequestTypeCompiler compiler;
-                auto compilation = compiler.compile(client);
-                compilation.writeSocket(this->_client_socket);
-                auto list = compilation.compilation();
-                for (auto item : servers(list)) {
-                    // cout << "msg received: " << item << endl;
-                    auto cmd = item + " &";
-                    system(cmd.c_str());
-                }
-            }
-            catch (exception& ex) {
-                cout << ex.what() << endl;
-                send_line(ex.what(), this->_client_socket);
-            }
-            catch (...) {
-                send_line("Unknown exception thrown", this->_client_socket);
-            }
-        }
-
         /**
          * @brief concrete class SocketPoolServer
          *
@@ -86,6 +60,54 @@ namespace extras {
         void SocketPoolServer::close() const {
             ::close(this->_client_socket);
             ::close(this->_server_socket);
+        }
+
+        /**
+         * @brief SocketPoolServer::transfer()
+         *
+         */
+        void SocketPoolServer::transfer() const {
+            try {
+                string msg;
+                while (msg.size() == 0) msg = read_line_block();
+                if (msg.size() == 0) throw std::string("test exception");
+                SocketPoolClient client(msg, _compilerInterface);
+                // cout << "msg received: " << client << endl;
+                RequestTypeCompiler compiler;
+                auto compilation = compiler.compile(client);
+                compilation.writeSocket(this->_client_socket);
+                auto list = compilation.compilation();
+                for (auto item : servers(list)) {
+                    // cout << "msg received: " << item << endl;
+                    auto cmd = item + " &";
+                    system(cmd.c_str());
+                }
+            }
+            catch (exception& ex) {
+                cout << ex.what() << endl;
+                send_line(ex.what(), this->_client_socket);
+            }
+            catch (...) {
+                send_line("Unknown exception thrown", this->_client_socket);
+            }
+        }
+
+        /**
+         * @brief send_line_block()
+         *
+         * @param msg
+         */
+        void  SocketPoolServer::send_line_block(const rsi::LinePacket& msg) const {
+            extras::rsi::send_line(msg, this->_client_socket);
+        }
+
+        /**
+         * @brief read_line_block()
+         *
+         * @return LinePacket
+         */
+        LinePacket  SocketPoolServer::read_line_block() const {
+            return extras::rsi::read_line(this->_client_socket);
         }
 
     }  // namespace rsi
