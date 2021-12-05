@@ -32,14 +32,27 @@ SCENARIO("Mock ParametersInterface: basic upload/vendor/download", "[SocketPoolP
         "data/exparx.webflow.zip", "upload", "vendor", "download"
     };
     int argc = sizeof(argv) / sizeof(argv[0]);
+    Parameters _parameters;
+    rsi::SocketRequestTypeList _requests;
+
     Mock<rsi::sockets::ParametersInterface> mock;
     When(Method(mock, parameters))
         .AlwaysDo(
-            [](int, char const* []) {
-                return rsi::Parameters();
+            [&_parameters, &_requests](int argc, char const* argv[]) {
+                _parameters.clear();
+                for (int i = 0; i < 3; i++) {
+                    auto arg = argv[i];
+                    _parameters.push_back(arg);
+                }
+                for (int i = 3; i < argc; i++) {
+                    rsi::RequestType arg = argv[i];
+                    _requests.push_back(arg);
+                }
+
+                return _parameters;
             });
 
     rsi::sockets::ParametersInterface& i = mock.get();
-    REQUIRE(i.parameters(argc, argv) == rsi::Parameters());
+    REQUIRE(i.parameters(argc, argv) == _parameters);
     Verify(Method(mock, parameters));
 }
