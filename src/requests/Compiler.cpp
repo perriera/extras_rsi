@@ -31,13 +31,13 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RequestTypeCompiler::compile()
+         * @brief RequestTypeCompilerTypeOne::compile()
          *
          * @param client
          * @param portAuthority
          * @return RequestTypeCompilation
          */
-        RequestTypeCompilation RequestTypeCompiler::compile(
+        RequestTypeCompilation RequestTypeCompilerTypeOne::compile(
             const sockets::ParametersInterface& client,
             PortAuthorityInterface& portAuthority) const {
             rsi::RequestTypeList list;

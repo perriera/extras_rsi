@@ -116,13 +116,13 @@ namespace extras {
         };
 
         /**
-         * @brief RequestTypeCompiler
+         * @brief RequestTypeCompilerTypeOne
          *
          */
-        concrete class RequestTypeCompiler implements RequestTypeCompilerInterface {
+        concrete class RequestTypeCompilerTypeOne implements RequestTypeCompilerInterface {
             int _socket = -1;
         public:
-            RequestTypeCompiler(int socket) : _socket(socket) {}
+            RequestTypeCompilerTypeOne(int socket) : _socket(socket) {}
             virtual RequestTypeCompilation compile(
                 const sockets::ParametersInterface& client,
                 PortAuthorityInterface& portAuthority) const override;
