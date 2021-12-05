@@ -38,6 +38,19 @@ SCENARIO("Test SocketPoolInterface: new script", "[SocketPoolParameters]") {
     When(Method(mock, transfer))
         .AlwaysDo(
             [&_requests]() {
+                // std::string msg = *this;
+                // send_line(msg, this->_client_socket);
+                // RequestTypeCompilation compilation;
+                // compilation.readSocket(this->_client_socket);
+                // auto list = compilation.compilation();
+                // for (auto item : clients(list)) {
+                //     // cout << "msg received: " << item << endl;
+                //     auto cmd = item;
+                //     system(cmd.c_str());
+                // }
+                // std::string cmd = "ls -la " + filename();
+                // extras::SystemException::assertion(cmd, __INFO__);
+                // std::cout << std::endl;
             });
 
     rsi::SocketPoolInterface& i = mock.get();
