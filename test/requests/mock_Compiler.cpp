@@ -16,8 +16,8 @@
  *
  */
 
+#include <extras_rsi/requests/RequestType.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
-#include <extras_rsi/sockets/SocketPool.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"
@@ -25,61 +25,33 @@
 
 using namespace extras;
 using namespace fakeit;
-// 
-SCENARIO("Test SocketPoolInterface: new script", "[SocketPoolParameters]") {
 
-    // "/home/perry/Projects/extras_rsi/build/socketpool_client 137.184.218.130 8080 data/exparx.webflow.zip upload vendor download "
+SCENARIO("Mock RequestTypeCompilerInterface", "[RequestTypeCompilerInterface]") {
 
-    rsi::SocketRequestTypeList _requests = {
+    rsi::SocketParaneters parameters;
+    rsi::PortAuthority portAuthority;
+    const char* argv[] = {
         "/home/perry/Projects/extras_rsi/build/socketpool_client",
         "137.184.218.130",
         "8080",
         "data/exparx.webflow.zip",
         "upload",
         "vendor",
-        "download"
-    };
+        "download" };
+    int argc = sizeof(argv) / sizeof(argv[0]);
+    parameters.parameters(argc, argv);
 
-    rsi::LinePacket linePacket = "upload data/exparx.webflow.zip";
-    rsi::LinePacket _sentLine;
-
-    Mock<rsi::LineBlockInterface> lineBlock;
-    When(Method(lineBlock, send_line_block))
+    Mock<rsi::RequestTypeCompilerInterface> mock;
+    When(Method(mock, compile))
         .AlwaysDo(
-            [&_sentLine](const rsi::LinePacket& linePacket) {
-                _sentLine = linePacket;
-            });
-    When(Method(lineBlock, read_line_block))
-        .AlwaysDo(
-            [&_sentLine]() {
-                return _sentLine;
+            [&parameters](const rsi::sockets::ParametersInterface& client,
+                rsi::PortAuthorityInterface& portAuthority) {
+                    int socket = std::stoi(parameters.port());
+                    rsi::RequestTypeCompilation compilation(socket);
+                    return compilation;
             });
 
-    rsi::LineBlockInterface& i_lineBlock = lineBlock.get();
-
-    Mock<rsi::SocketPoolInterface> mock;
-    When(Method(mock, transfer))
-        .AlwaysDo(
-            [&_requests, &i_lineBlock]() {
-
-
-                // i_lineBlock.send_line_block();
-                // std::string msg = *this;
-                // send_line(msg, this->_client_socket);
-                // RequestTypeCompilation compilation;
-                // compilation.readSocket(this->_client_socket);
-                // auto list = compilation.compilation();
-                // for (auto item : clients(list)) {
-                //     // cout << "msg received: " << item << endl;
-                //     auto cmd = item;
-                //     system(cmd.c_str());
-                // }
-                // std::string cmd = "ls -la " + filename();
-                // extras::SystemException::assertion(cmd, __INFO__);
-                // std::cout << std::endl;
-            });
-
-    rsi::SocketPoolInterface& i = mock.get();
-    i.transfer();
-    Verify(Method(mock, transfer));
+    rsi::RequestTypeCompilerInterface& i = mock.get();
+    i.compile(parameters, portAuthority);
+    Verify(Method(mock, compile));
 }

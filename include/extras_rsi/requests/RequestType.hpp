@@ -32,6 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/sockets/Parameters.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
 #include <iostream>
@@ -111,7 +112,7 @@ namespace extras {
 
         interface RequestTypeCompilerInterface {
             virtual RequestTypeCompilation compile(
-                const sockets::ParametersInterface& client,
+                const rsi::sockets::ParametersInterface& client,
                 PortAuthorityInterface& portAuthority) const pure;
         };
 
@@ -124,10 +125,10 @@ namespace extras {
         public:
             RequestTypeCompilerTypeOne(int socket) : _socket(socket) {}
             virtual RequestTypeCompilation compile(
-                const sockets::ParametersInterface& client,
+                const rsi::sockets::ParametersInterface& client,
                 PortAuthorityInterface& portAuthority) const override;
             virtual RequestTypeCompilation compile(
-                const sockets::ParametersInterface& client) const {
+                const rsi::sockets::ParametersInterface& client) const {
                 return compile(client, PortAuthority::instance());
             }
         };
