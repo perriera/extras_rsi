@@ -65,19 +65,8 @@ namespace extras {
 
         protected:
             virtual ServiceTypeList common(ServiceTypeMap& map,
-                const RequestTypeList& requests) const {
-                rsi::ServiceTypeList list;
-                for (auto request : requests) {
-                    auto parts = extras::split(request, ' ');
-                    NoTokensException::assertion(parts.size(), __INFO__);
-                    auto serviceType = map[parts[0]];
-                    UnsupportedTokenException::assertion(serviceType, __INFO__);
-                    std::string line =
-                        extras::replace_all(request, parts[0], serviceType);
-                    list.push_back(line);
-                }
-                return list;
-            }
+                const RequestTypeList& requests) const;
+
         public:
 
             virtual ServiceTypeList clients(

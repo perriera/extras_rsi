@@ -68,7 +68,7 @@ SCENARIO("Mock RequestTypeCompilerInterface", "[RequestTypeCompilerInterface]") 
                     int socket = std::stoi(client.port());
                     rsi::RequestTypeCompilation compilation(list, socket);
 
-                    compilation.send_line_block("");
+                    // compilation.send_line_block("");
 
                     auto _compilation = compilation.compilation();
                     auto cmds = vendor.clients(_compilation);

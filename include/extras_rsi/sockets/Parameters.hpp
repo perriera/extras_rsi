@@ -80,14 +80,18 @@ namespace extras {
             virtual  Parameter filename() const override { return _filename; };
             virtual  SocketRequestTypeList requests() const override { return _requests; };
 
+            operator std::string() const {
+                std::string msg;
+                std::stringstream ss;
+                ss << *this;
+                std::getline(ss, msg);
+                return msg;
+            }
+
             bool operator==(const SocketParaneters& rhs) const {
-                std::stringstream ssA;
-                ssA << *this;
-                std::string testA = ssA.str();
-                std::stringstream ssB;
-                ssB << rhs;
-                std::string testB = ssB.str();
-                return testB == testA;
+                std::string ssA = *this;
+                std::string ssB = rhs;
+                return ssA == ssB;
             }
 
             bool operator!=(const SocketParaneters& rhs) const {

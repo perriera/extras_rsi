@@ -34,7 +34,7 @@
 #include <extras/strings.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
-#include <extras_rsi/sockets/ServiceType.hpp>
+#include <extras_rsi/requests/ServiceType.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 

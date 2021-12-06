@@ -76,6 +76,7 @@ namespace extras {
             RequestTypeCompilation(const std::string& rawString, int socket) : _socket(socket) {
                 std::stringstream ss;
                 ss << rawString;
+                ss >> *this;
             }
             RequestTypeCompilation(int socket) : _socket(socket) {}
 
