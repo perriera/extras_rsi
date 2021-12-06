@@ -40,19 +40,21 @@ SCENARIO("Mock RequestTypeCompilerInterface", "[RequestTypeCompilerInterface]") 
         "upload",
         "vendor",
         "download" };
+
     int argc = sizeof(argv) / sizeof(argv[0]);
     parameters.parameters(argc, argv);
     std::string msg = parameters;
+    extras::rsi::ServiceTypeCompilerVendor vendor;
+    rsi::SocketPoolClient client(msg, vendor);
+    int socket = std::stoi(client.port());
 
     Mock<rsi::RequestTypeCompilerInterface> mock;
     When(Method(mock, compile))
         .AlwaysDo(
-            [&msg](const rsi::sockets::ParametersInterface&,
+            [&msg, &vendor, &client, &socket](const rsi::sockets::ParametersInterface&,
                 rsi::PortAuthorityInterface& portAuthority) {
-                    if (msg.size() == 0) throw std::string("test exception");
-                    extras::rsi::ServiceTypeCompilerVendor vendor;
-                    rsi::SocketPoolClient client(msg, vendor);
 
+                    if (msg.size() == 0) throw std::string("test exception");
                     rsi::RequestTypeList list;
                     for (auto request : client.requests()) {
                         auto port = portAuthority.request();
@@ -65,20 +67,17 @@ SCENARIO("Mock RequestTypeCompilerInterface", "[RequestTypeCompilerInterface]") 
                         list.push_back(line);
                     }
 
-                    int socket = std::stoi(client.port());
-                    rsi::RequestTypeCompilation compilation(list, socket);
-
-                    // compilation.send_line_block("");
-
-                    auto _compilation = compilation.compilation();
-                    auto cmds = vendor.clients(_compilation);
-                    for (auto cmd : cmds) {
-                        std::cout << "msg received: " << cmd << std::endl;
-                    }
-                    return compilation;
+                    return rsi::RequestTypeCompilation(list, socket);
             });
 
     rsi::RequestTypeCompilerInterface& i = mock.get();
-    i.compile(parameters, portAuthority);
+    auto _compilation = i.compile(parameters, portAuthority);
+    if (socket != 8080) // included for consistency
+        _compilation.send_line_block("");
+    auto cmds = vendor.clients(_compilation.compilation());
+    for (auto cmd : cmds) {
+        std::cout << "msg received: " << cmd << std::endl;
+    }
+
     Verify(Method(mock, compile));
 }
