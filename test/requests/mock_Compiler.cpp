@@ -18,12 +18,14 @@
 
 #include <extras_rsi/requests/RequestType.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
+#include <extras_rsi/sockets/Client.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
 
 using namespace extras;
+using namespace std;
 using namespace fakeit;
 
 SCENARIO("Mock RequestTypeCompilerInterface", "[RequestTypeCompilerInterface]") {
@@ -40,14 +42,39 @@ SCENARIO("Mock RequestTypeCompilerInterface", "[RequestTypeCompilerInterface]") 
         "download" };
     int argc = sizeof(argv) / sizeof(argv[0]);
     parameters.parameters(argc, argv);
+    std::string msg = parameters;
 
     Mock<rsi::RequestTypeCompilerInterface> mock;
     When(Method(mock, compile))
         .AlwaysDo(
-            [&parameters](const rsi::sockets::ParametersInterface& client,
+            [&msg](const rsi::sockets::ParametersInterface&,
                 rsi::PortAuthorityInterface& portAuthority) {
-                    int socket = std::stoi(parameters.port());
-                    rsi::RequestTypeCompilation compilation(socket);
+                    if (msg.size() == 0) throw std::string("test exception");
+                    extras::rsi::ServiceTypeCompilerVendor vendor;
+                    rsi::SocketPoolClient client(msg, vendor);
+
+                    rsi::RequestTypeList list;
+                    for (auto request : client.requests()) {
+                        auto port = portAuthority.request();
+                        std::stringstream ss;
+                        ss << request << ' ';
+                        ss << client.filename() << ' ';
+                        ss << client.ip() << ' ';
+                        ss << port;
+                        std::string line = ss.str();
+                        list.push_back(line);
+                    }
+
+                    int socket = std::stoi(client.port());
+                    rsi::RequestTypeCompilation compilation(list, socket);
+
+                    compilation.send_line_block("");
+
+                    auto _compilation = compilation.compilation();
+                    auto cmds = vendor.clients(_compilation);
+                    for (auto cmd : cmds) {
+                        std::cout << "msg received: " << cmd << std::endl;
+                    }
                     return compilation;
             });
 
