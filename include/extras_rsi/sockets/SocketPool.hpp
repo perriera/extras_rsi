@@ -103,6 +103,11 @@ namespace extras {
                 const RequestTypeList& requests) const override {
                 return _compilerInterface.servers(requests);
             }
+
+            virtual bool isParameter(const RequestType& requestType) const override {
+                return _compilerInterface.isParameter(requestType);
+            }
+
         };
 
 

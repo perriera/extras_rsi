@@ -53,6 +53,7 @@ namespace extras {
                 const RequestTypeList& requests) const pure;
             virtual ServiceTypeList servers(
                 const RequestTypeList& requests) const pure;
+            virtual bool isParameter(const RequestType& requestType) const pure;
         };
 
         /**
@@ -62,6 +63,7 @@ namespace extras {
         concrete class ServiceTypeCompilerVendor  implements ServiceTypeCompilerInterface {
             ServiceTypeList _clients;
             ServiceTypeList _servers;
+            ServiceTypeList _serviceList = { "upload","vendor","download" };
 
         protected:
             virtual ServiceTypeList common(ServiceTypeMap& map,
@@ -86,6 +88,11 @@ namespace extras {
                 forServers["download"] = "build/downloader_server";
                 return common(forServers, requests);
             };
+
+            virtual bool isParameter(const RequestType& requestType) const override {
+                auto result = std::find(_serviceList.begin(), _serviceList.end(), requestType);
+                return result == _serviceList.end();
+            }
         };
 
     }
