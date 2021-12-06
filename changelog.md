@@ -32,7 +32,7 @@ Updated README.md accordinging</br>
 #### 4.7.0 (2021-12-05)
 ## Refactored  
 - RequestTypeCompilation
-- RequestTypeCompiler
+- RequestTypeCompilerTypeOne
 
 #### 4.6.0 (2021-12-05)
 ## Refactored  

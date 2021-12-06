@@ -34,7 +34,7 @@
 #include <extras/strings.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
-#include <extras_rsi/sockets/ServiceType.hpp>
+#include <extras_rsi/requests/ServiceType.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
@@ -103,6 +103,11 @@ namespace extras {
                 const RequestTypeList& requests) const override {
                 return _compilerInterface.servers(requests);
             }
+
+            virtual bool isParameter(const RequestType& requestType) const override {
+                return _compilerInterface.isParameter(requestType);
+            }
+
         };
 
 
