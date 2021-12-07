@@ -60,8 +60,21 @@ SCENARIO("Test RequestTypeCompilerInterface: TypeTwo", "[RequestTypeCompilerInte
     if (socket != 8080) // included for consistency
         _compilation.send_line_block("");
     auto cmds = vendor.clients(_compilation.compilation());
+    REQUIRE(cmds.size() == 4);
+
+    std::vector<std::string> testData = {
+        "build/uploader_client 137.184.218.130 9000 data/exparx.webflow.zip ",
+        "build/uploader_client 137.184.218.130 9001 data/src.zip ",
+        "build/vendor_client 137.184.218.130 9002 ",
+        "build/downloader_client 137.184.218.130 9003 data/exparx.freeformjs.zip "
+    };
+    REQUIRE(cmds[0] == testData[0]);
+    REQUIRE(cmds[1] == testData[1]);
+    REQUIRE(cmds[2] == testData[2]);
+    REQUIRE(cmds[3] == testData[3]);
     for (auto cmd : cmds) {
         std::cout << "msg received: " << cmd << std::endl;
     }
+
 
 }
