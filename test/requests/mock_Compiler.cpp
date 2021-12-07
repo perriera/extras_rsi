@@ -90,6 +90,7 @@ SCENARIO("Mock RequestTypeCompilerInterface: type 2", "[RequestTypeCompilerInter
         "/home/perry/Projects/extras_rsi/build/socketpool_client",
         "137.184.218.130",
         "8080",
+        "data/exparx.webflow.zip",
         "upload",
         "data/exparx.webflow.zip",
         "upload",
@@ -109,29 +110,42 @@ SCENARIO("Mock RequestTypeCompilerInterface: type 2", "[RequestTypeCompilerInter
     Mock<rsi::RequestTypeCompilerInterface> mock;
     When(Method(mock, compile))
         .AlwaysDo(
-            [&msg, &vendor, &client, &socket](const rsi::sockets::ParametersInterface&,
+            [&msg, &vendor, &client, &socket, &parameters](const rsi::sockets::ParametersInterface&,
                 rsi::PortAuthorityInterface& portAuthority) {
 
-                    Parameters params;
+                    std::vector<std::string> keywords;
+                    std::map<int, std::vector<std::string> >script;
 
-                    if (msg.size() == 0) throw std::string("test exception");
-                    rsi::RequestTypeList list;
-                    for (auto request : client.requests()) {
-
-                        if (vendor.isParameter(request))
-                            params.push_back(request);
-                        else {
-                            auto port = portAuthority.request();
-                            std::stringstream ss;
-                            ss << request << ' ';
-                            ss << client.ip() << ' ';
-                            ss << port << ' ';
-                            for (auto parameter : params)
-                                ss << parameter << ' ';
-                            std::string line = ss.str();
-                            list.push_back(line);
-                            params.clear();
+                    for (rsi::RequestType request : parameters.requests()) {
+                        auto entry = script[script.size() - 1];
+                        if (vendor.isParameter(request)) {
+                            if (entry.size() == 0)
+                                throw "No entry";
+                            script[script.size() - 1].push_back(request);
                         }
+                        else {
+                            rsi::ParameterList list;
+                            list.push_back(request);
+                            keywords.push_back(request);
+                            script[script.size()] = list;
+                        }
+                    }
+
+                    script.erase(-1);
+
+                    rsi::RequestTypeList list;
+                    int lineNo = 0;
+                    for (auto entry : script) {
+                        auto port = portAuthority.request();
+                        std::stringstream ss;
+                        ss << keywords[lineNo++] << ' ';
+                        ss << client.ip() << ' ';
+                        ss << port << ' ';
+                        entry.second.erase(entry.second.begin());
+                        for (auto parm : entry.second)
+                            ss << parm << ' ';
+                        std::string line = ss.str();
+                        list.push_back(line);
                     }
 
                     return rsi::RequestTypeCompilation(list, socket);

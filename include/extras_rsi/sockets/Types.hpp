@@ -47,6 +47,7 @@ namespace extras {
 
         using Parameter = std::string;
         using Parameters = std::deque<Parameter>;
+        using ParameterList = std::vector<Parameter>;
 
         using PortDomainName = std::string;
         using PortNumber = int;

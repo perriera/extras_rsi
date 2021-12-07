@@ -52,6 +52,10 @@ namespace extras {
          *
          */
 
+        using RequestType = std::string;
+        using RequestTypeList = std::vector<RequestType>;
+        using RequestTypeMap = std::map<RequestType, ParameterList>;
+
         interface RequestTypeCompilationInterface {
             virtual void setCompilation(const RequestTypeList& list) pure;
             virtual RequestTypeList compilation() const pure;
@@ -134,6 +138,22 @@ namespace extras {
             }
         };
 
+        /**
+         * @brief RequestTypeCompilerTypeOne
+         *
+         */
+        concrete class RequestTypeCompilerTypeTwo implements RequestTypeCompilerInterface {
+            int _socket = -1;
+        public:
+            RequestTypeCompilerTypeTwo(int socket) : _socket(socket) {}
+            virtual RequestTypeCompilation compile(
+                const rsi::sockets::ParametersInterface& client,
+                PortAuthorityInterface& portAuthority) const override;
+            virtual RequestTypeCompilation compile(
+                const rsi::sockets::ParametersInterface& client) const {
+                return compile(client, PortAuthority::instance());
+            }
+        };
 
     }
 }
