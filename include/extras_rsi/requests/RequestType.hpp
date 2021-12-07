@@ -33,7 +33,7 @@
 #include <extras/interfaces.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
-#include <extras_rsi/sockets/SocketPool.hpp>
+#include <extras_rsi/socketpool/SocketPool.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
 #include <iostream>
