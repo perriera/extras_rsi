@@ -72,7 +72,6 @@ namespace extras {
      */
     void rsi::DownloaderClient::transfer() {
         unlock(lock(filename()));
-        std::cout << filename() << std::endl;
     }
 
 }  // namespace extras
