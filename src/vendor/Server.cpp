@@ -65,7 +65,6 @@ namespace extras {
         rsi::FileNotFoundException::assertion(filename(), __INFO__);
         std::cout << extras::cyan << extras::pass(" processes file ") << std::endl;
         std::cout << extras::blue << std::endl;
-        auto fn = extras::replace_all(filename(), "data/", "data/server/");
         auto cp = "cp data/exparx.webflow.zip data/exparx.freeformjs.zip ";
         SystemException::assertion(cp, __INFO__);
         auto cmd = "ls -la data/";
@@ -75,7 +74,7 @@ namespace extras {
         std::cout << extras::pass(" lists directory") << std::endl;
 
         std::string msg = "vendor completed";
-        send_line_block(msg);
+        send_line_block(cp);
 
     }
 
