@@ -61,8 +61,8 @@ namespace extras {
                     auto cmd = item;
                     system(cmd.c_str());
                 }
-                std::string cmd = "ls -la " + filename();
-                extras::SystemException::assertion(cmd, __INFO__);
+                // std::string cmd = "ls -la " + filename();
+                // extras::SystemException::assertion(cmd, __INFO__);
                 std::cout << std::endl;
             }
             catch (exception& ex) {

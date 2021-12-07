@@ -59,7 +59,7 @@ namespace extras {
         parcelImploder.unWrap();
         parcelImploder.merge();
         parcelImploder.clean();
-        std::cout << extras::pass(lock) << std::endl;
+        std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
         std::string msg = "downloader completed";
         send_line_block(msg);

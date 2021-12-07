@@ -45,7 +45,7 @@ SCENARIO("Test ParametersInterface: uploader parameters", "[UploaderParameters]"
     // test the expected results
     REQUIRE(i.parameters(argc, argv) == _parameters);
     REQUIRE(i.program() == _parameters[0]);
-    REQUIRE(i.filename() == _parameters[1]);
-    REQUIRE(i.ip() == _parameters[2]);
-    REQUIRE(i.port() == _parameters[3]);
+    REQUIRE(i.filename() == _parameters[3]);
+    REQUIRE(i.ip() == _parameters[1]);
+    REQUIRE(i.port() == _parameters[2]);
 }
