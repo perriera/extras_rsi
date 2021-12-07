@@ -66,7 +66,9 @@ namespace extras {
         std::cout << extras::cyan << extras::pass(" processes file ") << std::endl;
         std::cout << extras::blue << std::endl;
         auto fn = extras::replace_all(filename(), "data/", "data/server/");
-        auto cmd = "ls -la " + filename();
+        auto cp = "cp data/exparx.webflow.zip data/exparx.freeformjs.zip ";
+        SystemException::assertion(cp, __INFO__);
+        auto cmd = "ls -la data/";
         SystemException::assertion(cmd, __INFO__);
         std::cout << std::endl;
         std::cout << extras::pass(filename()) << std::endl;
