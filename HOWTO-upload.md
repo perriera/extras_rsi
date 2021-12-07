@@ -6,7 +6,7 @@ This upload utility allows the developer to quickly upload a file, (binary or ot
 ## uploader_client
 The **uploader_client** utility requires the following parameters:
 
-	uploader_client <filename> <ip> <port> | -help
+	uploader_client <ip> <port> <filename>  | -help
 
 Where:
 
@@ -17,7 +17,7 @@ Where:
 ## uploader_server
 The **uploader_client** utility requires the following parameters:
 
-	uploader_server <filename> <ip> <port> | -help
+	uploader_server <ip> <port> <filename>  | -help
 
 Where:
 

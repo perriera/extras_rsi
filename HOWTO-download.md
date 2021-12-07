@@ -6,7 +6,7 @@ This download utility allows the developer to quickly download a file, (binary o
 ## downloader_client
 The **downloader_client** utility requires the following parameters:
 
-	downloader_client <filename> <ip> <port> | -help
+	downloader_client <ip> <port> <filename>  | -help
 
 Where:
 
@@ -17,7 +17,7 @@ Where:
 ## downloader_server
 The **downloader_client** utility requires the following parameters:
 
-	downloader_server <filename> <ip> <port> | -help
+	downloader_server <ip> <port> <filename>  | -help
 
 Where:
 

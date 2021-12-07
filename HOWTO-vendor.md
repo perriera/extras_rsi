@@ -6,7 +6,7 @@ This vendor utility allows the developer to quickly vendor a file, (binary or ot
 ## vendor_client
 The **vendor_client** utility requires the following parameters:
 
-	vendor_client <filename> <ip> <port> | -help
+	vendor_client <ip> <port> <filename>  | -help
 
 Where:
 
@@ -17,7 +17,7 @@ Where:
 ## vendor_server
 The **vendor_client** utility requires the following parameters:
 
-	vendor_server <filename> <ip> <port> | -help
+	vendor_server <ip> <port> <filename>  | -help
 
 Where:
 

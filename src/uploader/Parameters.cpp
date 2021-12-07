@@ -41,8 +41,8 @@ namespace extras {
         if (argc == 2 && rsi::Parameter(argv[1]) == "-help")
             help();
         if (argc < 4) {
-            cout << "parameters: <filename> <ip> <port> | -help " << endl;
-            throw RSIException("parameters: <filename> <ip> <port>", __INFO__);
+            cout << "parameters: <ip> <port> <filename>  | -help " << endl;
+            throw RSIException("parameters: <ip> <port> <filename> ", __INFO__);
         }
         rsi::Parameters result;
         for (int i = 0; i < argc; i++) result.push_back(argv[i]);
