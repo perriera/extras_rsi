@@ -57,7 +57,7 @@ namespace extras {
                 compilation.read_line_block();
                 auto list = compilation.compilation();
                 for (auto item : clients(list)) {
-                    // cout << "msg received: " << item << endl;
+                    cout << "msg received: " << item << endl;
                     auto cmd = item;
                     system(cmd.c_str());
                 }

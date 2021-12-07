@@ -102,13 +102,13 @@ namespace extras {
                 return _parameters[0];
             };
             virtual Parameter filename() const override {
-                return _parameters[1];
+                return _parameters[3];
             };
             virtual Parameter ip() const override {
-                return _parameters[2];
+                return _parameters[1];
             };
             virtual Parameter port() const override {
-                return _parameters[3];
+                return _parameters[2];
             };
 
             virtual void  help() const {
