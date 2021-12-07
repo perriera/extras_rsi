@@ -33,7 +33,8 @@
 #include <extras/interfaces.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
-#include <extras_rsi/sockets/PortAuthority.hpp>
+#include <extras_rsi/sockets/SocketPool.hpp>
+#include <extras_rsi/sockets/Parameters.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
 #include <iostream>
 
@@ -142,10 +143,13 @@ namespace extras {
          * @brief RequestTypeCompilerTypeOne
          *
          */
-        concrete class RequestTypeCompilerTypeTwo implements RequestTypeCompilerInterface {
+        concrete class RequestTypeCompilerTypeTwo implements RequestTypeCompilerInterface
+            with ServiceTypeCompilerInterface {
+            const ServiceTypeCompilerInterface& _compilerInterface;
             int _socket = -1;
         public:
-            RequestTypeCompilerTypeTwo(int socket) : _socket(socket) {}
+            RequestTypeCompilerTypeTwo(const ServiceTypeCompilerInterface& compilerInterface, int socket)
+                : _compilerInterface(compilerInterface), _socket(socket) {}
             virtual RequestTypeCompilation compile(
                 const rsi::sockets::ParametersInterface& client,
                 PortAuthorityInterface& portAuthority) const override;
@@ -153,6 +157,19 @@ namespace extras {
                 const rsi::sockets::ParametersInterface& client) const {
                 return compile(client, PortAuthority::instance());
             }
+            virtual ServiceTypeList clients(
+                const RequestTypeList& requests) const override {
+                return _compilerInterface.clients(requests);
+            }
+            virtual ServiceTypeList servers(
+                const RequestTypeList& requests) const override {
+                return _compilerInterface.servers(requests);
+            }
+
+            virtual bool isParameter(const RequestType& requestType) const override {
+                return _compilerInterface.isParameter(requestType);
+            }
+
         };
 
     }

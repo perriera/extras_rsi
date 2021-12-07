@@ -38,7 +38,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/socketpool_client",
             "args": [
-                "137.184.218.130",
+                "127.0.0.1",
                 "8080",
                 "data/exparx.webflow.zip",
                 "upload",
