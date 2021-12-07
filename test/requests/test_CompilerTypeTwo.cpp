@@ -22,11 +22,9 @@
 #include <iostream>
 
 #include "../unittesting/catch.hpp"
-#include "../unittesting/fakeit.hpp"
 
 using namespace extras;
 using namespace std;
-using namespace fakeit;
 
 SCENARIO("Test RequestTypeCompilerInterface: TypeTwo", "[RequestTypeCompilerInterface]") {
 
@@ -53,51 +51,11 @@ SCENARIO("Test RequestTypeCompilerInterface: TypeTwo", "[RequestTypeCompilerInte
     rsi::SocketPoolClient client(msg, vendor);
     int socket = std::stoi(client.port());
 
-    Mock<rsi::RequestTypeCompilerInterface> mock;
-    When(Method(mock, compile))
-        .AlwaysDo(
-            [&msg, &vendor, &client, &socket, &parameters](const rsi::sockets::ParametersInterface&,
-                rsi::PortAuthorityInterface& portAuthority) {
+    //
+    rsi::RequestTypeCompilerTypeTwo typeTwo(vendor, socket);
+    //     REQUIRE
 
-                    std::vector<std::string> keywords;
-                    std::map<int, std::vector<std::string> >script;
-
-                    for (rsi::RequestType request : parameters.requests()) {
-                        auto entry = script[script.size() - 1];
-                        if (vendor.isParameter(request)) {
-                            if (entry.size() == 0)
-                                throw "No entry";
-                            script[script.size() - 1].push_back(request);
-                        }
-                        else {
-                            rsi::ParameterList list;
-                            list.push_back(request);
-                            keywords.push_back(request);
-                            script[script.size()] = list;
-                        }
-                    }
-
-                    script.erase(-1);
-
-                    rsi::RequestTypeList list;
-                    int lineNo = 0;
-                    for (auto entry : script) {
-                        auto port = portAuthority.request();
-                        std::stringstream ss;
-                        ss << keywords[lineNo++] << ' ';
-                        ss << client.ip() << ' ';
-                        ss << port << ' ';
-                        entry.second.erase(entry.second.begin());
-                        for (auto parm : entry.second)
-                            ss << parm << ' ';
-                        std::string line = ss.str();
-                        list.push_back(line);
-                    }
-
-                    return rsi::RequestTypeCompilation(list, socket);
-            });
-
-    rsi::RequestTypeCompilerInterface& i = mock.get();
+    rsi::RequestTypeCompilerInterface& i = typeTwo;
     auto _compilation = i.compile(parameters, portAuthority);
     if (socket != 8080) // included for consistency
         _compilation.send_line_block("");
@@ -106,5 +64,4 @@ SCENARIO("Test RequestTypeCompilerInterface: TypeTwo", "[RequestTypeCompilerInte
         std::cout << "msg received: " << cmd << std::endl;
     }
 
-    Verify(Method(mock, compile));
 }
