@@ -61,12 +61,18 @@ namespace extras {
         std::string line = read_line_block();
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(line) << std::endl;
-
         rsi::FileNotFoundException::assertion(filename(), __INFO__);
+
         std::cout << extras::cyan << extras::pass(" processes file: ") << filename() << std::endl;
-        for (auto extra : this->extra_files())
+        auto ls1 = "ls -la " + filename();
+        SystemException::assertion(ls1, __INFO__);
+        for (auto extra : this->extra_files()) {
+            rsi::FileNotFoundException::assertion(extra, __INFO__);
             std::cout << extras::cyan << extras::pass(" processes file: ") << extra << std::endl;
-        std::cout << extras::blue << std::endl;
+            auto ls1 = "ls -la " + extra;
+            SystemException::assertion(ls1, __INFO__);
+        }
+
         auto cp = "cp data/src.zip data/exparx.freeformjs.zip ";
         SystemException::assertion(cp, __INFO__);
         auto cmd = "ls -la data/";
