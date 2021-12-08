@@ -34,14 +34,11 @@ SCENARIO("Test RequestTypeCompilerInterface: TypeThree", "[RequestTypeCompilerIn
         "/home/perry/Projects/extras_rsi/build/socketpool_client",
         "137.184.218.130",
         "8080",
-        "data/exparx.webflow.zip",
-        "upload",
-        "data/exparx.webflow.zip",
-        "upload",
         "data/src.zip",
+        "upload",
+        "data/exparx.webflow.zip",
         "vendor",
-        "download",
-        "data/exparx.freeformjs.zip",
+        "download"
     };
 
     int argc = sizeof(argv) / sizeof(argv[0]);
@@ -63,11 +60,12 @@ SCENARIO("Test RequestTypeCompilerInterface: TypeThree", "[RequestTypeCompilerIn
     REQUIRE(cmds.size() == 4);
 
     std::vector<std::string> testData = {
-        "build/uploader_client 137.184.218.130 9000 data/exparx.webflow.zip ",
-        "build/uploader_client 137.184.218.130 9001 data/src.zip ",
-        "build/vendor_client 137.184.218.130 9002 ",
-        "build/downloader_client 137.184.218.130 9003 data/exparx.freeformjs.zip "
+        "build/uploader_client 137.184.218.130 9000 data/src.zip",
+        "build/uploader_client 137.184.218.130 9001 data/exparx.webflow.zip ",
+        "build/vendor_client 137.184.218.130 9002 data/src.zip",
+        "build/downloader_client 137.184.218.130 9003 data/src.zip"
     };
+
     REQUIRE(cmds[0] == testData[0]);
     REQUIRE(cmds[1] == testData[1]);
     REQUIRE(cmds[2] == testData[2]);
