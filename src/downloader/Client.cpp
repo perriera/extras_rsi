@@ -45,7 +45,7 @@ namespace extras {
         arc::ParcelImploder parcelImploder(lock);
         auto wrappedName = parcelImploder.wrapped();
         write_file_block(wrappedName);
-        auto ls1 = "ls -la " + filename();
+        auto ls1 = "ls -la " + wrappedName;
         SystemException::assertion(ls1, __INFO__);
         return lock;
     }
