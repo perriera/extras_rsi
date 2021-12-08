@@ -58,11 +58,13 @@ namespace extras {
 
     void rsi::VendorServer::transfer() {
 
+        // lock the transfer
         std::string line = read_line_block();
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(line) << std::endl;
         rsi::FileNotFoundException::assertion(filename(), __INFO__);
 
+        // check the contents of the file(s)
         std::cout << extras::cyan << extras::pass(" processes file: ") << filename() << std::endl;
         auto ls1 = "ls -la " + filename();
         SystemException::assertion(ls1, __INFO__);
@@ -73,16 +75,12 @@ namespace extras {
             SystemException::assertion(ls1, __INFO__);
         }
 
-        auto cp = "cp data/src.zip data/exparx.freeformjs.zip ";
-        SystemException::assertion(cp, __INFO__);
-        auto cmd = "ls -la data/";
-        SystemException::assertion(cmd, __INFO__);
+        // unlock the transfer
         std::cout << std::endl;
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass(" lists directory") << std::endl;
-
-        std::string msg = "vendor completed";
-        send_line_block(cp);
+        std::string msg = filename() + " processed ";
+        send_line_block(msg);
 
     }
 
