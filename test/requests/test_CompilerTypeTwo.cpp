@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/requests/RequestType.hpp>
+#include <extras_rsi/requests/RequestTypeTwo.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
 #include <extras_rsi/sockets/Client.hpp>
 #include <iostream>

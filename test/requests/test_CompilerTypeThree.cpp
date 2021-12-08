@@ -16,19 +16,17 @@
  *
  */
 
-#include <extras_rsi/requests/RequestTypeOne.hpp>
+#include <extras_rsi/requests/RequestTypeThree.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
 #include <extras_rsi/sockets/Client.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"
-#include "../unittesting/fakeit.hpp"
 
 using namespace extras;
 using namespace std;
-using namespace fakeit;
 
-SCENARIO("Mock RequestTypeCompilerInterface: TypeOne", "[RequestTypeCompilerInterface]") {
+SCENARIO("Test RequestTypeCompilerInterface: TypeThree", "[RequestTypeCompilerInterface]") {
 
     rsi::SocketParaneters parameters;
     rsi::PortAuthority portAuthority;
@@ -36,10 +34,12 @@ SCENARIO("Mock RequestTypeCompilerInterface: TypeOne", "[RequestTypeCompilerInte
         "/home/perry/Projects/extras_rsi/build/socketpool_client",
         "137.184.218.130",
         "8080",
-        "data/exparx.webflow.zip",
+        "data/src.zip",
         "upload",
+        "data/exparx.webflow.zip",
         "vendor",
-        "download" };
+        "download"
+    };
 
     int argc = sizeof(argv) / sizeof(argv[0]);
     parameters.parameters(argc, argv);
@@ -48,36 +48,31 @@ SCENARIO("Mock RequestTypeCompilerInterface: TypeOne", "[RequestTypeCompilerInte
     rsi::SocketPoolClient client(msg, vendor);
     int socket = std::stoi(client.port());
 
-    Mock<rsi::RequestTypeCompilerInterface> mock;
-    When(Method(mock, compile))
-        .AlwaysDo(
-            [&msg, &vendor, &client, &socket](const rsi::sockets::ParametersInterface&,
-                rsi::PortAuthorityInterface& portAuthority) {
+    //
+    rsi::RequestTypeCompilerTypeThree typeTwo(vendor, socket);
+    //     REQUIRE
 
-                    if (msg.size() == 0) throw std::string("test exception");
-                    rsi::RequestTypeList list;
-                    for (auto request : client.requests()) {
-                        auto port = portAuthority.request();
-                        std::stringstream ss;
-                        ss << request << ' ';
-                        ss << client.filename() << ' ';
-                        ss << client.ip() << ' ';
-                        ss << port;
-                        std::string line = ss.str();
-                        list.push_back(line);
-                    }
-
-                    return rsi::RequestTypeCompilation(list, socket);
-            });
-
-    rsi::RequestTypeCompilerInterface& i = mock.get();
+    rsi::RequestTypeCompilerInterface& i = typeTwo;
     auto _compilation = i.compile(parameters, portAuthority);
     if (socket != 8080) // included for consistency
         _compilation.send_line_block("");
     auto cmds = vendor.clients(_compilation.compilation());
+    REQUIRE(cmds.size() == 4);
+
+    std::vector<std::string> testData = {
+        "build/uploader_client 137.184.218.130 9000 data/src.zip",
+        "build/uploader_client 137.184.218.130 9001 data/exparx.webflow.zip ",
+        "build/vendor_client 137.184.218.130 9002 data/src.zip",
+        "build/downloader_client 137.184.218.130 9003 data/src.zip"
+    };
+
+    REQUIRE(cmds[0] == testData[0]);
+    REQUIRE(cmds[1] == testData[1]);
+    REQUIRE(cmds[2] == testData[2]);
+    REQUIRE(cmds[3] == testData[3]);
     for (auto cmd : cmds) {
         std::cout << "msg received: " << cmd << std::endl;
     }
 
-    Verify(Method(mock, compile));
+
 }

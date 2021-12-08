@@ -20,7 +20,7 @@
 #include <unistd.h>
 
 #include <extras_rsi/sockets/Client.hpp>
-#include <extras_rsi/requests/RequestTypeTwo.hpp>
+#include <extras_rsi/requests/RequestTypeThree.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
@@ -37,9 +37,10 @@ namespace extras {
          * @param portAuthority
          * @return RequestTypeCompilation
          */
-        RequestTypeCompilation RequestTypeCompilerTypeTwo::compile(
+        RequestTypeCompilation RequestTypeCompilerTypeThree::compile(
             const sockets::ParametersInterface& client,
             PortAuthorityInterface& portAuthority) const {
+
             std::vector<std::string> keywords;
             std::map<int, std::vector<std::string> >script;
 
@@ -65,14 +66,24 @@ namespace extras {
             for (auto entry : script) {
                 auto port = portAuthority.request();
                 std::stringstream ss;
-                ss << keywords[lineNo++] << ' ';
+                ss << keywords[lineNo] << ' ';
                 ss << client.ip() << ' ';
                 ss << port << ' ';
-                entry.second.erase(entry.second.begin());
-                for (auto parm : entry.second)
-                    ss << parm << ' ';
+                ss << client.filename();
                 std::string line = ss.str();
                 list.push_back(line);
+                entry.second.erase(entry.second.begin());
+                for (auto parm : entry.second) {
+                    std::stringstream ss;
+                    auto port = portAuthority.request();
+                    ss << keywords[lineNo] << ' ';
+                    ss << client.ip() << ' ';
+                    ss << port << ' ';
+                    ss << parm << ' ';
+                    std::string line = ss.str();
+                    list.push_back(line);
+                }
+                lineNo++;
             }
 
             return rsi::RequestTypeCompilation(list, _socket);
