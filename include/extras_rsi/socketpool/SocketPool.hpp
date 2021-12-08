@@ -32,10 +32,11 @@
 
 #include <extras/interfaces.hpp>
 #include <extras/strings.hpp>
-#include <extras_rsi/sockets/Parameters.hpp>
+#include <extras_rsi/socketpool/Parameters.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
 #include <extras_rsi/requests/ServiceType.hpp>
 #include <extras_rsi/exceptions.hpp>
+#include <extras/status/help.hpp>
 #include <iostream>
 
 namespace extras {
@@ -71,7 +72,8 @@ namespace extras {
          */
         abstract class SocketPool implements SocketPoolInterface with
             sockets::ParametersInterface with ServiceTypeCompilerInterface
-            with LineBlockInterface {
+            with LineBlockInterface
+            with HelpInterface {
         protected:
 
             SocketParaneters _socketParaneters;
@@ -79,14 +81,15 @@ namespace extras {
             SocketRequestTypeMap _lastRequest;
             const ServiceTypeCompilerInterface& _compilerInterface;
 
+            void getHelp(Parameter howto_filename) const;
+
         public:
 
             SocketPool(const ServiceTypeCompilerInterface& compilerInterface)
                 :_compilerInterface(compilerInterface) {}
 
-            virtual Parameters parameters(int argc, char const* argv[]) override {
-                return _socketParaneters.parameters(argc, argv);
-            }
+            virtual Parameters parameters(int argc, char const* argv[]) override;
+
             virtual  Parameter program() const override { return _socketParaneters.program(); }
             virtual  Parameter ip() const override { return _socketParaneters.ip(); }
             virtual  Parameter port() const override { return _socketParaneters.port(); }
@@ -108,6 +111,9 @@ namespace extras {
                 return _compilerInterface.isParameter(requestType);
             }
 
+            virtual void  help() const {
+                getHelp("HOWTO-socketpool.md");
+            }
 
         };
 

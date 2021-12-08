@@ -38,6 +38,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/socketpool_client",
             "args": [
+                "-help",
                 "137.184.218.130",
                 "8080",
                 "data/src.zip",
@@ -65,7 +66,8 @@
             "program": "${workspaceFolder}/build/socketpool_server",
             "args": [
                 "127.0.0.1",
-                "8080"
+                "8080",
+                "9000-9500"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/",

@@ -79,6 +79,8 @@ namespace extras {
             int _client_socket;
             PortAuthority _PortAuthority;
 
+            PortAuthority configPortAuthority(const Parameter& server_port, const Parameter& range);
+
         public:
             SocketPoolServer(const ServiceTypeCompilerInterface& compiler) : SocketPool(compiler) {};
             virtual PortAuthority& portAuthority() override { return _PortAuthority; }

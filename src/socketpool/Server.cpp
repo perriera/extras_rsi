@@ -39,9 +39,22 @@ namespace extras {
          *
          */
 
+        PortAuthority SocketPoolServer::configPortAuthority(
+            const Parameter& server_port,
+            const Parameter& range) {
+            int port = std::stoi(server_port);
+            BadRangeFormatException::assertion(range, __INFO__);
+            auto parts = extras::split(range, '-');
+            int from = std::stoi(parts[0]);
+            int to = std::stoi(parts[1]);
+            int span = to - from;
+            return PortAuthority(port, from, span);
+        }
+
         Parameters SocketPoolServer::parameters(int argc, char const* argv[]) {
-            char const* extra_argv[] = { argv[0], argv[1], argv[2], "ignore.txt" };
-            return _socketParaneters.parameters(++argc, extra_argv);
+            auto parameters = _socketParaneters.parameters(argc, argv);
+            _PortAuthority = configPortAuthority(this->port(), this->filename());
+            return parameters;
         }
 
         void SocketPoolServer::connect() {

@@ -4,8 +4,8 @@
 > The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), </br>
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v4.12.0 -m "Added RequestTypeCompilerTypeFour"</br>
-> > git push origin v4.10.0
+> > git tag -a v4.13.0 -m "Added a bunch of enhancements"</br>
+> > git push origin v4.13.0
 > 
 
 IMPORTANT: 
@@ -28,6 +28,10 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 4.13.0 (2021-12-07)
+## Prototype  
+- Added a bunch of enhancements  
 
 #### 4.12.0 (2021-12-06)
 ## Prototype  
@@ -306,7 +310,8 @@ Updated README.md accordinging</br>
 ### Removed
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/extras_rsi/compare/v4.12.0...HEAD
+[Unreleased]: https://github.com/perriera/extras_rsi/compare/v4.13.0...HEAD
+[4.13.0]: https://github.com/perriera/extras_rsi/compare/v4.12.0...v4.13.0
 [4.12.0]: https://github.com/perriera/extras_rsi/compare/v4.11.0...v4.12.0
 [4.11.0]: https://github.com/perriera/extras_rsi/compare/v4.10.0...v4.11.0
 [4.10.0]: https://github.com/perriera/extras_rsi/compare/v4.9.0...v4.10.0

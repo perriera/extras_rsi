@@ -60,6 +60,21 @@ namespace extras {
             if (response.size() == 0) throw RemoteBlockException("no response", ref);
         }
 
+        void BadRangeFormatException::assertion(
+            const std::string& range,
+            const extras::WhereAmI& ref) {
+            auto parts = extras::split(range, '-');
+            if (parts.size() != 2) throw BadRangeFormatException(range, ref);
+            int from = std::stoi(parts[0]);
+            int to = std::stoi(parts[1]);
+            int span = to - from;
+            if (to < 1) throw BadRangeFormatException(range, ref);
+            if (from < 0) throw BadRangeFormatException(range, ref);
+            if (to > 0xffff) throw BadRangeFormatException(range, ref);
+            if (from > 0xffff) throw BadRangeFormatException(range, ref);
+            if (from >= to) throw BadRangeFormatException(range, ref);
+            if (span < 0 || span>0xffff) throw BadRangeFormatException(range, ref);
+        }
 
     }
 }  // namespace extras

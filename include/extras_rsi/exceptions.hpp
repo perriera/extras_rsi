@@ -134,6 +134,17 @@ namespace extras {
             static void assertion(const std::string& response, const extras::WhereAmI& ref);
         };
 
+        /**
+         * @brief CantOpenFileException
+         *
+         */
+        concrete class BadRangeFormatException extends RSIException {
+        public:
+            BadRangeFormatException(std::string msg, const extras::WhereAmI& whereAmI)
+                : RSIException(msg.c_str(), whereAmI) {}
+            static void assertion(const std::string& response, const extras::WhereAmI& ref);
+        };
+
     }  // namespace rsi
 
 }  // namespace extras
