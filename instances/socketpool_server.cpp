@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/sockets/Server.hpp>
+#include <extras_rsi/socketpool/Server.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <iostream>
 #include <extras_rsi/exceptions.hpp>

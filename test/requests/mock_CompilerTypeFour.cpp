@@ -18,7 +18,7 @@
 
 #include <extras_rsi/requests/RequestTypeThree.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
-#include <extras_rsi/sockets/Client.hpp>
+#include <extras_rsi/socketpool/Client.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"
@@ -90,7 +90,7 @@ SCENARIO("Mock RequestTypeCompilerInterface: TypeFour", "[RequestTypeCompilerInt
                         ss << "download" << ' ';
                         ss << client.ip() << ' ';
                         ss << portAuthority.request() << ' ';
-                        ss << client.filename() << ' ';
+                        ss << client.filename();
                         std::string line = ss.str();
                         list.push_back(line);
                     }

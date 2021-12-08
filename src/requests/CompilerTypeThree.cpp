@@ -19,7 +19,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include <extras_rsi/sockets/Client.hpp>
+#include <extras_rsi/socketpool/Client.hpp>
 #include <extras_rsi/requests/RequestTypeThree.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>
@@ -31,7 +31,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RequestTypeCompilerTypeTwo::compile()
+         * @brief RequestTypeCompilerTypeThree::compile()
          *
          * @param client
          * @param portAuthority

@@ -19,9 +19,9 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include <extras_rsi/sockets/Client.hpp>
-#include <extras_rsi/sockets/Server.hpp>
-#include <extras_rsi/requests/RequestTypeThree.hpp>
+#include <extras_rsi/socketpool/Client.hpp>
+#include <extras_rsi/socketpool/Server.hpp>
+#include <extras_rsi/requests/RequestTypeFour.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
@@ -38,6 +38,12 @@ namespace extras {
          *   ss >> prg >> filename >> ip >> port;
          *
          */
+
+        Parameters SocketPoolServer::parameters(int argc, char const* argv[]) {
+            char const* extra_argv[] = { argv[0], argv[1], argv[2], "ignore.txt" };
+            return _socketParaneters.parameters(++argc, extra_argv);
+        }
+
         void SocketPoolServer::connect() {
             this->_server_socket = configure_serversocket(ip().c_str(), stoi(port()),
                 _server_addr, false);
@@ -73,7 +79,7 @@ namespace extras {
                 if (msg.size() == 0) throw std::string("test exception");
                 SocketPoolClient client(msg, _compilerInterface);
                 // cout << "msg received: " << client << endl;
-                RequestTypeCompilerTypeThree compiler(*this, this->_client_socket);
+                RequestTypeCompilerTypeFour compiler(*this, this->_client_socket);
                 auto compilation = compiler.compile(client, PortAuthority::instance());
                 compilation.send_line_block("");
                 auto list = compilation.compilation();

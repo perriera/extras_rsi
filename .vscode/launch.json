@@ -71,8 +71,7 @@
             "program": "${workspaceFolder}/build/socketpool_server",
             "args": [
                 "127.0.0.1",
-                "8080",
-                "send.txt",
+                "8080"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/",
