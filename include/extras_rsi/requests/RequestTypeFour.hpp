@@ -1,7 +1,7 @@
 /**
- * @file Parameters.hpp
+ * @file RequestType.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief ParametersInterface
+ * @brief RequestTypeCompilerTypeThree
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSIUPLOADERPARAMETERS_HPP
-#define _EXPARX_RSIUPLOADERPARAMETERS_HPP
+#ifndef _EXPARX_RSIREQUESTTYPEFOUR_HPP
+#define _EXPARX_RSIREQUESTTYPEFOUR_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,33 +31,35 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/requests/RequestTypeBase.hpp>
 #include <iostream>
+
+  /**
+   * @brief
+   *
+   */
 
 namespace extras {
     namespace rsi {
-        namespace uploader {
 
-            /**
-             * @brief ParametersInterface
-             *
-             */
+        /**
+         * @brief RequestTypeCompilerTypeThree
+         *
+         */
+        concrete class RequestTypeCompilerTypeFour extends RequestTypeCompilerBase {
+        public:
+            RequestTypeCompilerTypeFour(
+                const ServiceTypeCompilerInterface& compilerInterface, int socket)
+                : RequestTypeCompilerBase(compilerInterface, socket) {}
 
-            interface ParametersInterface {
+            virtual RequestTypeCompilation compile(
+                const rsi::sockets::ParametersInterface& client,
+                PortAuthorityInterface& portAuthority) const override;
 
-                virtual Parameters parameters(int argc, char const* argv[]) pure;
-                virtual  Parameter program() const pure;
-                virtual  Parameter ip() const pure;
-                virtual  Parameter port() const pure;
-                virtual  Parameter filename() const pure;
-                virtual  Parameters extra_files() const pure;
-
-            };
-
-        }
+        };
     }
 }
 
-#endif // _EXPARX_RSISOCKETSPARAMETERS_HPP
+#endif // _EXPARX_RSIREQUESTTYPEFOUR_HPP
 
 

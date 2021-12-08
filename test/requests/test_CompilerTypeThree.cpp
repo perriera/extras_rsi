@@ -18,7 +18,7 @@
 
 #include <extras_rsi/requests/RequestTypeThree.hpp>
 #include <extras_rsi/sockets/Parameters.hpp>
-#include <extras_rsi/sockets/Client.hpp>
+#include <extras_rsi/socketpool/Client.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"
@@ -49,10 +49,10 @@ SCENARIO("Test RequestTypeCompilerInterface: TypeThree", "[RequestTypeCompilerIn
     int socket = std::stoi(client.port());
 
     //
-    rsi::RequestTypeCompilerTypeThree typeTwo(vendor, socket);
+    rsi::RequestTypeCompilerTypeThree typeIII(vendor, socket);
     //     REQUIRE
 
-    rsi::RequestTypeCompilerInterface& i = typeTwo;
+    rsi::RequestTypeCompilerInterface& i = typeIII;
     auto _compilation = i.compile(parameters, portAuthority);
     if (socket != 8080) // included for consistency
         _compilation.send_line_block("");

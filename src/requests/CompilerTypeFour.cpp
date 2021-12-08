@@ -20,7 +20,7 @@
 #include <unistd.h>
 
 #include <extras_rsi/socketpool/Client.hpp>
-#include <extras_rsi/requests/RequestTypeOne.hpp>
+#include <extras_rsi/requests/RequestTypeFour.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
@@ -31,27 +31,60 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RequestTypeCompilerTypeOne::compile()
+         * @brief RequestTypeCompilerTypeFour::compile()
          *
          * @param client
          * @param portAuthority
          * @return RequestTypeCompilation
          */
-        RequestTypeCompilation RequestTypeCompilerTypeOne::compile(
+        RequestTypeCompilation RequestTypeCompilerTypeFour::compile(
             const sockets::ParametersInterface& client,
             PortAuthorityInterface& portAuthority) const {
+
+            std::vector<std::string> extra_files = client.requests();
+
             rsi::RequestTypeList list;
-            for (auto request : client.requests()) {
-                auto port = portAuthority.request();
+            {
                 std::stringstream ss;
-                ss << request << ' ';
-                ss << client.filename() << ' ';
+                ss << "upload" << ' ';
                 ss << client.ip() << ' ';
-                ss << port;
+                ss << portAuthority.request() << ' ';
+                ss << client.filename();
                 std::string line = ss.str();
                 list.push_back(line);
             }
+            for (auto entry : extra_files) {
+                std::stringstream ss;
+                ss << "upload" << ' ';
+                ss << client.ip() << ' ';
+                ss << portAuthority.request() << ' ';
+                ss << entry;
+                std::string line = ss.str();
+                list.push_back(line);
+            }
+            {
+                std::stringstream ss;
+                ss << "vendor" << ' ';
+                ss << client.ip() << ' ';
+                ss << portAuthority.request() << ' ';
+                ss << client.filename() << ' ';
+                for (auto entry : extra_files)
+                    ss << entry << ' ';
+                std::string line = ss.str();
+                list.push_back(line);
+            }
+            {
+                std::stringstream ss;
+                ss << "download" << ' ';
+                ss << client.ip() << ' ';
+                ss << portAuthority.request() << ' ';
+                ss << client.filename();
+                std::string line = ss.str();
+                list.push_back(line);
+            }
+
             return rsi::RequestTypeCompilation(list, _socket);
+
         }
 
     }  // namespace rsi

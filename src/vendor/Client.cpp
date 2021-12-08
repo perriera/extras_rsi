@@ -18,6 +18,7 @@
 
 #include <extras_rsi/vendor/Vendor.hpp>
 #include <iostream>
+#include <extras/devices/ansi_colors.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/subsystem.hpp>
 
@@ -33,6 +34,18 @@ namespace extras {
 
         std::string msg = "vendor started";
         send_line_block(msg);
+
+        std::cout << extras::cyan << extras::pass(" processes file: ") << filename() << std::endl;
+        rsi::FileNotFoundException::assertion(filename(), __INFO__);
+        auto ls1 = "ls -la " + filename();
+        SystemException::assertion(ls1, __INFO__);
+        for (auto extra : this->extra_files()) {
+            rsi::FileNotFoundException::assertion(extra, __INFO__);
+            std::cout << extras::cyan << extras::pass(" processes file: ") << extra << std::endl;
+            auto ls1 = "ls -la " + extra;
+            SystemException::assertion(ls1, __INFO__);
+        }
+
         std::string status = read_line_block();
         RemoteBlockException::assertion(status, __INFO__);
         std::cout << extras::pass(filename()) << std::endl;

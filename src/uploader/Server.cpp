@@ -81,7 +81,10 @@ namespace extras {
     rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) {
         arc::ParcelImploder parcelImploder(lock);;
         auto wrappedName = parcelImploder.wrapped();
-        return write_file_block(wrappedName);
+        auto _lock = write_file_block(wrappedName);
+        auto ls1 = "ls -la " + wrappedName;
+        SystemException::assertion(ls1, __INFO__);
+        return _lock;
     }
 
     /**

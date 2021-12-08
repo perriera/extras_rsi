@@ -89,6 +89,8 @@ namespace extras {
             virtual void send_line_block(const LinePacket& msg) const override;
             virtual LinePacket read_line_block() override;
 
+            virtual Parameters parameters(int argc, char const* argv[]) override;
+
         };
 
     }
