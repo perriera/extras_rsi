@@ -47,7 +47,7 @@ namespace extras {
         rsi::Parameters result;
         for (int i = 0; i < argc; i++) result.push_back(argv[i]);
         _parameters = result;
-        for (int i = 3; i < argc; i++) _extra_files.push_back(argv[i]);
+        for (int i = 4; i < argc; i++) _extra_files.push_back(argv[i]);
         return _parameters;
     }
 
