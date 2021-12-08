@@ -97,6 +97,8 @@ namespace extras {
         send_line_block("uploader completed");
         std::cout << extras::pass(filename()) << std::endl;
         std::cout << extras::pass("write_file successful") << std::endl;
+        auto ls1 = "ls -la " + filename();
+        SystemException::assertion(ls1, __INFO__);
         return original;
     }
 
