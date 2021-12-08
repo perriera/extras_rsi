@@ -44,11 +44,13 @@ namespace extras {
              */
 
             interface ParametersInterface {
+
                 virtual Parameters parameters(int argc, char const* argv[]) pure;
                 virtual  Parameter program() const pure;
                 virtual  Parameter ip() const pure;
                 virtual  Parameter port() const pure;
                 virtual  Parameter filename() const pure;
+                virtual  Parameters extra_files() const pure;
 
             };
 

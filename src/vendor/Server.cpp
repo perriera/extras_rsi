@@ -64,6 +64,8 @@ namespace extras {
 
         rsi::FileNotFoundException::assertion(filename(), __INFO__);
         std::cout << extras::cyan << extras::pass(" processes file: ") << filename() << std::endl;
+        for (auto extra : this->extra_files())
+            std::cout << extras::cyan << extras::pass(" processes file: ") << extra << std::endl;
         std::cout << extras::blue << std::endl;
         auto cp = "cp data/src.zip data/exparx.freeformjs.zip ";
         SystemException::assertion(cp, __INFO__);
