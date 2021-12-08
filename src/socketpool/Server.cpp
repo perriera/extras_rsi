@@ -21,7 +21,7 @@
 
 #include <extras_rsi/sockets/Client.hpp>
 #include <extras_rsi/sockets/Server.hpp>
-#include <extras_rsi/requests/RequestType.hpp>
+#include <extras_rsi/requests/RequestTypeTwo.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
@@ -74,7 +74,7 @@ namespace extras {
                 SocketPoolClient client(msg, _compilerInterface);
                 // cout << "msg received: " << client << endl;
                 RequestTypeCompilerTypeTwo compiler(*this, this->_client_socket);
-                auto compilation = compiler.compile(client);
+                auto compilation = compiler.compile(client, PortAuthority::instance());
                 compilation.send_line_block("");
                 auto list = compilation.compilation();
                 for (auto item : servers(list)) {

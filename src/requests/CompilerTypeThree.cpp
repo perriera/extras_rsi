@@ -20,7 +20,7 @@
 #include <unistd.h>
 
 #include <extras_rsi/sockets/Client.hpp>
-#include <extras_rsi/requests/RequestTypeOne.hpp>
+#include <extras_rsi/requests/RequestTypeThree.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
@@ -31,26 +31,50 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RequestTypeCompilerTypeOne::compile()
+         * @brief RequestTypeCompilerTypeTwo::compile()
          *
          * @param client
          * @param portAuthority
          * @return RequestTypeCompilation
          */
-        RequestTypeCompilation RequestTypeCompilerTypeOne::compile(
+        RequestTypeCompilation RequestTypeCompilerTypeThree::compile(
             const sockets::ParametersInterface& client,
             PortAuthorityInterface& portAuthority) const {
+            std::vector<std::string> keywords;
+            std::map<int, std::vector<std::string> >script;
+
+            for (rsi::RequestType request : client.requests()) {
+                auto entry = script[script.size() - 1];
+                if (isParameter(request)) {
+                    if (entry.size() == 0)
+                        throw "No entry";
+                    script[script.size() - 1].push_back(request);
+                }
+                else {
+                    rsi::ParameterList list;
+                    list.push_back(request);
+                    keywords.push_back(request);
+                    script[script.size()] = list;
+                }
+            }
+
+            script.erase(-1);
+
             rsi::RequestTypeList list;
-            for (auto request : client.requests()) {
+            int lineNo = 0;
+            for (auto entry : script) {
                 auto port = portAuthority.request();
                 std::stringstream ss;
-                ss << request << ' ';
-                ss << client.filename() << ' ';
+                ss << keywords[lineNo++] << ' ';
                 ss << client.ip() << ' ';
-                ss << port;
+                ss << port << ' ';
+                entry.second.erase(entry.second.begin());
+                for (auto parm : entry.second)
+                    ss << parm << ' ';
                 std::string line = ss.str();
                 list.push_back(line);
             }
+
             return rsi::RequestTypeCompilation(list, _socket);
         }
 
