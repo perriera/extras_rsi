@@ -68,12 +68,12 @@ else()
   #
   # NOTE: add additional project options
   #
-  option(RSI_PRODUCTION "Production build" OFF)
+  option(EXTRAS_RSI_PRODUCTION "Production build" OFF)
 
   #
-  # NOTE: Build defaults to production, cmake -DRSI_PRODUCTION=OFF will build debug with tests
+  # NOTE: Build defaults to production, cmake -DEXTRAS_RSI_PRODUCTION=OFF will build debug with tests
   #
-  if(NOT RSI_PRODUCTION)
+  if(NOT EXTRAS_RSI_PRODUCTION)
     print(STATUS "Building ${PROJECT_NAME}-${PROJECT_VERSION} [DEBUG]")
     set(CMAKE_BUILD_TYPE Debug)
     set(RSI_TESTS ON)
