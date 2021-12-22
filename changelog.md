@@ -5,8 +5,8 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v4.15.0 -m "Using EXTRAS_RSI_PRODUCTION"</br>
-> > git push origin v4.15.0
+> > git tag -a v4.16.0 -m "Using extras_arc v2.3.0"</br>
+> > git push origin v4.16.0
 
 IMPORTANT:
 
@@ -31,6 +31,12 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 4.16.0 (2021-12-21)
+
+## Using
+
+- extras_arc v2.3.0
 
 #### 4.15.0 (2021-12-21)
 
@@ -438,7 +444,8 @@ Updated README.md accordinging</br>
 
 - Conan package manager deprecated
 
-[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.15.0...HEAD
+[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.16.0...HEAD
+[4.16.0]: https://github.com/perriera/extras_rsi/compare/v4.15.0...v4.16.0
 [4.15.0]: https://github.com/perriera/extras_rsi/compare/v4.14.0...v4.15.0
 [4.14.0]: https://github.com/perriera/extras_rsi/compare/v4.13.0...v4.14.0
 [4.13.0]: https://github.com/perriera/extras_rsi/compare/v4.12.0...v4.13.0
