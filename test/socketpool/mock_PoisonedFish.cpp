@@ -35,9 +35,15 @@ SCENARIO("Mock PoisonedFishInterface", "[PoisonedFishInterface]") {
             [&correct](const rsi::PoisonedFishKey& msg) {
                 return correct == msg;
             });
+    When(Method(mock, killServers))
+        .AlwaysDo(
+            []() {
+            });
 
     rsi::PoisonedFishInterface& i = mock.get();
     REQUIRE(!i.poisonedFishReceived(random));
     REQUIRE(i.poisonedFishReceived(correct));
+    i.killServers();
     Verify(Method(mock, poisonedFishReceived));
+    Verify(Method(mock, killServers));
 }
