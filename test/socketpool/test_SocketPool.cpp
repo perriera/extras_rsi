@@ -20,6 +20,7 @@
 #include <extras/strings.hpp>
 #include <filesystem>
 #include <iostream>
+#include <fstream>
 
 
  // build/uploader_client data/cplusplusorg.freeformjs.imploded.zip 137.184.218.130 9003
@@ -37,15 +38,33 @@
 using namespace extras;
 namespace fs = std::filesystem;
 
-// SCENARIO("Test SocketPoolInterface: upload", "[SocketPoolInterface]") {
-//     std::string target = "send.txt";
-//     auto uploaded_file = extras::replace_all(target, ".txt", "_uploaded.txt");
-//     if (fs::exists(uploaded_file)) fs::remove(uploaded_file);
-//     REQUIRE(fs::exists(target));
-//     REQUIRE(!fs::exists(uploaded_file));
-//     system("build/socketpool_server 127.0.0.1 8080 send.txt upload download &");
-//     REQUIRE(system("build/socketpool_client 127.0.0.1 8080 send.txt upload download ") == 0);
-//     REQUIRE(!fs::exists(uploaded_file));
-//     REQUIRE(fs::exists(target));
-// }
+void killServers(std::string pattern) {
+    auto file = "list.txt";
+    auto report = "ps -A | grep \"" + pattern + "\" > " + file;
+    try {
+        SystemException::assertion(report, __INFO__);
+        std::ifstream in(file);
+        while (in.good()) {
+            std::string word;
+            std::string line;
+            in >> word;
+            getline(in, line);
+            if (word != "" && extras::contains(line, pattern)) {
+                auto kill = "kill " + word;
+                SystemException::assertion(kill, __INFO__);
+            }
+        }
+    }
+    catch (SystemException& ex) {
+        std::cout << ex << std::endl;
+    }
+}
+
+SCENARIO("Test SocketPoolInterface: upload", "[SocketPoolInterface]") {
+    extras::Parameters args = { "127.0.0.1", "8080", "9000-9500" };
+    killServers("socketpool_serv");
+    system("build/socketpool_server 127.0.0.1 8080 9000-9500 &");
+    killServers("socketpool_serv");
+    //    REQUIRE(system("build/socketpool_client 127.0.0.1 8080 send.txt upload download ") == 0);
+}
 

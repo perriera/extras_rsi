@@ -451,7 +451,8 @@ Updated README.md accordinging</br>
 
 - Conan package manager deprecated
 
-[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.16.0...HEAD
+[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.17.0...HEAD
+[4.17.0]: https://github.com/perriera/extras_rsi/compare/v4.16.0...v4.17.0
 [4.16.0]: https://github.com/perriera/extras_rsi/compare/v4.15.0...v4.16.0
 [4.15.0]: https://github.com/perriera/extras_rsi/compare/v4.14.0...v4.15.0
 [4.14.0]: https://github.com/perriera/extras_rsi/compare/v4.13.0...v4.14.0
