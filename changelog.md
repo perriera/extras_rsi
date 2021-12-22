@@ -1,14 +1,15 @@
-
 # Changelog
+
 > All notable changes to this project will be documented in this file.</br>
 > The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), </br>
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
-> > git tag -a v4.13.0 -m "Added a bunch of enhancements"</br>
-> > git push origin v4.13.0
-> 
+>
+> > git tag -a v4.14.0 -m "Using extras_arc v2.2.0"</br>
+> > git push origin v4.14.0
 
-IMPORTANT: 
+IMPORTANT:
+
 - Manually keep the changelog version number in sync with CMakeLists.txt project version.<br>
 - Keep the changelog.md up to date, neat and tidy, (as it is a convenient tool for code maintenance).<br>
 - Use [Semantic Versioning](https://semver.org/spec/v2.0.0.html) such that<br>
@@ -20,265 +21,383 @@ IMPORTANT:
 - MAKE SURE to tag and update the tag compare list below, (for quick code comparison purposes).<br>
 
 ## [Unreleased]
+
 Detailed test cases</br>
 Detailed class descriptions in README.md</br>
 Correct URL for github, (for source compare)</br>
 
 ## [Next Steps]
+
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
 
+#### 4.14.0 (2021-12-21)
+
+## Prototype
+
+- Using extras_arc v2.2.0
+
 #### 4.13.0 (2021-12-07)
-## Prototype  
-- Added a bunch of enhancements  
+
+## Prototype
+
+- Added a bunch of enhancements
 
 #### 4.12.0 (2021-12-06)
-## Prototype  
-- Working RequestTypeCompilerTypeFour   
+
+## Prototype
+
+- Working RequestTypeCompilerTypeFour
 
 #### 4.11.0 (2021-12-06)
-## Prototype  
-- Working RequestTypeCompilerTypeThree   
+
+## Prototype
+
+- Working RequestTypeCompilerTypeThree
 
 #### 4.10.0 (2021-12-06)
-## Prototype  
+
+## Prototype
+
 - Updated documentation for HOWTO- ... .md
 
 #### 4.9.0 (2021-12-06)
-## Prototype  
-- Working RequestTypeCompilerTypeTwo   
+
+## Prototype
+
+- Working RequestTypeCompilerTypeTwo
 
 #### 4.8.0 (2021-12-06)
-## Added type 2 test case   
-- type 2 test case   
+
+## Added type 2 test case
+
+- type 2 test case
 
 #### 4.7.0 (2021-12-05)
-## Refactored  
+
+## Refactored
+
 - RequestTypeCompilation
 - RequestTypeCompilerTypeOne
 
 #### 4.6.0 (2021-12-05)
-## Refactored  
+
+## Refactored
+
 - Added SocketParaneters
 
 #### 4.5.0 (2021-12-04)
-## Refactored  
+
+## Refactored
+
 - Added LineBlockInterface
 - Added FileBlockInterface
 
 #### 4.4.0 (2021-12-04)
-## Refactored  
+
+## Refactored
+
 - Added sockets::ParametersInterface
 
 #### 4.3.0 (2021-12-04)
-## Refactored  
+
+## Refactored
+
 - Added HOWTO documentation.
 
 #### 4.2.0 (2021-12-04)
-## Refactored  
+
+## Refactored
+
 - Using extras_arc v2.1.0
 - Added directive
 
 #### 4.1.0 (2021-12-03)
-## Refactored  
+
+## Refactored
+
 - Using extras_arc v2.0.0
 - Added directive
 
 #### 4.0.4 (2021-12-01)
-## Refactored  
+
+## Refactored
+
 - Using extras_arc v1.2.0
 - Added directive
 
 #### 4.0.3 (2021-11-30)
-## Refactored  
+
+## Refactored
+
 - Using extras_arc v1.1.3
 - Added directive
 
 #### 4.0.2 (2021-11-30)
-## Refactored  
+
+## Refactored
+
 - Using extras_arc v1.0.2
 - Added directive
 
 #### 4.0.1 (2021-11-30)
-## Refactored  
+
+## Refactored
+
 - Corrected identifiers
 
 #### 4.0.0 (2021-11-30)
-## Refactored  
+
+## Refactored
+
 - Using extras_arc v1.0.0
 
 #### 3.5.0 (2021-11-30)
-## Refactored  
+
+## Refactored
+
 - Using ng_imploder v0.9.0
 
 #### 3.4.0 (2021-11-30)
-## Added  
+
+## Added
+
 - HOWTO.md
+
 ## Changed
+
 - Using ng_monitor 0.8.0 instead
+
 ## Merged
+
 - PE-35B
 
 #### 3.3.0 (2021-11-29)
-## Added  
+
+## Added
+
 - LICENSE.md
+
 ## Changed
+
 - Using ng_monitor 0.7.0 instead
+
 ## Merged
+
 - PE-35
 
 #### 3.2.1 (2021-11-24)
-## Added  
+
+## Added
+
 - Working prototype
+
 ## Changed
+
 - Using ng_imploder 0.6.5
+
 ## Merged
+
 - RSI-14
 
 #### 3.2.0 (2021-11-24)
-## Added  
+
+## Added
+
 - SemaphoreInterface
 
 #### 3.1.0 (2021-11-22)
-## Changed  
+
+## Changed
+
 - Cleaned up code
 
 #### 3.0.1 (2021-11-22)
-## Changed  
+
+## Changed
+
 - Added semaphores, (better synchronization)
 
 #### 3.0.0 (2021-11-22)
-## Added  
+
+## Added
+
 - Working prototype
 
 #### 2.17.0 (2021-11-19
-## Added  
+
+## Added
+
 - Ported StatusLine
 
 #### 2.16.0 (2021-11-19
-## Added  
+
+## Added
+
 - Documented Vendor/Server.cpp
+
 * [RSi-12]
 
 #### 2.15.0 (2021-11-18)
-## Added  
-- Added ColorBar 
+
+## Added
+
+- Added ColorBar
+
 * [RSi-9B]
 
 #### 2.14.0 (2021-11-18)
-## Added  
-- Added maxcount 
+
+## Added
+
+- Added maxcount
+
 * [RSi-9]
 
 #### 2.13.1 (2021-11-18)
-## Added  
+
+## Added
+
 - StatusBarInterface
+
 * [RSi-9]
 
 #### 2.13.0 (2021-11-18)
-## Added  
+
+## Added
+
 - StatusBarInterface
+
 * [RSi-9]
 
 #### 2.12.0 (2021-11-16)
-## Added  
+
+## Added
+
 - StatusLineInterface
+
 * [RSi-8]
 
 #### 2.11.0 (2021-11-16)
-## Added  
+
+## Added
+
 - ServiceTypeCompilerVendor
+
 * [RSi-7]
 
 #### 2.10.0 (2021-11-16)
+
 - Using extras 5.2.0
 
 #### 2.9.0 (2021-11-15)
+
 - Using extras 5.1.1
 
 #### 2.8.0 (2021-11-15)
+
 - Added shared executables parameter
 
 #### 2.7.0 (2021-11-15)
+
 - Added ng-monitor
 
 #### 2.6.0 (2021-11-15)
-- Refactored unused code 
+
+- Refactored unused code
 
 #### 2.5.0 (2021-11-14)
-- Removed needess output from parcel pack/unpack 
+
+- Removed needess output from parcel pack/unpack
 
 #### 2.4.0 (2021-11-14)
+
 - MAKE_EXPARX_RSI_LIBRARY_TOOLS support
 
 #### 2.3.0 (2021-11-14)
+
 - MAKE_EXPARX_RSI_LIBRARY_ONLY support
 
 #### 2.2.0 (2021-11-14)
+
 - Operational Prototype
 
 #### 2.0.0 (2021-11-10)
+
 - New branch based on RSI-6B
-- Updated README.md 
+- Updated README.md
 
 #### 1.2.0 (2021-11-10)
+
 - using perriera/extras v5.0.9
-- Updated README.md 
+- Updated README.md
 
 #### 1.1.4 (2021-11-10)
+
 - using perriera/extras v5.0.8
-- Updated README.md 
+- Updated README.md
 
 #### 1.1.3 (2021-11-10)
+
 - using perriera/extras v5.0.4
 - RSI-4
 
 #### 1.1.2 (2021-11-10)
+
 - Changed message
 - RSI-4
 
 #### 1.1.1 (2021-11-10)
+
 - Trimmed code/updated docs
 - RSI-4
 
 #### 1.0.1 (2021-11-09)
+
 - Added bin2hex
 - Now using extras 5.0.1
 - RSI-4
 
 #### 1.0.0 (2021-11-09)
+
 - Changed namespace from exparx to extras, (aka. extras::extras_rsi)
 - RSI-3
 
 #### 0.3.1 (2021-11-08)
+
 - Updated changelog
 - RSI-2
 
 #### 0.3.0 (2021-11-08)
+
 - Ported over most of the necessary code
 - RSI-2
 
 #### 0.2.0 (2021-11-08)
+
 - Now using perriera/extras v4.19.0
 
 #### 0.1.0 (2021-11-08)
+
 - extras_rsi source code
 - SHARED library support
 - (perriera) extras library support, (3.11.0)
 - CPM.cmake support
-  * [CPM.cmake](https://github.com/cpm-cmake/CPM.cmake/blob/master/LICENSE) 
-  * This allows us to include other Github packages with the ability
+  - [CPM.cmake](https://github.com/cpm-cmake/CPM.cmake/blob/master/LICENSE)
+  - This allows us to include other Github packages with the ability
     to add package OPTIONS
 - FakeIt Mock Library support
-  * [FakeIt](https://github.com/eranpeer/FakeIt) 
-  * This gives us the ability to mock C++ interfaces, (before implementation)
+  - [FakeIt](https://github.com/eranpeer/FakeIt)
+  - This gives us the ability to mock C++ interfaces, (before implementation)
 - Catch2 support
-  * [Catch2](https://github.com/catchorg/Catch2)
-  * This gives us the ability to test C++ classes, (during implementation)
+  - [Catch2](https://github.com/catchorg/Catch2)
+  - This gives us the ability to test C++ classes, (during implementation)
+
 ### Changed
+
 - CMakeLists.txt
-  * [ModernCppStarter](https://github.com/TheLartians/ModernCppStarter/blob/master/LICENSE) 
+  - [ModernCppStarter](https://github.com/TheLartians/ModernCppStarter/blob/master/LICENSE)
 - spdlog is now used as a shared library, (libspdlog.so)
 - cpr is now used as a shared library, (libcpr.so)
 - placed all source into /src
@@ -297,6 +416,7 @@ Updated README.md accordinging</br>
 - Mock framework support, (FakeIt)
 
 ### Changed
+
 - CMakeLists.txt revamped & streamlined
 - README.md revamped & streamlined
 - Added documentation on code
@@ -304,13 +424,16 @@ Updated README.md accordinging</br>
 - std::filesystem on all targets
 
 ### Maintained
+
 - @brief style formatting
-- Doxygen support 
+- Doxygen support
 
 ### Removed
+
 - Conan package manager deprecated
 
-[Unreleased]: https://github.com/perriera/extras_rsi/compare/v4.13.0...HEAD
+[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.14.0...HEAD
+[4.14.0]: https://github.com/perriera/extras_rsi/compare/v4.13.0...v4.14.0
 [4.13.0]: https://github.com/perriera/extras_rsi/compare/v4.12.0...v4.13.0
 [4.12.0]: https://github.com/perriera/extras_rsi/compare/v4.11.0...v4.12.0
 [4.11.0]: https://github.com/perriera/extras_rsi/compare/v4.10.0...v4.11.0
