@@ -22,7 +22,12 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
-
+#include <extras_rsi/socketpool/Client.hpp>
+#include <extras/status/StatusLine.hpp>
+#include <iostream>
+#include <extras_rsi/exceptions.hpp>
+#include <chrono>
+#include <thread>
 
  // build/uploader_client data/cplusplusorg.freeformjs.imploded.zip 137.184.218.130 9003
  // build/uploader_server send.txt 137.184.218.130 9003
@@ -37,6 +42,8 @@
 #include "../unittesting/fakeit.hpp"
 
 using namespace extras;
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono;
 namespace fs = std::filesystem;
 
 void killServers(std::string pattern) {
@@ -47,11 +54,36 @@ void killServers(std::string pattern) {
     }
 }
 
-SCENARIO("Test SocketPoolInterface: upload", "[SocketPoolInterface]") {
-    extras::Parameters args = { "127.0.0.1", "8080", "9000-9500" };
+SCENARIO("Test SocketPoolInterface: socketpool_client", "[SocketPoolInterface]") {
+
+    //
+    // setup socketpool_server
+    //
     killServers("socketpool_serv");
+    system("rm -rf testit; mkdir testit; cp data/src.zip testit/; cp data/exparx.webflow.zip testit; ");
     system("build/socketpool_server 127.0.0.1 8080 9000-9500 &");
+    sleep_for(nanoseconds(10));
+    sleep_until(system_clock::now() + seconds(1));
+
+    //
+    // setup socketpool_client
+    //
+    const char* argv[] = { "build/socketpool_client", "127.0.0.1", "8080", "testit/src.zip", "testit/exparx.webflow.zip" };
+    int argc = sizeof(argv) / sizeof(argv[0]);
+    std::cout << extras::start(argv[0]) << std::endl;
+    extras::rsi::ServiceTypeCompilerVendor vendor;
+    extras::rsi::SocketPoolClient client(vendor);
+    client.parameters(argc, argv);
+    client.connect();
+    client.transfer();
+    std::cout << extras::pass("File sockets allocated successfully") << std::endl;
+    client.close();
+    std::cout << extras::end(argv[0]) << std::endl << std::endl;
+
+    //
+    // cleanup
+    //
     killServers("socketpool_serv");
-    //    REQUIRE(system("build/socketpool_client 127.0.0.1 8080 send.txt upload download ") == 0);
+
 }
 
