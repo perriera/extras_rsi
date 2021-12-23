@@ -32,6 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <iostream>
+#include <extras_rsi/rsiexception.hpp>
 
 namespace extras {
     namespace rsi {
@@ -53,6 +54,40 @@ namespace extras {
                 const PoisonedFishKey& msg) const pure;
             virtual void killServers() const pure;
         };
+
+        /**
+         * @brief NoServersToKillException
+         *
+         */
+        concrete class NoServersToKillException extends RSIException {
+        public:
+            NoServersToKillException(std::string pattern, const extras::WhereAmI& whereAmI)
+                : rsi::RSIException(pattern.c_str(), whereAmI) {}
+            static void assertion(const std::string& pattern, const Filename& tempFile, const extras::WhereAmI& ref);
+        };
+
+        /**
+         * @brief ServerNotKilledException
+         *
+         */
+        concrete class ServerNotKilledException extends RSIException {
+        public:
+            ServerNotKilledException(std::string pattern, const extras::WhereAmI& whereAmI)
+                : rsi::RSIException(pattern.c_str(), whereAmI) {}
+            static void assertion(const std::string& pattern, const extras::WhereAmI& ref);
+        };
+
+        /**
+         * @brief UnknownKillParametersException
+         *
+         */
+        concrete class UnknownKillParametersException extends RSIException {
+        public:
+            UnknownKillParametersException(std::string line, const extras::WhereAmI& whereAmI)
+                : rsi::RSIException(line.c_str(), whereAmI) {}
+            static void assertion(const std::string& line, const Filename& pattern, const extras::WhereAmI& ref);
+        };
+
 
     }
 }

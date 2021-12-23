@@ -31,22 +31,11 @@
   */
 
 #include <extras/interfaces.hpp>
+#include <extras_rsi/rsiexception.hpp>
 
 namespace extras {
 
     namespace rsi {
-
-        /**
-         * @brief RSIException
-         *
-         */
-        concrete class RSIException extends extras::AbstractCustomException {
-        public:
-            RSIException(const char* msg, const extras::WhereAmI& whereAmI)
-                : extras::AbstractCustomException(msg, whereAmI._file.c_str(),
-                    whereAmI._func.c_str(), whereAmI._line) {}
-            static void assertion(const std::string& msg, const extras::WhereAmI& ref);
-        };
 
         concrete class SocketException extends RSIException {
         public:
