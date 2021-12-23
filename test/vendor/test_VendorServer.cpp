@@ -41,20 +41,13 @@ void killServers(std::string pattern);
 void killAllServers();
 
 /**
- * @brief Test SocketPoolInterface: socketpool_server
- *
- * @note AT THE MOMENT THIS TEST IS FLAWED
- *       AS IT HAS BEEN REVEALED THAT ON A LOCAL SERVER
- *       BOTH THE CLIENT AND THE SERVER ARE ACTING ON THE
- *       SAME DIRECTORY. (ideally, this is not the way
- *       the way it should work, however it does show
- *       that the semaphore logic is working properly).
+ * @brief Test UploaderInterface: vendor_server
  *
  */
 SCENARIO("Test UploaderInterface: vendor_server", "[UploaderInterface]") {
 
     //
-    // setup socketpool_server
+    // setup vendor_server
     // 
     killAllServers();
     SystemException::assertion("rm -rf testit2; mkdir testit2; ", __INFO__);
@@ -66,7 +59,7 @@ SCENARIO("Test UploaderInterface: vendor_server", "[UploaderInterface]") {
     sleep_until(system_clock::now() + seconds(2));
 
     //
-    // setup socketpool_client
+    // setup vendor_client
     //
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
     SystemException::assertion("cp data/src.zip testit; cp data/exparx.webflow.zip testit; ", __INFO__);
