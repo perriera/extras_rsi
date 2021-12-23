@@ -5,8 +5,8 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v4.19.0 -m "Added test_SocketPoolClient()"</br>
-> > git push origin v4.18.0
+> > git tag -a v4.20.0 -m "Added test_SocketPoolServer()"</br>
+> > git push origin v4.20.0
 
 IMPORTANT:
 
@@ -31,6 +31,12 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 4.20.0 (2021-12-22)
+
+## Added
+
+- test_SocketPoolServer
 
 #### 4.19.0 (2021-12-22)
 
@@ -463,7 +469,8 @@ Updated README.md accordinging</br>
 
 - Conan package manager deprecated
 
-[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.19.0...HEAD
+[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.20.0...HEAD
+[4.20.0]: https://github.com/perriera/extras_rsi/compare/v4.19.0...v4.20.0
 [4.19.0]: https://github.com/perriera/extras_rsi/compare/v4.18.0...v4.19.0
 [4.18.0]: https://github.com/perriera/extras_rsi/compare/v4.17.0...v4.18.0
 [4.17.0]: https://github.com/perriera/extras_rsi/compare/v4.16.0...v4.17.0

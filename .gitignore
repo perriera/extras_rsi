@@ -29,3 +29,6 @@ data/cplusplusorg.freeformjs.imploded.zip.dir*
 data/client/*
 data/server/*
 runtime/*
+
+testit/
+testit2/

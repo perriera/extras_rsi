@@ -46,10 +46,16 @@ using namespace std::this_thread; // sleep_for, sleep_until
 using namespace std::chrono;
 namespace fs = std::filesystem;
 
-void killServers(std::string pattern);
+void killServers(std::string pattern) {
+    try {
+        rsi::SocketPool::killServers(pattern);
+    }
+    catch (const extras::rsi::NoServersToKillException& ex) {
+    }
+}
 
 /**
- * @brief Test SocketPoolInterface: socketpool_client
+ * @brief Test SocketPoolInterface: socketpool_server
  *
  * @note AT THE MOMENT THIS TEST IS FLAWED
  *       AS IT HAS BEEN REVEALED THAT ON A LOCAL SERVER
@@ -59,8 +65,7 @@ void killServers(std::string pattern);
  *       that the semaphore logic is working properly).
  *
  */
-
-SCENARIO("Test SocketPoolInterface: socketpool_client", "[SocketPoolInterface]") {
+SCENARIO("Test SocketPoolInterface: socketpool_server", "[SocketPoolInterface]") {
 
     //
     // setup socketpool_server
@@ -68,7 +73,7 @@ SCENARIO("Test SocketPoolInterface: socketpool_client", "[SocketPoolInterface]")
     killServers("socketpool_serv");
     REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
-    SystemException::assertion("build/socketpool_server 127.0.0.1 8080 9000-9500 &", __INFO__);
+    SystemException::assertion("build/socketpool_server 127.0.0.1 8088 8000-8500 &", __INFO__);
     sleep_for(nanoseconds(10));
     sleep_until(system_clock::now() + seconds(2));
 
@@ -78,7 +83,17 @@ SCENARIO("Test SocketPoolInterface: socketpool_client", "[SocketPoolInterface]")
     SystemException::assertion("cp data/src.zip testit/; cp data/exparx.webflow.zip testit; ", __INFO__);
     REQUIRE(fs::exists("testit/src.zip"));
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
-    SystemException::assertion("build/socketpool_client 127.0.0.1 8080 testit/src.zip testit/exparx.webflow.zip", __INFO__);
+    const char* argv[] = { "build/socketpool_client", "127.0.0.1", "8088", "testit/src.zip", "testit/exparx.webflow.zip" };
+    int argc = sizeof(argv) / sizeof(argv[0]);
+    std::cout << extras::start(argv[0]) << std::endl;
+    extras::rsi::ServiceTypeCompilerVendor vendor;
+    extras::rsi::SocketPoolClient client(vendor);
+    client.parameters(argc, argv);
+    client.connect();
+    client.transfer();
+    std::cout << extras::pass("File sockets allocated successfully") << std::endl;
+    client.close();
+    std::cout << extras::end(argv[0]) << std::endl << std::endl;
     REQUIRE(fs::exists("testit/src.zip"));
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
 
