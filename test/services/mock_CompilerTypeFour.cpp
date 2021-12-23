@@ -53,10 +53,10 @@ SCENARIO("Mock ServiceTypeCompilerInterface: clients", "[ServiceTypeCompilerInte
     };
 
     rsi::ServiceTypeList servers_list = {
-        "build/uploader_server 137.184.218.130 9000 data/src.zip",
-        "build/uploader_server 137.184.218.130 9001 data/exparx.webflow.zip",
-        "build/vendor_server 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip",
-        "build/downloader_server 137.184.218.130 9003 data/src.zip",
+        "build/uploader_server 137.184.218.130 9000 /tmp/$token/data/src.zip",
+        "build/uploader_server 137.184.218.130 9001 /tmp/$token/exparx.webflow.zip",
+        "build/vendor_server 137.184.218.130 9002 /tmp/$token/src.zip /tmp/$token/exparx.webflow.zip",
+        "build/downloader_server 137.184.218.130 9003 /tmp/$token/src.zip",
     };
 
     Mock<rsi::ServiceTypeCompilerInterface> mock;

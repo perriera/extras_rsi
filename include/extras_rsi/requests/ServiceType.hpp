@@ -49,6 +49,8 @@ namespace extras {
         using ServiceTypeMap = std::map<ServiceType, ServiceType>;
 
         interface ServiceTypeCompilerInterface {
+            virtual ServiceTypeList common(ServiceTypeMap& map,
+                const RequestTypeList& requests) const pure;
             virtual ServiceTypeList clients(
                 const RequestTypeList& requests) const pure;
             virtual ServiceTypeList servers(
@@ -67,7 +69,7 @@ namespace extras {
 
         protected:
             virtual ServiceTypeList common(ServiceTypeMap& map,
-                const RequestTypeList& requests) const;
+                const RequestTypeList& requests) const override;
 
         public:
 
