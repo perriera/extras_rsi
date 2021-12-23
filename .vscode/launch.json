@@ -14,7 +14,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build/run-unittests-extras_rsi",
-      "args": ["[UploaderInterface]"],
+      "args": ["[ServiceTypeCompilerInterface]"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
