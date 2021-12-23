@@ -48,8 +48,7 @@ namespace extras {
         using SessionTypeList = std::vector<SessionType>;
 
         interface SessionInterface {
-            virtual rsi::Directory common(const SessionTypeMap& map,
-                const RequestTypeList& requests) const pure;
+            virtual extras::Directory make() const pure;
         };
 
 
