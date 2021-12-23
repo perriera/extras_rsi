@@ -46,10 +46,11 @@ using namespace std::this_thread; // sleep_for, sleep_until
 using namespace std::chrono;
 namespace fs = std::filesystem;
 
+void killServers(std::string pattern);
 void killAllServers();
 
 /**
- * @brief Test SocketPoolInterface: socketpool_client
+ * @brief Test SocketPoolInterface: socketpool_server
  *
  * @note AT THE MOMENT THIS TEST IS FLAWED
  *       AS IT HAS BEEN REVEALED THAT ON A LOCAL SERVER
@@ -59,35 +60,34 @@ void killAllServers();
  *       that the semaphore logic is working properly).
  *
  */
-
-SCENARIO("Test SocketPoolInterface: socketpool_client", "[SocketPoolInterface]") {
+SCENARIO("Test UploaderInterface: uploader_client", "[UploaderInterface]") {
 
     //
     // setup socketpool_server
-    //
+    // 
     killAllServers();
-    SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
-    SystemException::assertion("build/socketpool_server 127.0.0.1 8080 9000-9500 &", __INFO__);
+    SystemException::assertion("rm -rf testit2; mkdir testit2; ", __INFO__);
+    REQUIRE(!fs::exists("testit2/exparx.webflow.zip"));
+    SystemException::assertion("build/uploader_server 127.0.0.1 8080 testit2/exparx.webflow.zip &", __INFO__);
     sleep_for(nanoseconds(10));
     sleep_until(system_clock::now() + seconds(2));
 
     //
     // setup socketpool_client
     //
-    SystemException::assertion("cp data/src.zip testit/; cp data/exparx.webflow.zip testit; ", __INFO__);
-    REQUIRE(fs::exists("testit/src.zip"));
+    SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
+    SystemException::assertion("cp data/exparx.webflow.zip testit; ", __INFO__);
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
 
-    SystemException::assertion("build/socketpool_client 127.0.0.1 8080 testit/src.zip testit/exparx.webflow.zip", __INFO__);
+    SystemException::assertion("build/uploader_client 127.0.0.1 8080 testit/exparx.webflow.zip", __INFO__);
 
-    REQUIRE(fs::exists("testit/src.zip"));
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
+    REQUIRE(fs::exists("testit2/exparx.webflow.zip"));
 
     //
     // cleanup
     //
     killAllServers();
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
     SystemException::assertion("rm -rf testit", __INFO__);
 
 }
