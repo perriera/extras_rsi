@@ -33,6 +33,7 @@
 #include <extras/interfaces.hpp>
 #include <extras/strings.hpp>
 #include <extras_rsi/socketpool/Parameters.hpp>
+#include <extras_rsi/socketpool/PoisonedFish.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
 #include <extras_rsi/requests/ServiceType.hpp>
 #include <extras_rsi/exceptions.hpp>
@@ -72,6 +73,7 @@ namespace extras {
          */
         abstract class SocketPool implements SocketPoolInterface with
             sockets::ParametersInterface with ServiceTypeCompilerInterface
+            with PoisonedFishInterface
             with LineBlockInterface
             with HelpInterface {
         protected:
@@ -84,6 +86,8 @@ namespace extras {
             void getHelp(Parameter howto_filename) const;
 
         public:
+
+            static void killServers(std::string pattern);
 
             SocketPool(const ServiceTypeCompilerInterface& compilerInterface)
                 :_compilerInterface(compilerInterface) {}
@@ -106,6 +110,11 @@ namespace extras {
                 const RequestTypeList& requests) const override {
                 return _compilerInterface.servers(requests);
             }
+
+            virtual bool poisonedFishReceived(
+                const PoisonedFishKey&) const override;
+
+            virtual void killServers() const override;
 
             virtual bool isParameter(const RequestType& requestType) const override {
                 return _compilerInterface.isParameter(requestType);

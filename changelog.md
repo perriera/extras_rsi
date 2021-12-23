@@ -5,8 +5,8 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v4.17.0 -m "PoisonFishInterface"</br>
-> > git push origin v4.17.0
+> > git tag -a v4.18.0 -m "Added killServers"</br>
+> > git push origin v4.18.0
 
 IMPORTANT:
 
@@ -31,6 +31,12 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 4.18.0 (2021-12-22)
+
+## Added
+
+- killServers
 
 #### 4.17.0 (2021-12-22)
 
@@ -451,7 +457,8 @@ Updated README.md accordinging</br>
 
 - Conan package manager deprecated
 
-[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.17.0...HEAD
+[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.18.0...HEAD
+[4.18.0]: https://github.com/perriera/extras_rsi/compare/v4.17.0...v4.18.0
 [4.17.0]: https://github.com/perriera/extras_rsi/compare/v4.16.0...v4.17.0
 [4.16.0]: https://github.com/perriera/extras_rsi/compare/v4.15.0...v4.16.0
 [4.15.0]: https://github.com/perriera/extras_rsi/compare/v4.14.0...v4.15.0

@@ -17,6 +17,7 @@
  */
 
 #include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/socketpool/SocketPool.hpp>
 #include <extras/strings.hpp>
 #include <filesystem>
 #include <iostream>
@@ -39,24 +40,10 @@ using namespace extras;
 namespace fs = std::filesystem;
 
 void killServers(std::string pattern) {
-    auto file = "list.txt";
-    auto report = "ps -A | grep \"" + pattern + "\" > " + file;
     try {
-        SystemException::assertion(report, __INFO__);
-        std::ifstream in(file);
-        while (in.good()) {
-            std::string word;
-            std::string line;
-            in >> word;
-            getline(in, line);
-            if (word != "" && extras::contains(line, pattern)) {
-                auto kill = "kill " + word;
-                SystemException::assertion(kill, __INFO__);
-            }
-        }
+        rsi::SocketPool::killServers(pattern);
     }
-    catch (SystemException& ex) {
-        std::cout << ex << std::endl;
+    catch (const extras::rsi::NoServersToKillException& ex) {
     }
 }
 
