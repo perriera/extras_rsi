@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/uploader/Downloader.hpp>
 #include <extras_rsi/socketpool/SocketPool.hpp>
 #include <extras/strings.hpp>
 #include <filesystem>
@@ -51,15 +51,16 @@ void killAllServers();
  *       that the semaphore logic is working properly).
  *
  */
-SCENARIO("Test UploaderInterface: uploader_server", "[UploaderInterface]") {
+SCENARIO("Test UploaderInterface: downloader_server", "[UploaderInterface]") {
 
     //
     // setup socketpool_server
     // 
     killAllServers();
     SystemException::assertion("rm -rf testit2; mkdir testit2; ", __INFO__);
-    REQUIRE(!fs::exists("testit2/exparx.webflow.zip"));
-    SystemException::assertion("build/uploader_server 127.0.0.1 8080 testit2/exparx.webflow.zip &", __INFO__);
+    SystemException::assertion("cp data/exparx.webflow.zip testit2; ", __INFO__);
+    REQUIRE(fs::exists("testit2/exparx.webflow.zip"));
+    SystemException::assertion("build/downloader_server 127.0.0.1 8080 testit2/exparx.webflow.zip &", __INFO__);
     sleep_for(nanoseconds(10));
     sleep_until(system_clock::now() + seconds(2));
 
@@ -67,23 +68,24 @@ SCENARIO("Test UploaderInterface: uploader_server", "[UploaderInterface]") {
     // setup socketpool_client
     //
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
-    SystemException::assertion("cp data/exparx.webflow.zip testit; ", __INFO__);
-    REQUIRE(fs::exists("testit/exparx.webflow.zip"));
+    REQUIRE(!fs::exists("testit/exparx.webflow.zip"));
 
-    const char* argv[] = { "build/uploader_client", "127.0.0.1", "8080", "testit/exparx.webflow.zip" };
+    const char* argv[] = { "build/downloader_client", "127.0.0.1", "8080", "testit/exparx.webflow.zip" };
     int argc = sizeof(argv) / sizeof(argv[0]);
 
     std::cout << extras::start(argv[0]) << std::endl;
-    extras::rsi::UploaderClient uploader;
-    uploader.parameters(argc, argv);
-    uploader.connect();
-    uploader.transfer();
-    std::cout << extras::pass("File data uploaded successfully") << std::endl;
-    uploader.close();
+    extras::rsi::DownloaderClient downloader;
+    downloader.parameters(argc, argv);
+    downloader.connect();
+    downloader.transfer();
+    std::cout << extras::pass("File data downloaded successfully") << std::endl;
+    downloader.close();
     std::cout << extras::end(argv[0]) << std::endl << std::endl;
 
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
-    REQUIRE(fs::exists("testit2/exparx.webflow.zip"));
+    sleep_for(nanoseconds(10));
+    sleep_until(system_clock::now() + seconds(2));
+    REQUIRE(!fs::exists("testit2/exparx.webflow.zip"));
 
     //
     // cleanup

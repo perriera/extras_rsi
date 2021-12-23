@@ -29,15 +29,6 @@
 #include <chrono>
 #include <thread>
 
- // build/uploader_client data/cplusplusorg.freeformjs.imploded.zip 137.184.218.130 9003
- // build/uploader_server send.txt 137.184.218.130 9003
-
- // build/uploader_client data/cplusplusorg.freeformjs.imploded.zip 137.184.218.130 9003
- // build/uploader_server send.txt 137.184.218.130 9003
-
- // build/_deps/extras_rsi-build/socketpool_server 127.0.0.1 8080 send.txt  
- // build/_deps/extras_rsi-build/socketpool_client 127.0.0.1 8080 data/cplusplusorg.freeformjs.imploded.zip upload vendor download
-
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
 
