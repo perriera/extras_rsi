@@ -35,13 +35,14 @@ namespace extras {
          * @param requests
          * @return ServiceTypeList
          */
-        ServiceTypeList ServiceTypeCompilerVendor::common(ServiceTypeMap& map,
+        ServiceTypeList ServiceTypeCompilerVendor::common(const ServiceTypeMap& map,
             const RequestTypeList& requests) const {
             rsi::ServiceTypeList list;
+            ServiceTypeMap dup = map;
             for (auto request : requests) {
                 auto parts = extras::split(request, ' ');
                 NoTokensException::assertion(parts.size(), __INFO__);
-                auto serviceType = map[parts[0]];
+                auto serviceType = dup[parts[0]];
                 UnsupportedTokenException::assertion(serviceType, __INFO__);
                 std::string line =
                     extras::replace_all(request, parts[0], serviceType);

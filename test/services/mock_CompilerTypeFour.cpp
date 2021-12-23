@@ -60,6 +60,11 @@ SCENARIO("Mock ServiceTypeCompilerInterface: clients", "[ServiceTypeCompilerInte
     };
 
     Mock<rsi::ServiceTypeCompilerInterface> mock;
+    // When(Method(mock, common))
+    //     .AlwaysDo(
+    //         [&clients_list](const rsi::RequestTypeList&) {
+    //             return clients_list;
+    //         });
     When(Method(mock, clients))
         .AlwaysDo(
             [&clients_list](const rsi::RequestTypeList&) {

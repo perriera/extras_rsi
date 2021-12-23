@@ -102,7 +102,7 @@ namespace extras {
                 return _socketParaneters.requests();
             }
 
-            virtual ServiceTypeList common(ServiceTypeMap& map,
+            virtual ServiceTypeList common(const ServiceTypeMap& map,
                 const RequestTypeList& requests) const override {
                 return _compilerInterface.common(map, requests);
             }
