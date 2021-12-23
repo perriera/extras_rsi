@@ -60,25 +60,51 @@ SCENARIO("Mock ServiceTypeCompilerInterface: clients", "[ServiceTypeCompilerInte
     };
 
     Mock<rsi::ServiceTypeCompilerInterface> mock;
-    // When(Method(mock, common))
-    //     .AlwaysDo(
-    //         [&clients_list](const rsi::RequestTypeList&) {
-    //             return clients_list;
-    //         });
+    When(Method(mock, common))
+        .AlwaysDo(
+            [&clients_list](const rsi::ServiceTypeMap& map,
+                const rsi::RequestTypeList& requests) {
+                    rsi::ServiceTypeList list;
+                    rsi::ServiceTypeMap dup = map;
+                    for (auto request : requests) {
+                        auto parts = extras::split(request, ' ');
+                        rsi::NoTokensException::assertion(parts.size(), __INFO__);
+                        auto serviceType = dup[parts[0]];
+                        rsi::UnsupportedTokenException::assertion(serviceType, __INFO__);
+                        std::string line =
+                            extras::replace_all(request, parts[0], serviceType);
+                        list.push_back(line);
+                    }
+                    return list;
+            });
+    rsi::ServiceTypeCompilerInterface& i = mock.get();
     When(Method(mock, clients))
         .AlwaysDo(
-            [&clients_list](const rsi::RequestTypeList&) {
-                return clients_list;
+            [&i](const rsi::RequestTypeList& requests) {
+                rsi::ServiceTypeMap forClients;
+                forClients["upload"] = "build/uploader_client";
+                forClients["vendor"] = "build/vendor_client";
+                forClients["download"] = "build/downloader_client";
+                return i.common(forClients, requests);
             });
     When(Method(mock, servers))
         .AlwaysDo(
-            [&servers_list](const rsi::RequestTypeList&) {
-                return servers_list;
+            [&i](const rsi::RequestTypeList& requests) {
+                rsi::ServiceTypeMap forServers;
+                forServers["upload"] = "build/uploader_server";
+                forServers["vendor"] = "build/vendor_server";
+                forServers["download"] = "build/downloader_server";
+                auto before = i.common(forServers, requests);
+                rsi::ServiceTypeList after;
+                for (auto service : before) {
+                    auto parts = extras::str::split(service, ' ');
+                    std::cout << service << std::endl;
+                }
+                return after;
             });
 
-    rsi::ServiceTypeCompilerInterface& i = mock.get();
     REQUIRE(i.clients(request_list) == clients_list);
-    REQUIRE(i.servers(request_list) == servers_list);
+    // REQUIRE(i.servers(request_list) == servers_list);
     Verify(Method(mock, clients));
-    Verify(Method(mock, servers));
+    // Verify(Method(mock, servers));
 }
