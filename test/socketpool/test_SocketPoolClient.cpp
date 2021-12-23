@@ -46,7 +46,7 @@ using namespace std::this_thread; // sleep_for, sleep_until
 using namespace std::chrono;
 namespace fs = std::filesystem;
 
-void killServers(std::string pattern);
+void killAllServers();
 
 /**
  * @brief Test SocketPoolInterface: socketpool_client
@@ -65,8 +65,7 @@ SCENARIO("Test SocketPoolInterface: socketpool_client", "[SocketPoolInterface]")
     //
     // setup socketpool_server
     //
-    killServers("socketpool_serv");
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
+    killAllServers();
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
     SystemException::assertion("build/socketpool_server 127.0.0.1 8080 9000-9500 &", __INFO__);
     sleep_for(nanoseconds(10));
@@ -85,7 +84,7 @@ SCENARIO("Test SocketPoolInterface: socketpool_client", "[SocketPoolInterface]")
     //
     // cleanup
     //
-    killServers("socketpool_serv");
+    killAllServers();
     REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
     SystemException::assertion("rm -rf testit", __INFO__);
 

@@ -54,6 +54,17 @@ void killServers(std::string pattern) {
     }
 }
 
+void killAllServers() {
+    killServers("socketpool_serv");
+    killServers("uploader_server");
+    killServers("downloader_serv");
+    killServers("vendor_server");
+    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
+    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("uploader_server"), extras::rsi::NoServersToKillException);
+    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("downloader_serv"), extras::rsi::NoServersToKillException);
+    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("vendor_server"), extras::rsi::NoServersToKillException);
+}
+
 /**
  * @brief Test SocketPoolInterface: socketpool_server
  *
@@ -70,8 +81,7 @@ SCENARIO("Test SocketPoolInterface: socketpool_server", "[SocketPoolInterface]")
     //
     // setup socketpool_server
     //
-    killServers("socketpool_serv");
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
+    killAllServers();
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
     SystemException::assertion("build/socketpool_server 127.0.0.1 8088 8000-8500 &", __INFO__);
     sleep_for(nanoseconds(10));
@@ -100,8 +110,7 @@ SCENARIO("Test SocketPoolInterface: socketpool_server", "[SocketPoolInterface]")
     //
     // cleanup
     //
-    killServers("socketpool_serv");
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
+    killAllServers();
     SystemException::assertion("rm -rf testit", __INFO__);
 
 }
