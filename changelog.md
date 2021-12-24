@@ -477,10 +477,6 @@ Updated README.md accordinging</br>
 - @brief style formatting
 - Doxygen support
 
-### Removed
-
-- Conan package manager deprecated
-
 [unreleased]: https://github.com/perriera/extras_rsi/compare/v4.22.0...HEAD
 [4.22.0]: https://github.com/perriera/extras_rsi/compare/v4.21.0...v4.22.0
 [4.21.0]: https://github.com/perriera/extras_rsi/compare/v4.20.0...v4.21.0
