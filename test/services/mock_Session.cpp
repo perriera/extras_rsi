@@ -112,6 +112,17 @@ SCENARIO("Mock SessionInterface: clients", "[SessionInterface]") {
                 }
                 return sessionType;
             });
+    When(Method(mock, sessionTypeList))
+        .AlwaysDo(
+            [&_directory, &i](const rsi::RequestTypeList& beforeList) {
+                rsi::ServiceTypeList afterList;
+                for (auto before : beforeList) {
+                    auto after = i.sessionType(before);
+                    afterList.push_back(after);
+                }
+                return afterList;
+            });
+
     // "vendor 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip"
     // "vendor 137.184.218.130 9002 /tmp/extras_rsi_PTduD4/src /tmp/extras_rsi_PTduD4/exparx.webflow.zip "
 
@@ -126,17 +137,48 @@ SCENARIO("Mock SessionInterface: clients", "[SessionInterface]") {
     REQUIRE(!i.active());
     i.add(pathname);
     REQUIRE(i.active());
-    i.remove(pathname);
-    REQUIRE(!i.active());
-    i.close();
-    REQUIRE(!i.exists());
-    REQUIRE(!i.active());
 
     rsi::RequestType after = "vendor 137.184.218.130 9002 ";
     auto fn3 = extras::FileSystem(_directory).append("/src.zip");
     auto fn4 = extras::FileSystem(_directory).append("/exparx.webflow.zip");
     after += fn3 + " " + fn4 + " ";
     REQUIRE(i.sessionType(before) == after);
+
+    rsi::RequestTypeList request_list = {
+        "build/uploader_server 137.184.218.130 9000 data/src.zip",
+        "build/uploader_server 137.184.218.130 9001 data/exparx.webflow.zip",
+        "build/vendor_server 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip",
+        "build/downloader_server 137.184.218.130 9003 data/src.zip"
+    };
+
+    rsi::ServiceTypeList servers_list = {
+        "build/uploader_server 137.184.218.130 9000 /tmp/$token/data/src.zip",
+        "build/uploader_server 137.184.218.130 9001 /tmp/$token/data/exparx.webflow.zip",
+        "build/vendor_server 137.184.218.130 9002 /tmp/$token/data/src.zip /tmp/$token/data/exparx.webflow.zip",
+        "build/downloader_server 137.184.218.130 9003 /tmp/$token/data/src.zip",
+    };
+
+    rsi::ServiceTypeList updated_servers_list;
+    for (auto item : servers_list) {
+        auto updated = extras::str::replace_all(item, "/tmp/$token/data", _directory) + " ";
+        updated_servers_list.push_back(updated);
+    }
+
+    auto afterList = i.sessionTypeList(request_list);
+
+    for (size_t i = 0; i < afterList.size(); i++) {
+        auto a = afterList[i];
+        auto b = updated_servers_list[i];
+        REQUIRE(a == b);
+    }
+
+    REQUIRE(afterList == updated_servers_list);
+
+    i.remove(pathname);
+    REQUIRE(!i.active());
+    i.close();
+    REQUIRE(!i.exists());
+    REQUIRE(!i.active());
 
     Verify(Method(mock, open));
     Verify(Method(mock, session));
@@ -145,5 +187,7 @@ SCENARIO("Mock SessionInterface: clients", "[SessionInterface]") {
     Verify(Method(mock, add));
     Verify(Method(mock, remove));
     Verify(Method(mock, active));
+    Verify(Method(mock, sessionType));
+    Verify(Method(mock, sessionTypeList));
 
 }

@@ -51,5 +51,52 @@ namespace extras {
             return list;
         }
 
+        /**
+         * @brief clients()
+         *
+         * @param requests
+         * @return ServiceTypeList
+         */
+        ServiceTypeList ServiceTypeCompilerVendor::clients(
+            const RequestTypeList& requests) const {
+            rsi::ServiceTypeMap forClients;
+            forClients["upload"] = "build/uploader_client";
+            forClients["vendor"] = "build/vendor_client";
+            forClients["download"] = "build/downloader_client";
+            return common(forClients, requests);
+        }
+
+        /**
+         * @brief servers()
+         *
+         * @param requests
+         * @return ServiceTypeList
+         */
+        ServiceTypeList ServiceTypeCompilerVendor::servers(
+            const RequestTypeList& requests) const {
+            rsi::ServiceTypeMap forServers;
+            forServers["upload"] = "build/uploader_server";
+            forServers["vendor"] = "build/vendor_server";
+            forServers["download"] = "build/downloader_server";
+            auto beforeList = common(forServers, requests);
+            rsi::ServiceTypeList afterList;
+            rsi::Session session;
+            session.open();
+            afterList = session.sessionTypeList(beforeList);
+            return afterList;
+        }
+
+        /**
+         * @brief isParameter()
+         *
+         * @param requestType
+         * @return true
+         * @return false
+         */
+        bool ServiceTypeCompilerVendor::isParameter(const RequestType& requestType) const {
+            auto result = std::find(_serviceList.begin(), _serviceList.end(), requestType);
+            return result == _serviceList.end();
+        }
+
     }  // namespace rsi
 }  // namespace extras

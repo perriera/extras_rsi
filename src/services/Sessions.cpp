@@ -133,5 +133,21 @@ namespace extras {
             return sessionType;
         }
 
+        /**
+         * @brief sessionType()
+         *
+         * @param requestType
+         * @return SessionType
+         */
+        SessionTypeList Session::sessionTypeList(
+            const rsi::RequestTypeList& beforeList) const {
+            rsi::ServiceTypeList afterList;
+            for (auto before : beforeList) {
+                auto after = sessionType(before);
+                afterList.push_back(after);
+            }
+            return afterList;
+        }
+
     }  // namespace rsi
 }  // namespace extras

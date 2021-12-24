@@ -35,7 +35,7 @@ SCENARIO("Test SessionInterface: clients", "[SessionInterface]") {
 
     extras::Pathname pathname = "data/exparx.webflow.zip";
     rsi::RequestType before = "vendor 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip";
-    extras::Directory directory = "/tmp/token";
+    extras::Directory _directory = "/tmp/token";
 
     rsi::Session session;
     rsi::SessionInterface& i = session;
@@ -43,15 +43,39 @@ SCENARIO("Test SessionInterface: clients", "[SessionInterface]") {
     REQUIRE(!i.exists());
     i.open();
     REQUIRE(fs::exists(i.session()));
-    directory = i.session();
+    _directory = i.session();
     REQUIRE(i.exists());
     auto fn1 = extras::FileSystem(pathname).filename();
-    auto fn2 = extras::FileSystem(directory).append(fn1);
+    auto fn2 = extras::FileSystem(_directory).append(fn1);
     auto correct_answer = fn2;
     REQUIRE(i.entry_name(pathname) == correct_answer);
     REQUIRE(!i.active());
     i.add(pathname);
     REQUIRE(i.active());
+
+    rsi::RequestTypeList request_list = {
+        "build/uploader_server 137.184.218.130 9000 data/src.zip",
+        "build/uploader_server 137.184.218.130 9001 data/exparx.webflow.zip",
+        "build/vendor_server 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip",
+        "build/downloader_server 137.184.218.130 9003 data/src.zip"
+    };
+
+    rsi::ServiceTypeList servers_list = {
+        "build/uploader_server 137.184.218.130 9000 /tmp/$token/data/src.zip",
+        "build/uploader_server 137.184.218.130 9001 /tmp/$token/data/exparx.webflow.zip",
+        "build/vendor_server 137.184.218.130 9002 /tmp/$token/data/src.zip /tmp/$token/data/exparx.webflow.zip",
+        "build/downloader_server 137.184.218.130 9003 /tmp/$token/data/src.zip",
+    };
+
+    rsi::ServiceTypeList updated_servers_list;
+    for (auto item : servers_list) {
+        auto updated = extras::str::replace_all(item, "/tmp/$token/data", _directory) + " ";
+        updated_servers_list.push_back(updated);
+    }
+
+    auto afterList = i.sessionTypeList(request_list);
+    REQUIRE(afterList == updated_servers_list);
+
     i.remove(pathname);
     REQUIRE(!i.active());
     i.close();
@@ -59,9 +83,10 @@ SCENARIO("Test SessionInterface: clients", "[SessionInterface]") {
     REQUIRE(!i.active());
 
     rsi::RequestType after = "vendor 137.184.218.130 9002 ";
-    auto fn3 = extras::FileSystem(directory).append("/src.zip");
-    auto fn4 = extras::FileSystem(directory).append("/exparx.webflow.zip");
+    auto fn3 = extras::FileSystem(_directory).append("/src.zip");
+    auto fn4 = extras::FileSystem(_directory).append("/exparx.webflow.zip");
     after += fn3 + " " + fn4 + " ";
-    REQUIRE(i.sessionType(before) == after);
+    auto test = i.sessionType(before);
+    REQUIRE(test == after);
 
 }

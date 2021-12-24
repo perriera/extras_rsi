@@ -57,6 +57,7 @@ namespace extras {
             virtual void add(const extras::Pathname& entry) const pure;
             virtual void remove(const extras::Pathname& entry) const pure;
             virtual SessionType sessionType(const rsi::RequestType& requestType) const pure;
+            virtual SessionTypeList sessionTypeList(const rsi::RequestTypeList& requestType) const pure;
         };
 
         /**
@@ -77,6 +78,7 @@ namespace extras {
             virtual void add(const extras::Pathname& entry) const override;
             virtual void remove(const extras::Pathname& entry) const override;
             virtual SessionType sessionType(const rsi::RequestType& requestType) const override;
+            virtual SessionTypeList sessionTypeList(const rsi::RequestTypeList& requestType) const override;
         };
 
 

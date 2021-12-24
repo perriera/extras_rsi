@@ -19,6 +19,7 @@
 #include <extras_rsi/requests/RequestTypeThree.hpp>
 #include <extras_rsi/socketpool/Parameters.hpp>
 #include <extras_rsi/socketpool/Client.hpp>
+#include <extras_rsi/services/SessionType.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"
@@ -54,10 +55,12 @@ SCENARIO("Mock ServiceTypeCompilerInterface: clients", "[ServiceTypeCompilerInte
 
     rsi::ServiceTypeList servers_list = {
         "build/uploader_server 137.184.218.130 9000 /tmp/$token/data/src.zip",
-        "build/uploader_server 137.184.218.130 9001 /tmp/$token/exparx.webflow.zip",
-        "build/vendor_server 137.184.218.130 9002 /tmp/$token/src.zip /tmp/$token/exparx.webflow.zip",
-        "build/downloader_server 137.184.218.130 9003 /tmp/$token/src.zip",
+        "build/uploader_server 137.184.218.130 9001 /tmp/$token/data/exparx.webflow.zip",
+        "build/vendor_server 137.184.218.130 9002 /tmp/$token/data/src.zip /tmp/$token/data/exparx.webflow.zip",
+        "build/downloader_server 137.184.218.130 9003 /tmp/$token/data/src.zip",
     };
+
+    extras::Directory _directory;
 
     Mock<rsi::ServiceTypeCompilerInterface> mock;
     When(Method(mock, common))
@@ -89,22 +92,36 @@ SCENARIO("Mock ServiceTypeCompilerInterface: clients", "[ServiceTypeCompilerInte
             });
     When(Method(mock, servers))
         .AlwaysDo(
-            [&i](const rsi::RequestTypeList& requests) {
+            [&i, &_directory](const rsi::RequestTypeList& requests) {
                 rsi::ServiceTypeMap forServers;
                 forServers["upload"] = "build/uploader_server";
                 forServers["vendor"] = "build/vendor_server";
                 forServers["download"] = "build/downloader_server";
-                auto before = i.common(forServers, requests);
-                rsi::ServiceTypeList after;
-                for (auto service : before) {
-                    auto parts = extras::str::split(service, ' ');
-                    std::cout << service << std::endl;
-                }
-                return after;
+                auto beforeList = i.common(forServers, requests);
+                rsi::ServiceTypeList afterList;
+                rsi::Session session;
+                session.open();
+                _directory = session.session();
+                afterList = session.sessionTypeList(beforeList);
+                return afterList;
             });
 
     REQUIRE(i.clients(request_list) == clients_list);
-    // REQUIRE(i.servers(request_list) == servers_list);
+    auto afterList = i.servers(request_list);
+
+    rsi::ServiceTypeList updated_servers_list;
+    for (auto item : servers_list) {
+        auto updated = extras::str::replace_all(item, "/tmp/$token/data", _directory) + " ";
+        updated_servers_list.push_back(updated);
+    }
+
+    for (size_t i = 0; i < afterList.size(); i++) {
+        auto a = afterList[i];
+        auto b = updated_servers_list[i];
+        REQUIRE(a == b);
+    }
+
+    Verify(Method(mock, common));
     Verify(Method(mock, clients));
-    // Verify(Method(mock, servers));
+    Verify(Method(mock, servers));
 }
