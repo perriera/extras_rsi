@@ -48,7 +48,35 @@ namespace extras {
         using SessionTypeList = std::vector<SessionType>;
 
         interface SessionInterface {
-            virtual extras::Directory make() const pure;
+            virtual void open()  pure;
+            virtual extras::Directory session() const pure;
+            virtual void close() const pure;
+            virtual bool exists() const pure;
+            virtual bool active() const pure;
+            virtual extras::Pathname entry_name(const extras::Pathname& entry) const pure;
+            virtual void add(const extras::Pathname& entry) const pure;
+            virtual void remove(const extras::Pathname& entry) const pure;
+            virtual SessionType sessionType(const rsi::RequestType& requestType) const pure;
+        };
+
+        /**
+         * @brief class Session
+         *
+         */
+        concrete class Session implements SessionInterface {
+            extras::Directory _directory;
+        public:
+            virtual void open()  override;
+            virtual extras::Directory session() const override {
+                return _directory;
+            }
+            virtual void close() const override;
+            virtual bool exists() const override;
+            virtual bool active() const override;
+            virtual extras::Pathname entry_name(const extras::Pathname& entry) const override;
+            virtual void add(const extras::Pathname& entry) const override;
+            virtual void remove(const extras::Pathname& entry) const override;
+            virtual SessionType sessionType(const rsi::RequestType& requestType) const override;
         };
 
 
