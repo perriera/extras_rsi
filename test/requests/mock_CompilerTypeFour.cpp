@@ -102,9 +102,15 @@ SCENARIO("Mock RequestTypeCompilerInterface: TypeFour", "[RequestTypeCompilerInt
     auto _compilation = i.compile(parameters, portAuthority);
     if (socket != 8080) // included for consistency
         _compilation.send_line_block("");
-    auto cmds = vendor.clients(_compilation.compilation());
-    for (auto cmd : cmds) {
-        std::cout << "msg received: " << cmd << std::endl;
+    for (auto item : _compilation.compilation())
+        std::cout << "msg received: " << item << std::endl;
+    auto clients = vendor.clients(_compilation.compilation());
+    for (auto client : clients) {
+        std::cout << "msg received: " << client << std::endl;
+    }
+    auto servers = vendor.servers(_compilation.compilation());
+    for (auto server : servers) {
+        std::cout << "msg received: " << server << std::endl;
     }
 
     Verify(Method(mock, compile));

@@ -32,6 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/services/SessionType.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
 #include <iostream>
@@ -49,10 +50,42 @@ namespace extras {
         using ServiceTypeMap = std::map<ServiceType, ServiceType>;
 
         interface ServiceTypeCompilerInterface {
+
+            /**
+             * @brief common()
+             * @note Common processing between clients and servers_list
+             * @param map
+             * @param requests
+             * @return ServiceTypeList
+             */
+            virtual ServiceTypeList common(const ServiceTypeMap& map,
+                const RequestTypeList& requests) const pure;
+
+            /**
+             * @brief clients()
+             * @note client specific syntax
+             * @param requests
+             * @return ServiceTypeList
+             */
             virtual ServiceTypeList clients(
                 const RequestTypeList& requests) const pure;
+
+            /**
+             * @brief servers()
+             * @note server specific syntax
+             * @param requests
+             * @return ServiceTypeList
+             */
             virtual ServiceTypeList servers(
                 const RequestTypeList& requests) const pure;
+
+
+            /**
+             * @brief isParameter()
+             * @note determine if a commandline entry is a parameter, (or not)
+             * @param requests
+             * @return ServiceTypeList
+             */
             virtual bool isParameter(const RequestType& requestType) const pure;
         };
 
@@ -66,33 +99,19 @@ namespace extras {
             ServiceTypeList _serviceList = { "upload","vendor","download" };
 
         protected:
-            virtual ServiceTypeList common(ServiceTypeMap& map,
-                const RequestTypeList& requests) const;
+            virtual ServiceTypeList common(const ServiceTypeMap& map,
+                const RequestTypeList& requests) const override;
 
         public:
 
             virtual ServiceTypeList clients(
-                const RequestTypeList& requests) const override {
-                rsi::ServiceTypeMap forClients;
-                forClients["upload"] = "build/uploader_client";
-                forClients["vendor"] = "build/vendor_client";
-                forClients["download"] = "build/downloader_client";
-                return common(forClients, requests);
-            };
+                const RequestTypeList& requests) const override;
 
             virtual ServiceTypeList servers(
-                const RequestTypeList& requests) const override {
-                rsi::ServiceTypeMap forServers;
-                forServers["upload"] = "build/uploader_server";
-                forServers["vendor"] = "build/vendor_server";
-                forServers["download"] = "build/downloader_server";
-                return common(forServers, requests);
-            };
+                const RequestTypeList& requests) const override;
 
-            virtual bool isParameter(const RequestType& requestType) const override {
-                auto result = std::find(_serviceList.begin(), _serviceList.end(), requestType);
-                return result == _serviceList.end();
-            }
+            virtual bool isParameter(const RequestType& requestType) const override;
+
         };
 
     }

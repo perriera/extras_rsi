@@ -93,6 +93,7 @@ SCENARIO("Test SocketPoolInterface: socketpool_server", "[SocketPoolInterface]")
     SystemException::assertion("cp data/src.zip testit/; cp data/exparx.webflow.zip testit; ", __INFO__);
     REQUIRE(fs::exists("testit/src.zip"));
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
+
     const char* argv[] = { "build/socketpool_client", "127.0.0.1", "8088", "testit/src.zip", "testit/exparx.webflow.zip" };
     int argc = sizeof(argv) / sizeof(argv[0]);
     std::cout << extras::start(argv[0]) << std::endl;
@@ -104,6 +105,7 @@ SCENARIO("Test SocketPoolInterface: socketpool_server", "[SocketPoolInterface]")
     std::cout << extras::pass("File sockets allocated successfully") << std::endl;
     client.close();
     std::cout << extras::end(argv[0]) << std::endl << std::endl;
+
     REQUIRE(fs::exists("testit/src.zip"));
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
 

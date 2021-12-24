@@ -77,6 +77,7 @@ namespace extras {
             auto report = "ps -A | grep \"" + pattern + "\" > " + tempFile;
             try {
                 SystemException::assertion(report, __INFO__);
+                SystemException::assertion("cat " + tempFile, __INFO__);
             }
             catch (SystemException& ex) {
                 throw NoServersToKillException(pattern, ref);
@@ -88,6 +89,7 @@ namespace extras {
             try {
                 auto kill = "kill " + word;
                 SystemException::assertion(kill, __INFO__);
+                std::cout << "killed " << word << std::endl;
             }
             catch (SystemException& ex) {
                 throw ServerNotKilledException(word, ref);

@@ -35,7 +35,7 @@
 #include <extras_rsi/socketpool/Parameters.hpp>
 #include <extras_rsi/socketpool/PoisonedFish.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
-#include <extras_rsi/requests/ServiceType.hpp>
+#include <extras_rsi/services/ServiceType.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/status/help.hpp>
 #include <iostream>
@@ -102,10 +102,16 @@ namespace extras {
                 return _socketParaneters.requests();
             }
 
+            virtual ServiceTypeList common(const ServiceTypeMap& map,
+                const RequestTypeList& requests) const override {
+                return _compilerInterface.common(map, requests);
+            }
+
             virtual ServiceTypeList clients(
                 const RequestTypeList& requests) const override {
                 return _compilerInterface.clients(requests);
             }
+
             virtual ServiceTypeList servers(
                 const RequestTypeList& requests) const override {
                 return _compilerInterface.servers(requests);

@@ -66,6 +66,11 @@ namespace extras {
             RequestTypeCompilerBase(const ServiceTypeCompilerInterface& compilerInterface, int socket)
                 : _compilerInterface(compilerInterface), _socket(socket) {}
 
+            virtual ServiceTypeList common(const ServiceTypeMap& map,
+                const RequestTypeList& requests) const override {
+                return _compilerInterface.common(map, requests);
+            }
+
             virtual ServiceTypeList clients(
                 const RequestTypeList& requests) const override {
                 return _compilerInterface.clients(requests);
