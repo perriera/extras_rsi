@@ -82,7 +82,6 @@ SCENARIO("Test SocketPoolInterface: socketpool_server", "[SocketPoolInterface]")
     // setup socketpool_server
     //
     killAllServers();
-    SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
     SystemException::assertion("build/socketpool_server 127.0.0.1 8088 8000-8500 &", __INFO__);
     sleep_for(nanoseconds(10));
     sleep_until(system_clock::now() + seconds(2));
@@ -90,6 +89,7 @@ SCENARIO("Test SocketPoolInterface: socketpool_server", "[SocketPoolInterface]")
     //
     // setup socketpool_client
     //
+    SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
     SystemException::assertion("cp data/src.zip testit/; cp data/exparx.webflow.zip testit; ", __INFO__);
     REQUIRE(fs::exists("testit/src.zip"));
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
@@ -105,6 +105,9 @@ SCENARIO("Test SocketPoolInterface: socketpool_server", "[SocketPoolInterface]")
     std::cout << extras::pass("File sockets allocated successfully") << std::endl;
     client.close();
     std::cout << extras::end(argv[0]) << std::endl << std::endl;
+
+    sleep_for(nanoseconds(10));
+    sleep_until(system_clock::now() + seconds(2));
 
     REQUIRE(fs::exists("testit/src.zip"));
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));

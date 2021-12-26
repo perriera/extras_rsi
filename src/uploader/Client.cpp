@@ -90,9 +90,9 @@ namespace extras {
      */
     rsi::Lock rsi::UploaderClient::unlock(const rsi::Lock& lock) {
         auto status = read_line_block();
+        RemoteBlockException::assertion(status, __INFO__);
         arc::ParcelImploder parcelImploder(lock);;
         parcelImploder.clean();
-        RemoteBlockException::assertion(status, __INFO__);
         std::cout << extras::pass(lock) << std::endl;
         std::cout << extras::pass(status) << std::endl;
         std::cout << extras::pass("send_file2 successful") << std::endl;

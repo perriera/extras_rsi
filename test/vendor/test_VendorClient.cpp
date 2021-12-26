@@ -54,7 +54,7 @@ SCENARIO("Test UploaderInterface: vendor_client", "[UploaderInterface]") {
     SystemException::assertion("cp data/src.zip testit2; cp data/exparx.webflow.zip testit2; ", __INFO__);
     REQUIRE(fs::exists("testit2/src.zip"));
     REQUIRE(fs::exists("testit2/exparx.webflow.zip"));
-    SystemException::assertion("build/vendor_server 127.0.0.1 8080 testit2/exparx.webflow.zip &", __INFO__);
+    SystemException::assertion("build/vendor_server 127.0.0.1 8080 testit2/src.zip testit2/exparx.webflow.zip &", __INFO__);
     sleep_for(nanoseconds(10));
     sleep_until(system_clock::now() + seconds(2));
 

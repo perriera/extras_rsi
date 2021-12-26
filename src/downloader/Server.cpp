@@ -61,11 +61,11 @@ namespace extras {
 
     rsi::Lock rsi::DownloaderServer::unlock(const rsi::Lock& lock) {
         std::string status = read_line_block();
+        RemoteBlockException::assertion(status, __INFO__);
         arc::ParcelImploder parcelImploder(lock);
         parcelImploder.clean();
         auto rm_cmd = "rm " + lock;
         SystemException::assertion(rm_cmd, __INFO__);
-        RemoteBlockException::assertion(status, __INFO__);
         std::cout << extras::pass(lock) << std::endl;
         std::cout << extras::pass(status) << std::endl;
         return lock;

@@ -60,7 +60,7 @@ SCENARIO("Test UploaderInterface: uploader_client", "[UploaderInterface]") {
     // setup uploader_client
     //
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
-    SystemException::assertion("cp data/exparx.webflow.zip testit; ", __INFO__);
+    SystemException::assertion("rm -rf testit; mkdir testit; cp data/exparx.webflow.zip testit; ", __INFO__);
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
 
     SystemException::assertion("build/uploader_client 127.0.0.1 8080 testit/exparx.webflow.zip", __INFO__);
