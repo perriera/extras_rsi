@@ -29,9 +29,13 @@
 #include <extras/status/StatusLine.hpp>
 #include <extras_arc/wrap.hpp>
 #include <extras/filesystem/system.hpp>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 namespace fs = std::filesystem;
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono;
 
 namespace extras {
 
@@ -57,6 +61,10 @@ namespace extras {
      * @return rsi::Lock
      */
     rsi::Lock rsi::DownloaderClient::unlock(const rsi::Lock& lock) {
+
+        sleep_for(nanoseconds(10));
+        sleep_until(system_clock::now() + seconds(2));
+
         arc::ParcelImploder parcelImploder(lock);;
         parcelImploder.unWrap();
         parcelImploder.merge();
