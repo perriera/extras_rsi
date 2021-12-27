@@ -21,31 +21,34 @@
 #include <iostream>
 
 #include "../unittesting/catch.hpp"
+#include "../unittesting/fakeit.hpp"
 
 using namespace extras;
+using namespace fakeit;
 
-SCENARIO("Test ParametersInterface: uploader parameters", "[UploaderParameters]") {
+SCENARIO("Test uploader::ParametersInterface", "[uploader::ParametersInterface]") {
 
-    // define the parameters 
     const char* argv[] = {
-         "build/uploader_client", "data/exparx.webflow.zip", "137.184.218.130", "8080" };
+         "build/uploader_client",
+         "137.184.218.130",
+         "8080",
+         "data/src.zip",
+         "data/exparx.webflow.zip"
+    };
     int argc = sizeof(argv) / sizeof(argv[0]);
-    Parameters _parameters;
-    for (int i = 0; i < argc; i++) {
-        auto arg = argv[i];
-        _parameters.push_back(arg);
-    }
+    Parameters _parameters = { argv[0], argv[1], argv[2], argv[3], argv[4] };
+    Parameters _extra = { argv[4] };
 
-    // define the mock 
     rsi::UploaderClient client;
-
     // define the instance 
     rsi::uploader::ParametersInterface& i = client;
 
     // test the expected results
     REQUIRE(i.parameters(argc, argv) == _parameters);
     REQUIRE(i.program() == _parameters[0]);
-    REQUIRE(i.filename() == _parameters[3]);
     REQUIRE(i.ip() == _parameters[1]);
     REQUIRE(i.port() == _parameters[2]);
+    REQUIRE(i.filename() == _parameters[3]);
+    REQUIRE(i.extra_files() == _extra);
+
 }
