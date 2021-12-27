@@ -5,8 +5,8 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v4.22.0 -m "Added SessionInterface"</br>
-> > git push origin v4.22.0
+> > git tag -a v4.22.1 -m "Corrected data/scr.zip"</br>
+> > git push origin v4.22.1
 
 IMPORTANT:
 
@@ -31,6 +31,12 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 4.22.1 (2021-12-26)
+
+## Corrected
+
+- data/scr.zip
 
 #### 4.22.0 (2021-12-23)
 
@@ -477,7 +483,8 @@ Updated README.md accordinging</br>
 - @brief style formatting
 - Doxygen support
 
-[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.22.0...HEAD
+[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.22.1...HEAD
+[4.22.1]: https://github.com/perriera/extras_rsi/compare/v4.22.0...v4.22.1
 [4.22.0]: https://github.com/perriera/extras_rsi/compare/v4.21.0...v4.22.0
 [4.21.0]: https://github.com/perriera/extras_rsi/compare/v4.20.0...v4.21.0
 [4.20.0]: https://github.com/perriera/extras_rsi/compare/v4.19.0...v4.20.0
