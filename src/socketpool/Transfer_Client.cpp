@@ -32,35 +32,28 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief concrete class SocketPoolClient
-         *
-         *   build/rsi_client 127.0.0.1 8080 transfer send.txt
-         *   ss >> prg >> filename >> ip >> port;
+         * @brief SocketPoolClient::transfer()
          *
          */
-        void SocketPoolClient::connect() {
-            this->_client_socket =
-                connect_to_server(ip().c_str(), stoi(port()), _server_addr);
-        }
-
-        void SocketPoolClient::close() const { ::close(this->_client_socket); }
-
-        /**
-         * @brief send_line_block()
-         *
-         * @param msg
-         */
-        void  SocketPoolClient::send_line_block(const rsi::LinePacket& msg) const {
-            extras::rsi::send_line(msg, this->_client_socket);
-        }
-
-        /**
-         * @brief read_line_block()
-         *
-         * @return LinePacket
-         */
-        LinePacket  SocketPoolClient::read_line_block() {
-            return extras::rsi::read_line(this->_client_socket);
+        void SocketPoolClient::transfer() {
+            try {
+                std::string msg = *this;
+                send_line_block(msg);
+                RequestTypeCompilation compilation(this->_client_socket);
+                compilation.read_line_block();
+                auto list = compilation.compilation();
+                for (auto item : clients(list)) {
+                    // cout << "msg received: " << item << endl;
+                    auto cmd = item;
+                    system(cmd.c_str());
+                }
+                // std::string cmd = "ls -la " + filename();
+                // extras::SystemException::assertion(cmd, __INFO__);
+                std::cout << std::endl;
+            }
+            catch (exception& ex) {
+                cout << ex.what() << endl;
+            }
         }
 
     }  // namespace rsi
