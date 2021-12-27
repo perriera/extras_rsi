@@ -61,10 +61,6 @@ namespace extras {
      * @return rsi::Lock
      */
     rsi::Lock rsi::DownloaderClient::unlock(const rsi::Lock& lock) {
-
-        sleep_for(nanoseconds(10));
-        sleep_until(system_clock::now() + seconds(2));
-
         arc::ParcelImploder parcelImploder(lock);;
         parcelImploder.unWrap();
         parcelImploder.merge();

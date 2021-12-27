@@ -25,8 +25,12 @@
 #include <extras_rsi/exceptions.hpp>
 #include <extras/filesystem/system.hpp>
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 using namespace std;
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono;
 
 namespace extras {
     namespace rsi {
@@ -60,6 +64,9 @@ namespace extras {
                     // cout << "msg received: " << item << endl;
                     auto cmd = item;
                     system(cmd.c_str());
+                    sleep_for(nanoseconds(1000));
+                    // sleep_until(system_clock::now() + seconds(2));
+
                 }
                 // std::string cmd = "ls -la " + filename();
                 // extras::SystemException::assertion(cmd, __INFO__);

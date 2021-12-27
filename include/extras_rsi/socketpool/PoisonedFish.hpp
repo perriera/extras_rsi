@@ -52,7 +52,8 @@ namespace extras {
         interface PoisonedFishInterface {
             virtual bool poisonedFishReceived(
                 const PoisonedFishKey& msg) const pure;
-            virtual void killServers() const pure;
+            virtual void killServers(const std::string& pattern) const pure;
+            virtual void killAllServers() const pure;
         };
 
         /**

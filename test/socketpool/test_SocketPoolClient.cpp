@@ -90,7 +90,7 @@ SCENARIO("Test SocketPoolInterface: socketpool_client", "[SocketPoolInterfaceX]"
     // cleanup
     //
     killAllServers();
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
+    REQUIRE_THROWS_AS(rsi::SocketPool::_killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
     SystemException::assertion("rm -rf testit", __INFO__);
 
 }

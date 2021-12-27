@@ -37,13 +37,13 @@ SCENARIO("Mock PoisonedFishInterface", "[PoisonedFishInterface]") {
             });
     When(Method(mock, killServers))
         .AlwaysDo(
-            []() {
+            [](const std::string&) {
             });
 
     rsi::PoisonedFishInterface& i = mock.get();
     REQUIRE(!i.poisonedFishReceived(random));
     REQUIRE(i.poisonedFishReceived(correct));
-    i.killServers();
+    i.killServers(correct);
     Verify(Method(mock, poisonedFishReceived));
     Verify(Method(mock, killServers));
 }

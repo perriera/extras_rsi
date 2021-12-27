@@ -48,7 +48,7 @@ namespace fs = std::filesystem;
 
 void killServers(std::string pattern) {
     try {
-        rsi::SocketPool::killServers(pattern);
+        rsi::SocketPool::_killServers(pattern);
     }
     catch (const extras::rsi::NoServersToKillException& ex) {
     }
@@ -59,10 +59,10 @@ void killAllServers() {
     killServers("uploader_server");
     killServers("downloader_serv");
     killServers("vendor_server");
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("uploader_server"), extras::rsi::NoServersToKillException);
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("downloader_serv"), extras::rsi::NoServersToKillException);
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("vendor_server"), extras::rsi::NoServersToKillException);
+    REQUIRE_THROWS_AS(rsi::SocketPool::_killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
+    REQUIRE_THROWS_AS(rsi::SocketPool::_killServers("uploader_server"), extras::rsi::NoServersToKillException);
+    REQUIRE_THROWS_AS(rsi::SocketPool::_killServers("downloader_serv"), extras::rsi::NoServersToKillException);
+    REQUIRE_THROWS_AS(rsi::SocketPool::_killServers("vendor_server"), extras::rsi::NoServersToKillException);
 }
 
 /**

@@ -103,24 +103,23 @@ namespace extras {
         }
 
         /**
-         * @brief killServers() const
-         *
-         * For use by SocketPool.
-         *
-         */
-        void SocketPool::killServers() const {
-            std::string pattern = "socketpool_serv";
-            killServers(pattern);
-        }
-
-        /**
          * @brief killServers()
          *
          * For the purpose of test cases.
          *
          * @param pattern, (aka. "ps -A | grep \"" + pattern + "\"")
          */
-        void SocketPool::killServers(std::string pattern) {
+        void SocketPool::killServers(const std::string& pattern) const {
+            _killServers(pattern);
+        }
+
+        /**
+         * @brief _killServers() const
+         *
+         * For use by SocketPool.
+         *
+         */
+        void SocketPool::_killServers(const std::string& pattern) {
             auto file = "/tmp/killServers.txt";
             NoServersToKillException::assertion(pattern, file, __INFO__);
             std::ifstream in(file);
@@ -133,6 +132,26 @@ namespace extras {
                     UnknownKillParametersException::assertion(line, pattern, __INFO__);
                     ServerNotKilledException::assertion(word, __INFO__);
                 }
+            }
+        }
+
+        void SocketPool::killAllServers() const {
+            _killAllServers();
+        }
+
+        void SocketPool::_killAllServers() {
+            std::string types[] = {
+                "socketpool_serv",
+                "uploader_server",
+                "downloader_serv",
+                "vendor_server"
+            };
+            for (auto server : types) {
+                try {
+                    _killServers(server);
+                    std::cout << server << std::endl;
+                }
+                catch (rsi::NoServersToKillException&) {}
             }
         }
 

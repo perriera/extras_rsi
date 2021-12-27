@@ -30,13 +30,8 @@
 #include <extras_arc/wrap.hpp>
 #include <extras/filesystem/system.hpp>
 
-#include <chrono>
-#include <thread>
-
 using namespace std;
 namespace fs = std::filesystem;
-using namespace std::this_thread; // sleep_for, sleep_until
-using namespace std::chrono;
 
 namespace extras {
 
@@ -53,10 +48,6 @@ namespace extras {
         auto wrapped = parcelImploder.wrap();
         rsi::FileNotFoundException::assertion(wrapped, __INFO__);
         send_file_block(wrapped);
-
-        sleep_for(nanoseconds(10));
-        sleep_until(system_clock::now() + seconds(2));
-
         std::cout << extras::pass("send_file2 successful") << std::endl;
         return lock;
     }

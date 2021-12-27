@@ -169,6 +169,10 @@ target_link_libraries(socketpool_client PRIVATE ${PROJECT_NAME} stdc++fs extras 
 add_executable(socketpool_server instances/socketpool_server.cpp) 
 target_include_directories(socketpool_server PUBLIC ${INCLUDES})
 target_link_libraries(socketpool_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(kill_servers instances/kill_servers.cpp) 
+target_include_directories(kill_servers PUBLIC ${INCLUDES})
+target_link_libraries(kill_servers PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 endif()
 
 #
@@ -214,7 +218,7 @@ endif()
 # NOTE: Install all shared libraries & executables
 #
 install(TARGETS 
-  socketpool_client socketpool_server
+  socketpool_client socketpool_server kill_servers
   uploader_client uploader_server 
   vendor_client vendor_server 
   downloader_client downloader_server 

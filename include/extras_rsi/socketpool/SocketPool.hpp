@@ -87,7 +87,8 @@ namespace extras {
 
         public:
 
-            static void killServers(std::string pattern);
+            static void _killServers(const std::string& pattern);
+            static void _killAllServers();
 
             SocketPool(const ServiceTypeCompilerInterface& compilerInterface)
                 :_compilerInterface(compilerInterface) {}
@@ -120,7 +121,8 @@ namespace extras {
             virtual bool poisonedFishReceived(
                 const PoisonedFishKey&) const override;
 
-            virtual void killServers() const override;
+            virtual void killServers(const std::string& pattern) const override;
+            virtual void killAllServers() const override;
 
             virtual bool isParameter(const RequestType& requestType) const override {
                 return _compilerInterface.isParameter(requestType);
