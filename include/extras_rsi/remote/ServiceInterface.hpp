@@ -44,8 +44,11 @@ namespace extras {
 
         using ServiceType = std::string;
         using ServiceTypeList = std::vector<std::string>;
+        using Parameter = std::string;
+        using ParameterList = std::vector<std::string>;
 
         interface RemoteServiceInterface {
+            virtual void parameters(int argc, char const* argv[]) pure;
 
         };
 

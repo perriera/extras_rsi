@@ -43,55 +43,22 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
         "download 137.184.218.130 9003 data/src.zip"
     };
 
-    // Mock<rsi::RemoteServiceInterface> mock;
-    // When(Method(mock_lb, send_line_block))
-    //     .AlwaysDo(
-    //         [&_compilation](const rsi::LinePacket& msg) {
-    //             _compilation.send_line_block(msg);
-    //         });
-    // When(Method(mock_lb, read_line_block))
-    //     .AlwaysDo(
-    //         [&_compilation]() {
-    //             rsi::ServiceTypeList request_list = {
-    //                 "upload 137.184.218.130 9000 data/src.zip",
-    //                 "upload 137.184.218.130 9001 data/exparx.webflow.zip",
-    //                 "vendor 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip",
-    //                 "download 137.184.218.130 9003 data/src.zip"
-    //             };
-    //             std::string line = extras::replace_all("_line", ";", "\n");
-    //             return line;
-    //         });
+    rsi::ParameterList _parameterList;
 
-    // Mock<rsi::ServiceTypeCompilerInterface> mock_stc;
-    // When(Method(mock_stc, clients))
-    //     .AlwaysDo(
-    //         [](const rsi::RequestTypeList& requests) {
-    //             return rsi::ServiceTypeList();
-    //         });
+    Mock<rsi::RemoteServiceInterface> mock;
+    When(Method(mock, parameters))
+        .AlwaysDo(
+            [&_parameterList](int argc, char const* argv[]) {
+                rsi::NotEnoughParametersException::assertion(argc, 3, __INFO__);
+                for (auto i = 1; i < argc; i++)
+                    _parameterList.push_back(argv[i]);
+            });
 
-    // rsi::LineBlockInterface& ilb = mock_lb.get();
-    // rsi::ServiceTypeCompilerInterface& istc = mock_stc.get();
+    rsi::RemoteServiceInterface& i = mock.get();
 
-    // Mock<rsi::SocketPoolInterface> mock;
-    // When(Method(mock, transfer))
-    //     .AlwaysDo(
-    //         [&ilb, &parameters, &istc]() {
-    //             // std::string msg = parameters;
-    //             // ilb.send_line_block(msg);
-    //             // rsi::RequestTypeCompilation compilation(-1);
-    //             // compilation.read_line_block();
-    //             // auto list = compilation.compilation();
-    //             // for (auto item : istc.clients(list)) {
-    //             //     // cout << "msg received: " << item << endl;
-    //             //     auto cmd = item;
-    //             //     system(cmd.c_str());
-    //             // }
-    //             // // std::string cmd = "ls -la " + filename();
-    //             // // extras::SystemException::assertion(cmd, __INFO__);
-    //             // std::cout << std::endl;
-    //         });
+    REQUIRE(_parameterList.size() == 0);
+    i.parameters(argc, argv);
+    REQUIRE(_parameterList.size() == 3);
 
-    // rsi::SocketPoolInterface& i = mock.get();
-    // i.transfer();
-    // Verify(Method(mock, transfer));
+    Verify(Method(mock, parameters));
 }

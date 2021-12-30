@@ -134,6 +134,18 @@ namespace extras {
             static void assertion(const std::string& response, const extras::WhereAmI& ref);
         };
 
+        /**
+         * @brief NotEnoughParametersException
+         *
+         */
+        concrete class NotEnoughParametersException extends RSIException {
+        public:
+            NotEnoughParametersException(std::string msg, const extras::WhereAmI& whereAmI)
+                : RSIException(msg.c_str(), whereAmI) {}
+            static void assertion(int argc, int minimum, const extras::WhereAmI& ref);
+        };
+
+
     }  // namespace rsi
 
 }  // namespace extras
