@@ -31,6 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
+#include <extras_rsi/sockets/PortAuthority.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
@@ -49,7 +50,12 @@ namespace extras {
 
         interface RemoteServiceInterface {
             virtual void parameters(int argc, char const* argv[]) pure;
-
+            virtual Parameter address() const pure;
+            virtual Parameter port() const pure;
+            virtual Filenames filenames() const pure;
+            virtual void formUploads() pure;
+            virtual void formVendor() pure;
+            virtual void formDownloads() pure;
         };
 
 

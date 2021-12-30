@@ -17,7 +17,9 @@
  */
 
 #include <extras_rsi/remote/ServiceInterface.hpp>
+#include <extras/strings.hpp>
 #include <iostream>
+#include <sstream>
 
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
@@ -44,21 +46,55 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     };
 
     rsi::ParameterList _parameterList;
+    rsi::PortAuthority _portAuthority;
+    rsi::ServiceTypeList _serviceTypeList;
+    extras::Filenames _filenameList;
 
     Mock<rsi::RemoteServiceInterface> mock;
+    rsi::RemoteServiceInterface& i = mock.get();
     When(Method(mock, parameters))
         .AlwaysDo(
-            [&_parameterList](int argc, char const* argv[]) {
+            [&_parameterList, &_filenameList](int argc, char const* argv[]) {
                 rsi::NotEnoughParametersException::assertion(argc, 3, __INFO__);
                 for (auto i = 1; i < argc; i++)
                     _parameterList.push_back(argv[i]);
+                for (auto i = 2; i < argc; i++)
+                    _filenameList.push_back(argv[i]);
+            });
+    When(Method(mock, address))
+        .AlwaysDo(
+            [&_parameterList, &i]() {
+                return extras::str::split(_parameterList[0], ':')[0];
+            });
+    When(Method(mock, port))
+        .AlwaysDo(
+            [&_parameterList, &i]() {
+                return extras::str::split(_parameterList[0], ':')[1];
+            });
+    When(Method(mock, filenames))
+        .AlwaysDo(
+            [&_parameterList, &i, &_filenameList]() {
+                return _filenameList;
+            });
+    When(Method(mock, formUploads))
+        .AlwaysDo(
+            [&_parameterList, &_portAuthority, &_serviceTypeList, &i]() {
+                for (auto filename : i.filenames()) {
+                    std::stringstream ss;
+                    ss << "upload " << i.address() << ' ';
+                    ss << _portAuthority.request() << ' ' << filename;
+                    _serviceTypeList.push_back(ss.str());
+                }
             });
 
-    rsi::RemoteServiceInterface& i = mock.get();
 
     REQUIRE(_parameterList.size() == 0);
     i.parameters(argc, argv);
     REQUIRE(_parameterList.size() == 3);
+    REQUIRE(i.address() == "137.184.218.130");
+    REQUIRE(i.port() == "8080");
+    i.formUploads();
+    auto u1 = _serviceTypeList[0];
 
     Verify(Method(mock, parameters));
 }
