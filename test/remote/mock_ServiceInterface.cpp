@@ -59,7 +59,6 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     _clientTasks["vendor"] = "build/vendor_client";
     _clientTasks["download"] = "build/downloader_client";
 
-
     rsi::ServiceTypeMap _serverTasks;
     _serverTasks["upload"] = "build/uploader_server";
     _serverTasks["vendor"] = "build/vendor_server";
@@ -199,6 +198,16 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
                 i.formDownloads(dup["download"], session);
                 return _serviceTypeList;
             });
+    When(Method(mock, compileClients))
+        .AlwaysDo(
+            [&_serviceTypeList, &i](const rsi::SessionInterface& session) {
+                return i.compile(i.client_tasks(), session);
+            });
+    When(Method(mock, compileServers))
+        .AlwaysDo(
+            [&_serviceTypeList, &i, &_serverTasks](const rsi::SessionInterface& session) {
+                return i.compile(_serverTasks, session);
+            });
     When(Method(mock, package_request))
         .AlwaysDo(
             [&_parameterList, &i, &lbi](const rsi::ServiceTypeList& list) {
@@ -261,7 +270,7 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     When(Method(mock, start_clients_block))
         .AlwaysDo(
             [&_parameterList, &i](const rsi::SessionInterface& session, int socket) {
-                auto list = i.compile(i.client_tasks(), session);
+                auto list = i.compileClients(session);
                 for (auto task : list) {
                     std::cout << task << std::endl;
                 }
@@ -269,7 +278,7 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     When(Method(mock, start_servers_block))
         .AlwaysDo(
             [&_parameterList, &i, &_serverTasks](const rsi::SessionInterface& session, int socket) {
-                auto list = i.compile(_serverTasks, session);
+                auto list = i.compileServers(session);
                 for (auto task : list) {
                     std::cout << task << std::endl;
                 }

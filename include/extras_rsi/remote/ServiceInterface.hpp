@@ -63,14 +63,16 @@ namespace extras {
             virtual void formVendor(const ServiceType& type, const SessionInterface& session) pure;
             virtual void formDownloads(const ServiceType& type, const SessionInterface& session) pure;
             virtual ServiceTypeList compile(const ServiceTypeMap& serviceTypes, const SessionInterface& session) pure;
+            virtual ServiceTypeList compileClients(const SessionInterface& session) pure;
+            virtual ServiceTypeList compileServers(const SessionInterface& session) pure;
             virtual LinePacket package_request(const ServiceTypeList& list) pure;
             virtual ServiceTypeList unpackage_response(const LinePacket& package) pure;
             virtual LinePacket servicesResponse(int socket) pure;
             virtual ServiceTypeList servicesRequest(int socket) pure;
             virtual void start_servers_block(const SessionInterface& session, int socket) pure;
             virtual void start_clients_block(const SessionInterface& session, int socket) pure;
-            virtual const ServiceTypeMap& client_tasks() pure;
-            virtual const ServiceTypeMap& server_tasks() pure;
+            virtual const ServiceTypeMap& client_tasks() const pure;
+            virtual const ServiceTypeMap& server_tasks() const pure;
         };
 
 
