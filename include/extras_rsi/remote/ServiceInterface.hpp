@@ -47,6 +47,7 @@ namespace extras {
 
         using ServiceType = std::string;
         using ServiceTypeList = std::vector<std::string>;
+        using ServiceTypeMap = std::map<ServiceType, ServiceType>;
         using Parameter = std::string;
         using ParameterList = std::vector<std::string>;
 
@@ -56,10 +57,16 @@ namespace extras {
             virtual Parameter port() const pure;
             virtual Filenames filenames() const pure;
             virtual Pathname shadow(const Pathname& parameter, const SessionInterface& session) pure;
-            virtual void formUploads() pure;
-            virtual void formVendor() pure;
-            virtual void formDownloads() pure;
-            virtual void compile() pure;
+            virtual void formUploads(const ServiceType& type, const SessionInterface& session) pure;
+            virtual void formVendor(const ServiceType& type, const SessionInterface& session) pure;
+            virtual void formDownloads(const ServiceType& type, const SessionInterface& session) pure;
+            virtual ServiceTypeList compile(const ServiceTypeMap& serviceTypes, const SessionInterface& session) pure;
+            virtual void send_parameters_block(int socket) pure;
+            virtual void receive_parameters_block(int socket) pure;
+            virtual void start_servers_block(const SessionInterface& session, int socket) pure;
+            virtual void start_clients_block(const SessionInterface& session, int socket) pure;
+            virtual const ServiceTypeMap& client_tasks() pure;
+            virtual const ServiceTypeMap& server_tasks() pure;
         };
 
 
