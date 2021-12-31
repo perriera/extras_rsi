@@ -65,6 +65,27 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     _serverTasks["vendor"] = "build/vendor_server";
     _serverTasks["download"] = "build/downloader_server";
 
+    rsi::LinePacket linePacket = "upload data/exparx.webflow.zip";
+    rsi::LinePacket _sentLine;
+
+    Mock<rsi::LineBlockInterface> mock_lbi;
+    When(Method(mock_lbi, send_line_block))
+        .AlwaysDo(
+            [&_sentLine](const rsi::LinePacket& linePacket) {
+                _sentLine = linePacket;
+            });
+    When(Method(mock_lbi, read_line_block))
+        .AlwaysDo(
+            [&_sentLine]() {
+                return _sentLine;
+            });
+
+    rsi::LineBlockInterface& lbi = mock_lbi.get();
+    lbi.send_line_block(linePacket);
+    REQUIRE(lbi.read_line_block() == linePacket);
+    Verify(Method(mock_lbi, send_line_block));
+    Verify(Method(mock_lbi, read_line_block));
+
     Mock<rsi::RemoteServiceInterface> mock;
     rsi::RemoteServiceInterface& i = mock.get();
     When(Method(mock, parameters))
@@ -151,14 +172,17 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
             });
     When(Method(mock, send_parameters_block))
         .AlwaysDo(
-            [&_parameterList, &i, &_sentList](int) {
+            [&_parameterList, &i, &_sentList, &lbi](int) {
                 _sentList = _parameterList;
+                rsi::LinePacket linePacket = "upload data/exparx.webflow.zip";
+                lbi.send_line_block(linePacket);
             });
     When(Method(mock, receive_parameters_block))
         .AlwaysDo(
-            [&_parameterList, &i, &_sentList, &_receivedList](int) {
+            [&_parameterList, &i, &_sentList, &_receivedList, &lbi](int) {
                 _receivedList = _sentList;
                 _parameterList = _receivedList;
+                auto linePacket = lbi.read_line_block();
             });
     When(Method(mock, start_clients_block))
         .AlwaysDo(
