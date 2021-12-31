@@ -65,8 +65,8 @@ namespace extras {
             virtual ServiceTypeList compile(const ServiceTypeMap& serviceTypes, const SessionInterface& session) pure;
             virtual LinePacket package_request(const ServiceTypeList& list) pure;
             virtual ServiceTypeList unpackage_response(const LinePacket& package) pure;
-            virtual LinePacket receive_parameters_block(int socket) pure;
-            virtual ServiceTypeList send_parameters_block(int socket) pure;
+            virtual LinePacket servicesResponse(int socket) pure;
+            virtual ServiceTypeList servicesRequest(int socket) pure;
             virtual void start_servers_block(const SessionInterface& session, int socket) pure;
             virtual void start_clients_block(const SessionInterface& session, int socket) pure;
             virtual const ServiceTypeMap& client_tasks() pure;

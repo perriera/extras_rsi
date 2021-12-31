@@ -217,7 +217,7 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
                     list.push_back(item);
                 return list;
             });
-    When(Method(mock, send_parameters_block))
+    When(Method(mock, servicesRequest))
         .AlwaysDo(
             [&_parameterList, &i, &lbi](int socket) {
                 std::stringstream ss;
@@ -230,12 +230,12 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
                     return serviceList;
                 }
                 else {  // mock
-                    auto linePacket = i.receive_parameters_block(-1);
+                    auto linePacket = i.servicesResponse(-1);
                     auto serviceList = i.unpackage_response(linePacket);
                     return serviceList;
                 }
             });
-    When(Method(mock, receive_parameters_block))
+    When(Method(mock, servicesResponse))
         .AlwaysDo(
             [&_parameterList, &i, &_sentList, &_receivedList, &lbi](int) {
                 auto linePacket = lbi.read_line_block();
@@ -282,10 +282,10 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     //
 
     REQUIRE(_sentList != _parameterList);
-    auto response1 = i.send_parameters_block(-1);
+    auto response1 = i.servicesRequest(-1);
     REQUIRE(response1 == servicesList);
 
-    auto response2 = i.receive_parameters_block(-1);
+    auto response2 = i.servicesResponse(-1);
     auto response3 = i.package_request(response1);
     auto response4 = i.unpackage_response(response2);
 
