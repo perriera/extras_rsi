@@ -58,12 +58,15 @@ namespace extras {
             virtual Parameter port() const pure;
             virtual Filenames filenames() const pure;
             virtual Pathname shadow(const Pathname& parameter, const SessionInterface& session) pure;
+            virtual ServiceTypeList formRequests(const ParameterList& list) pure;
             virtual void formUploads(const ServiceType& type, const SessionInterface& session) pure;
             virtual void formVendor(const ServiceType& type, const SessionInterface& session) pure;
             virtual void formDownloads(const ServiceType& type, const SessionInterface& session) pure;
             virtual ServiceTypeList compile(const ServiceTypeMap& serviceTypes, const SessionInterface& session) pure;
-            virtual void send_parameters_block(int socket) pure;
-            virtual void receive_parameters_block(int socket) pure;
+            virtual LinePacket package_request(const ServiceTypeList& list) pure;
+            virtual ServiceTypeList unpackage_response(const LinePacket& package) pure;
+            virtual LinePacket receive_parameters_block(int socket) pure;
+            virtual ServiceTypeList send_parameters_block(int socket) pure;
             virtual void start_servers_block(const SessionInterface& session, int socket) pure;
             virtual void start_clients_block(const SessionInterface& session, int socket) pure;
             virtual const ServiceTypeMap& client_tasks() pure;

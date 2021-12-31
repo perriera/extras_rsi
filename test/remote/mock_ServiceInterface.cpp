@@ -38,10 +38,10 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     int argc = sizeof(argv) / sizeof(argv[0]);
 
     // output parameters
-    rsi::ServiceTypeList request_list = {
+    rsi::ServiceTypeList servicesList = {
         "upload 137.184.218.130 9000 data/src.zip",
         "upload 137.184.218.130 9001 data/exparx.webflow.zip",
-        "vendor 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip",
+        "vendor 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip ",
         "download 137.184.218.130 9003 data/src.zip"
     };
 
@@ -128,6 +128,35 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
             [&_serverTasks, &i]() {
                 return _serverTasks;
             });
+    When(Method(mock, formRequests))
+        .AlwaysDo(
+            [&_portAuthority, &i](
+                const rsi::ParameterList& list) {
+                    rsi::ServiceTypeList serviceTypeList;
+                    for (auto filename : i.filenames()) {
+                        std::stringstream ss;
+                        ss << "upload" << ' ' << i.address() << ' ';
+                        ss << _portAuthority.request() << ' ' << filename;
+                        serviceTypeList.push_back(ss.str());
+                    }
+                    {
+                        std::stringstream ss;
+                        ss << "vendor" << ' ' << i.address() << ' ';
+                        ss << _portAuthority.request() << ' ';
+                        for (auto filename : i.filenames()) {
+                            ss << filename << ' ';
+                        }
+                        serviceTypeList.push_back(ss.str());
+                    }
+                    {
+                        std::stringstream ss;
+                        ss << "download" << ' ' << i.address() << ' ';
+                        ss << _portAuthority.request() << ' ';
+                        ss << i.filenames()[0];
+                        serviceTypeList.push_back(ss.str());
+                    }
+                    return serviceTypeList;
+            });
     When(Method(mock, formUploads))
         .AlwaysDo(
             [&_parameterList, &_portAuthority, &_serviceTypeList, &i](
@@ -170,19 +199,60 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
                 i.formDownloads(dup["download"], session);
                 return _serviceTypeList;
             });
+    When(Method(mock, package_request))
+        .AlwaysDo(
+            [&_parameterList, &i, &lbi](const rsi::ServiceTypeList& list) {
+                std::stringstream ss;
+                for (auto param : list)
+                    ss << param << ';';
+                rsi::LinePacket packet = ss.str();
+                return packet;
+            });
+    When(Method(mock, unpackage_response))
+        .AlwaysDo(
+            [&_parameterList, &i, &lbi](const rsi::LinePacket& package) {
+                auto parts = extras::str::split(package, ';');
+                rsi::ServiceTypeList list;
+                for (auto item : parts)
+                    list.push_back(item);
+                return list;
+            });
     When(Method(mock, send_parameters_block))
         .AlwaysDo(
-            [&_parameterList, &i, &_sentList, &lbi](int) {
-                _sentList = _parameterList;
-                rsi::LinePacket linePacket = "upload data/exparx.webflow.zip";
-                lbi.send_line_block(linePacket);
+            [&_parameterList, &i, &lbi](int socket) {
+                std::stringstream ss;
+                for (auto param : _parameterList)
+                    ss << param << ' ';
+                lbi.send_line_block(ss.str());
+                if (socket != -1) { // real time
+                    auto linePacket = lbi.read_line_block();
+                    auto serviceList = i.unpackage_response(linePacket);
+                    return serviceList;
+                }
+                else {  // mock
+                    auto linePacket = i.receive_parameters_block(-1);
+                    auto serviceList = i.unpackage_response(linePacket);
+                    return serviceList;
+                }
             });
     When(Method(mock, receive_parameters_block))
         .AlwaysDo(
             [&_parameterList, &i, &_sentList, &_receivedList, &lbi](int) {
-                _receivedList = _sentList;
-                _parameterList = _receivedList;
                 auto linePacket = lbi.read_line_block();
+                {
+                    std::stringstream ss;
+                    ss << linePacket;
+                    _receivedList.clear();
+                    while (ss.good()) {
+                        rsi::Parameter parameter;
+                        ss >> parameter;
+                        if (ss.good()) _receivedList.push_back(parameter);
+                    }
+                }
+                auto serviceList = i.formRequests(_receivedList);
+                linePacket = i.package_request(serviceList);
+                lbi.send_line_block(linePacket);
+                return linePacket;
             });
     When(Method(mock, start_clients_block))
         .AlwaysDo(
@@ -212,12 +282,15 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     //
 
     REQUIRE(_sentList != _parameterList);
-    i.send_parameters_block(-1);
-    REQUIRE(_sentList == _parameterList);
+    auto response1 = i.send_parameters_block(-1);
+    REQUIRE(response1 == servicesList);
 
-    REQUIRE(_receivedList != _parameterList);
-    i.receive_parameters_block(-1);
-    REQUIRE(_receivedList == _parameterList);
+    auto response2 = i.receive_parameters_block(-1);
+    auto response3 = i.package_request(response1);
+    auto response4 = i.unpackage_response(response2);
+
+    REQUIRE(response2 != response3);
+    REQUIRE(response1 != response4);
 
     // 
     // step 3. start server requests
