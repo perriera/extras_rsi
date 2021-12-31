@@ -38,7 +38,7 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     int argc = sizeof(argv) / sizeof(argv[0]);
 
     // output parameters
-    rsi::ServiceTypeList servicesList = {
+    rsi::ServiceTypeList expectedServicesList = {
         "upload 137.184.218.130 9000 data/src.zip",
         "upload 137.184.218.130 9001 data/exparx.webflow.zip",
         "vendor 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip ",
@@ -220,6 +220,9 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     When(Method(mock, servicesRequest))
         .AlwaysDo(
             [&_parameterList, &i, &lbi](int socket) {
+                if (socket == -2)
+                    throw rsi::RSIException("unknown", __INFO__);
+                // --- core code below ----
                 std::stringstream ss;
                 for (auto param : _parameterList)
                     ss << param << ' ';
@@ -229,11 +232,12 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
                     auto serviceList = i.unpackage_response(linePacket);
                     return serviceList;
                 }
-                else {  // mock
+                // --- core code above ----
+                else {
                     auto linePacket = i.servicesResponse(-1);
                     auto serviceList = i.unpackage_response(linePacket);
                     return serviceList;
-                }
+                } // mock
             });
     When(Method(mock, servicesResponse))
         .AlwaysDo(
@@ -281,16 +285,11 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     // step 2. send/receive parameters
     //
 
+    REQUIRE_THROWS_AS(i.servicesRequest(-2), rsi::RSIException);
+
     REQUIRE(_sentList != _parameterList);
-    auto response1 = i.servicesRequest(-1);
-    REQUIRE(response1 == servicesList);
-
-    auto response2 = i.servicesResponse(-1);
-    auto response3 = i.package_request(response1);
-    auto response4 = i.unpackage_response(response2);
-
-    REQUIRE(response2 != response3);
-    REQUIRE(response1 != response4);
+    auto servicesList = i.servicesRequest(-1);
+    REQUIRE(servicesList == expectedServicesList);
 
     // 
     // step 3. start server requests
