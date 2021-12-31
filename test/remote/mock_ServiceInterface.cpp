@@ -49,6 +49,7 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     rsi::PortAuthority _portAuthority;
     rsi::ServiceTypeList _serviceTypeList;
     extras::Filenames _filenameList;
+    rsi::Session _session;
 
     Mock<rsi::RemoteServiceInterface> mock;
     rsi::RemoteServiceInterface& i = mock.get();
@@ -76,6 +77,12 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
             [&_parameterList, &i, &_filenameList]() {
                 return _filenameList;
             });
+    When(Method(mock, shadow))
+        .AlwaysDo(
+            [](const Pathname& parameter, const rsi::SessionInterface& session) {
+                auto result = session.entry_name(parameter);
+                return result;
+            });
     When(Method(mock, formUploads))
         .AlwaysDo(
             [&_parameterList, &_portAuthority, &_serviceTypeList, &i]() {
@@ -86,14 +93,42 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
                     _serviceTypeList.push_back(ss.str());
                 }
             });
+    When(Method(mock, formVendor))
+        .AlwaysDo(
+            [&_parameterList, &_portAuthority, &_serviceTypeList, &i]() {
+                std::stringstream ss;
+                ss << "vendor " << i.address() << ' ';
+                ss << _portAuthority.request() << ' ';
+                for (auto filename : i.filenames()) {
+                    ss << filename << ' ';
+                }
+                _serviceTypeList.push_back(ss.str());
+            });
+    When(Method(mock, formDownloads))
+        .AlwaysDo(
+            [&_parameterList, &_portAuthority, &_serviceTypeList, &i]() {
+                std::stringstream ss;
+                ss << "download " << i.address() << ' ';
+                ss << _portAuthority.request() << ' ' << i.filenames()[0];
+                _serviceTypeList.push_back(ss.str());
+            });
+    When(Method(mock, compile))
+        .AlwaysDo(
+            [&_parameterList, &_portAuthority, &_serviceTypeList, &i]() {
+                i.formUploads();
+                i.formVendor();
+                i.formDownloads();
+            });
 
+    _session.create();
+    auto directory = _session.session();
 
     REQUIRE(_parameterList.size() == 0);
     i.parameters(argc, argv);
     REQUIRE(_parameterList.size() == 3);
     REQUIRE(i.address() == "137.184.218.130");
     REQUIRE(i.port() == "8080");
-    i.formUploads();
+    i.compile();
     auto u1 = _serviceTypeList[0];
 
     Verify(Method(mock, parameters));

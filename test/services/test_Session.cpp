@@ -41,7 +41,7 @@ SCENARIO("Test SessionInterface: clients", "[SessionInterface]") {
     rsi::SessionInterface& i = session;
 
     REQUIRE(!i.exists());
-    i.open();
+    i.create();
     REQUIRE(fs::exists(i.session()));
     _directory = i.session();
     REQUIRE(i.exists());
@@ -78,7 +78,7 @@ SCENARIO("Test SessionInterface: clients", "[SessionInterface]") {
 
     i.remove(pathname);
     REQUIRE(!i.active());
-    i.close();
+    i.destroy();
     REQUIRE(!i.exists());
     REQUIRE(!i.active());
 

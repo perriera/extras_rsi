@@ -35,7 +35,7 @@ namespace extras {
          * @brief open()
          *
          */
-        void Session::open() {
+        void Session::create() {
             char templatebuf[80];
             char* mkdirectory = mkdtemp(strcpy(templatebuf, "/tmp/extras_rsi_XXXXXX"));
             std::string tempDir = mkdirectory;
@@ -46,7 +46,7 @@ namespace extras {
          * @brief close()
          *
          */
-        void Session::close() const {
+        void Session::destroy() const {
             if (_directory != "" && fs::exists(_directory))
                 fs::remove_all(_directory);
         }

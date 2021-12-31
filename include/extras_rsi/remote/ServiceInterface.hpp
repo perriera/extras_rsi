@@ -31,7 +31,9 @@
   */
 
 #include <extras/interfaces.hpp>
+#include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
+#include <extras_rsi/services/SessionType.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
@@ -53,9 +55,11 @@ namespace extras {
             virtual Parameter address() const pure;
             virtual Parameter port() const pure;
             virtual Filenames filenames() const pure;
+            virtual Pathname shadow(const Pathname& parameter, const SessionInterface& session) pure;
             virtual void formUploads() pure;
             virtual void formVendor() pure;
             virtual void formDownloads() pure;
+            virtual void compile() pure;
         };
 
 
