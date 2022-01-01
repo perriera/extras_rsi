@@ -65,19 +65,37 @@ namespace extras {
                 const ServiceTypeList& list
             ) const pure;
 
-            // virtual Pathname shadow(const Pathname& parameter, const SessionInterface& session) pure;
             virtual ServiceTypeList formRequests(const ParameterList& list) pure;
-            // virtual void formUploads(const ServiceType& type, const SessionInterface& session) pure;
-            // virtual void formVendor(const ServiceType& type, const SessionInterface& session) pure;
-            // virtual void formDownloads(const ServiceType& type, const SessionInterface& session) pure;
 
             virtual void start_servers_block(const SessionInterface& session, int socket) pure;
             virtual void start_clients_block(const SessionInterface& session, int socket) pure;
 
-            // virtual ServiceTypeList compileClients(const SessionInterface& session) pure;
-            // virtual ServiceTypeList compileServers(const SessionInterface& session) pure;
-            // virtual const ServiceTypeMap& client_tasks() const pure;
-            // virtual const ServiceTypeMap& server_tasks() const pure;
+        };
+
+        concrete class Invocation implements InvocationInterface {
+        public:
+
+            virtual void parameters(int argc, char const* argv[]) override;
+            virtual  Parameter address() const override;
+            virtual  Parameter port() const override;
+            virtual  Filenames filenames() const override;
+
+            virtual LinePacket servicesResponse(int socket) override;
+            virtual ServiceTypeList servicesRequest(int socket) override;
+
+            virtual LinePacket package_request(const ServiceTypeList& list) override;
+            virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
+
+            virtual ServiceTypeList compile(
+                const ServiceTypeMap& serviceTypes,
+                const SessionInterface& session,
+                const ServiceTypeList& list
+            ) const override;
+
+            virtual ServiceTypeList formRequests(const ParameterList& list) override;
+
+            virtual void start_servers_block(const SessionInterface& session, int socket) override;
+            virtual void start_clients_block(const SessionInterface& session, int socket) override;
         };
 
 

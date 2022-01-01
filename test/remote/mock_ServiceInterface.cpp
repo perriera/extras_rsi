@@ -54,7 +54,10 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     rsi::ServiceTypeList _serviceTypeList;
     rsi::ServiceTypeList _clientTypeList;
     rsi::ServiceTypeList _serverTypeList;
-    extras::Filenames _filenameList;
+    rsi::Parameter _address;
+    rsi::Parameter _port;
+    extras::Filenames _filenames;
+
 
     rsi::ServiceTypeMap _clientTasks;
     _clientTasks["upload"] = "build/uploader_client";
@@ -91,27 +94,29 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     rsi::InvocationInterface& i = mock.get();
     When(Method(mock, parameters))
         .AlwaysDo(
-            [&_parameterList, &_filenameList](int argc, char const* argv[]) {
+            [&_parameterList, &_filenames, &_address, &_port](int argc, char const* argv[]) {
                 rsi::NotEnoughParametersException::assertion(argc, 3, __INFO__);
                 for (auto i = 1; i < argc; i++)
                     _parameterList.push_back(argv[i]);
                 for (auto i = 2; i < argc; i++)
-                    _filenameList.push_back(argv[i]);
+                    _filenames.push_back(argv[i]);
+                _address = extras::str::split(_parameterList[0], ':')[0];
+                _port = extras::str::split(_parameterList[0], ':')[1];
             });
     When(Method(mock, address))
         .AlwaysDo(
-            [&_parameterList, &i]() {
-                return extras::str::split(_parameterList[0], ':')[0];
+            [&_address]() {
+                return _address;
             });
     When(Method(mock, port))
         .AlwaysDo(
-            [&_parameterList, &i]() {
-                return extras::str::split(_parameterList[0], ':')[1];
+            [&_port]() {
+                return _port;
             });
     When(Method(mock, filenames))
         .AlwaysDo(
-            [&_parameterList, &i, &_filenameList]() {
-                return _filenameList;
+            [&_parameterList, &i, &_filenames]() {
+                return _filenames;
             });
     When(Method(mock, formRequests))
         .AlwaysDo(
