@@ -65,19 +65,19 @@ namespace extras {
                 const ServiceTypeList& list
             ) const pure;
 
-            virtual Pathname shadow(const Pathname& parameter, const SessionInterface& session) pure;
+            // virtual Pathname shadow(const Pathname& parameter, const SessionInterface& session) pure;
             virtual ServiceTypeList formRequests(const ParameterList& list) pure;
-            virtual void formUploads(const ServiceType& type, const SessionInterface& session) pure;
-            virtual void formVendor(const ServiceType& type, const SessionInterface& session) pure;
-            virtual void formDownloads(const ServiceType& type, const SessionInterface& session) pure;
+            // virtual void formUploads(const ServiceType& type, const SessionInterface& session) pure;
+            // virtual void formVendor(const ServiceType& type, const SessionInterface& session) pure;
+            // virtual void formDownloads(const ServiceType& type, const SessionInterface& session) pure;
 
             virtual void start_servers_block(const SessionInterface& session, int socket) pure;
             virtual void start_clients_block(const SessionInterface& session, int socket) pure;
 
-            virtual ServiceTypeList compileClients(const SessionInterface& session) pure;
-            virtual ServiceTypeList compileServers(const SessionInterface& session) pure;
-            virtual const ServiceTypeMap& client_tasks() const pure;
-            virtual const ServiceTypeMap& server_tasks() const pure;
+            // virtual ServiceTypeList compileClients(const SessionInterface& session) pure;
+            // virtual ServiceTypeList compileServers(const SessionInterface& session) pure;
+            // virtual const ServiceTypeMap& client_tasks() const pure;
+            // virtual const ServiceTypeMap& server_tasks() const pure;
         };
 
 
