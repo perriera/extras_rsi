@@ -27,7 +27,7 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock RemoteInvocationInterface", "[RemoteInvocationInterface]") {
+SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     const char* argv[] = {
         "build/rsi",
@@ -85,8 +85,8 @@ SCENARIO("Mock RemoteInvocationInterface", "[RemoteInvocationInterface]") {
     Verify(Method(mock_lbi, send_line_block));
     Verify(Method(mock_lbi, read_line_block));
 
-    Mock<rsi::RemoteInvocationInterface> mock;
-    rsi::RemoteInvocationInterface& i = mock.get();
+    Mock<rsi::InvocationInterface> mock;
+    rsi::InvocationInterface& i = mock.get();
     When(Method(mock, parameters))
         .AlwaysDo(
             [&_parameterList, &_filenameList](int argc, char const* argv[]) {

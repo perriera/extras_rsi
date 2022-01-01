@@ -43,10 +43,10 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RemoteInvocationInterface
+         * @brief InvocationInterface
          *
          */
-        interface RemoteInvocationInterface {
+        interface InvocationInterface {
 
             virtual void parameters(int argc, char const* argv[]) pure;
             virtual Parameter address() const pure;

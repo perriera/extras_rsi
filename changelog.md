@@ -5,7 +5,7 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v4.23.0 -m "Added RemoteInvocationInterface"</br>
+> > git tag -a v4.23.0 -m "Added InvocationInterface"</br>
 > > git push origin v4.23.0
 
 IMPORTANT:
@@ -36,8 +36,8 @@ Updated README.md accordinging</br>
 
 ## Added
 
-- RemoteInvocationInterface
-- RemoteServiceInterface
+- InvocationInterface
+- ServiceInterface
 
 #### 4.22.1 (2021-12-26)
 

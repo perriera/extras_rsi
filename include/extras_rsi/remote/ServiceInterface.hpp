@@ -42,7 +42,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RemoteInvocationInterface
+         * @brief InvocationInterface
          *
          */
 
@@ -53,10 +53,10 @@ namespace extras {
         using ParameterList = std::vector<std::string>;
 
         /**
-         * @brief RemoteServiceInterface
+         * @brief ServiceInterface
          *
          */
-        interface RemoteServiceInterface {
+        interface ServiceInterface {
             virtual const ServiceType& service() const pure;
             virtual const Parameter& address() const pure;
             virtual const Parameter& port() const pure;
@@ -74,7 +74,7 @@ namespace extras {
          * @brief RemoteService
          *
          */
-        concrete class RemoteService implements RemoteServiceInterface {
+        concrete class RemoteService implements ServiceInterface {
             friend std::ostream& operator<<(std::ostream& out, const RemoteService& obj);
             friend std::istream& operator>>(std::istream& in, RemoteService& obj);
 
