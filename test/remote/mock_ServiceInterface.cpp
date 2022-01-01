@@ -190,23 +190,47 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
             });
     When(Method(mock, compile))
         .AlwaysDo(
-            [&_serviceTypeList, &i]
-    (const rsi::ServiceTypeMap& serviceTypes, const rsi::SessionInterface& session) {
+            [&i]
+    (const rsi::ServiceTypeMap& serviceTypes, const rsi::SessionInterface& session, const rsi::ServiceTypeList& before) {
                 auto dup = serviceTypes;
-                i.formUploads(dup["upload"], session);
-                i.formVendor(dup["vendor"], session);
-                i.formDownloads(dup["download"], session);
-                return _serviceTypeList;
+                rsi::ServiceTypeList after;
+                for (auto line : before) {
+                    std::stringstream in;
+                    in << line;
+                    rsi::Parameter service, ip, port;
+                    in >> service >> ip >> port;
+                    rsi::ParameterList files;
+                    while (in.good()) {
+                        rsi::Parameter file;
+                        in >> file;
+                        if (file != "")
+                            files.push_back(file);
+                    }
+                    std::stringstream out;
+                    out << dup[service] << ' ';
+                    out << ip << ' ';
+                    out << port << ' ';
+                    for (auto file : files)
+                        out << session.entry_name(file) << ' ';
+                    after.push_back(out.str());
+                }
+                return after;
+            });
+    When(Method(mock, prepare))
+        .AlwaysDo(
+            [&_serviceTypeList, &i](const rsi::SessionInterface& session,
+                const rsi::ServiceTypeList& list) {
+                    // return i.compile(i.client_tasks(), session, _serviceTypeList);
             });
     When(Method(mock, compileClients))
         .AlwaysDo(
             [&_serviceTypeList, &i](const rsi::SessionInterface& session) {
-                return i.compile(i.client_tasks(), session);
+                return i.compile(i.client_tasks(), session, _serviceTypeList);
             });
     When(Method(mock, compileServers))
         .AlwaysDo(
             [&_serviceTypeList, &i, &_serverTasks](const rsi::SessionInterface& session) {
-                return i.compile(_serverTasks, session);
+                return i.compile(_serverTasks, session, _serviceTypeList);
             });
     When(Method(mock, package_request))
         .AlwaysDo(
@@ -303,13 +327,19 @@ SCENARIO("Mock RemoteServiceInterface", "[RemoteServiceInterface]") {
     // 
     // step 3. start server requests
     //
+
+    rsi::Session _clientSession;
+    _clientSession.create();
     rsi::Session _serverSession;
     _serverSession.create();
+
+    auto clients = i.compile(_clientTasks, _clientSession, servicesList);
+    auto servers = i.compile(_serverTasks, _serverSession, servicesList);
+
+    i.prepare(_clientSession, clients);
+    i.prepare(_serverSession, servers);
+
     i.start_servers_block(_serverSession, -1);
-    rsi::Session _clientSession;
-
-
-
 
     // REQUIRE(_parameterList.size() == 3);
     // REQUIRE(i.address() == "137.184.218.130");

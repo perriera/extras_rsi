@@ -52,25 +52,44 @@ namespace extras {
         using Parameter = std::string;
         using ParameterList = std::vector<std::string>;
 
+        // interface RemoteServiceInterface {
+        // };
+
         interface RemoteServiceInterface {
+
             virtual void parameters(int argc, char const* argv[]) pure;
             virtual Parameter address() const pure;
             virtual Parameter port() const pure;
             virtual Filenames filenames() const pure;
+
+            virtual LinePacket servicesResponse(int socket) pure;
+            virtual ServiceTypeList servicesRequest(int socket) pure;
+
+            virtual LinePacket package_request(const ServiceTypeList& list) pure;
+            virtual ServiceTypeList unpackage_response(const LinePacket& package) pure;
+
+            virtual ServiceTypeList compile(
+                const ServiceTypeMap& serviceTypes,
+                const SessionInterface& session,
+                const ServiceTypeList& list
+            ) const pure;
+
+            virtual void prepare(
+                const SessionInterface& session,
+                const ServiceTypeList& list
+            ) const pure;
+
             virtual Pathname shadow(const Pathname& parameter, const SessionInterface& session) pure;
             virtual ServiceTypeList formRequests(const ParameterList& list) pure;
             virtual void formUploads(const ServiceType& type, const SessionInterface& session) pure;
             virtual void formVendor(const ServiceType& type, const SessionInterface& session) pure;
             virtual void formDownloads(const ServiceType& type, const SessionInterface& session) pure;
-            virtual ServiceTypeList compile(const ServiceTypeMap& serviceTypes, const SessionInterface& session) pure;
-            virtual ServiceTypeList compileClients(const SessionInterface& session) pure;
-            virtual ServiceTypeList compileServers(const SessionInterface& session) pure;
-            virtual LinePacket package_request(const ServiceTypeList& list) pure;
-            virtual ServiceTypeList unpackage_response(const LinePacket& package) pure;
-            virtual LinePacket servicesResponse(int socket) pure;
-            virtual ServiceTypeList servicesRequest(int socket) pure;
+
             virtual void start_servers_block(const SessionInterface& session, int socket) pure;
             virtual void start_clients_block(const SessionInterface& session, int socket) pure;
+
+            virtual ServiceTypeList compileClients(const SessionInterface& session) pure;
+            virtual ServiceTypeList compileServers(const SessionInterface& session) pure;
             virtual const ServiceTypeMap& client_tasks() const pure;
             virtual const ServiceTypeMap& server_tasks() const pure;
         };
