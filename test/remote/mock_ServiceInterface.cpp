@@ -190,37 +190,26 @@ SCENARIO("Mock RemoteInvocationInterface", "[RemoteInvocationInterface]") {
             });
     When(Method(mock, compile))
         .AlwaysDo(
-            [&i]
-    (const rsi::ServiceTypeMap& serviceTypes, const rsi::SessionInterface& session, const rsi::ServiceTypeList& before) {
-                auto dup = serviceTypes;
-                rsi::ServiceTypeList after;
-                for (auto line : before) {
-                    std::stringstream in;
-                    in << line;
-                    rsi::Parameter service, ip, port;
-                    in >> service >> ip >> port;
-                    rsi::ParameterList files;
-                    while (in.good()) {
-                        rsi::Parameter file;
-                        in >> file;
-                        if (file != "")
-                            files.push_back(file);
+            [&i](const rsi::ServiceTypeMap& serviceTypes,
+                const rsi::SessionInterface& session,
+                const rsi::ServiceTypeList& before) {
+                    auto dup = serviceTypes;
+                    rsi::ServiceTypeList after;
+                    for (auto line : before) {
+                        std::stringstream in;
+                        rsi::RemoteService rs;
+                        in << line;
+                        in >> rs;
+                        rs.prepare(session);
+                        std::stringstream out;
+                        out << dup[rs.service()] << ' ';
+                        out << rs.address() << ' ';
+                        out << rs.port() << ' ';
+                        for (auto file : rs.filenames())
+                            out << session.entry_name(file) << ' ';
+                        after.push_back(out.str());
                     }
-                    std::stringstream out;
-                    out << dup[service] << ' ';
-                    out << ip << ' ';
-                    out << port << ' ';
-                    for (auto file : files)
-                        out << session.entry_name(file) << ' ';
-                    after.push_back(out.str());
-                }
-                return after;
-            });
-    When(Method(mock, prepare))
-        .AlwaysDo(
-            [&_serviceTypeList, &i](const rsi::SessionInterface& session,
-                const rsi::ServiceTypeList& list) {
-                    // return i.compile(i.client_tasks(), session, _serviceTypeList);
+                    return after;
             });
     When(Method(mock, compileClients))
         .AlwaysDo(
@@ -335,9 +324,6 @@ SCENARIO("Mock RemoteInvocationInterface", "[RemoteInvocationInterface]") {
 
     auto clients = i.compile(_clientTasks, _clientSession, servicesList);
     auto servers = i.compile(_serverTasks, _serverSession, servicesList);
-
-    i.prepare(_clientSession, clients);
-    i.prepare(_serverSession, servers);
 
     i.start_servers_block(_serverSession, -1);
 

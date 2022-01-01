@@ -52,9 +52,52 @@ namespace extras {
         using Parameter = std::string;
         using ParameterList = std::vector<std::string>;
 
-        // interface RemoteInvocationInterface {
-        // };
+        /**
+         * @brief RemoteServiceInterface
+         *
+         */
+        interface RemoteServiceInterface {
+            virtual const ServiceType& service() const pure;
+            virtual const Parameter& address() const pure;
+            virtual const Parameter& port() const pure;
+            virtual const Filenames& filenames() const pure;
+            virtual bool isUploader() const pure;
+            virtual void prepare(
+                const SessionInterface& session
+            ) const pure;
+            virtual void cleanup(
+                const SessionInterface& session
+            ) const pure;
+        };
 
+        /**
+         * @brief RemoteService
+         *
+         */
+        concrete class RemoteService implements RemoteServiceInterface {
+            friend std::ostream& operator<<(std::ostream& out, const RemoteService& obj);
+            friend std::istream& operator>>(std::istream& in, RemoteService& obj);
+
+            ServiceType _serviceType;
+            Parameter _address;
+            Parameter _port;
+            Filenames _filenameList;
+
+        public:
+            virtual const ServiceType& service() const override { return _serviceType; }
+            virtual const Parameter& address() const override { return _address; }
+            virtual const Parameter& port() const override { return _port; }
+            virtual const Filenames& filenames() const override { return _filenameList; }
+            virtual bool isUploader() const override;
+            virtual void prepare(const SessionInterface& session) const override;
+            virtual void cleanup(const SessionInterface& session) const override;
+
+        };
+
+        /**
+         * @brief RemoteInvocationInterface
+         *
+         */
         interface RemoteInvocationInterface {
 
             virtual void parameters(int argc, char const* argv[]) pure;
@@ -70,11 +113,6 @@ namespace extras {
 
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,
-                const SessionInterface& session,
-                const ServiceTypeList& list
-            ) const pure;
-
-            virtual void prepare(
                 const SessionInterface& session,
                 const ServiceTypeList& list
             ) const pure;
