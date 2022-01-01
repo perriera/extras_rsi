@@ -130,7 +130,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     When(Method(mock, formRequests))
         .AlwaysDo(
             [&_portAuthority, &i](
-                const rsi::ParameterList& list) {
+                const rsi::ParameterList&) {
                     rsi::ServiceTypeList serviceTypeList;
                     for (auto filename : i.filenames()) {
                         std::stringstream ss;
@@ -182,7 +182,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     When(Method(mock, formDownloads))
         .AlwaysDo(
             [&_parameterList, &_portAuthority, &_serviceTypeList, &i](
-                const rsi::ServiceType& serviceType, const rsi::SessionInterface& session) {
+                const rsi::ServiceType& serviceType, const rsi::SessionInterface&) {
                     std::stringstream ss;
                     ss << serviceType << ' ' << i.address() << ' ';
                     ss << _portAuthority.request() << ' ' << i.filenames()[0];
@@ -280,22 +280,6 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 lbi.send_line_block(linePacket);
                 return linePacket;
             });
-    When(Method(mock, start_clients_block))
-        .AlwaysDo(
-            [&_parameterList, &i](const rsi::SessionInterface& session, int socket) {
-                auto list = i.compileClients(session);
-                for (auto task : list) {
-                    std::cout << task << std::endl;
-                }
-            });
-    When(Method(mock, start_servers_block))
-        .AlwaysDo(
-            [&_parameterList, &i, &_serverTasks](const rsi::SessionInterface& session, int socket) {
-                auto list = i.compileServers(session);
-                for (auto task : list) {
-                    std::cout << task << std::endl;
-                }
-            });
 
     // 
     // step 1. determine, (and validate) parameters
@@ -317,15 +301,43 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     // step 3. start server requests
     //
 
-    rsi::Session _clientSession;
-    _clientSession.create();
+    When(Method(mock, start_servers_block))
+        .AlwaysDo(
+            [&i, &_serverTasks, &servicesList](const rsi::SessionInterface& session, int socket) {
+                if (socket == -2)
+                    throw rsi::RSIException("unknown", __INFO__);
+                // --- core code below ----
+                auto servers = i.compile(_serverTasks, session, servicesList);
+                for (auto task : servers) {
+                    std::cout << task << std::endl;
+                }
+                // --- core code above ----
+            });
+
     rsi::Session _serverSession;
     _serverSession.create();
-
-    auto clients = i.compile(_clientTasks, _clientSession, servicesList);
-    auto servers = i.compile(_serverTasks, _serverSession, servicesList);
-
     i.start_servers_block(_serverSession, -1);
+
+    // 
+    // step 4. start client requests
+    //
+
+    When(Method(mock, start_clients_block))
+        .AlwaysDo(
+            [&_parameterList, &i](const rsi::SessionInterface& session, int socket) {
+                if (socket == -2)
+                    throw rsi::RSIException("unknown", __INFO__);
+                // --- core code below ----
+                auto list = i.compileClients(session);
+                for (auto task : list) {
+                    std::cout << task << std::endl;
+                }
+                // --- core code above ----
+            });
+
+    rsi::Session _clientSession;
+    _clientSession.create();
+    auto clients = i.compile(_clientTasks, _clientSession, servicesList);
 
     // REQUIRE(_parameterList.size() == 3);
     // REQUIRE(i.address() == "137.184.218.130");
