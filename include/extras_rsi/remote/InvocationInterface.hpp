@@ -57,7 +57,7 @@ namespace extras {
             virtual ServiceTypeList servicesRequest(int socket) pure;
 
             virtual LinePacket package_request(const ServiceTypeList& list) pure;
-            virtual ServiceTypeList unpackage_response(const LinePacket& package) pure;
+            virtual ServiceTypeList unpackage_request(const LinePacket& package) pure;
 
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,

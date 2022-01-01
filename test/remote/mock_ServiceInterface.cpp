@@ -27,11 +27,13 @@
 using namespace extras;
 using namespace fakeit;
 
+void killAllServers();
+
 SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     const char* argv[] = {
         "build/rsi",
-        "137.184.218.130:8080",
+        "127.0.0.1:8080",
         "data/src.zip",
         "data/exparx.webflow.zip"
     };
@@ -39,10 +41,10 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     // output parameters
     rsi::ServiceTypeList expectedServicesList = {
-        "upload 137.184.218.130 9000 data/src.zip",
-        "upload 137.184.218.130 9001 data/exparx.webflow.zip",
-        "vendor 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip ",
-        "download 137.184.218.130 9003 data/src.zip"
+        "upload 127.0.0.1 9000 data/src.zip",
+        "upload 127.0.0.1 9001 data/exparx.webflow.zip",
+        "vendor 127.0.0.1 9002 data/src.zip data/exparx.webflow.zip ",
+        "download 127.0.0.1 9003 data/src.zip"
     };
 
     rsi::ParameterList _parameterList;
@@ -230,7 +232,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 rsi::LinePacket packet = ss.str();
                 return packet;
             });
-    When(Method(mock, unpackage_response))
+    When(Method(mock, unpackage_request))
         .AlwaysDo(
             [&_parameterList, &i, &lbi](const rsi::LinePacket& package) {
                 auto parts = extras::str::split(package, ';');
@@ -251,13 +253,13 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 lbi.send_line_block(ss.str());
                 if (socket != -1) { // real time
                     auto linePacket = lbi.read_line_block();
-                    auto serviceList = i.unpackage_response(linePacket);
+                    auto serviceList = i.unpackage_request(linePacket);
                     return serviceList;
                 }
                 // --- core code above ----
                 else {
                     auto linePacket = i.servicesResponse(-1);
-                    auto serviceList = i.unpackage_response(linePacket);
+                    auto serviceList = i.unpackage_request(linePacket);
                     return serviceList;
                 } // mock
             });
@@ -282,6 +284,11 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
             });
 
     // 
+    // step 0. killAllServers();
+    //
+    killAllServers();
+
+    // 
     // step 1. determine, (and validate) parameters
     //
     REQUIRE(_parameterList.size() == 0);
@@ -303,14 +310,25 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     When(Method(mock, start_servers_block))
         .AlwaysDo(
-            [&i, &_serverTasks, &servicesList](const rsi::SessionInterface& session, int socket) {
+            [&i, &lbi, &_serverTasks, &servicesList](const rsi::SessionInterface& session, int socket) {
                 if (socket == -2)
                     throw rsi::RSIException("unknown", __INFO__);
                 // --- core code below ----
                 auto servers = i.compile(_serverTasks, session, servicesList);
-                for (auto task : servers) {
+                for (std::string task : servers) {
                     std::cout << task << std::endl;
+                    SystemException::assertion(task + " &", __INFO__);
                 }
+                if (socket != -1) { // real time
+                    auto linePacket = i.package_request(servers);
+                    lbi.send_line_block(linePacket);
+                }
+                // --- core code above ----
+                else {
+                    auto linePacket = i.package_request(servers);
+                    lbi.send_line_block(linePacket);
+                } // mock
+
                 // --- core code above ----
             });
 
@@ -340,7 +358,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     auto clients = i.compile(_clientTasks, _clientSession, servicesList);
 
     // REQUIRE(_parameterList.size() == 3);
-    // REQUIRE(i.address() == "137.184.218.130");
+    // REQUIRE(i.address() == "127.0.0.1");
     // REQUIRE(i.port() == "8080");
     // i.compile(_serverSession);
     // auto u1 = _serviceTypeList[0];
