@@ -42,7 +42,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RemoteServiceInterface
+         * @brief RemoteInvocationInterface
          *
          */
 
@@ -52,10 +52,10 @@ namespace extras {
         using Parameter = std::string;
         using ParameterList = std::vector<std::string>;
 
-        // interface RemoteServiceInterface {
+        // interface RemoteInvocationInterface {
         // };
 
-        interface RemoteServiceInterface {
+        interface RemoteInvocationInterface {
 
             virtual void parameters(int argc, char const* argv[]) pure;
             virtual Parameter address() const pure;

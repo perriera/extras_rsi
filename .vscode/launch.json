@@ -14,7 +14,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build/run-unittests-extras_rsi",
-      "args": ["[RemoteServiceInterface]"],
+      "args": ["[RemoteInvocationInterface]"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
