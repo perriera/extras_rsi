@@ -76,5 +76,17 @@ namespace extras {
             if (span < 0 || span>0xffff) throw BadRangeFormatException(range, ref);
         }
 
+        void NotEnoughParametersException::assertion(int argc, int minimum, const extras::WhereAmI& ref) {
+            if (argc < minimum) {
+                std::string msg;
+                msg += argc;
+                msg += " given, ";
+                msg += minimum;
+                msg += " expected, (at least) ";
+                throw NotEnoughParametersException(msg, ref);
+            }
+
+        }
+
     }
 }  // namespace extras

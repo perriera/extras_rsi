@@ -14,7 +14,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build/run-unittests-extras_rsi",
-      "args": ["[ServiceTypeCompilerInterface]"],
+      "args": ["[RemoteInvocationInterface]"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
@@ -35,12 +35,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build/socketpool_client",
-      "args": [
-        "137.184.218.130",
-        "8080",
-        "data/src.zip",
-        "data/exparx.webflow.zip"
-      ],
+      "args": ["127.0.0.1", "8080", "data/src.zip", "data/exparx.webflow.zip"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}/",
       "environment": [],

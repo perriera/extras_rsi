@@ -38,7 +38,7 @@ SCENARIO("Mock SessionInterface: clients", "[SessionInterface]") {
     extras::Directory _directory = "/tmp/token";
 
     Mock<rsi::SessionInterface> mock;
-    When(Method(mock, open))
+    When(Method(mock, create))
         .AlwaysDo(
             [&_directory]() {
                 char templatebuf[80];
@@ -51,7 +51,7 @@ SCENARIO("Mock SessionInterface: clients", "[SessionInterface]") {
             [&_directory]() {
                 return _directory;
             });
-    When(Method(mock, close))
+    When(Method(mock, destroy))
         .AlwaysDo(
             [&_directory]() {
                 if (_directory != "" && fs::exists(_directory))
@@ -127,7 +127,7 @@ SCENARIO("Mock SessionInterface: clients", "[SessionInterface]") {
     // "vendor 137.184.218.130 9002 /tmp/extras_rsi_PTduD4/src /tmp/extras_rsi_PTduD4/exparx.webflow.zip "
 
     REQUIRE(!i.exists());
-    i.open();
+    i.create();
     REQUIRE(i.session() == _directory);
     REQUIRE(i.exists());
     auto fn1 = extras::FileSystem(pathname).filename();
@@ -176,13 +176,13 @@ SCENARIO("Mock SessionInterface: clients", "[SessionInterface]") {
 
     i.remove(pathname);
     REQUIRE(!i.active());
-    i.close();
+    i.destroy();
     REQUIRE(!i.exists());
     REQUIRE(!i.active());
 
-    Verify(Method(mock, open));
+    Verify(Method(mock, create));
     Verify(Method(mock, session));
-    Verify(Method(mock, close));
+    Verify(Method(mock, destroy));
     Verify(Method(mock, exists));
     Verify(Method(mock, add));
     Verify(Method(mock, remove));

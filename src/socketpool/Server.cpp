@@ -82,36 +82,6 @@ namespace extras {
         }
 
         /**
-         * @brief SocketPoolServer::transfer()
-         *
-         */
-        void SocketPoolServer::transfer() {
-            try {
-                string msg;
-                while (msg.size() == 0) msg = read_line_block();
-                if (msg.size() == 0) throw std::string("test exception");
-                SocketPoolClient client(msg, _compilerInterface);
-                // cout << "msg received: " << client << endl;
-                RequestTypeCompilerTypeFour compiler(*this, this->_client_socket);
-                auto compilation = compiler.compile(client, PortAuthority::instance());
-                compilation.send_line_block("");
-                auto list = compilation.compilation();
-                for (auto item : servers(list)) {
-                    // cout << "msg received: " << item << endl;
-                    auto cmd = item + " &";
-                    system(cmd.c_str());
-                }
-            }
-            catch (exception& ex) {
-                cout << ex.what() << endl;
-                send_line(ex.what(), this->_client_socket);
-            }
-            catch (...) {
-                send_line("Unknown exception thrown", this->_client_socket);
-            }
-        }
-
-        /**
          * @brief send_line_block()
          *
          * @param msg

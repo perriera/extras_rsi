@@ -100,7 +100,7 @@ SCENARIO("Mock ServiceTypeCompilerInterface: clients", "[ServiceTypeCompilerInte
                 auto beforeList = i.common(forServers, requests);
                 rsi::ServiceTypeList afterList;
                 rsi::Session session;
-                session.open();
+                session.create();
                 _directory = session.session();
                 afterList = session.sessionTypeList(beforeList);
                 return afterList;

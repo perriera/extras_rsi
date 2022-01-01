@@ -81,7 +81,7 @@ namespace extras {
             auto beforeList = common(forServers, requests);
             rsi::ServiceTypeList afterList;
             rsi::Session session;
-            session.open();
+            session.create();
             afterList = session.sessionTypeList(beforeList);
             return afterList;
         }
