@@ -491,7 +491,7 @@ Updated README.md accordinging</br>
 - Doxygen support
 
 [unreleased]: https://github.com/perriera/extras_rsi/compare/v4.23.0...HEAD
-[4.23.0]: https://github.com/perriera/extras_rsi/compare/v4.22.1...v4.23.1
+[4.23.0]: https://github.com/perriera/extras_rsi/compare/v4.22.1...v4.23.0
 [4.22.1]: https://github.com/perriera/extras_rsi/compare/v4.22.0...v4.22.1
 [4.22.0]: https://github.com/perriera/extras_rsi/compare/v4.21.0...v4.22.0
 [4.21.0]: https://github.com/perriera/extras_rsi/compare/v4.20.0...v4.21.0
