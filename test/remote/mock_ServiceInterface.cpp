@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/remote/ServiceInterface.hpp>
+#include <extras_rsi/remote/InvocationInterface.hpp>
 #include <extras/strings.hpp>
 #include <iostream>
 #include <sstream>
