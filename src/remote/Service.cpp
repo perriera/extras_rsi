@@ -77,6 +77,17 @@ namespace extras {
         }
 
         /**
+         * @brief isServer()
+         *
+         * @param param
+         * @return true
+         * @return false
+         */
+        bool RemoteService::isServer(const Parameter& param) const {
+            return extras::str::contains(param, "server");
+        }
+
+        /**
          * @brief prepare()
          *
          * @param session

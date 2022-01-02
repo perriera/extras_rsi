@@ -62,6 +62,7 @@ namespace extras {
             virtual const Parameter& port() const pure;
             virtual const Filenames& filenames() const pure;
             virtual bool isUploader() const pure;
+            virtual bool isServer(const Parameter& param) const pure;
             virtual void prepare(
                 const SessionInterface& session
             ) const pure;
@@ -89,6 +90,7 @@ namespace extras {
             virtual const Parameter& port() const override { return _port; }
             virtual const Filenames& filenames() const override { return _filenameList; }
             virtual bool isUploader() const override;
+            virtual bool isServer(const Parameter& param) const override;
             virtual void prepare(const SessionInterface& session) const override;
             virtual void cleanup(const SessionInterface& session) const override;
 

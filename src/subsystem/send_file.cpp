@@ -61,8 +61,13 @@ void extras::rsi::send_file2(const std::string& filename, int sockfd) {
         }
         sendIt(sockfd, ss.str());
     }
+    in.close();
+
     std::cout << "\x1B[2K\r" << extras::rsi::spinner(0) << " ";
     std::cout << extras::cyan << filename << " sent intact" << std::endl;
+
+    auto cpCmd = "cp " + filename + " " + filename + ".sent_copy";
+    SystemException::assertion(cpCmd, __INFO__);
 
     sendIt(sockfd, "done");
     for (int i = 0; i < 5000; i++)

@@ -130,7 +130,8 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                         rsi::RemoteService rs;
                         in << line;
                         in >> rs;
-                        rs.prepare(session);
+                        if (!rs.isServer(dup[rs.service()]))
+                            rs.prepare(session);
                         std::stringstream out;
                         out << dup[rs.service()] << ' ';
                         out << rs.address() << ' ';
@@ -181,13 +182,25 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
             });
     When(Method(mock, servicesResponse))
         .AlwaysDo(
-            [&_parameterList, &i, &_sentList, &_receivedList, &lbi](int) {
-                auto linePacket = lbi.read_line_block();
-                rsi::ParametersX parameters(linePacket);
+            [&_parameterList, &i, &_sentList, &_receivedList, &lbi, &_serverTasks](int) {
+
+                auto request = lbi.read_line_block();
+                rsi::ParametersX parameters(request);
                 auto serviceList = i.formRequests(parameters);
-                linePacket = i.package_request(serviceList);
-                lbi.send_line_block(linePacket);
-                return linePacket;
+
+                rsi::Session _serverSession;
+                _serverSession.create();
+
+                auto servers = i.compile(_serverTasks, _serverSession, serviceList);
+                for (std::string task : servers) {
+                    std::cout << task << std::endl;
+                    SystemException::assertion(task + " &", __INFO__);
+                }
+
+                auto response = i.package_request(serviceList);
+                lbi.send_line_block(response);
+                return response;
+
             });
 
     // 
@@ -210,25 +223,24 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     // step 3. start server requests
     //
 
-    When(Method(mock, start_servers_block))
+    When(Method(mock, runClients))
         .AlwaysDo(
-            [&i, &lbi, &_serverTasks, &servicesList](const rsi::SessionInterface& session) {
+            [&i, &lbi, &_clientTasks, &servicesList](const rsi::SessionInterface& session) {
                 // --- core code below ----
-                auto servers = i.compile(_serverTasks, session, servicesList);
-                for (std::string task : servers) {
+                auto clients = i.compile(_clientTasks, session, servicesList);
+                for (std::string task : clients) {
                     std::cout << task << std::endl;
-                    SystemException::assertion(task + " &", __INFO__);
+                    SystemException::assertion(task, __INFO__);
                 }
-                auto linePacket = i.package_request(servers);
-                lbi.send_line_block(linePacket);
-                return linePacket;
+                // auto linePacket = i.package_request(clients);
+                // lbi.send_line_block(linePacket);
+                // return linePacket;
                 // --- core code above ----
             });
 
-    rsi::Session _serverSession;
-    _serverSession.create();
-    auto status = i.start_servers_block(_serverSession);
-    auto startedServers = i.unpackage_request(status);
+    rsi::Session _clientSession;
+    _clientSession.create();
+    i.runClients(_clientSession);
 
     // 
     // step 4. start client requests
@@ -245,8 +257,8 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 // --- core code above ----
             });
 
-    rsi::Session _clientSession;
-    _clientSession.create();
+    // rsi::Session _clientSession;
+    // _clientSession.create();
 
     // REQUIRE(_parameterList.size() == 3);
     // REQUIRE(i.address() == "127.0.0.1");

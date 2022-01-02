@@ -178,20 +178,17 @@ namespace extras {
         }
 
         /**
-         * @brief start_servers_block()
+         * @brief runClients()
          *
          * @param session
          * @param socket
          */
-        LinePacket Invocation::start_servers_block(const SessionInterface& session) {
-            auto servers = compile(_serverTasks, session, _servicesList);
-            for (std::string task : servers) {
+        void Invocation::runClients(const SessionInterface& session) {
+            auto clients = compile(_clientTasks, session, _servicesList);
+            for (std::string task : clients) {
                 std::cout << task << std::endl;
-                SystemException::assertion(task + " &", __INFO__);
+                SystemException::assertion(task, __INFO__);
             }
-            auto linePacket = package_request(servers);
-            send_line_block(linePacket);
-            return linePacket;
         }
 
         /**

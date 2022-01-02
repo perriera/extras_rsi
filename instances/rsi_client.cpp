@@ -61,8 +61,8 @@ int main(int argc, char const* argv[]) {
         //
         rsi::Session _clientSession;
         _clientSession.create();
-        auto status = rsi.start_servers_block(_clientSession);
-        auto startedServers = rsi.unpackage_request(status);
+        rsi.runClients(_clientSession);
+
 
 
         std::cout << extras::start(argv[0]) << std::endl;

@@ -85,8 +85,13 @@ void extras::rsi::write_file(const std::string& filename, int sockfd) {
         bzero(buffer, extras::rsi::SIZE);
 
     }
+    out.close();
+
     std::cout << "\x1B[2K\r" << extras::rsi::spinner(0) << " ";
     std::cout << extras::cyan << filename << " received intact" << std::endl;
+
+    auto cpCmd = "cp " + filename + " " + filename + ".recevied_copy";
+    SystemException::assertion(cpCmd, __INFO__);
 
     return;
 }
