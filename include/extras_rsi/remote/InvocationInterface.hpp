@@ -34,6 +34,7 @@
 #include <extras_rsi/remote/ServiceInterface.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
+#include <extras_rsi/remote/ParametersInterface.hpp>
 #include <extras_rsi/services/SessionType.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
 #include <extras_rsi/exceptions.hpp>
@@ -48,12 +49,6 @@ namespace extras {
          */
         interface InvocationInterface {
 
-            virtual void parse(int argc, char const* argv[]) pure;
-            virtual Parameter parameters() const pure;
-            virtual const Parameter& address() const pure;
-            virtual const Parameter& port() const pure;
-            virtual const Filenames& filenames() const pure;
-
             virtual LinePacket servicesResponse(int socket) pure;
             virtual ServiceTypeList servicesRequest(int socket) pure;
 
@@ -66,7 +61,7 @@ namespace extras {
                 const ServiceTypeList& list
             ) const pure;
 
-            virtual ServiceTypeList formRequests(const ParameterList& list) pure;
+            virtual ServiceTypeList formRequests(const ParametersInterface& parameters) pure;
 
             virtual void start_servers_block(const SessionInterface& session, int socket) pure;
             virtual void start_clients_block(const SessionInterface& session, int socket) pure;
@@ -77,11 +72,10 @@ namespace extras {
          * @brief Invocation class
          *
          */
-        concrete class Invocation implements InvocationInterface with LineBlockInterface {
-            ParameterList _parameterList;
-            Parameter _address;
-            Parameter _port;
-            Filenames _filenames;
+        concrete class Invocation implements InvocationInterface
+            with ParametersInterface
+            with LineBlockInterface {
+            ParametersX _parameters;
             rsi::PortAuthority& _portAuthority;
             int _client_socket = -1;
             const rsi::ServiceTypeMap& _clientTasks;
@@ -111,14 +105,26 @@ namespace extras {
                 _serverTasks(serverTasks) {}
 
             /**
+             * @brief LineBlockInterface implementation
+             *
+             */
+
+            virtual void parse(int argc, char const* argv[]) override
+            {
+                _parameters.parse(argc, argv);
+            }
+            virtual Parameter parameters() const override {
+                return _parameters.parameters();
+            }
+
+            virtual  const Parameter& address() const override { return _parameters.address(); }
+            virtual  const Parameter& port() const override { return  _parameters.port(); }
+            virtual  const Filenames& filenames() const override { return  _parameters.filenames(); }
+            virtual ParameterList list() const override { return  _parameters.list(); }
+            /**
              * @brief InvocationInterface implementation
              *
              */
-            virtual void parse(int argc, char const* argv[]) override;
-            virtual Parameter parameters() const override;
-            virtual  const Parameter& address() const override { return _address; }
-            virtual  const Parameter& port() const override { return _port; }
-            virtual  const Filenames& filenames() const override { return _filenames; }
 
             virtual ServiceTypeList servicesRequest(int socket) override;
             virtual LinePacket servicesResponse(int socket) override;
@@ -132,7 +138,7 @@ namespace extras {
                 const ServiceTypeList& list
             ) const override;
 
-            virtual ServiceTypeList formRequests(const ParameterList& list) override;
+            virtual ServiceTypeList formRequests(const ParametersInterface& parameters) override;
 
             virtual void start_servers_block(const SessionInterface& session, int socket) override;
             virtual void start_clients_block(const SessionInterface& session, int socket) override;

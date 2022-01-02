@@ -47,6 +47,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
         "download 127.0.0.1 9003 data/src.zip"
     };
 
+    rsi::ParametersX _parameters;
     rsi::ParameterList _parameterList;
     rsi::ParameterList _sentList;
     rsi::ParameterList _receivedList;
@@ -54,10 +55,6 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     rsi::ServiceTypeList _serviceTypeList;
     rsi::ServiceTypeList _clientTypeList;
     rsi::ServiceTypeList _serverTypeList;
-    rsi::Parameter _address;
-    rsi::Parameter _port;
-    extras::Filenames _filenames;
-
 
     rsi::ServiceTypeMap _clientTasks;
     _clientTasks["upload"] = "build/uploader_client";
@@ -92,50 +89,31 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     Mock<rsi::InvocationInterface> mock;
     rsi::InvocationInterface& i = mock.get();
-    When(Method(mock, parse))
-        .AlwaysDo(
-            [&_parameterList, &_filenames, &_address, &_port](int argc, char const* argv[]) {
-                rsi::NotEnoughParametersException::assertion(argc, 3, __INFO__);
-                for (auto i = 1; i < argc; i++)
-                    _parameterList.push_back(argv[i]);
-                for (auto i = 2; i < argc; i++)
-                    _filenames.push_back(argv[i]);
-                _address = extras::str::split(_parameterList[0], ':')[0];
-                _port = extras::str::split(_parameterList[0], ':')[1];
-            });
-    When(Method(mock, parameters))
-        .AlwaysDo(
-            [&_parameterList]() {
-                std::stringstream ss;
-                for (auto param : _parameterList)
-                    ss << param << ' ';
-                return ss.str();
-            });
     When(Method(mock, formRequests))
         .AlwaysDo(
-            [&_portAuthority, &i, &_filenames, &_address](
-                const rsi::ParameterList&) {
+            [&_portAuthority](
+                const rsi::ParametersInterface& parameters) {
                     rsi::ServiceTypeList serviceTypeList;
-                    for (auto filename : _filenames) {
+                    for (auto filename : parameters.filenames()) {
                         std::stringstream ss;
-                        ss << "upload" << ' ' << _address << ' ';
+                        ss << "upload" << ' ' << parameters.address() << ' ';
                         ss << _portAuthority.request() << ' ' << filename;
                         serviceTypeList.push_back(ss.str());
                     }
                     {
                         std::stringstream ss;
-                        ss << "vendor" << ' ' << _address << ' ';
+                        ss << "vendor" << ' ' << parameters.address() << ' ';
                         ss << _portAuthority.request() << ' ';
-                        for (auto filename : _filenames) {
+                        for (auto filename : parameters.filenames()) {
                             ss << filename << ' ';
                         }
                         serviceTypeList.push_back(ss.str());
                     }
                     {
                         std::stringstream ss;
-                        ss << "download" << ' ' << _address << ' ';
+                        ss << "download" << ' ' << parameters.address() << ' ';
                         ss << _portAuthority.request() << ' ';
-                        ss << _filenames[0];
+                        ss << parameters.filenames()[0];
                         serviceTypeList.push_back(ss.str());
                     }
                     return serviceTypeList;
@@ -183,11 +161,11 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
             });
     When(Method(mock, servicesRequest))
         .AlwaysDo(
-            [&_parameterList, &i, &lbi](int socket) {
+            [&_parameterList, &i, &lbi, &_parameters](int socket) {
                 if (socket == -2)
                     throw rsi::RSIException("unknown", __INFO__);
                 // --- core code below ----
-                auto params = i.parameters();
+                auto params = _parameters.parameters();
                 lbi.send_line_block(params);
                 if (socket != -1) { // real time
                     auto linePacket = lbi.read_line_block();
@@ -205,17 +183,8 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
         .AlwaysDo(
             [&_parameterList, &i, &_sentList, &_receivedList, &lbi](int) {
                 auto linePacket = lbi.read_line_block();
-                {
-                    std::stringstream ss;
-                    ss << linePacket;
-                    _receivedList.clear();
-                    while (ss.good()) {
-                        rsi::Parameter parameter;
-                        ss >> parameter;
-                        if (ss.good()) _receivedList.push_back(parameter);
-                    }
-                }
-                auto serviceList = i.formRequests(_receivedList);
+                rsi::ParametersX parameters(linePacket);
+                auto serviceList = i.formRequests(parameters);
                 linePacket = i.package_request(serviceList);
                 lbi.send_line_block(linePacket);
                 return linePacket;
@@ -230,7 +199,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     // step 1. determine, (and validate) parameters
     //
     REQUIRE(_parameterList.size() == 0);
-    i.parse(argc, argv);
+    _parameters.parse(argc, argv);
 
     // 
     // step 2. send/receive parameters
@@ -295,5 +264,5 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     // i.compile(_serverSession);
     // auto u1 = _serviceTypeList[0];
 
-    Verify(Method(mock, parse));
+    // Verify(Method(mock, parse));
 }

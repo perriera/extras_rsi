@@ -28,7 +28,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RequestTypeCompilation ostream
+         * @brief RemoteService ostream
          *
          * @param out
          * @param obj
@@ -47,7 +47,7 @@ namespace extras {
         }
 
         /**
-         * @brief RequestTypeCompilation istream
+         * @brief RemoteService istream
          *
          * @param out
          * @param obj

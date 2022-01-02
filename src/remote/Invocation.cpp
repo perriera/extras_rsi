@@ -47,35 +47,6 @@ namespace extras {
         }
 
         /**
-         * @brief parameters()
-         *
-         * @param argc
-         * @param argv
-         */
-        void Invocation::parse(int argc, char const* argv[]) {
-            rsi::NotEnoughParametersException::assertion(argc, 3, __INFO__);
-            for (auto i = 1; i < argc; i++)
-                _parameterList.push_back(argv[i]);
-            for (auto i = 2; i < argc; i++) {
-                _filenames.push_back(argv[i]);
-            }
-            _address = extras::str::split(_parameterList[0], ':')[0];
-            _port = extras::str::split(_parameterList[0], ':')[1];
-        }
-
-        /**
-         * @brief parameters()
-         *
-         * @return Parameter
-         */
-        Parameter Invocation::parameters() const {
-            std::stringstream ss;
-            for (auto param : _parameterList)
-                ss << param << ' ';
-            return ss.str();
-        }
-
-        /**
          * @brief servicesRequest()
          *
          * @param socket
@@ -101,25 +72,15 @@ namespace extras {
 
             _client_socket = socket;
 
-            std::string msg;
-            while (msg.size() == 0) msg = read_line_block();
-            if (msg.size() == 0) throw std::string("test exception");
+            std::string linePacket;
+            while (linePacket.size() == 0) linePacket = read_line_block();
+            if (linePacket.size() == 0) throw std::string("test exception");
 
-            auto linePacket = msg;
-            rsi::ParameterList _receivedList;
-            {
-                std::stringstream ss;
-                ss << linePacket;
-                _receivedList.clear();
-                while (ss.good()) {
-                    rsi::Parameter parameter;
-                    ss >> parameter;
-                    if (ss.good()) _receivedList.push_back(parameter);
-                }
-            }
-            _servicesList = formRequests(_receivedList);
+            rsi::ParametersX parameters(linePacket);
+            _servicesList = formRequests(parameters);
             linePacket = package_request(_servicesList);
             send_line_block(linePacket);
+
             return linePacket;
         }
 
@@ -189,7 +150,7 @@ namespace extras {
          * @param list
          * @return ServiceTypeList
          */
-        ServiceTypeList Invocation::formRequests(const ParameterList& list) {
+        ServiceTypeList Invocation::formRequests(const ParametersInterface& parameters) {
             rsi::ServiceTypeList serviceTypeList;
             for (auto filename : filenames()) {
                 std::stringstream ss;
