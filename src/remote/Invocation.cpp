@@ -152,26 +152,26 @@ namespace extras {
          */
         ServiceTypeList Invocation::formRequests(const ParametersInterface& parameters) {
             rsi::ServiceTypeList serviceTypeList;
-            for (auto filename : filenames()) {
+            for (auto filename : parameters.filenames()) {
                 std::stringstream ss;
-                ss << "upload" << ' ' << address() << ' ';
+                ss << "upload" << ' ' << parameters.address() << ' ';
                 ss << _portAuthority.request() << ' ' << filename;
                 serviceTypeList.push_back(ss.str());
             }
             {
                 std::stringstream ss;
-                ss << "vendor" << ' ' << address() << ' ';
+                ss << "vendor" << ' ' << parameters.address() << ' ';
                 ss << _portAuthority.request() << ' ';
-                for (auto filename : filenames()) {
+                for (auto filename : parameters.filenames()) {
                     ss << filename << ' ';
                 }
                 serviceTypeList.push_back(ss.str());
             }
             {
                 std::stringstream ss;
-                ss << "download" << ' ' << address() << ' ';
+                ss << "download" << ' ' << parameters.address() << ' ';
                 ss << _portAuthority.request() << ' ';
-                ss << filenames()[0];
+                ss << parameters.filenames()[0];
                 serviceTypeList.push_back(ss.str());
             }
             return serviceTypeList;

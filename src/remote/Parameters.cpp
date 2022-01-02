@@ -89,7 +89,19 @@ namespace extras {
             return ss.str();
         }
 
-
+        /**
+         * @brief list()
+         *
+         */
+        ParameterList ParametersX::list() const {
+            ParameterList list;
+            Parameter param = address() + ":" + port();
+            list.push_back(param);
+            for (auto filename : filenames()) {
+                list.push_back(filename);
+            }
+            return list;
+        }
 
     }  // namespace rsi
 }  // namespace extras

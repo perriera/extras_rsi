@@ -94,15 +94,7 @@ namespace extras {
             virtual  const Parameter& address() const override { return _address; }
             virtual  const Parameter& port() const override { return _port; }
             virtual  const Filenames& filenames() const override { return _filenames; }
-            virtual  ParameterList list() const override {
-                ParameterList list;
-                Parameter param = address() + ":" + port();
-                list.push_back(param);
-                for (auto filename : filenames()) {
-                    list.push_back(filename);
-                }
-                return list;
-            }
+            virtual  ParameterList list() const override;
 
         };
 
