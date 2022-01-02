@@ -103,6 +103,14 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 _address = extras::str::split(_parameterList[0], ':')[0];
                 _port = extras::str::split(_parameterList[0], ':')[1];
             });
+    When(Method(mock, parameters))
+        .AlwaysDo(
+            [&_parameterList]() {
+                std::stringstream ss;
+                for (auto param : _parameterList)
+                    ss << param << ' ';
+                return ss.str();
+            });
     When(Method(mock, formRequests))
         .AlwaysDo(
             [&_portAuthority, &i, &_filenames, &_address](
@@ -179,10 +187,8 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 if (socket == -2)
                     throw rsi::RSIException("unknown", __INFO__);
                 // --- core code below ----
-                std::stringstream ss;
-                for (auto param : _parameterList)
-                    ss << param << ' ';
-                lbi.send_line_block(ss.str());
+                auto params = i.parameters();
+                lbi.send_line_block(params);
                 if (socket != -1) { // real time
                     auto linePacket = lbi.read_line_block();
                     auto serviceList = i.unpackage_request(linePacket);
@@ -229,12 +235,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     // 
     // step 2. send/receive parameters
     //
-
-    REQUIRE_THROWS_AS(i.servicesRequest(-2), rsi::RSIException);
-
-    REQUIRE(_sentList != _parameterList);
     auto servicesList = i.servicesRequest(-1);
-    REQUIRE(servicesList == expectedServicesList);
 
     // 
     // step 3. start server requests

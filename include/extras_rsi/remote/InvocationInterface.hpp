@@ -49,7 +49,7 @@ namespace extras {
         interface InvocationInterface {
 
             virtual void parse(int argc, char const* argv[]) pure;
-            virtual Parameter xxx() const pure;
+            virtual Parameter parameters() const pure;
             virtual const Parameter& address() const pure;
             virtual const Parameter& port() const pure;
             virtual const Filenames& filenames() const pure;
@@ -83,6 +83,7 @@ namespace extras {
             Parameter _port;
             Filenames _filenames;
             rsi::PortAuthority& _portAuthority;
+            int _client_socket = -1;
             const rsi::ServiceTypeMap& _clientTasks;
             const rsi::ServiceTypeMap& _serverTasks;
             ServiceTypeList _servicesList;
@@ -114,7 +115,7 @@ namespace extras {
              *
              */
             virtual void parse(int argc, char const* argv[]) override;
-            virtual Parameter xxx() const override { return Parameter(); }
+            virtual Parameter parameters() const override;
             virtual  const Parameter& address() const override { return _address; }
             virtual  const Parameter& port() const override { return _port; }
             virtual  const Filenames& filenames() const override { return _filenames; }

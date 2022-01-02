@@ -34,7 +34,7 @@ namespace extras {
          * @param msg
          */
         void  Invocation::send_line_block(const rsi::LinePacket& msg) const {
-            extras::rsi::send_line(msg, this->_portAuthority.serversocketport());
+            extras::rsi::send_line(msg, _client_socket);
         }
 
         /**
@@ -43,7 +43,7 @@ namespace extras {
          * @return LinePacket
          */
         LinePacket  Invocation::read_line_block() {
-            return extras::rsi::read_line(this->_portAuthority.serversocketport());
+            return extras::rsi::read_line(_client_socket);
         }
 
         /**
@@ -57,11 +57,22 @@ namespace extras {
             for (auto i = 1; i < argc; i++)
                 _parameterList.push_back(argv[i]);
             for (auto i = 2; i < argc; i++) {
-                _parameterList.push_back(argv[i]);
                 _filenames.push_back(argv[i]);
             }
             _address = extras::str::split(_parameterList[0], ':')[0];
             _port = extras::str::split(_parameterList[0], ':')[1];
+        }
+
+        /**
+         * @brief parameters()
+         *
+         * @return Parameter
+         */
+        Parameter Invocation::parameters() const {
+            std::stringstream ss;
+            for (auto param : _parameterList)
+                ss << param << ' ';
+            return ss.str();
         }
 
         /**
@@ -71,10 +82,10 @@ namespace extras {
          * @return LinePacket
          */
         ServiceTypeList Invocation::servicesRequest(int socket) {
-            std::stringstream ss;
-            for (auto param : _parameterList)
-                ss << param << ' ';
-            send_line_block(ss.str());
+
+            _client_socket = socket;
+
+            send_line_block(parameters());
             auto linePacket = read_line_block();
             _servicesList = unpackage_request(linePacket);
             return _servicesList;
@@ -87,6 +98,8 @@ namespace extras {
          * @return LinePacket
          */
         LinePacket Invocation::servicesResponse(int socket) {
+
+            _client_socket = socket;
 
             std::string msg;
             while (msg.size() == 0) msg = read_line_block();
