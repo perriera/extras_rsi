@@ -212,31 +212,23 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     When(Method(mock, start_servers_block))
         .AlwaysDo(
-            [&i, &lbi, &_serverTasks, &servicesList](const rsi::SessionInterface& session, int socket) {
-                if (socket == -2)
-                    throw rsi::RSIException("unknown", __INFO__);
+            [&i, &lbi, &_serverTasks, &servicesList](const rsi::SessionInterface& session) {
                 // --- core code below ----
                 auto servers = i.compile(_serverTasks, session, servicesList);
                 for (std::string task : servers) {
                     std::cout << task << std::endl;
                     SystemException::assertion(task + " &", __INFO__);
                 }
-                if (socket != -1) { // real time
-                    auto linePacket = i.package_request(servers);
-                    lbi.send_line_block(linePacket);
-                }
-                // --- core code above ----
-                else {
-                    auto linePacket = i.package_request(servers);
-                    lbi.send_line_block(linePacket);
-                } // mock
-
+                auto linePacket = i.package_request(servers);
+                lbi.send_line_block(linePacket);
+                return linePacket;
                 // --- core code above ----
             });
 
     rsi::Session _serverSession;
     _serverSession.create();
-    i.start_servers_block(_serverSession, -1);
+    auto status = i.start_servers_block(_serverSession);
+    auto startedServers = i.unpackage_request(status);
 
     // 
     // step 4. start client requests
@@ -244,9 +236,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     When(Method(mock, start_clients_block))
         .AlwaysDo(
-            [&_parameterList, &i, &servicesList, &_clientTasks](const rsi::SessionInterface& session, int socket) {
-                if (socket == -2)
-                    throw rsi::RSIException("unknown", __INFO__);
+            [&_parameterList, &i, &servicesList, &_clientTasks](const rsi::SessionInterface& session) {
                 // --- core code below ----
                 auto clients = i.compile(_clientTasks, session, servicesList);
                 for (auto task : clients) {

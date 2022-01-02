@@ -56,6 +56,14 @@ int main(int argc, char const* argv[]) {
         //
         auto response = rsi.servicesRequest(_client_socket);
 
+        // 
+        // step 3. start server requests
+        //
+        rsi::Session _clientSession;
+        _clientSession.create();
+        auto status = rsi.start_servers_block(_clientSession);
+        auto startedServers = rsi.unpackage_request(status);
+
 
         std::cout << extras::start(argv[0]) << std::endl;
         extras::rsi::ServiceTypeCompilerVendor vendor;

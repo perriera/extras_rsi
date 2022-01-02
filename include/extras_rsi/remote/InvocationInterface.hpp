@@ -63,8 +63,8 @@ namespace extras {
 
             virtual ServiceTypeList formRequests(const ParametersInterface& parameters) pure;
 
-            virtual void start_servers_block(const SessionInterface& session, int socket) pure;
-            virtual void start_clients_block(const SessionInterface& session, int socket) pure;
+            virtual LinePacket start_servers_block(const SessionInterface& session) pure;
+            virtual void start_clients_block(const SessionInterface& session) pure;
 
         };
 
@@ -140,8 +140,8 @@ namespace extras {
 
             virtual ServiceTypeList formRequests(const ParametersInterface& parameters) override;
 
-            virtual void start_servers_block(const SessionInterface& session, int socket) override;
-            virtual void start_clients_block(const SessionInterface& session, int socket) override;
+            virtual LinePacket start_servers_block(const SessionInterface& session) override;
+            virtual void start_clients_block(const SessionInterface& session) override;
         };
 
 

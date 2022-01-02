@@ -183,7 +183,7 @@ namespace extras {
          * @param session
          * @param socket
          */
-        void Invocation::start_servers_block(const SessionInterface& session, int socket) {
+        LinePacket Invocation::start_servers_block(const SessionInterface& session) {
             auto servers = compile(_serverTasks, session, _servicesList);
             for (std::string task : servers) {
                 std::cout << task << std::endl;
@@ -191,6 +191,7 @@ namespace extras {
             }
             auto linePacket = package_request(servers);
             send_line_block(linePacket);
+            return linePacket;
         }
 
         /**
@@ -199,7 +200,7 @@ namespace extras {
          * @param session
          * @param socket
          */
-        void Invocation::start_clients_block(const SessionInterface& session, int socket) {
+        void Invocation::start_clients_block(const SessionInterface& session) {
             auto clients = compile(_clientTasks, session, _servicesList);
             for (auto task : clients) {
                 std::cout << task << std::endl;
