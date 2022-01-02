@@ -56,7 +56,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build/rsi_server",
-      "args": ["127.0.0.1", "8080", "9000-9500"],
+      "args": ["127.0.0.1:8080", "9000-9500"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}/",
       "environment": [],
