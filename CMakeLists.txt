@@ -159,6 +159,19 @@ endif()
 #
 
 #
+# rsi_client/server
+#
+if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
+add_executable(rsi_client instances/rsi_client.cpp) 
+target_include_directories(rsi_client PUBLIC ${INCLUDES})
+target_link_libraries(rsi_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(rsi_server instances/rsi_server.cpp) 
+target_include_directories(rsi_server PUBLIC ${INCLUDES})
+target_link_libraries(rsi_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+endif()
+
+#
 # socketpool_client/server
 #
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
@@ -214,6 +227,7 @@ endif()
 # NOTE: Install all shared libraries & executables
 #
 install(TARGETS 
+  rsi_client rsi_server
   socketpool_client socketpool_server
   uploader_client uploader_server 
   vendor_client vendor_server 
