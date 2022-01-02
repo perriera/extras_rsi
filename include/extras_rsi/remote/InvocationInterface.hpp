@@ -48,7 +48,8 @@ namespace extras {
          */
         interface InvocationInterface {
 
-            virtual void parameters(int argc, char const* argv[]) pure;
+            virtual void parse(int argc, char const* argv[]) pure;
+            virtual Parameter xxx() const pure;
             virtual const Parameter& address() const pure;
             virtual const Parameter& port() const pure;
             virtual const Filenames& filenames() const pure;
@@ -77,6 +78,7 @@ namespace extras {
          *
          */
         concrete class Invocation implements InvocationInterface with LineBlockInterface {
+            ParameterList _parameterList;
             Parameter _address;
             Parameter _port;
             Filenames _filenames;
@@ -111,7 +113,8 @@ namespace extras {
              * @brief InvocationInterface implementation
              *
              */
-            virtual void parameters(int argc, char const* argv[]) override;
+            virtual void parse(int argc, char const* argv[]) override;
+            virtual Parameter xxx() const override { return Parameter(); }
             virtual  const Parameter& address() const override { return _address; }
             virtual  const Parameter& port() const override { return _port; }
             virtual  const Filenames& filenames() const override { return _filenames; }

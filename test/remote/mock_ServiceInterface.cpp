@@ -92,7 +92,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     Mock<rsi::InvocationInterface> mock;
     rsi::InvocationInterface& i = mock.get();
-    When(Method(mock, parameters))
+    When(Method(mock, parse))
         .AlwaysDo(
             [&_parameterList, &_filenames, &_address, &_port](int argc, char const* argv[]) {
                 rsi::NotEnoughParametersException::assertion(argc, 3, __INFO__);
@@ -224,7 +224,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     // step 1. determine, (and validate) parameters
     //
     REQUIRE(_parameterList.size() == 0);
-    i.parameters(argc, argv);
+    i.parse(argc, argv);
 
     // 
     // step 2. send/receive parameters
@@ -294,5 +294,5 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     // i.compile(_serverSession);
     // auto u1 = _serviceTypeList[0];
 
-    Verify(Method(mock, parameters));
+    Verify(Method(mock, parse));
 }

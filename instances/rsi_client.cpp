@@ -16,15 +16,47 @@
  *
  */
 
+#include <extras/status/StatusLine.hpp>
+#include <extras_rsi/remote/InvocationInterface.hpp>
 #include <extras_rsi/socketpool/Client.hpp>
 #include <extras/status/StatusLine.hpp>
+#include <extras_rsi/subsystem.hpp>
 #include <iostream>
 #include <extras_rsi/exceptions.hpp>
+#include <arpa/inet.h>
+#include <unistd.h>
 
 using namespace  extras;
 
 int main(int argc, char const* argv[]) {
     try {
+
+        rsi::PortAuthority portAuthority;
+        rsi::ServiceTypeMap clientTasks;
+        clientTasks["upload"] = "build/uploader_client";
+        clientTasks["vendor"] = "build/vendor_client";
+        clientTasks["download"] = "build/downloader_client";
+        rsi::ServiceTypeMap serverTasks;
+        serverTasks["upload"] = "build/uploader_server";
+        serverTasks["vendor"] = "build/vendor_server";
+        serverTasks["download"] = "build/downloader_server";
+
+        rsi::Invocation rsi(portAuthority, clientTasks, serverTasks);
+        rsi.parse(argc, argv);
+
+        //
+        // connect to the server
+        // 
+        struct sockaddr_in _server_addr;
+        int _client_socket =
+            rsi::connect_to_server(rsi.address().c_str(), stoi(rsi.port()), _server_addr);
+
+        //
+        // send request to server
+        //
+        auto response = rsi.servicesRequest(_client_socket);
+
+
         std::cout << extras::start(argv[0]) << std::endl;
         extras::rsi::ServiceTypeCompilerVendor vendor;
         extras::rsi::SocketPoolClient client(vendor);

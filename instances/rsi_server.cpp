@@ -43,7 +43,7 @@ int main(int argc, char const* argv[]) {
         serverTasks["download"] = "build/downloader_server";
 
         rsi::Invocation rsi(portAuthority, clientTasks, serverTasks);
-        rsi.parameters(argc, argv);
+        rsi.parse(argc, argv);
 
         // 
         // setup server socket
@@ -55,6 +55,23 @@ int main(int argc, char const* argv[]) {
             ::close(_server_socket);
             // throw RSIException("Timeout on uploader_server connect", __INFO__);
         }
+
+        // 
+        // accept connection
+        //
+        struct sockaddr_in _new_addr;
+        socklen_t addr_size = sizeof(_new_addr);
+        int _client_socket = ::accept(_server_socket, (struct sockaddr*)&_new_addr, &addr_size);
+        if (_client_socket == -1) {
+            ::close(_client_socket);
+            // throw RSIException("Timeout on uploader_server accept", __INFO__);
+        }
+
+        //
+        // handle request
+        //
+        auto response = rsi.servicesResponse(_client_socket);
+
 
 
         extras::rsi::ServiceTypeCompilerVendor vendor;

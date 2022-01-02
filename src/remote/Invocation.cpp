@@ -52,13 +52,14 @@ namespace extras {
          * @param argc
          * @param argv
          */
-        void Invocation::parameters(int argc, char const* argv[]) {
+        void Invocation::parse(int argc, char const* argv[]) {
             rsi::NotEnoughParametersException::assertion(argc, 3, __INFO__);
-            rsi::ParameterList _parameterList;
             for (auto i = 1; i < argc; i++)
                 _parameterList.push_back(argv[i]);
-            for (auto i = 2; i < argc; i++)
+            for (auto i = 2; i < argc; i++) {
+                _parameterList.push_back(argv[i]);
                 _filenames.push_back(argv[i]);
+            }
             _address = extras::str::split(_parameterList[0], ':')[0];
             _port = extras::str::split(_parameterList[0], ':')[1];
         }
@@ -71,6 +72,8 @@ namespace extras {
          */
         ServiceTypeList Invocation::servicesRequest(int socket) {
             std::stringstream ss;
+            for (auto param : _parameterList)
+                ss << param << ' ';
             send_line_block(ss.str());
             auto linePacket = read_line_block();
             _servicesList = unpackage_request(linePacket);
@@ -84,7 +87,12 @@ namespace extras {
          * @return LinePacket
          */
         LinePacket Invocation::servicesResponse(int socket) {
-            auto linePacket = read_line_block();
+
+            std::string msg;
+            while (msg.size() == 0) msg = read_line_block();
+            if (msg.size() == 0) throw std::string("test exception");
+
+            auto linePacket = msg;
             rsi::ParameterList _receivedList;
             {
                 std::stringstream ss;
