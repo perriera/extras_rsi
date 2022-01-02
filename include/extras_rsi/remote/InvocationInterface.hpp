@@ -49,9 +49,9 @@ namespace extras {
         interface InvocationInterface {
 
             virtual void parameters(int argc, char const* argv[]) pure;
-            virtual Parameter address() const pure;
-            virtual Parameter port() const pure;
-            virtual Filenames filenames() const pure;
+            virtual const Parameter& address() const pure;
+            virtual const Parameter& port() const pure;
+            virtual const Filenames& filenames() const pure;
 
             virtual LinePacket servicesResponse(int socket) pure;
             virtual ServiceTypeList servicesRequest(int socket) pure;
@@ -72,16 +72,52 @@ namespace extras {
 
         };
 
-        concrete class Invocation implements InvocationInterface {
+        /**
+         * @brief Invocation class
+         *
+         */
+        concrete class Invocation implements InvocationInterface with LineBlockInterface {
+            Parameter _address;
+            Parameter _port;
+            Filenames _filenames;
+            rsi::PortAuthority& _portAuthority;
+            const rsi::ServiceTypeMap& _clientTasks;
+            const rsi::ServiceTypeMap& _serverTasks;
+            ServiceTypeList _servicesList;
+
+            /**
+             * @brief LineBlockInterface implementation
+             *
+             */
+            virtual void send_line_block(const LinePacket& msg) const override;
+            virtual LinePacket read_line_block() override;
+
         public:
 
-            virtual void parameters(int argc, char const* argv[]) override;
-            virtual  Parameter address() const override;
-            virtual  Parameter port() const override;
-            virtual  Filenames filenames() const override;
+            /**
+             * @brief Construct a new Invocation object
+             *
+             * @param portAuthority
+             */
+            Invocation(
+                rsi::PortAuthority& portAuthority,
+                const rsi::ServiceTypeMap& clientTasks,
+                const rsi::ServiceTypeMap& serverTasks)
+                : _portAuthority(portAuthority),
+                _clientTasks(clientTasks),
+                _serverTasks(serverTasks) {}
 
-            virtual LinePacket servicesResponse(int socket) override;
+            /**
+             * @brief InvocationInterface implementation
+             *
+             */
+            virtual void parameters(int argc, char const* argv[]) override;
+            virtual  const Parameter& address() const override { return _address; }
+            virtual  const Parameter& port() const override { return _port; }
+            virtual  const Filenames& filenames() const override { return _filenames; }
+
             virtual ServiceTypeList servicesRequest(int socket) override;
+            virtual LinePacket servicesResponse(int socket) override;
 
             virtual LinePacket package_request(const ServiceTypeList& list) override;
             virtual ServiceTypeList unpackage_request(const LinePacket& package) override;

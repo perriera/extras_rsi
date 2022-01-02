@@ -103,46 +103,31 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 _address = extras::str::split(_parameterList[0], ':')[0];
                 _port = extras::str::split(_parameterList[0], ':')[1];
             });
-    When(Method(mock, address))
-        .AlwaysDo(
-            [&_address]() {
-                return _address;
-            });
-    When(Method(mock, port))
-        .AlwaysDo(
-            [&_port]() {
-                return _port;
-            });
-    When(Method(mock, filenames))
-        .AlwaysDo(
-            [&_parameterList, &i, &_filenames]() {
-                return _filenames;
-            });
     When(Method(mock, formRequests))
         .AlwaysDo(
-            [&_portAuthority, &i](
+            [&_portAuthority, &i, &_filenames, &_address](
                 const rsi::ParameterList&) {
                     rsi::ServiceTypeList serviceTypeList;
-                    for (auto filename : i.filenames()) {
+                    for (auto filename : _filenames) {
                         std::stringstream ss;
-                        ss << "upload" << ' ' << i.address() << ' ';
+                        ss << "upload" << ' ' << _address << ' ';
                         ss << _portAuthority.request() << ' ' << filename;
                         serviceTypeList.push_back(ss.str());
                     }
                     {
                         std::stringstream ss;
-                        ss << "vendor" << ' ' << i.address() << ' ';
+                        ss << "vendor" << ' ' << _address << ' ';
                         ss << _portAuthority.request() << ' ';
-                        for (auto filename : i.filenames()) {
+                        for (auto filename : _filenames) {
                             ss << filename << ' ';
                         }
                         serviceTypeList.push_back(ss.str());
                     }
                     {
                         std::stringstream ss;
-                        ss << "download" << ' ' << i.address() << ' ';
+                        ss << "download" << ' ' << _address << ' ';
                         ss << _portAuthority.request() << ' ';
-                        ss << i.filenames()[0];
+                        ss << _filenames[0];
                         serviceTypeList.push_back(ss.str());
                     }
                     return serviceTypeList;
