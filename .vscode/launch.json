@@ -14,7 +14,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build/run-unittests-extras_rsi",
-      "args": ["[BadCRC]"],
+      "args": ["[UploaderInterfaceX]"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],

@@ -72,43 +72,5 @@ namespace extras {
         return filename;
     }
 
-    /**
-     * @brief UploaderServer::lock()
-     *
-     * @param lock
-     * @return rsi::Lock
-     */
-    rsi::Lock rsi::UploaderServer::lock(const rsi::Lock& lock) {
-        arc::ParcelImploder parcelImploder(lock);;
-        auto wrappedName = parcelImploder.wrapped();
-        auto _lock = write_file_block(wrappedName);
-        auto ls1 = "ls -la " + wrappedName;
-        SystemException::assertion(ls1, __INFO__);
-        return _lock;
-    }
-
-    /**
-     * @brief UploaderServer::unlock()
-     *
-     * @return rsi::Lock
-     */
-    rsi::Lock rsi::UploaderServer::unlock(const rsi::Lock&) {
-        arc::ParcelImploder parcelImploder(filename());;
-        parcelImploder.unWrap();
-        parcelImploder.merge();
-        auto original = parcelImploder.clean();
-        send_line_block("uploader completed");
-        std::cout << extras::pass(filename()) << std::endl;
-        std::cout << extras::pass("write_file successful") << std::endl;
-        return original;
-    }
-
-    /**
-     * @brief UploaderServer::transfer()
-     *
-     */
-    void rsi::UploaderServer::transfer() {
-        unlock(lock(filename()));
-    }
 
 }  // namespace extras

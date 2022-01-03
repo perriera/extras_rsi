@@ -1,0 +1,19 @@
+
+        /**
+         * @brief  FORWARD ERROR CORRECTION
+         *
+         * extern ssize_t send (int __fd, const void *__buf, size_t __n, int __flags);
+         *
+         * For reasons unknown, this method of sending files across a socket
+         * absolutely insists on putting in a single quote inside the file
+         * (twice) as it is sent across. Talk about 'forward error correction'.
+         *
+         */
+        if (extras::str::contains(msg, "'")) {
+            // std::cout << "\x1B[2K\r" << " FOUND IT" << std::endl;
+            // std::cout << "\x1B[2K\r" << msg << std::endl;
+            msg = extras::str::replace_all(msg, "'", "");
+        }
+
+        (See also: src/subsystem/send_file.cpp)
+        (See also: src/subsystem/write_file.cpp)

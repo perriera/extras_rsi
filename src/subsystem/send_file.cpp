@@ -35,6 +35,23 @@ using namespace std;
 using namespace extras;
 
 static void sendIt(int sockfd, const string& buffer) {
+
+    /**
+     * @brief  FORWARD ERROR CORRECTION
+     *
+     * extern ssize_t send (int __fd, const void *__buf, size_t __n, int __flags);
+     *
+     * For reasons unknown, this method of sending files across a socket
+     * absolutely insists on putting in a single quote inside the file
+     * (twice) as it is sent across. Talk about 'forward error correction'.
+     *
+     */
+    if (extras::str::contains(buffer, "'")) {
+        std::cout << "\x1B[2K\r" << " FOUND IT BEFORE IT WENT ACROSS" << std::endl;
+        // std::cout << "\x1B[2K\r" << msg << std::endl;
+        // buffer = extras::str::replace_all(buffer, "'", "");
+    }
+
     const char* packet = buffer.c_str();
     int size = buffer.size();
     if (send(sockfd, packet, size, 0) == -1) {
@@ -61,13 +78,15 @@ void extras::rsi::send_file2(const std::string& filename, int sockfd) {
         }
         sendIt(sockfd, ss.str());
     }
-    in.close();
 
     std::cout << "\x1B[2K\r" << extras::rsi::spinner(0) << " ";
     std::cout << extras::cyan << filename << " sent intact" << std::endl;
 
-    auto cpCmd = "cp " + filename + " " + filename + ".sent_copy";
-    SystemException::assertion(cpCmd, __INFO__);
+    in.close();
+
+    // auto cpCmd = "cp " + filename + " " + filename + ".sent_copy";
+    // SystemException::assertion(cpCmd, __INFO__);
+    // std::cout << extras::cyan << filename + ".sent_copy" << " written" << std::endl;
 
     sendIt(sockfd, "done");
     for (int i = 0; i < 5000; i++)
