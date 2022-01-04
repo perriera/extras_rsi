@@ -84,9 +84,9 @@ void extras::rsi::send_file2(const std::string& filename, int sockfd) {
 
     in.close();
 
-    // auto cpCmd = "cp " + filename + " " + filename + ".sent_copy";
-    // SystemException::assertion(cpCmd, __INFO__);
-    // std::cout << extras::cyan << filename + ".sent_copy" << " written" << std::endl;
+    auto cpCmd = "cp " + filename + " " + filename + ".sent_copy";
+    SystemException::assertion(cpCmd, __INFO__);
+    std::cout << std::endl << extras::cyan << filename + ".sent_copy" << " written" << std::endl;
 
     sendIt(sockfd, "done");
     for (int i = 0; i < 5000; i++)

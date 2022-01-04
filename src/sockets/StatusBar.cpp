@@ -48,9 +48,9 @@ namespace extras {
         StatusBarMsg StatusBar::bar(int count, int max) const {
             std::stringstream ss;
             ss << spinner(count) << " ";
-            ss << extras::white << count + 1;
+            ss << extras::white << std::hex << count + 1;
             ss << extras::magenta << " / ";
-            ss << extras::white << max;
+            ss << extras::white << std::hex << max;
             return ss.str();
         }
 
