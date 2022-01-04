@@ -68,6 +68,14 @@ namespace extras {
             };
         };
 
+        /**
+         * @brief downloader_client
+         *
+         * @param argc
+         * @param argv
+         * @return int
+         */
+        int downloader_client(int argc, char const* argv[]);
 
     }  // namespace rsi
 
