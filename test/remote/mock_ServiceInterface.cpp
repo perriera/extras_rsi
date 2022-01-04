@@ -277,7 +277,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
             break;
         }
         catch (std::exception& ex) {
-            std::cout << ex.what() << std::endl;
+            std::cout << red << ex.what() << reset << std::endl;
             _clientSession.destroy();
         }
     }

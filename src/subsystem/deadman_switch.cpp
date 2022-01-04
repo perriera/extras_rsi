@@ -73,7 +73,7 @@ namespace extras {
             cout << cyan << "deadman_switch activated for: " << green << msg << std::endl;
             sleep_until(system_clock::now() + seconds(15));
             if (_dead_man_switch) {
-                cout << red << "deadman_switch killed: " << green << msg << std::endl;
+                cout << std::endl << red << "deadman_switch killed: " << green << msg << std::endl;
                 exit(-1);
             }
         }
