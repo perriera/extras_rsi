@@ -169,6 +169,14 @@ namespace extras {
             virtual UploaderStatus read_line_block()  override;
         };
 
+        /**
+         * @brief uploader_client
+         *
+         * @param argc
+         * @param argv
+         * @return int
+         */
+        int uploader_client(int argc, char const* argv[]);
 
     }  // namespace rsi
 

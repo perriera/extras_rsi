@@ -64,6 +64,15 @@ namespace extras {
             };
         };
 
+        /**
+         * @brief vendor_client
+         *
+         * @param argc
+         * @param argv
+         * @return int
+         */
+        int vendor_client(int argc, char const* argv[]);
+
     }  // namespace rsi
 
 }  // namespace extras

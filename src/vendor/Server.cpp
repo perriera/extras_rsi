@@ -87,8 +87,8 @@ namespace extras {
         // auto unzipCmd = "unzip -o " + filename() + " -d " + pn;
         // SystemException::assertion(unzipCmd, __INFO__);
 
-        auto rezipCmd = "zip -ur " + filename() + " " + pn;
-        SystemException::assertion(rezipCmd, __INFO__);
+        // auto rezipCmd = "zip -ur " + filename() + " " + pn;
+        // SystemException::assertion(rezipCmd, __INFO__);
 
         // unlock the transfer
         std::cout << std::endl;
