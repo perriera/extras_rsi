@@ -19,7 +19,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include <extras_rsi/remote/InvocationInterface.hpp>
+#include <extras_rsi/remote/Invocation.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <iostream>
 
@@ -58,8 +58,7 @@ namespace extras {
 
             send_line_block(parameters());
             auto linePacket = read_line_block();
-            _servicesList = unpackage_request(linePacket);
-            return _servicesList;
+            return unpackage_request(linePacket);;
         }
 
         /**
@@ -77,7 +76,7 @@ namespace extras {
             if (linePacket.size() == 0) throw std::string("test exception");
 
             rsi::ParametersX parameters(linePacket);
-            _servicesList = formRequests(parameters);
+            auto _servicesList = formRequests(parameters);
             linePacket = package_request(_servicesList);
             send_line_block(linePacket);
 
@@ -213,13 +212,13 @@ namespace extras {
          * @param session
          * @param socket
          */
-        void Invocation::invoke(const SessionInterface& session) {
-            auto clients = compile(_clientTasks, session, _servicesList);
+        void Invocation::invoke(const SessionInterface& session, const ServiceTypeList& list) {
+            auto clients = compile(_clientTasks, session, list);
             for (std::string task : clients) {
                 std::cout << task << std::endl;
                 SystemException::assertion(task, __INFO__);
             }
-            decompile(_servicesList, clients);
+            decompile(list, clients);
         }
 
     }  // namespace rsi

@@ -243,37 +243,38 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     //
     killAllServers();
 
+    When(Method(mock, invoke))
+        .AlwaysDo(
+            [&i, &lbi, &_clientTasks](const rsi::SessionInterface& session, const rsi::ServiceTypeList& list) {
+                // --- core code below ----
+                auto clients = i.compile(_clientTasks, session, list);
+                for (std::string task : clients) {
+                    std::cout << task << std::endl;
+                    SystemException::assertion(task, __INFO__);
+                }
+                i.decompile(list, clients);
+            });
+
     // 
     // step 1. determine, (and validate) parameters
     //
     REQUIRE(_parameterList.size() == 0);
     _parameters.parse(argc, argv);
 
-    // 
-    // step 2. send/receive parameters
-    //
-    auto servicesList = i.servicesRequest(-1);
-
-    // 
-    // step 3. start server requests
-    //
-
-    When(Method(mock, invoke))
-        .AlwaysDo(
-            [&i, &lbi, &_clientTasks, &servicesList](const rsi::SessionInterface& session) {
-                // --- core code below ----
-                auto clients = i.compile(_clientTasks, session, servicesList);
-                for (std::string task : clients) {
-                    std::cout << task << std::endl;
-                    SystemException::assertion(task, __INFO__);
-                }
-                i.decompile(servicesList, clients);
-            });
-
-    rsi::Session _clientSession;
-    _clientSession.create();
-    i.invoke(_clientSession);
-    _clientSession.destroy();
+    for (int attempt = 0; attempt < 3; attempt++) {
+        auto servicesList = i.servicesRequest(-1);
+        rsi::Session _clientSession;
+        _clientSession.create();
+        try {
+            i.invoke(_clientSession, servicesList);
+            _clientSession.destroy();
+            break;
+        }
+        catch (std::exception& ex) {
+            std::cout << ex.what() << std::endl;
+            _clientSession.destroy();
+        }
+    }
 
     REQUIRE(fs::exists(src_file));
     REQUIRE(fs::exists(webflow_file));

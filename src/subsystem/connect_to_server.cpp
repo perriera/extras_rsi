@@ -35,8 +35,9 @@ int extras::rsi::connect_to_server(const char* ip, int port,
     if (timeoutmode) {
         // Set a timeout ...
         struct timeval timeout;
-        timeout.tv_sec = 5;  // after 60 seconds connect() will timeout
+        timeout.tv_sec = 5;  // after 5 seconds connect() will timeout
         timeout.tv_usec = 0;
+        setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof(timeout));
         setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
         std::cout << extras::pass("Client socket times out in 5 seconds") << std::endl;
     }

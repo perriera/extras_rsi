@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_INVOCATION_HPP
-#define _EXPARX_RSI_INVOCATION_HPP
+#ifndef _EXPARX_RSI_INVOCATIONINTERFACE_HPP
+#define _EXPARX_RSI_INVOCATIONINTERFACE_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -68,97 +68,13 @@ namespace extras {
 
             virtual ServiceTypeList formRequests(const ParametersInterface& parameters) pure;
 
-            virtual void invoke(const SessionInterface& session) pure;
+            virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) pure;
 
         };
-
-        /**
-         * @brief Invocation class
-         *
-         */
-        concrete class Invocation implements InvocationInterface
-            with ParametersInterface
-            with LineBlockInterface {
-            ParametersX _parameters;
-            rsi::PortAuthority& _portAuthority;
-            int _client_socket = -1;
-            const rsi::ServiceTypeMap& _clientTasks;
-            const rsi::ServiceTypeMap& _serverTasks;
-            ServiceTypeList _servicesList;
-
-            /**
-             * @brief LineBlockInterface implementation
-             *
-             */
-            virtual void send_line_block(const LinePacket& msg) const override;
-            virtual LinePacket read_line_block() override;
-
-        public:
-
-            /**
-             * @brief Construct a new Invocation object
-             *
-             * @param portAuthority
-             */
-            Invocation(
-                rsi::PortAuthority& portAuthority,
-                const rsi::ServiceTypeMap& clientTasks,
-                const rsi::ServiceTypeMap& serverTasks)
-                : _portAuthority(portAuthority),
-                _clientTasks(clientTasks),
-                _serverTasks(serverTasks) {}
-
-            /**
-             * @brief LineBlockInterface implementation
-             *
-             */
-
-            virtual void parse(int argc, char const* argv[]) override
-            {
-                _parameters.parse(argc, argv);
-            }
-
-            virtual Parameter parameters() const override {
-                return _parameters.parameters();
-            }
-
-            virtual const Parameter& address() const override { return _parameters.address(); }
-            virtual const Parameter& port() const override { return  _parameters.port(); }
-            virtual const Filenames& filenames() const override { return  _parameters.filenames(); }
-            virtual ParameterList    list() const override { return  _parameters.list(); }
-
-            /**
-             * @brief InvocationInterface implementation
-             *
-             */
-
-            virtual ServiceTypeList servicesRequest(int socket) override;
-            virtual LinePacket servicesResponse(int socket) override;
-
-            virtual LinePacket package_request(const ServiceTypeList& list) override;
-            virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
-
-            virtual ServiceTypeList compile(
-                const ServiceTypeMap& serviceTypes,
-                const SessionInterface& session,
-                const ServiceTypeList& list
-            ) const override;
-
-            virtual void decompile(
-                const ServiceTypeList& before,
-                const ServiceTypeList& after
-            ) const override;
-
-            virtual ServiceTypeList formRequests(const ParametersInterface& parameters) override;
-
-            virtual void invoke(const SessionInterface& session) override;
-
-        };
-
 
     }
 }
 
-#endif // _EXPARX_RSI_INVOCATION_HPP
+#endif // _EXPARX_RSI_INVOCATIONINTERFACE_HPP
 
 

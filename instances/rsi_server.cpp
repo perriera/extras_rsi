@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/remote/InvocationInterface.hpp>
+#include <extras_rsi/remote/Invocation.hpp>
 #include <extras_rsi/socketpool/Server.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/subsystem.hpp>

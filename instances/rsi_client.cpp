@@ -17,7 +17,7 @@
  */
 
 #include <extras/status/StatusLine.hpp>
-#include <extras_rsi/remote/InvocationInterface.hpp>
+#include <extras_rsi/remote/Invocation.hpp>
 #include <extras_rsi/socketpool/Client.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/subsystem.hpp>
@@ -54,14 +54,14 @@ int main(int argc, char const* argv[]) {
         //
         // send request to server
         //
-        auto response = rsi.servicesRequest(_client_socket);
+        auto list = rsi.servicesRequest(_client_socket);
 
         // 
         // step 3. start server requests
         //
         rsi::Session _clientSession;
         _clientSession.create();
-        rsi.invoke(_clientSession);
+        rsi.invoke(_clientSession, list);
         _clientSession.destroy();
 
 
