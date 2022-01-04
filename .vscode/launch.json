@@ -14,7 +14,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build/run-unittests-extras_rsi",
-      "args": ["[RemoteInvocationInterface]"],
+      "args": ["[InvocationInterface]"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
@@ -28,6 +28,48 @@
         }
       ],
       "preLaunchTask": "Build C++ project",
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
+    {
+      "name": "rsi_client",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/rsi_client",
+      "args": ["127.0.0.1:8080", "data/src.zip", "data/exparx.webflow.zip"],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "Build C++ project (for uploader_client)",
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
+    {
+      "name": "rsi_server",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/rsi_server",
+      "args": ["127.0.0.1:8080", "9000-9500"],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "Build C++ project (for uploader_server)",
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {

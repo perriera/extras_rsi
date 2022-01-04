@@ -16,8 +16,8 @@
  *
  */
 
-#include <extras_rsi/sockets/StatusBar.hpp>
-#include <extras_rsi/sockets/Spinner.hpp>
+#include <extras_rsi/gadgets/StatusBar.hpp>
+#include <extras_rsi/gadgets/Spinner.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/strings.hpp>
@@ -48,9 +48,9 @@ namespace extras {
         StatusBarMsg StatusBar::bar(int count, int max) const {
             std::stringstream ss;
             ss << spinner(count) << " ";
-            ss << extras::white << count + 1;
+            ss << extras::white << std::hex << count + 1;
             ss << extras::magenta << " / ";
-            ss << extras::white << max;
+            ss << extras::white << std::hex << max;
             return ss.str();
         }
 

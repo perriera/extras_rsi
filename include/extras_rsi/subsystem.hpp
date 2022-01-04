@@ -53,7 +53,9 @@ namespace extras {
         void write_file(const std::string& filename, int sockfd);
 
         int connect_to_server(const char* ip, int port,
-            struct sockaddr_in& server_addr);
+            struct sockaddr_in& server_addr,
+            bool timeout = true);
+
         int configure_serversocket(const char* ip, int port,
             struct sockaddr_in& server_addr,
             bool timeout = true);

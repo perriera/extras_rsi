@@ -72,7 +72,7 @@ SCENARIO("Mock SocketPoolInterface", "[SocketPoolInterface]") {
     Mock<rsi::ServiceTypeCompilerInterface> mock_stc;
     When(Method(mock_stc, clients))
         .AlwaysDo(
-            [](const rsi::RequestTypeList& requests) {
+            [](const rsi::RequestTypeList&) {
                 return rsi::ServiceTypeList();
             });
 

@@ -24,8 +24,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <extras_rsi/sockets/StatusBar.hpp>
-#include <extras_rsi/sockets/Spinner.hpp>
+#include <extras_rsi/gadgets/StatusBar.hpp>
+#include <extras_rsi/gadgets/Spinner.hpp>
 #include <extras_arc/parcel.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras/strings.hpp>
@@ -81,12 +81,35 @@ void extras::rsi::write_file(const std::string& filename, int sockfd) {
         }
 
         if (n <= 0) break;
+
+        /**
+         * @brief  FORWARD ERROR CORRECTION
+         *
+         * extern ssize_t send (int __fd, const void *__buf, size_t __n, int __flags);
+         *
+         * For reasons unknown, this method of sending files across a socket
+         * absolutely insists on putting in a single quote inside the file
+         * (twice) as it is sent across. Talk about 'forward error correction'.
+         *
+         */
+        if (extras::str::contains(msg, "'")) {
+            // std::cout << "\x1B[2K\r" << " FOUND IT AFTER IT CAME ACROSS" << std::endl;
+                // std::cout << "\x1B[2K\r" << msg << std::endl;
+            msg = extras::str::replace_all(msg, "'", "");
+        }
+
         out << msg;
         bzero(buffer, extras::rsi::SIZE);
 
     }
-    std::cout << "\x1B[2K\r" << extras::rsi::spinner(0) << " ";
+    out.close();
+
+    std::cout << "\x1B[2K\r" << extras::rsi::spinner(0) << " " << std::endl;
     std::cout << extras::cyan << filename << " received intact" << std::endl;
+
+    auto cpCmd = "cp " + filename + " " + filename + ".recevied_copy";
+    SystemException::assertion(cpCmd, __INFO__);
+    std::cout << extras::cyan << filename + ".recevied_copy" << " written" << std::endl;
 
     return;
 }

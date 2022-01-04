@@ -1,7 +1,7 @@
 /**
  * @file ServiceType.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief ServiceTypeCompilerInterface
+ * @brief ServiceInterface
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_REMOTESERVICE_HPP
-#define _EXPARX_RSI_REMOTESERVICE_HPP
+#ifndef _EXPARX_RSI_SERVICE_HPP
+#define _EXPARX_RSI_SERVICE_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -42,7 +42,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RemoteInvocationInterface
+         * @brief InvocationInterface
          *
          */
 
@@ -53,15 +53,16 @@ namespace extras {
         using ParameterList = std::vector<std::string>;
 
         /**
-         * @brief RemoteServiceInterface
+         * @brief ServiceInterface
          *
          */
-        interface RemoteServiceInterface {
+        interface ServiceInterface {
             virtual const ServiceType& service() const pure;
             virtual const Parameter& address() const pure;
             virtual const Parameter& port() const pure;
             virtual const Filenames& filenames() const pure;
             virtual bool isUploader() const pure;
+            virtual bool isServer(const Parameter& param) const pure;
             virtual void prepare(
                 const SessionInterface& session
             ) const pure;
@@ -74,7 +75,7 @@ namespace extras {
          * @brief RemoteService
          *
          */
-        concrete class RemoteService implements RemoteServiceInterface {
+        concrete class RemoteService implements ServiceInterface {
             friend std::ostream& operator<<(std::ostream& out, const RemoteService& obj);
             friend std::istream& operator>>(std::istream& in, RemoteService& obj);
 
@@ -89,53 +90,16 @@ namespace extras {
             virtual const Parameter& port() const override { return _port; }
             virtual const Filenames& filenames() const override { return _filenameList; }
             virtual bool isUploader() const override;
+            virtual bool isServer(const Parameter& param) const override;
             virtual void prepare(const SessionInterface& session) const override;
             virtual void cleanup(const SessionInterface& session) const override;
 
-        };
-
-        /**
-         * @brief RemoteInvocationInterface
-         *
-         */
-        interface RemoteInvocationInterface {
-
-            virtual void parameters(int argc, char const* argv[]) pure;
-            virtual Parameter address() const pure;
-            virtual Parameter port() const pure;
-            virtual Filenames filenames() const pure;
-
-            virtual LinePacket servicesResponse(int socket) pure;
-            virtual ServiceTypeList servicesRequest(int socket) pure;
-
-            virtual LinePacket package_request(const ServiceTypeList& list) pure;
-            virtual ServiceTypeList unpackage_response(const LinePacket& package) pure;
-
-            virtual ServiceTypeList compile(
-                const ServiceTypeMap& serviceTypes,
-                const SessionInterface& session,
-                const ServiceTypeList& list
-            ) const pure;
-
-            virtual Pathname shadow(const Pathname& parameter, const SessionInterface& session) pure;
-            virtual ServiceTypeList formRequests(const ParameterList& list) pure;
-            virtual void formUploads(const ServiceType& type, const SessionInterface& session) pure;
-            virtual void formVendor(const ServiceType& type, const SessionInterface& session) pure;
-            virtual void formDownloads(const ServiceType& type, const SessionInterface& session) pure;
-
-            virtual void start_servers_block(const SessionInterface& session, int socket) pure;
-            virtual void start_clients_block(const SessionInterface& session, int socket) pure;
-
-            virtual ServiceTypeList compileClients(const SessionInterface& session) pure;
-            virtual ServiceTypeList compileServers(const SessionInterface& session) pure;
-            virtual const ServiceTypeMap& client_tasks() const pure;
-            virtual const ServiceTypeMap& server_tasks() const pure;
         };
 
 
     }
 }
 
-#endif // _EXPARX_RSI_REMOTESERVICE_HPP
+#endif // _EXPARX_RSI_SERVICE_HPP
 
 

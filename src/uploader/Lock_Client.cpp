@@ -37,34 +37,43 @@ using namespace std;
 namespace extras {
 
     /**
-     * @brief concrete class UploaderClient
+     * @brief UploaderClient::lock()
      *
-     *   build/rsi_client 127.0.0.1 8080 transfer send.txt
-     *   ss >> prg >> filename >> ip >> port;
+     * @param lock
+     * @return rsi::Lock
+     */
+    rsi::Lock rsi::UploaderClient::lock(const rsi::Lock& lock) {
+        rsi::FileNotFoundException::assertion(lock, __INFO__);
+        arc::ParcelImploder parcelImploder(lock);
+        auto wrapped = parcelImploder.wrap();
+        rsi::FileNotFoundException::assertion(wrapped, __INFO__);
+        send_file_block(wrapped);
+        return lock;
+    }
+
+    /**
+     * @brief UploaderClient::unlock()
+     *
+     * @param lock
+     * @return rsi::Lock
+     */
+    rsi::Lock rsi::UploaderClient::unlock(const rsi::Lock& lock) {
+        auto status = read_line_block();
+        arc::ParcelImploder parcelImploder(lock);;
+        parcelImploder.clean();
+        RemoteBlockException::assertion(status, __INFO__);
+        std::cout << extras::pass(lock) << std::endl;
+        std::cout << extras::pass(status) << std::endl;
+        std::cout << extras::pass("send_file2 successful") << std::endl;
+        return lock;
+    }
+
+    /**
+     * @brief UploaderClient::transfer()
      *
      */
-    void rsi::UploaderClient::connect() {
-        this->_sockfd = extras::rsi::connect_to_server(ip().c_str(), stoi(port()),
-            _server_addr);
-    }
-
-    void rsi::UploaderClient::close() const { ::close(this->_sockfd); }
-
-    void rsi::UploaderClient::send_file_block(const Filename& filename) const {
-        extras::rsi::send_file2(filename, this->_sockfd);
-    }
-
-    void rsi::UploaderClient::send_line_block(const rsi::UploaderStatus& msg) const {
-        extras::rsi::send_line(msg, this->_sockfd);
-    }
-
-    rsi::UploaderStatus rsi::UploaderClient::read_line_block() {
-        return extras::rsi::read_line(this->_sockfd);
-    }
-
-    rsi::Filename rsi::UploaderClient::write_file_block(const Filename& filename) const {
-        extras::rsi::write_file(filename, this->_sockfd);
-        return filename;
+    void rsi::UploaderClient::transfer() {
+        unlock(lock(filename()));
     }
 
 }  // namespace extras

@@ -5,8 +5,8 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v4.23.0 -m "Added RemoteInvocationInterface"</br>
-> > git push origin v4.23.0
+> > git tag -a v4.24.0 -m "InvocationInterface, (Working prototype)"</br>
+> > git push origin v4.24.0
 
 IMPORTANT:
 
@@ -32,12 +32,19 @@ Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
 
+#### 4.24.0 (2022-01-01)
+
+## Added
+
+- InvocationInterface, (Working prototype)
+- ServiceInterface
+
 #### 4.23.0 (2022-01-01)
 
 ## Added
 
-- RemoteInvocationInterface
-- RemoteServiceInterface
+- InvocationInterface
+- ServiceInterface
 
 #### 4.22.1 (2021-12-26)
 
@@ -490,7 +497,8 @@ Updated README.md accordinging</br>
 - @brief style formatting
 - Doxygen support
 
-[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.23.0...HEAD
+[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.24.0...HEAD
+[4.24.0]: https://github.com/perriera/extras_rsi/compare/v4.23.0...v4.24.0
 [4.23.0]: https://github.com/perriera/extras_rsi/compare/v4.22.1...v4.23.0
 [4.22.1]: https://github.com/perriera/extras_rsi/compare/v4.22.0...v4.22.1
 [4.22.0]: https://github.com/perriera/extras_rsi/compare/v4.21.0...v4.22.0

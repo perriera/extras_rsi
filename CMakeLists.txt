@@ -106,7 +106,7 @@ print(STATUS "CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 CPMAddPackage(
   NAME extras_arc
   GITHUB_REPOSITORY perriera/extras_arc
-  VERSION 2.5.0
+  VERSION 3.2.1
   OPTIONS "MAKE_SPDLOG_SHARED OFF"
   OPTIONS "MAKE_EXTRAS_LIBRARY_ONLY ON"
   OPTIONS "MAKE_EXTRAS_ARC_LIBRARY_ONLY ON"
@@ -157,6 +157,19 @@ endif()
 # includes ALL headers and sources under include/ and src/. So, to keep two or more main() 
 # declarations seperate, we place any sources that have a main() in the instances/ folder
 #
+
+#
+# rsi_client/server
+#
+if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
+add_executable(rsi_client instances/rsi_client.cpp) 
+target_include_directories(rsi_client PUBLIC ${INCLUDES})
+target_link_libraries(rsi_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(rsi_server instances/rsi_server.cpp) 
+target_include_directories(rsi_server PUBLIC ${INCLUDES})
+target_link_libraries(rsi_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+endif()
 
 #
 # socketpool_client/server
@@ -214,6 +227,7 @@ endif()
 # NOTE: Install all shared libraries & executables
 #
 install(TARGETS 
+  rsi_client rsi_server
   socketpool_client socketpool_server
   uploader_client uploader_server 
   vendor_client vendor_server 

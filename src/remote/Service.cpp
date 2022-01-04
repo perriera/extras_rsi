@@ -28,7 +28,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RequestTypeCompilation ostream
+         * @brief RemoteService ostream
          *
          * @param out
          * @param obj
@@ -47,7 +47,7 @@ namespace extras {
         }
 
         /**
-         * @brief RequestTypeCompilation istream
+         * @brief RemoteService istream
          *
          * @param out
          * @param obj
@@ -74,6 +74,17 @@ namespace extras {
          */
         bool RemoteService::isUploader() const {
             return extras::str::contains(_serviceType, "upload");
+        }
+
+        /**
+         * @brief isServer()
+         *
+         * @param param
+         * @return true
+         * @return false
+         */
+        bool RemoteService::isServer(const Parameter& param) const {
+            return extras::str::contains(param, "server");
         }
 
         /**
