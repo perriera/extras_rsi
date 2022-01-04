@@ -61,10 +61,14 @@ namespace extras {
                 const ServiceTypeList& list
             ) const pure;
 
+            virtual void decompile(
+                const ServiceTypeList& before,
+                const ServiceTypeList& after
+            ) const pure;
+
             virtual ServiceTypeList formRequests(const ParametersInterface& parameters) pure;
 
-            virtual void runClients(const SessionInterface& session) pure;
-            virtual void start_clients_block(const SessionInterface& session) pure;
+            virtual void invoke(const SessionInterface& session) pure;
 
         };
 
@@ -113,14 +117,16 @@ namespace extras {
             {
                 _parameters.parse(argc, argv);
             }
+
             virtual Parameter parameters() const override {
                 return _parameters.parameters();
             }
 
-            virtual  const Parameter& address() const override { return _parameters.address(); }
-            virtual  const Parameter& port() const override { return  _parameters.port(); }
-            virtual  const Filenames& filenames() const override { return  _parameters.filenames(); }
-            virtual ParameterList list() const override { return  _parameters.list(); }
+            virtual const Parameter& address() const override { return _parameters.address(); }
+            virtual const Parameter& port() const override { return  _parameters.port(); }
+            virtual const Filenames& filenames() const override { return  _parameters.filenames(); }
+            virtual ParameterList    list() const override { return  _parameters.list(); }
+
             /**
              * @brief InvocationInterface implementation
              *
@@ -138,10 +144,15 @@ namespace extras {
                 const ServiceTypeList& list
             ) const override;
 
+            virtual void decompile(
+                const ServiceTypeList& before,
+                const ServiceTypeList& after
+            ) const override;
+
             virtual ServiceTypeList formRequests(const ParametersInterface& parameters) override;
 
-            virtual void runClients(const SessionInterface& session) override;
-            virtual void start_clients_block(const SessionInterface& session) override;
+            virtual void invoke(const SessionInterface& session) override;
+
         };
 
 

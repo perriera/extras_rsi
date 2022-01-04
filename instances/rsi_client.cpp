@@ -61,7 +61,8 @@ int main(int argc, char const* argv[]) {
         //
         rsi::Session _clientSession;
         _clientSession.create();
-        rsi.runClients(_clientSession);
+        rsi.invoke(_clientSession);
+        _clientSession.destroy();
 
 
 

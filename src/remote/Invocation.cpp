@@ -145,6 +145,36 @@ namespace extras {
         }
 
         /**
+         * @brief decompile()
+         *
+         * @param before
+         * @param after
+         */
+        void Invocation::decompile(
+            const ServiceTypeList& before,
+            const ServiceTypeList& after
+        ) const {
+            for (size_t i = 0; i < before.size(); i++) {
+                auto l1 = before[i];
+                auto l2 = after[i];
+                std::stringstream in1;
+                std::stringstream in2;
+                rsi::RemoteService rs1;
+                rsi::RemoteService rs2;
+                in1 << l1;
+                in1 >> rs1;
+                in2 << l2;
+                in2 >> rs2;
+                if (rs1.service() == "download") {
+                    auto src = rs2.filenames()[0];
+                    auto des = rs1.filenames()[0];
+                    auto cpCmd = "cp " + src + " " + des + " ";
+                    SystemException::assertion(cpCmd, __INFO__);
+                };
+            }
+        }
+
+        /**
          * @brief formRequests()
          *
          * @param list
@@ -183,27 +213,14 @@ namespace extras {
          * @param session
          * @param socket
          */
-        void Invocation::runClients(const SessionInterface& session) {
+        void Invocation::invoke(const SessionInterface& session) {
             auto clients = compile(_clientTasks, session, _servicesList);
             for (std::string task : clients) {
                 std::cout << task << std::endl;
                 SystemException::assertion(task, __INFO__);
             }
+            decompile(_servicesList, clients);
         }
-
-        /**
-         * @brief start_clients_block()
-         *
-         * @param session
-         * @param socket
-         */
-        void Invocation::start_clients_block(const SessionInterface& session) {
-            auto clients = compile(_clientTasks, session, _servicesList);
-            for (auto task : clients) {
-                std::cout << task << std::endl;
-            }
-        }
-
 
     }  // namespace rsi
 }  // namespace extras

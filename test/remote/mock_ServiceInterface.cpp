@@ -20,22 +20,32 @@
 #include <extras/strings.hpp>
 #include <iostream>
 #include <sstream>
+#include <filesystem>
 
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
 
 using namespace extras;
+using namespace std;
 using namespace fakeit;
+namespace fs = std::filesystem;
 
 void killAllServers();
 
 SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
+    SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
+    SystemException::assertion("cp data/exparx.webflow.zip testit; ", __INFO__);
+    SystemException::assertion("cp data/src.zip testit; ", __INFO__);
+
+    auto src_file = "testit/src.zip";
+    auto webflow_file = "testit/src.zip";
+
     const char* argv[] = {
         "build/rsi",
         "127.0.0.1:8080",
-        "data/src.zip",
-        "data/exparx.webflow.zip"
+        src_file,
+        webflow_file
     };
     int argc = sizeof(argv) / sizeof(argv[0]);
 
@@ -142,6 +152,31 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                     }
                     return after;
             });
+    When(Method(mock, decompile))
+        .AlwaysDo(
+            [&i](
+                const rsi::ServiceTypeList& before,
+                const rsi::ServiceTypeList& after
+                ) {
+                    for (size_t i = 0; i < before.size(); i++) {
+                        auto l1 = before[i];
+                        auto l2 = after[i];
+                        std::stringstream in1;
+                        std::stringstream in2;
+                        rsi::RemoteService rs1;
+                        rsi::RemoteService rs2;
+                        in1 << l1;
+                        in1 >> rs1;
+                        in2 << l2;
+                        in2 >> rs2;
+                        if (rs1.service() == "download") {
+                            auto src = rs2.filenames()[0];
+                            auto des = rs1.filenames()[0];
+                            auto cpCmd = "cp " + src + " " + des + " ";
+                            SystemException::assertion(cpCmd, __INFO__);
+                        };
+                    }
+            });
     When(Method(mock, package_request))
         .AlwaysDo(
             [&_parameterList, &i, &lbi](const rsi::ServiceTypeList& list) {
@@ -223,7 +258,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     // step 3. start server requests
     //
 
-    When(Method(mock, runClients))
+    When(Method(mock, invoke))
         .AlwaysDo(
             [&i, &lbi, &_clientTasks, &servicesList](const rsi::SessionInterface& session) {
                 // --- core code below ----
@@ -232,39 +267,15 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                     std::cout << task << std::endl;
                     SystemException::assertion(task, __INFO__);
                 }
-                // auto linePacket = i.package_request(clients);
-                // lbi.send_line_block(linePacket);
-                // return linePacket;
-                // --- core code above ----
+                i.decompile(servicesList, clients);
             });
 
     rsi::Session _clientSession;
     _clientSession.create();
-    i.runClients(_clientSession);
+    i.invoke(_clientSession);
+    _clientSession.destroy();
 
-    // 
-    // step 4. start client requests
-    //
+    REQUIRE(fs::exists(src_file));
+    REQUIRE(fs::exists(webflow_file));
 
-    When(Method(mock, start_clients_block))
-        .AlwaysDo(
-            [&_parameterList, &i, &servicesList, &_clientTasks](const rsi::SessionInterface& session) {
-                // --- core code below ----
-                auto clients = i.compile(_clientTasks, session, servicesList);
-                for (auto task : clients) {
-                    std::cout << task << std::endl;
-                }
-                // --- core code above ----
-            });
-
-    // rsi::Session _clientSession;
-    // _clientSession.create();
-
-    // REQUIRE(_parameterList.size() == 3);
-    // REQUIRE(i.address() == "127.0.0.1");
-    // REQUIRE(i.port() == "8080");
-    // i.compile(_serverSession);
-    // auto u1 = _serviceTypeList[0];
-
-    // Verify(Method(mock, parse));
 }
