@@ -24,8 +24,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <extras_rsi/sockets/StatusBar.hpp>
-#include <extras_rsi/sockets/Spinner.hpp>
+#include <extras_rsi/gadgets/StatusBar.hpp>
+#include <extras_rsi/gadgets/Spinner.hpp>
 #include <extras_arc/parcel.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras/strings.hpp>

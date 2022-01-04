@@ -16,8 +16,8 @@
  *
  */
 
-#include <extras_rsi/sockets/StatusBar.hpp>
-#include <extras_rsi/sockets/Spinner.hpp>
+#include <extras_rsi/gadgets/StatusBar.hpp>
+#include <extras_rsi/gadgets/Spinner.hpp>
 #include <iostream>
 #include <sstream>
 

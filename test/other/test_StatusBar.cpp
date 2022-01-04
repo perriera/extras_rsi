@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/sockets/StatusBar.hpp>
+#include <extras_rsi/gadgets/StatusBar.hpp>
 #include <extras/strings.hpp>
 #include <iostream>
 #include <sstream>
