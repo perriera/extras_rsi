@@ -24,7 +24,9 @@
 
 using namespace  extras;
 
-
 int main(int argc, char const* argv[]) {
-    return extras::rsi::downloader_client(argc, argv);
+    activate_deadman_switch(argv[0]);
+    auto code = extras::rsi::downloader_client(argc, argv);
+    rsi::kill_deadman_switch();
+    return code;
 }

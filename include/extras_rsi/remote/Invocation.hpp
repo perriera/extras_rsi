@@ -43,6 +43,7 @@ namespace extras {
          */
         concrete class Invocation implements InvocationInterface
             with ParametersInterface
+            with ExecutableInterface
             with LineBlockInterface {
             ParametersX _parameters;
             rsi::PortAuthority& _portAuthority;
@@ -116,6 +117,14 @@ namespace extras {
             virtual ServiceTypeList formRequests(const ParametersInterface& parameters) override;
 
             virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) override;
+
+            /**
+             * @brief ExecutableInterface
+             *
+             * @param task
+             */
+            virtual void internal(const ServiceType& task) override;
+            virtual void external(const ServiceType& task) override;
 
         };
 

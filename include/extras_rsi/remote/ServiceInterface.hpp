@@ -53,6 +53,15 @@ namespace extras {
         using ParameterList = std::vector<std::string>;
 
         /**
+         * @brief ExecutableInterface
+         *
+         */
+        interface ExecutableInterface {
+            virtual void internal(const ServiceType& task) pure;
+            virtual void external(const ServiceType& task) pure;
+        };
+
+        /**
          * @brief ServiceInterface
          *
          */
@@ -75,7 +84,9 @@ namespace extras {
          * @brief RemoteService
          *
          */
-        concrete class RemoteService implements ServiceInterface {
+        concrete class RemoteService implements ServiceInterface
+            with ExecutableInterface {
+
             friend std::ostream& operator<<(std::ostream& out, const RemoteService& obj);
             friend std::istream& operator>>(std::istream& in, RemoteService& obj);
 
@@ -93,6 +104,14 @@ namespace extras {
             virtual bool isServer(const Parameter& param) const override;
             virtual void prepare(const SessionInterface& session) const override;
             virtual void cleanup(const SessionInterface& session) const override;
+
+            /**
+             * @brief ExecutableInterface
+             *
+             * @param task
+             */
+            virtual void internal(const ServiceType& task) override;
+            virtual void external(const ServiceType& task) override;
 
         };
 

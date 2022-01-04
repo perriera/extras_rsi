@@ -244,6 +244,25 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
             });
 
+    Mock<rsi::ExecutableInterface> mock_exe;
+    rsi::ExecutableInterface& i_exe = mock_exe.get();
+
+    When(Method(mock_exe, internal))
+        .AlwaysDo(
+            [&i](const rsi::ServiceType& task) {
+                std::stringstream in;
+                rsi::RemoteService rs;
+                in << task;
+                in >> rs;
+                rs.internal(task);
+            });
+
+    When(Method(mock_exe, external))
+        .AlwaysDo(
+            [](const rsi::ServiceType& task) {
+                SystemException::assertion(task, __INFO__);
+            });
+
     // 
     // step 0. killAllServers();
     //
@@ -251,12 +270,12 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     When(Method(mock, invoke))
         .AlwaysDo(
-            [&i, &lbi, &_clientTasks](const rsi::SessionInterface& session, const rsi::ServiceTypeList& list) {
+            [&i, &lbi, &i_exe, &_clientTasks](const rsi::SessionInterface& session, const rsi::ServiceTypeList& list) {
                 // --- core code below ----
                 auto clients = i.compile(_clientTasks, session, list);
                 for (std::string task : clients) {
                     std::cout << task << std::endl;
-                    SystemException::assertion(task, __INFO__);
+                    i_exe.internal(task);
                 }
                 i.decompile(list, clients);
             });

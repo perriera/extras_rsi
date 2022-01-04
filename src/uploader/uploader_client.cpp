@@ -27,14 +27,12 @@ using namespace  extras;
 int extras::rsi::uploader_client(int argc, char const* argv[]) {
     try {
         std::cout << extras::start(argv[0]) << std::endl;
-        activate_deadman_switch(argv[0]);
         extras::rsi::UploaderClient uploader;
         uploader.parameters(argc, argv);
         uploader.connect();
         uploader.transfer();
         std::cout << extras::pass("File data uploaded successfully") << std::endl;
         uploader.close();
-        rsi::kill_deadman_switch();
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
         return 0;
     }

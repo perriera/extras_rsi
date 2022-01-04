@@ -27,14 +27,12 @@ using namespace  extras;
 int extras::rsi::vendor_client(int argc, char const* argv[]) {
     try {
         std::cout << extras::start(argv[0]) << std::endl;
-        activate_deadman_switch(argv[0]);
         extras::rsi::VendorClient vendor;
         vendor.parameters(argc, argv);
         vendor.connect();
         vendor.transfer();
         std::cout << extras::pass("File data processed successfully") << std::endl;
         vendor.close();
-        rsi::kill_deadman_switch();
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
         return 0;
     }

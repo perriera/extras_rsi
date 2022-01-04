@@ -221,5 +221,13 @@ namespace extras {
             decompile(list, clients);
         }
 
+        /**
+         * @brief ExecutableInterface
+         *
+         */
+        void Invocation::internal(const ServiceType&) {}
+        void Invocation::external(const ServiceType&) {}
+
+
     }  // namespace rsi
 }  // namespace extras

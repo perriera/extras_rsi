@@ -20,6 +20,9 @@
 #include <unistd.h>
 
 #include <extras_rsi/remote/ServiceInterface.hpp>
+#include <extras_rsi/uploader/Downloader.hpp>
+#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/vendor/Vendor.hpp>
 #include <iostream>
 
 using namespace std;
@@ -108,6 +111,33 @@ namespace extras {
                 session.remove(file);
         }
 
+        /**
+         * @brief ExecutableInterface
+         *
+         */
+        void RemoteService::internal(const ServiceType&) {
+            bool extra_files = filenames().size() > 1;
+            std::string filename2 = (extra_files ? filenames()[1] : "");
+            const char* argv[] = {
+                 service().c_str(),
+                 address().c_str(),
+                 port().c_str(),
+                filenames()[0].c_str(),
+                filename2.c_str(),
+            };
+            int argc = sizeof(argv) / sizeof(argv[0]);
+            argc = !extra_files ? argc - 1 : argc;
+            if (extras::str::contains(service(), "upload"))
+                uploader_client(argc, argv);
+            if (extras::str::contains(service(), "vendor"))
+                vendor_client(argc, argv);
+            if (extras::str::contains(service(), "download"))
+                downloader_client(argc, argv);
+        }
+
+        void RemoteService::external(const ServiceType& task) {
+            SystemException::assertion(task, __INFO__);
+        }
 
     }  // namespace rsi
 }  // namespace extras
