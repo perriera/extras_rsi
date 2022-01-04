@@ -20,7 +20,10 @@
 #include <extras/strings.hpp>
 #include <iostream>
 #include <sstream>
+#include <extras/devices/ansi_colors.hpp>
 #include <filesystem>
+#include <chrono>
+#include <thread>
 
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
@@ -29,6 +32,8 @@ using namespace extras;
 using namespace std;
 using namespace fakeit;
 namespace fs = std::filesystem;
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono;
 
 void killAllServers();
 
@@ -174,6 +179,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                             auto des = rs1.filenames()[0];
                             auto cpCmd = "cp " + src + " " + des + " ";
                             SystemException::assertion(cpCmd, __INFO__);
+                            std::cout << white << cpCmd << yellow << " rsi update successful" << std::endl;
                         };
                     }
             });

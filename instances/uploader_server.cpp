@@ -18,6 +18,7 @@
 
 #include <extras_rsi/uploader/Uploader.hpp>
 #include <extras/status/StatusLine.hpp>
+#include <extras_rsi/subsystem.hpp>
 #include <iostream>
 #include <extras_rsi/exceptions.hpp>
 
@@ -26,12 +27,14 @@ using namespace  extras;
 int main(int argc, char const* argv[]) {
     try {
         std::cout << extras::start(argv[0]) << std::endl;
+        activate_deadman_switch(argv[0]);
         extras::rsi::UploaderServer uploader;
         uploader.parameters(argc, argv);
         uploader.connect();
         uploader.transfer();
         std::cout << extras::pass("File data uploaded successfully") << std::endl;
         uploader.close();
+        rsi::kill_deadman_switch();
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
         exit(0);
     }
