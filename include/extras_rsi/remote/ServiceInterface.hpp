@@ -31,7 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/remote/ServiceTypes.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
 #include <extras_rsi/services/SessionType.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
@@ -40,17 +40,6 @@
 
 namespace extras {
     namespace rsi {
-
-        /**
-         * @brief InvokableInterface
-         *
-         */
-
-        using ServiceType = std::string;
-        using ServiceTypeList = std::vector<std::string>;
-        using ServiceTypeMap = std::map<ServiceType, ServiceType>;
-        using Parameter = std::string;
-        using ParameterList = std::vector<std::string>;
 
         /**
          * @brief PackageInterface
