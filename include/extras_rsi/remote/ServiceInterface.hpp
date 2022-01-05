@@ -33,6 +33,7 @@
 #include <extras/interfaces.hpp>
 #include <extras_rsi/remote/ServiceTypes.hpp>
 #include <extras_rsi/remote/ExecutableInterface.hpp>
+#include <extras_rsi/remote/PackageInterface.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
 #include <extras_rsi/services/SessionType.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
@@ -41,15 +42,6 @@
 
 namespace extras {
     namespace rsi {
-
-        /**
-         * @brief PackageInterface
-         *
-         */
-        interface PackageInterface {
-            virtual LinePacket package_request(const ServiceTypeList& list) pure;
-            virtual ServiceTypeList unpackage_request(const LinePacket& package) pure;
-        };
 
         /**
          * @brief ServiceInterface
