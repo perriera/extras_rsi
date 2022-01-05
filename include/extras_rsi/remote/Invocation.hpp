@@ -1,7 +1,7 @@
 /**
- * @file ServiceType.hpp
+ * @file Invocation.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief InvokableInterface
+ * @brief Invocation class
  * @version 0.1
  * @date 2021-11-30
  *
@@ -31,7 +31,8 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/remote/InvocationInterface.hpp>
+#include <extras_rsi/remote/ServiceInterface.hpp>
+#include <extras_rsi/remote/InvokableInterface.hpp>
 #include <iostream>
 
 namespace extras {
@@ -43,6 +44,7 @@ namespace extras {
          */
         concrete class Invocation implements InvokableInterface
             with ParametersInterface
+            with ResolvableInterface
             with ExecutableInterface
             with PackageInterface
             with ServicesInterface
@@ -76,7 +78,7 @@ namespace extras {
                 _serverTasks(serverTasks) {}
 
             /**
-             * @brief LineBlockInterface implementation
+             * @brief ParametersInterface implementation
              *
              */
 
@@ -104,16 +106,7 @@ namespace extras {
             virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
 
             /**
-             * @brief ServicesInterface
-             *
-             * @param socket
-             * @return ServiceTypeList
-             */
-            virtual ServiceTypeList servicesRequest(int socket) override;
-            virtual LinePacket servicesResponse(int socket) override;
-
-            /**
-             * @brief InvokableInterface implementation
+             * @brief ResolvableInterface
              *
              */
 
@@ -130,6 +123,11 @@ namespace extras {
 
             virtual ServiceTypeList resolve(const ParametersInterface& parameters) override;
 
+            /**
+             * @brief InvokableInterface implementation
+             *
+             */
+
             virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) override;
 
             /**
@@ -139,6 +137,15 @@ namespace extras {
              */
             virtual void internal(const ServiceType& task) override;
             virtual void external(const ServiceType& task) override;
+
+            /**
+             * @brief ServicesInterface
+             *
+             * @param socket
+             * @return ServiceTypeList
+             */
+            virtual ServiceTypeList servicesRequest(int socket) override;
+            virtual LinePacket servicesResponse(int socket) override;
 
         };
 

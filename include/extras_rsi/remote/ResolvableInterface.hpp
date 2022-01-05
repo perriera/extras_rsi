@@ -1,7 +1,7 @@
 /**
- * @file ServiceType.hpp
+ * @file ResolvableInterface.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief InvokableInterface
+ * @brief ResolvableInterface
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_INVOCATIONINTERFACE_HPP
-#define _EXPARX_RSI_INVOCATIONINTERFACE_HPP
+#ifndef _EXPARX_RSI_RESOLVABLEINTERFACE_HPP
+#define _EXPARX_RSI_RESOLVABLEINTERFACE_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -44,11 +44,10 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief InvokableInterface
+         * @brief ResolvableInterface
          *
          */
-        interface InvokableInterface {
-
+        interface ResolvableInterface {
 
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,
@@ -62,13 +61,12 @@ namespace extras {
             ) const pure;
 
             virtual ServiceTypeList resolve(const ParametersInterface& parameters) pure;
-            virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) pure;
 
         };
 
     }
 }
 
-#endif // _EXPARX_RSI_INVOCATIONINTERFACE_HPP
+#endif // _EXPARX_RSI_RESOLVABLEINTERFACE_HPP
 
 

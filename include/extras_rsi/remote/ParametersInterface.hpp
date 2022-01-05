@@ -44,8 +44,16 @@ namespace extras {
          */
         interface ParametersInterface {
 
+            /**
+             * @brief parse()
+             * @note parse recognized parameters
+             *
+             * @param argc
+             * @param argv
+             */
             virtual void parse(int argc, char const* argv[]) pure;
             virtual Parameter parameters() const pure;
+
             virtual const Parameter& address() const pure;
             virtual const Parameter& port() const pure;
             virtual const Filenames& filenames() const pure;
@@ -54,7 +62,7 @@ namespace extras {
         };
 
         /**
-         * @brief Invocation class
+         * @brief ParametersX class
          *
          */
         concrete class ParametersX implements ParametersInterface {

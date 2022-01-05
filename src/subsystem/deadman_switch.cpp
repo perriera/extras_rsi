@@ -31,7 +31,7 @@
 #include <extras/strings.hpp>
 #include <extras/devices/ansi_colors.hpp>
 
-#include <extras_rsi/remote/InvocationInterface.hpp>
+#include <extras_rsi/remote/InvokableInterface.hpp>
 #include <extras/strings.hpp>
 #include <iostream>
 #include <sstream>

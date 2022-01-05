@@ -31,6 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
+#include <extras_rsi/remote/ExecutableInterface.hpp>
 #include <extras_rsi/remote/ServiceInterface.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
@@ -80,6 +81,11 @@ namespace extras {
             void background_downloader(task_parameters parms);
 
         public:
+
+            /**
+             * @brief ServiceInterface
+             *
+             */
             virtual const ServiceType& service() const override { return _serviceType; }
             virtual const Parameter& address() const override { return _address; }
             virtual const Parameter& port() const override { return _port; }
