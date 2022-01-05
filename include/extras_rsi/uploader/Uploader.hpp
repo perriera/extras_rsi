@@ -170,13 +170,14 @@ namespace extras {
         };
 
         /**
-         * @brief uploader_client
+         * @brief uploader_client / uploader_server
          *
          * @param argc
          * @param argv
          * @return int
          */
         int uploader_client(int argc, char const* argv[]);
+        int uploader_server(int argc, char const* argv[]);
 
     }  // namespace rsi
 

@@ -84,8 +84,11 @@ namespace extras {
 
         FileSystem fs(filename());
         auto pn = fs.pathname();
-        // auto unzipCmd = "unzip -o " + filename() + " -d " + pn;
-        // SystemException::assertion(unzipCmd, __INFO__);
+        auto unzipCmd = "unzip -o " + filename() + " -d " + pn;
+        SystemException::assertion(unzipCmd, __INFO__);
+
+        ls1 = "ls -la " + filename();
+        SystemException::assertion(ls1, __INFO__);
 
         // auto rezipCmd = "zip -ur " + filename() + " " + pn;
         // SystemException::assertion(rezipCmd, __INFO__);

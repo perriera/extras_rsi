@@ -44,6 +44,7 @@ namespace extras {
         concrete class Invocation implements InvocationInterface
             with ParametersInterface
             with ExecutableInterface
+            with PackageInterface
             with LineBlockInterface {
             ParametersX _parameters;
             rsi::PortAuthority& _portAuthority;
@@ -93,15 +94,21 @@ namespace extras {
             virtual ParameterList    list() const override { return  _parameters.list(); }
 
             /**
+             * @brief PackageInterface
+             *
+             * @param list
+             * @return LinePacket
+             */
+            virtual LinePacket package_request(const ServiceTypeList& list) override;
+            virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
+
+            /**
              * @brief InvocationInterface implementation
              *
              */
 
             virtual ServiceTypeList servicesRequest(int socket) override;
             virtual LinePacket servicesResponse(int socket) override;
-
-            virtual LinePacket package_request(const ServiceTypeList& list) override;
-            virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
 
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,
@@ -114,7 +121,7 @@ namespace extras {
                 const ServiceTypeList& after
             ) const override;
 
-            virtual ServiceTypeList formRequests(const ParametersInterface& parameters) override;
+            virtual ServiceTypeList resolve(const ParametersInterface& parameters) override;
 
             virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) override;
 

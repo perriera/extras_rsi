@@ -69,13 +69,14 @@ namespace extras {
         };
 
         /**
-         * @brief downloader_client
+         * @brief downloader_client / downloader_server
          *
          * @param argc
          * @param argv
          * @return int
          */
         int downloader_client(int argc, char const* argv[]);
+        int downloader_server(int argc, char const* argv[]);
 
     }  // namespace rsi
 

@@ -24,11 +24,22 @@
 #include <extras_rsi/uploader/Uploader.hpp>
 #include <extras_rsi/vendor/Vendor.hpp>
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 using namespace std;
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono;
 
 namespace extras {
     namespace rsi {
+
+        static Filenames _filenames;
+        static bool _extra_files;
+        static Filename _filename2;
+        static Parameter _service;
+        static Parameter _address;
+        static Parameter _port;
 
         /**
          * @brief RemoteService ostream
@@ -115,6 +126,46 @@ namespace extras {
          * @brief ExecutableInterface
          *
          */
+
+        void RemoteService::background_uploader(task_parameters parms) {
+            const char* argv[] = {
+                 parms._service.c_str(),
+                 parms._address.c_str(),
+                 parms._port.c_str(),
+                parms._filenames[0].c_str(),
+                parms._filename2.c_str(),
+            };
+            int argc = sizeof(argv) / sizeof(argv[0]);
+            argc = !_extra_files ? argc - 1 : argc;
+            uploader_server(argc, argv);
+        }
+
+        void RemoteService::background_vendor(task_parameters parms) {
+            const char* argv[] = {
+                 parms._service.c_str(),
+                 parms._address.c_str(),
+                 parms._port.c_str(),
+                parms._filenames[0].c_str(),
+                parms._filename2.c_str(),
+            };
+            int argc = sizeof(argv) / sizeof(argv[0]);
+            argc = !_extra_files ? argc - 1 : argc;
+            vendor_server(argc, argv);
+        }
+
+        void RemoteService::background_downloader(task_parameters parms) {
+            const char* argv[] = {
+                 parms._service.c_str(),
+                 parms._address.c_str(),
+                 parms._port.c_str(),
+                parms._filenames[0].c_str(),
+                parms._filename2.c_str(),
+            };
+            int argc = sizeof(argv) / sizeof(argv[0]);
+            argc = !_extra_files ? argc - 1 : argc;
+            downloader_server(argc, argv);
+        }
+
         void RemoteService::internal(const ServiceType&) {
             bool extra_files = filenames().size() > 1;
             std::string filename2 = (extra_files ? filenames()[1] : "");
@@ -127,17 +178,32 @@ namespace extras {
             };
             int argc = sizeof(argv) / sizeof(argv[0]);
             argc = !extra_files ? argc - 1 : argc;
-            if (extras::str::contains(service(), "upload"))
-                uploader_client(argc, argv);
-            if (extras::str::contains(service(), "vendor"))
-                vendor_client(argc, argv);
-            if (extras::str::contains(service(), "download"))
-                downloader_client(argc, argv);
+            if (extras::str::contains(service(), "server")) {
+                if (extras::str::contains(service(), "upload"))
+                    std::thread(&RemoteService::background_uploader, this, task_parameters(*this)).detach();
+                if (extras::str::contains(service(), "vendor"))
+                    std::thread(&RemoteService::background_vendor, this, task_parameters(*this)).detach();
+                if (extras::str::contains(service(), "download"))
+                    std::thread(&RemoteService::background_downloader, this, task_parameters(*this)).detach();
+                sleep_until(system_clock::now() + seconds(1));
+            }
+            else {
+                if (extras::str::contains(service(), "upload"))
+                    uploader_client(argc, argv);
+                if (extras::str::contains(service(), "vendor"))
+                    vendor_client(argc, argv);
+                if (extras::str::contains(service(), "download"))
+                    downloader_client(argc, argv);
+            }
         }
 
         void RemoteService::external(const ServiceType& task) {
-            SystemException::assertion(task, __INFO__);
-        }
+            if (extras::str::contains(service(), "server"))
+                SystemException::assertion(task + " &", __INFO__);
+            else
+                SystemException::assertion(task, __INFO__);
 
-    }  // namespace rsi
-}  // namespace extras
+        }  // namespace rsi
+    }  // namespace extras
+}
+

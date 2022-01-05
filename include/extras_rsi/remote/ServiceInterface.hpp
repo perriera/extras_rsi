@@ -53,6 +53,15 @@ namespace extras {
         using ParameterList = std::vector<std::string>;
 
         /**
+         * @brief PackageInterface
+         *
+         */
+        interface PackageInterface {
+            virtual LinePacket package_request(const ServiceTypeList& list) pure;
+            virtual ServiceTypeList unpackage_request(const LinePacket& package) pure;
+        };
+
+        /**
          * @brief ExecutableInterface
          *
          */
@@ -84,6 +93,7 @@ namespace extras {
          * @brief RemoteService
          *
          */
+
         concrete class RemoteService implements ServiceInterface
             with ExecutableInterface {
 
@@ -94,6 +104,27 @@ namespace extras {
             Parameter _address;
             Parameter _port;
             Filenames _filenameList;
+
+            struct task_parameters {
+                Filenames _filenames;
+                bool _extra_files;
+                Filename _filename2;
+                Parameter _service;
+                Parameter _address;
+                Parameter _port;
+                task_parameters(const ServiceInterface& si) {
+                    _filenames = si.filenames();
+                    _extra_files = _filenames.size() > 1;
+                    _filename2 = (_extra_files ? _filenames[1] : "");
+                    _service = si.service();
+                    _address = si.address();
+                    _port = si.port();
+                }
+            };
+
+            void background_uploader(task_parameters parms);
+            void background_vendor(task_parameters parms);
+            void background_downloader(task_parameters parms);
 
         public:
             virtual const ServiceType& service() const override { return _serviceType; }

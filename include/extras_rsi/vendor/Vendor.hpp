@@ -65,13 +65,14 @@ namespace extras {
         };
 
         /**
-         * @brief vendor_client
+         * @brief vendor_client / vendor_server
          *
          * @param argc
          * @param argv
          * @return int
          */
         int vendor_client(int argc, char const* argv[]);
+        int vendor_server(int argc, char const* argv[]);
 
     }  // namespace rsi
 

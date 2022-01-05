@@ -104,7 +104,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     Mock<rsi::InvocationInterface> mock;
     rsi::InvocationInterface& i = mock.get();
-    When(Method(mock, formRequests))
+    When(Method(mock, resolve))
         .AlwaysDo(
             [&_portAuthority](
                 const rsi::ParametersInterface& parameters) {
@@ -183,7 +183,10 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                         };
                     }
             });
-    When(Method(mock, package_request))
+
+    Mock<rsi::PackageInterface> mock_pkg;
+    rsi::PackageInterface& i_pkg = mock_pkg.get();
+    When(Method(mock_pkg, package_request))
         .AlwaysDo(
             [&_parameterList, &i, &lbi](const rsi::ServiceTypeList& list) {
                 std::stringstream ss;
@@ -192,7 +195,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 rsi::LinePacket packet = ss.str();
                 return packet;
             });
-    When(Method(mock, unpackage_request))
+    When(Method(mock_pkg, unpackage_request))
         .AlwaysDo(
             [&_parameterList, &i, &lbi](const rsi::LinePacket& package) {
                 auto parts = extras::str::split(package, ';');
@@ -201,9 +204,10 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                     list.push_back(item);
                 return list;
             });
+
     When(Method(mock, servicesRequest))
         .AlwaysDo(
-            [&_parameterList, &i, &lbi, &_parameters](int socket) {
+            [&_parameterList, &i, &lbi, &i_pkg, &_parameters](int socket) {
                 if (socket == -2)
                     throw rsi::RSIException("unknown", __INFO__);
                 // --- core code below ----
@@ -211,37 +215,15 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 lbi.send_line_block(params);
                 if (socket != -1) { // real time
                     auto linePacket = lbi.read_line_block();
-                    auto serviceList = i.unpackage_request(linePacket);
+                    auto serviceList = i_pkg.unpackage_request(linePacket);
                     return serviceList;
                 }
                 // --- core code above ----
                 else {
                     auto linePacket = i.servicesResponse(-1);
-                    auto serviceList = i.unpackage_request(linePacket);
+                    auto serviceList = i_pkg.unpackage_request(linePacket);
                     return serviceList;
                 } // mock
-            });
-    When(Method(mock, servicesResponse))
-        .AlwaysDo(
-            [&_parameterList, &i, &_sentList, &_receivedList, &lbi, &_serverTasks](int) {
-
-                auto request = lbi.read_line_block();
-                rsi::ParametersX parameters(request);
-                auto serviceList = i.formRequests(parameters);
-
-                rsi::Session _serverSession;
-                _serverSession.create();
-
-                auto servers = i.compile(_serverTasks, _serverSession, serviceList);
-                for (std::string task : servers) {
-                    std::cout << task << std::endl;
-                    SystemException::assertion(task + " &", __INFO__);
-                }
-
-                auto response = i.package_request(serviceList);
-                lbi.send_line_block(response);
-                return response;
-
             });
 
     Mock<rsi::ExecutableInterface> mock_exe;
@@ -260,8 +242,38 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     When(Method(mock_exe, external))
         .AlwaysDo(
             [](const rsi::ServiceType& task) {
-                SystemException::assertion(task, __INFO__);
+                std::stringstream in;
+                rsi::RemoteService rs;
+                in << task;
+                in >> rs;
+                rs.external(task);
             });
+
+
+    When(Method(mock, servicesResponse))
+        .AlwaysDo(
+            [&_parameterList, &i, &i_pkg, &_sentList, &_receivedList, &lbi, &_serverTasks, &i_exe](int) {
+
+                auto request = lbi.read_line_block();
+                rsi::ParametersX parameters(request);
+                auto serviceList = i.resolve(parameters);
+
+                rsi::Session _serverSession;
+                _serverSession.create();
+
+                auto servers = i.compile(_serverTasks, _serverSession, serviceList);
+                for (std::string task : servers) {
+                    std::cout << task << std::endl;
+                    i_exe.external(task);
+                    // SystemException::assertion(task + " &", __INFO__);
+                }
+
+                auto response = i_pkg.package_request(serviceList);
+                lbi.send_line_block(response);
+                return response;
+
+            });
+
 
     // 
     // step 0. killAllServers();
@@ -275,7 +287,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 auto clients = i.compile(_clientTasks, session, list);
                 for (std::string task : clients) {
                     std::cout << task << std::endl;
-                    i_exe.internal(task);
+                    i_exe.external(task);
                 }
                 i.decompile(list, clients);
             });

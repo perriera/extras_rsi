@@ -25,25 +25,8 @@
 using namespace  extras;
 
 int main(int argc, char const* argv[]) {
-    try {
-        std::cout << extras::start(argv[0]) << std::endl;
-        activate_deadman_switch(argv[0]);
-        extras::rsi::DownloaderServer downloader;
-        downloader.parameters(argc, argv);
-        downloader.connect();
-        downloader.transfer();
-        std::cout << extras::pass("File data downloaded successfully") << std::endl;
-        downloader.close();
-        rsi::kill_deadman_switch();
-        std::cout << extras::end(argv[0]) << std::endl << std::endl;
-        exit(0);
-    }
-    catch (extras::exception& ex) {
-        std::cout << ex << std::endl;
-        exit(-1);
-    }
-    catch (std::exception& ex) {
-        std::cout << extras::fail(ex.what()) << std::endl;
-        exit(-1);
-    }
+    activate_deadman_switch(argv[0]);
+    auto code = extras::rsi::downloader_server(argc, argv);
+    rsi::kill_deadman_switch();
+    return code;
 }

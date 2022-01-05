@@ -76,7 +76,7 @@ namespace extras {
             if (linePacket.size() == 0) throw std::string("test exception");
 
             rsi::ParametersX parameters(linePacket);
-            auto _servicesList = formRequests(parameters);
+            auto _servicesList = resolve(parameters);
             linePacket = package_request(_servicesList);
             send_line_block(linePacket);
 
@@ -174,12 +174,12 @@ namespace extras {
         }
 
         /**
-         * @brief formRequests()
+         * @brief resolve()
          *
          * @param list
          * @return ServiceTypeList
          */
-        ServiceTypeList Invocation::formRequests(const ParametersInterface& parameters) {
+        ServiceTypeList Invocation::resolve(const ParametersInterface& parameters) {
             rsi::ServiceTypeList serviceTypeList;
             for (auto filename : parameters.filenames()) {
                 std::stringstream ss;

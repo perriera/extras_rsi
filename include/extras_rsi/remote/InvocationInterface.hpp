@@ -52,9 +52,6 @@ namespace extras {
             virtual LinePacket servicesResponse(int socket) pure;
             virtual ServiceTypeList servicesRequest(int socket) pure;
 
-            virtual LinePacket package_request(const ServiceTypeList& list) pure;
-            virtual ServiceTypeList unpackage_request(const LinePacket& package) pure;
-
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,
                 const SessionInterface& session,
@@ -66,7 +63,7 @@ namespace extras {
                 const ServiceTypeList& after
             ) const pure;
 
-            virtual ServiceTypeList formRequests(const ParametersInterface& parameters) pure;
+            virtual ServiceTypeList resolve(const ParametersInterface& parameters) pure;
 
             virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) pure;
 
