@@ -71,7 +71,7 @@ namespace extras {
             }
 
             /**
-             * @brief InvokableInterface implementation
+             * @brief ParametersInterface implementation
              *
              */
             virtual void parse(int argc, char const* argv[]) override;

@@ -52,8 +52,13 @@ namespace extras {
              * @param argv
              */
             virtual void parse(int argc, char const* argv[]) pure;
-            virtual Parameter parameters() const pure;
 
+            /**
+             * @brief various parameter methods
+             *
+             * @return Parameter
+             */
+            virtual Parameter parameters() const pure;
             virtual const Parameter& address() const pure;
             virtual const Parameter& port() const pure;
             virtual const Filenames& filenames() const pure;
