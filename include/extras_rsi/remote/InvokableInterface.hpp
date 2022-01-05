@@ -61,7 +61,7 @@ namespace extras {
              * @param session
              * @param list
              */
-            virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) pure;
+            virtual void invoke() pure;
 
         };
 

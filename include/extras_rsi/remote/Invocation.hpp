@@ -146,7 +146,7 @@ namespace extras {
              *
              */
 
-            virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) override;
+            virtual void invoke() override;
 
         };
 

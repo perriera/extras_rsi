@@ -291,16 +291,31 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
 
     When(Method(mock, invoke))
         .AlwaysDo(
-            [&i, &lbi, &i_exe, &i_rsv, &_clientTasks](const rsi::SessionInterface& session, const rsi::ServiceTypeList& list) {
+            [&i, &lbi, &i_exe, &i_rsv, &i_svc, &_clientTasks]() {
 
 
-                // --- core code below ----
-                auto clients = i_rsv.compile(_clientTasks, session, list);
-                for (std::string task : clients) {
-                    std::cout << task << std::endl;
-                    i_exe.external(task);
+                for (int attempt = 0; attempt < 3; attempt++) {
+                    auto servicesList = i_svc.servicesRequest(-1);
+                    rsi::Session _clientSession;
+                    _clientSession.create();
+                    try {
+
+                        // --- core code below ----
+                        auto clients = i_rsv.compile(_clientTasks, _clientSession, servicesList);
+                        for (std::string task : clients) {
+                            std::cout << task << std::endl;
+                            i_exe.external(task);
+                        }
+                        i_rsv.decompile(servicesList, clients);
+
+                        _clientSession.destroy();
+                        break;
+                    }
+                    catch (std::exception& ex) {
+                        std::cout << red << ex.what() << reset << std::endl;
+                        _clientSession.destroy();
+                    }
                 }
-                i_rsv.decompile(list, clients);
 
 
 
@@ -311,21 +326,8 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
     //
     REQUIRE(_parameterList.size() == 0);
     _parameters.parse(argc, argv);
+    i.invoke();
 
-    for (int attempt = 0; attempt < 3; attempt++) {
-        auto servicesList = i_svc.servicesRequest(-1);
-        rsi::Session _clientSession;
-        _clientSession.create();
-        try {
-            i.invoke(_clientSession, servicesList);
-            _clientSession.destroy();
-            break;
-        }
-        catch (std::exception& ex) {
-            std::cout << red << ex.what() << reset << std::endl;
-            _clientSession.destroy();
-        }
-    }
 
     REQUIRE(fs::exists(src_file));
     REQUIRE(fs::exists(webflow_file));

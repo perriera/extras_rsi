@@ -21,6 +21,7 @@
 
 #include <extras_rsi/remote/Invocation.hpp>
 #include <extras_rsi/remote/Service.hpp>
+#include <extras/devices/ansi_colors.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <iostream>
 
@@ -213,13 +214,31 @@ namespace extras {
          * @param session
          * @param socket
          */
-        void Invocation::invoke(const SessionInterface& session, const ServiceTypeList& list) {
-            auto clients = compile(_clientTasks, session, list);
-            for (std::string task : clients) {
-                std::cout << task << std::endl;
-                SystemException::assertion(task, __INFO__);
+        void Invocation::invoke() {
+
+            for (int attempt = 0; attempt < 3; attempt++) {
+                auto servicesList = servicesRequest(-1);
+                rsi::Session _clientSession;
+                _clientSession.create();
+                try {
+
+                    // --- core code below ----
+                    auto clients = compile(_clientTasks, _clientSession, servicesList);
+                    for (std::string task : clients) {
+                        std::cout << task << std::endl;
+                        external(task);
+                    }
+                    decompile(servicesList, clients);
+
+                    _clientSession.destroy();
+                    break;
+                }
+                catch (std::exception& ex) {
+                    std::cout << red << ex.what() << reset << std::endl;
+                    _clientSession.destroy();
+                }
             }
-            decompile(list, clients);
+
         }
 
         /**
