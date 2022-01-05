@@ -17,7 +17,7 @@
  */
 
 #include <extras_rsi/remote/InvokableInterface.hpp>
-#include <extras_rsi/remote/RemoteService.hpp>
+#include <extras_rsi/remote/Service.hpp>
 #include <extras_rsi/remote/ParametersX.hpp>
 #include <extras/strings.hpp>
 #include <iostream>

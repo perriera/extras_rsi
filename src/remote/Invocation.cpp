@@ -20,7 +20,7 @@
 #include <unistd.h>
 
 #include <extras_rsi/remote/Invocation.hpp>
-#include <extras_rsi/remote/RemoteService.hpp>
+#include <extras_rsi/remote/Service.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <iostream>
 
