@@ -44,7 +44,28 @@ namespace extras {
          *
          */
         interface PackageInterface {
+
+            /**
+             * @brief package_request()
+             *
+             * Package the request for transport over a socket connection,
+             * (typically as a single line). Typically, we replace all std::endl
+             * with a semicolon. As long as there are no semicolons used in the
+             * message itself, this will work, (see class specific implementation).
+             *
+             * @param list
+             * @return LinePacket
+             */
             virtual LinePacket package_request(const ServiceTypeList& list) pure;
+
+            /**
+             * @brief unpackage_request()
+             *
+             * Unpackage the request transported, (see above)
+             *
+             * @param list
+             * @return LinePacket
+             */
             virtual ServiceTypeList unpackage_request(const LinePacket& package) pure;
         };
 

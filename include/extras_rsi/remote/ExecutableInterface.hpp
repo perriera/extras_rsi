@@ -1,7 +1,7 @@
 /**
- * @file ServiceType.hpp
+ * @file ExecutableInterface.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief ServiceInterface
+ * @brief ExecutableInterface
  * @version 0.1
  * @date 2021-11-30
  *
@@ -43,8 +43,29 @@ namespace extras {
          *
          */
         interface ExecutableInterface {
+
+            /**
+             * @brief internal()
+             * @note run the service internally, (if possble)
+             *
+             * This is usually achieved either by running the class directly,
+             * or through a thread, (using the C++11 style thread support)
+             *
+             * @param task
+             */
             virtual void internal(const ServiceType& task) pure;
+
+            /**
+             * @brief external()
+             * @note run the service externally, (if possble)
+             *
+             * This is usually achievd using the C/C++ standard library
+             * system() called, (see extras::SystemException::assertion())
+             *
+             * @param task
+             */
             virtual void external(const ServiceType& task) pure;
+
         };
 
     }

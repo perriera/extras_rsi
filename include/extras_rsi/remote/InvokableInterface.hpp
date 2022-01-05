@@ -53,6 +53,11 @@ namespace extras {
             /**
              * @brief invoke()
              * @note execute the methods compiled
+             *
+             * After taking into consiration the parameters provided by
+             * the ResolvableInterface, execute in sequence a series of calls
+             * to fully 'resolve' the objective, (of the parameters).
+             *
              * @param session
              * @param list
              */
