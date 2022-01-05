@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_PARAMETERS_HPP
-#define _EXPARX_RSI_PARAMETERS_HPP
+#ifndef _EXPARX_RSI_PARAMETERSINTERFACE_HPP
+#define _EXPARX_RSI_PARAMETERSINTERFACE_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -61,55 +61,10 @@ namespace extras {
 
         };
 
-        /**
-         * @brief ParametersX class
-         *
-         */
-        concrete class ParametersX implements ParametersInterface {
-
-            friend std::ostream& operator<<(std::ostream& out, const ParametersX& obj);
-            friend std::istream& operator>>(std::istream& in, ParametersX& obj);
-
-            Parameter _address;
-            Parameter _port;
-            Filenames _filenames;
-
-        public:
-
-            /**
-             * @brief Construct a new Invocation object
-             *
-             * @param portAuthority
-             */
-            ParametersX() {};
-
-            ParametersX(const Parameter& param) {
-                std::stringstream ss;
-                ss << param;
-                ss >> *this;
-            };
-
-            ParametersX(int argc, char const* argv[]) {
-                parse(argc, argv);
-            }
-
-            /**
-             * @brief InvokableInterface implementation
-             *
-             */
-            virtual void parse(int argc, char const* argv[]) override;
-            virtual Parameter parameters() const override;
-            virtual  const Parameter& address() const override { return _address; }
-            virtual  const Parameter& port() const override { return _port; }
-            virtual  const Filenames& filenames() const override { return _filenames; }
-            virtual  ParameterList list() const override;
-
-        };
-
 
     }
 }
 
-#endif // _EXPARX_RSI_PARAMETERS_HPP
+#endif // _EXPARX_RSI_PARAMETERSINTERFACE_HPP
 
 

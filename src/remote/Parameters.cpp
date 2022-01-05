@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/remote/ParametersInterface.hpp>
+#include <extras_rsi/remote/ParametersX.hpp>
 #include <iostream>
 
 using namespace std;
