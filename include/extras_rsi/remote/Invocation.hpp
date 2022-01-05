@@ -45,6 +45,7 @@ namespace extras {
             with ParametersInterface
             with ExecutableInterface
             with PackageInterface
+            with ServicesInterface
             with LineBlockInterface {
             ParametersX _parameters;
             rsi::PortAuthority& _portAuthority;
@@ -103,12 +104,18 @@ namespace extras {
             virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
 
             /**
+             * @brief ServicesInterface
+             *
+             * @param socket
+             * @return ServiceTypeList
+             */
+            virtual ServiceTypeList servicesRequest(int socket) override;
+            virtual LinePacket servicesResponse(int socket) override;
+
+            /**
              * @brief InvocationInterface implementation
              *
              */
-
-            virtual ServiceTypeList servicesRequest(int socket) override;
-            virtual LinePacket servicesResponse(int socket) override;
 
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,

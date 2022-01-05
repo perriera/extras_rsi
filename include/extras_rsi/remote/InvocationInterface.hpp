@@ -49,9 +49,6 @@ namespace extras {
          */
         interface InvocationInterface {
 
-            virtual LinePacket servicesResponse(int socket) pure;
-            virtual ServiceTypeList servicesRequest(int socket) pure;
-
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,
                 const SessionInterface& session,
@@ -64,7 +61,6 @@ namespace extras {
             ) const pure;
 
             virtual ServiceTypeList resolve(const ParametersInterface& parameters) pure;
-
             virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) pure;
 
         };

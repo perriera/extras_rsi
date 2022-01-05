@@ -20,6 +20,7 @@
 #include <unistd.h>
 
 #include <extras_rsi/remote/ServiceInterface.hpp>
+#include <extras_rsi/remote/RemoteService.hpp>
 #include <extras_rsi/uploader/Downloader.hpp>
 #include <extras_rsi/uploader/Uploader.hpp>
 #include <extras_rsi/vendor/Vendor.hpp>

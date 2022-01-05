@@ -17,6 +17,7 @@
  */
 
 #include <extras_rsi/remote/InvocationInterface.hpp>
+#include <extras_rsi/remote/RemoteService.hpp>
 #include <extras/strings.hpp>
 #include <iostream>
 #include <sstream>
@@ -205,9 +206,12 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 return list;
             });
 
-    When(Method(mock, servicesRequest))
+    Mock<rsi::ServicesInterface> mock_svc;
+    rsi::ServicesInterface& i_svc = mock_svc.get();
+
+    When(Method(mock_svc, servicesRequest))
         .AlwaysDo(
-            [&_parameterList, &i, &lbi, &i_pkg, &_parameters](int socket) {
+            [&_parameterList, &i, &lbi, &i_pkg, &i_svc, &_parameters](int socket) {
                 if (socket == -2)
                     throw rsi::RSIException("unknown", __INFO__);
                 // --- core code below ----
@@ -220,7 +224,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 }
                 // --- core code above ----
                 else {
-                    auto linePacket = i.servicesResponse(-1);
+                    auto linePacket = i_svc.servicesResponse(-1);
                     auto serviceList = i_pkg.unpackage_request(linePacket);
                     return serviceList;
                 } // mock
@@ -250,7 +254,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
             });
 
 
-    When(Method(mock, servicesResponse))
+    When(Method(mock_svc, servicesResponse))
         .AlwaysDo(
             [&_parameterList, &i, &i_pkg, &_sentList, &_receivedList, &lbi, &_serverTasks, &i_exe](int) {
 
@@ -299,7 +303,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     _parameters.parse(argc, argv);
 
     for (int attempt = 0; attempt < 3; attempt++) {
-        auto servicesList = i.servicesRequest(-1);
+        auto servicesList = i_svc.servicesRequest(-1);
         rsi::Session _clientSession;
         _clientSession.create();
         try {

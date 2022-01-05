@@ -90,59 +90,13 @@ namespace extras {
         };
 
         /**
-         * @brief RemoteService
+         * @brief ServicesInterface
          *
          */
+        interface ServicesInterface {
 
-        concrete class RemoteService implements ServiceInterface
-            with ExecutableInterface {
-
-            friend std::ostream& operator<<(std::ostream& out, const RemoteService& obj);
-            friend std::istream& operator>>(std::istream& in, RemoteService& obj);
-
-            ServiceType _serviceType;
-            Parameter _address;
-            Parameter _port;
-            Filenames _filenameList;
-
-            struct task_parameters {
-                Filenames _filenames;
-                bool _extra_files;
-                Filename _filename2;
-                Parameter _service;
-                Parameter _address;
-                Parameter _port;
-                task_parameters(const ServiceInterface& si) {
-                    _filenames = si.filenames();
-                    _extra_files = _filenames.size() > 1;
-                    _filename2 = (_extra_files ? _filenames[1] : "");
-                    _service = si.service();
-                    _address = si.address();
-                    _port = si.port();
-                }
-            };
-
-            void background_uploader(task_parameters parms);
-            void background_vendor(task_parameters parms);
-            void background_downloader(task_parameters parms);
-
-        public:
-            virtual const ServiceType& service() const override { return _serviceType; }
-            virtual const Parameter& address() const override { return _address; }
-            virtual const Parameter& port() const override { return _port; }
-            virtual const Filenames& filenames() const override { return _filenameList; }
-            virtual bool isUploader() const override;
-            virtual bool isServer(const Parameter& param) const override;
-            virtual void prepare(const SessionInterface& session) const override;
-            virtual void cleanup(const SessionInterface& session) const override;
-
-            /**
-             * @brief ExecutableInterface
-             *
-             * @param task
-             */
-            virtual void internal(const ServiceType& task) override;
-            virtual void external(const ServiceType& task) override;
+            virtual LinePacket servicesResponse(int socket) pure;
+            virtual ServiceTypeList servicesRequest(int socket) pure;
 
         };
 
