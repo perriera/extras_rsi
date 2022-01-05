@@ -292,6 +292,8 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
     When(Method(mock, invoke))
         .AlwaysDo(
             [&i, &lbi, &i_exe, &i_rsv, &_clientTasks](const rsi::SessionInterface& session, const rsi::ServiceTypeList& list) {
+
+
                 // --- core code below ----
                 auto clients = i_rsv.compile(_clientTasks, session, list);
                 for (std::string task : clients) {
@@ -299,6 +301,9 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
                     i_exe.external(task);
                 }
                 i_rsv.decompile(list, clients);
+
+
+
             });
 
     // 

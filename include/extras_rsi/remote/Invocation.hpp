@@ -98,6 +98,15 @@ namespace extras {
             virtual void internal(const ServiceType& task) override;
             virtual void external(const ServiceType& task) override;
 
+            /**
+             * @brief ServicesInterface
+             *
+             * @param socket
+             * @return ServiceTypeList
+             */
+            virtual ServiceTypeList servicesRequest(int socket) override;
+            virtual LinePacket servicesResponse(int socket) override;
+
         public:
 
             /**
@@ -138,15 +147,6 @@ namespace extras {
              */
 
             virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) override;
-
-            /**
-             * @brief ServicesInterface
-             *
-             * @param socket
-             * @return ServiceTypeList
-             */
-            virtual ServiceTypeList servicesRequest(int socket) override;
-            virtual LinePacket servicesResponse(int socket) override;
 
         };
 

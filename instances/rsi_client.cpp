@@ -54,15 +54,15 @@ int main(int argc, char const* argv[]) {
         //
         // send request to server
         //
-        auto list = rsi.servicesRequest(_client_socket);
+        // auto list = rsi.servicesRequest(_client_socket);
 
         // 
         // step 3. start server requests
         //
-        rsi::Session _clientSession;
-        _clientSession.create();
-        rsi.invoke(_clientSession, list);
-        _clientSession.destroy();
+        // rsi::Session _clientSession;
+        // _clientSession.create();
+        // rsi.invoke(_clientSession, list);
+        // _clientSession.destroy();
 
 
 
