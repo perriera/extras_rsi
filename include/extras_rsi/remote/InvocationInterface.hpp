@@ -1,7 +1,7 @@
 /**
  * @file ServiceType.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief InvocationInterface
+ * @brief InvokableInterface
  * @version 0.1
  * @date 2021-11-30
  *
@@ -44,10 +44,11 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief InvocationInterface
+         * @brief InvokableInterface
          *
          */
-        interface InvocationInterface {
+        interface InvokableInterface {
+
 
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,

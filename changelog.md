@@ -5,7 +5,7 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v4.24.0 -m "InvocationInterface, (Working prototype)"</br>
+> > git tag -a v4.24.0 -m "InvokableInterface, (Working prototype)"</br>
 > > git push origin v4.24.0
 
 IMPORTANT:
@@ -36,14 +36,14 @@ Updated README.md accordinging</br>
 
 ## Added
 
-- InvocationInterface, (Working prototype)
+- InvokableInterface, (Working prototype)
 - ServiceInterface
 
 #### 4.23.0 (2022-01-01)
 
 ## Added
 
-- InvocationInterface
+- InvokableInterface
 - ServiceInterface
 
 #### 4.22.1 (2021-12-26)

@@ -38,7 +38,7 @@ using namespace std::chrono;
 
 void killAllServers();
 
-SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
+SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
 
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
     SystemException::assertion("cp data/exparx.webflow.zip testit; ", __INFO__);
@@ -103,8 +103,8 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     Verify(Method(mock_lbi, send_line_block));
     Verify(Method(mock_lbi, read_line_block));
 
-    Mock<rsi::InvocationInterface> mock;
-    rsi::InvocationInterface& i = mock.get();
+    Mock<rsi::InvokableInterface> mock;
+    rsi::InvokableInterface& i = mock.get();
     When(Method(mock, resolve))
         .AlwaysDo(
             [&_portAuthority](

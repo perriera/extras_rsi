@@ -1,7 +1,7 @@
 /**
  * @file ServiceType.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief InvocationInterface
+ * @brief InvokableInterface
  * @version 0.1
  * @date 2021-11-30
  *
@@ -41,7 +41,7 @@ namespace extras {
          * @brief Invocation class
          *
          */
-        concrete class Invocation implements InvocationInterface
+        concrete class Invocation implements InvokableInterface
             with ParametersInterface
             with ExecutableInterface
             with PackageInterface
@@ -113,7 +113,7 @@ namespace extras {
             virtual LinePacket servicesResponse(int socket) override;
 
             /**
-             * @brief InvocationInterface implementation
+             * @brief InvokableInterface implementation
              *
              */
 

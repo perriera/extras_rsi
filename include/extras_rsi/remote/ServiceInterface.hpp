@@ -42,7 +42,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief InvocationInterface
+         * @brief InvokableInterface
          *
          */
 
