@@ -63,6 +63,41 @@ namespace extras {
             virtual void send_line_block(const LinePacket& msg) const override;
             virtual LinePacket read_line_block() override;
 
+            /**
+             * @brief PackageInterface
+             *
+             * @param list
+             * @return LinePacket
+             */
+            virtual LinePacket package_request(const ServiceTypeList& list) override;
+            virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
+
+            /**
+             * @brief ResolvableInterface
+             *
+             */
+
+            virtual ServiceTypeList compile(
+                const ServiceTypeMap& serviceTypes,
+                const SessionInterface& session,
+                const ServiceTypeList& list
+            ) const override;
+
+            virtual void decompile(
+                const ServiceTypeList& before,
+                const ServiceTypeList& after
+            ) const override;
+
+            virtual ServiceTypeList resolve(const ParametersInterface& parameters) override;
+
+            /**
+             * @brief ExecutableInterface
+             *
+             * @param task
+             */
+            virtual void internal(const ServiceType& task) override;
+            virtual void external(const ServiceType& task) override;
+
         public:
 
             /**
@@ -98,46 +133,11 @@ namespace extras {
             virtual ParameterList    list() const override { return  _parameters.list(); }
 
             /**
-             * @brief PackageInterface
-             *
-             * @param list
-             * @return LinePacket
-             */
-            virtual LinePacket package_request(const ServiceTypeList& list) override;
-            virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
-
-            /**
-             * @brief ResolvableInterface
-             *
-             */
-
-            virtual ServiceTypeList compile(
-                const ServiceTypeMap& serviceTypes,
-                const SessionInterface& session,
-                const ServiceTypeList& list
-            ) const override;
-
-            virtual void decompile(
-                const ServiceTypeList& before,
-                const ServiceTypeList& after
-            ) const override;
-
-            virtual ServiceTypeList resolve(const ParametersInterface& parameters) override;
-
-            /**
              * @brief InvokableInterface implementation
              *
              */
 
             virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) override;
-
-            /**
-             * @brief ExecutableInterface
-             *
-             * @param task
-             */
-            virtual void internal(const ServiceType& task) override;
-            virtual void external(const ServiceType& task) override;
 
             /**
              * @brief ServicesInterface
