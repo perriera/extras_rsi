@@ -55,7 +55,6 @@ namespace extras {
         private:
 
             ParametersX _parameters;
-            int _client_socket = -1;
             rsi::VendorInterface& _vendor;
 
             /**
@@ -120,6 +119,10 @@ namespace extras {
 
             virtual ServiceTypeList servicesRequest(int socket) override;
             virtual LinePacket servicesResponse(int socket) override;
+
+        protected:
+
+            int _client_socket = -1;
 
         public:
 
