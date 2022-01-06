@@ -47,6 +47,10 @@ namespace extras {
             ::close(this->_client_socket);
         }
 
+        void InvocationClient::send() {
+            invoke(_client_socket);
+        }
+
         /**
          * @brief InvocationServer
          *
@@ -65,7 +69,7 @@ namespace extras {
 
         void InvocationServer::accept() {
             socklen_t addr_size = sizeof(_client_addr);
-            int _client_socket = ::accept(_server_socket, (struct sockaddr*)&_client_addr, &addr_size);
+            _client_socket = ::accept(_server_socket, (struct sockaddr*)&_client_addr, &addr_size);
             if (_client_socket == -1) {
                 // TODO:: write a proper assertion() for this
                 ::close(_client_socket);
@@ -74,7 +78,11 @@ namespace extras {
         }
         void InvocationServer::close() const {
             ::close(this->_client_socket);
-            ::close(this->_client_socket);
+            ::close(this->_server_socket);
+        }
+
+        void InvocationServer::receive() {
+            service(_client_socket);
         }
 
     }  // namespace rsi

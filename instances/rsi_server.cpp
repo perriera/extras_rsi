@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/remote/Invocation.hpp>
+#include <extras_rsi/remote/ClientServer.hpp>
 #include <extras_rsi/remote/Vendor.hpp>
 #include <extras_rsi/socketpool/Server.hpp>
 #include <extras/status/StatusLine.hpp>
@@ -45,42 +45,18 @@ int main(int argc, char const* argv[]) {
         std::cout << extras::start(argv[0]) << std::endl;
 
         //
-        // parameters 
+        // new way 
         //
 
         rsi::PortAuthority portAuthority;
         rsi::Vendor vendor(portAuthority);
-        rsi::Invocation server(vendor);
+        rsi::InvocationServer server(vendor);
         server.parse(argc, argv);
-
-        //
-        // setyup the server
-        // 
-
-        struct sockaddr_in _server_addr;
-        int _server_socket = rsi::configure_serversocket(server.address().c_str(), stoi(server.port()),
-            _server_addr, false);
-        if (_server_socket == -1) {
-            ::close(_server_socket);
-            // throw RSIException("Timeout on uploader_server connect", __INFO__);
+        server.connect();
+        while (true) {
+            server.accept();
+            server.receive();
         }
-
-        // 
-        // accept connection
-        //
-        struct sockaddr_in _new_addr;
-        socklen_t addr_size = sizeof(_new_addr);
-        int _client_socket = ::accept(_server_socket, (struct sockaddr*)&_new_addr, &addr_size);
-        if (_client_socket == -1) {
-            ::close(_client_socket);
-            // throw RSIException("Timeout on uploader_server accept", __INFO__);
-        }
-
-        // 
-        // service the invocation of the client connection
-        // 
-
-        server.service(_client_socket);
 
         //
         // old way

@@ -45,6 +45,7 @@ namespace extras {
 
             virtual void connect() pure;
             virtual void close() const pure;
+            virtual void send() pure;
 
         };
 
@@ -57,6 +58,7 @@ namespace extras {
             virtual void connect() pure;
             virtual void accept() pure;
             virtual void close() const pure;
+            virtual void receive() pure;
 
         };
 

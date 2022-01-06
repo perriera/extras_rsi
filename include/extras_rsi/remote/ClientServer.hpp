@@ -36,6 +36,8 @@
 
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
+#include <arpa/inet.h>
+#include <unistd.h>
 
 namespace extras {
     namespace rsi {
@@ -57,6 +59,7 @@ namespace extras {
 
             virtual void connect() override;
             virtual void close() const override;
+            virtual void send() override;
 
         };
 
@@ -80,6 +83,7 @@ namespace extras {
             virtual void connect() override;
             virtual void accept() override;
             virtual void close() const override;
+            virtual void receive() override;
 
         };
 

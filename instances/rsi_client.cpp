@@ -19,6 +19,7 @@
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/remote/Vendor.hpp>
 #include <extras_rsi/remote/Invocation.hpp>
+#include <extras_rsi/remote/ClientServer.hpp>
 #include <extras_rsi/socketpool/Client.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/subsystem.hpp>
@@ -33,28 +34,15 @@ int main(int argc, char const* argv[]) {
     try {
 
         //
-        // parameters
+        // new way
         //
 
         rsi::PortAuthority portAuthority;
         rsi::Vendor vendor(portAuthority);
-        rsi::Invocation client(vendor);
+        rsi::InvocationClient client(vendor);
         client.parse(argc, argv);
-
-        //
-        // connect to the server
-        // 
-
-        struct sockaddr_in _server_addr;
-        auto ip = client.address().c_str();
-        auto port = stoi(client.port());
-        int _client_socket = rsi::connect_to_server(ip, port, _server_addr, false);
-
-        //
-        // invoke the server
-        //
-        client.invoke(_client_socket);
-
+        client.connect();
+        client.send();
 
         //
         // old way
