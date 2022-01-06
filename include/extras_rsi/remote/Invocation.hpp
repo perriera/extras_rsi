@@ -45,7 +45,7 @@ namespace extras {
          */
         concrete class Invocation implements InvokableInterface
             with ParametersInterface
-            with ResolvableInterface
+            with CompilerInterface
             with ExecutableInterface
             with PackageInterface
             with ServicesInterface
@@ -56,8 +56,8 @@ namespace extras {
             ParametersX _parameters;
             rsi::PortAuthority& _portAuthority;
             int _client_socket = -1;
-            const rsi::ServiceTypeMap& _clientTasks;
-            const rsi::ServiceTypeMap& _serverTasks;
+            ServiceTypeMap _clientTasks;
+            ServiceTypeMap _serverTasks;
 
             /**
              * @brief LineBlockInterface
@@ -76,9 +76,12 @@ namespace extras {
             virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
 
             /**
-             * @brief ResolvableInterface
+             * @brief CompilerInterface
              *
              */
+
+            virtual const ServiceTypeMap& clientTasks() override { return _clientTasks; }
+            virtual const ServiceTypeMap& serverTasks()  override { return _serverTasks; }
 
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,

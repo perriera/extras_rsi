@@ -107,8 +107,8 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
     Mock<rsi::InvokableInterface> mock;
     rsi::InvokableInterface& i = mock.get();
 
-    Mock<rsi::ResolvableInterface> mock_rsv;
-    rsi::ResolvableInterface& i_rsv = mock_rsv.get();
+    Mock<rsi::CompilerInterface> mock_rsv;
+    rsi::CompilerInterface& i_rsv = mock_rsv.get();
 
     When(Method(mock_rsv, resolve))
         .AlwaysDo(
