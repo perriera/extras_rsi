@@ -44,27 +44,28 @@ int main(int argc, char const* argv[]) {
         rsi::Invocation rsi(portAuthority, clientTasks, serverTasks);
         rsi.parse(argc, argv);
 
-        //
-        // connect to the server
-        // 
-        struct sockaddr_in _server_addr;
-        int _client_socket =
-            rsi::connect_to_server(rsi.address().c_str(), stoi(rsi.port()), _server_addr);
+        // //
+        // // connect to the server
+        // // 
+        // struct sockaddr_in _server_addr;
+        // auto ip = rsi.address().c_str();
+        // auto port = stoi(rsi.port());
+        // int _client_socket = rsi::connect_to_server(ip, port, _server_addr, false);
 
-        //
-        // send request to server
-        //
-        // auto list = rsi.servicesRequest(_client_socket);
+        // //
+        // // send request to server
+        // //
+        // // auto list = rsi.servicesRequest(_client_socket);
 
-        // 
-        // step 3. start server requests
-        //
-        // rsi::Session _clientSession;
-        // _clientSession.create();
-        // rsi.invoke(_clientSession, list);
-        // _clientSession.destroy();
+        // // 
+        // // step 3. start server requests
+        // //
+        // // rsi::Session _clientSession;
+        // // _clientSession.create();
+        // // rsi.invoke(_clientSession, list);
+        // // _clientSession.destroy();
 
-        rsi.invoke(_client_socket);
+        // rsi.invoke(_client_socket);
 
 
 
