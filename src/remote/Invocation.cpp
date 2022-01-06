@@ -209,9 +209,27 @@ namespace extras {
         }
 
         /**
-         * @brief runClients()
+         * @brief ExecutableInterface
          *
-         * @param session
+         */
+        void Invocation::internal(const ServiceType& task) {
+            std::stringstream in;
+            rsi::RemoteService rs;
+            in << task;
+            in >> rs;
+            rs.internal(task);
+        }
+        void Invocation::external(const ServiceType& task) {
+            std::stringstream in;
+            rsi::RemoteService rs;
+            in << task;
+            in >> rs;
+            rs.external(task);
+        }
+
+        /**
+         * @brief invoke()
+         *
          * @param socket
          */
         void Invocation::invoke(int socket) {
@@ -226,7 +244,7 @@ namespace extras {
                     auto clients = compile(_clientTasks, _clientSession, servicesList);
                     for (std::string task : clients) {
                         std::cout << task << std::endl;
-                        external(task);
+                        internal(task);
                     }
                     decompile(servicesList, clients);
 
@@ -242,12 +260,10 @@ namespace extras {
         }
 
         /**
-         * @brief ExecutableInterface
+         * @brief service()
          *
+         * @param socket
          */
-        void Invocation::internal(const ServiceType&) {}
-        void Invocation::external(const ServiceType&) {}
-
         void Invocation::service(int socket) {
             servicesResponse(socket);
         }

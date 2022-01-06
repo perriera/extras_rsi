@@ -27,9 +27,20 @@
 
 using namespace  extras;
 
+void killAllServers() {
+    rsi::SocketPool::killServers("rsi_server");
+    rsi::SocketPool::killServers("socketpool_serv");
+    rsi::SocketPool::killServers("uploader_server");
+    rsi::SocketPool::killServers("downloader_serv");
+    rsi::SocketPool::killServers("vendor_server");
+}
 
 int main(int argc, char const* argv[]) {
+
+    killAllServers();
+
     try {
+
         std::cout << extras::start(argv[0]) << std::endl;
 
         rsi::PortAuthority portAuthority;
@@ -71,6 +82,9 @@ int main(int argc, char const* argv[]) {
         // handle request
         //
         // auto response = rsi.servicesResponse(_client_socket);
+
+
+
         rsi.service(_client_socket);
 
 
