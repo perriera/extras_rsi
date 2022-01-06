@@ -55,12 +55,13 @@ namespace extras {
          * @return LinePacket
          */
         ServiceTypeList Invocation::servicesRequest(int socket) {
-
             _client_socket = socket;
 
-            send_line_block(parameters());
+            auto params = _parameters.parameters();
+            send_line_block(params);
             auto linePacket = read_line_block();
-            return unpackage_request(linePacket);;
+            auto serviceList = unpackage_request(linePacket);
+            return serviceList;
         }
 
         /**
@@ -70,19 +71,29 @@ namespace extras {
          * @return LinePacket
          */
         LinePacket Invocation::servicesResponse(int socket) {
-
             _client_socket = socket;
 
-            std::string linePacket;
-            while (linePacket.size() == 0) linePacket = read_line_block();
-            if (linePacket.size() == 0) throw std::string("test exception");
+            std::string request;
+            while (request.size() == 0) request = read_line_block();
+            if (request.size() == 0) throw std::string("test exception");
 
-            rsi::ParametersX parameters(linePacket);
-            auto _servicesList = resolve(parameters);
-            linePacket = package_request(_servicesList);
-            send_line_block(linePacket);
+            rsi::ParametersX parameters(request);
+            auto serviceList = resolve(parameters);
 
-            return linePacket;
+            rsi::Session _serverSession;
+            _serverSession.create();
+
+            auto servers = compile(_serverTasks, _serverSession, serviceList);
+            for (std::string task : servers) {
+                std::cout << task << std::endl;
+                external(task);
+            }
+
+            auto response = package_request(serviceList);
+            send_line_block(response);
+
+            return response;
+
         }
 
         /**
@@ -133,7 +144,8 @@ namespace extras {
                 rsi::RemoteService rs;
                 in << line;
                 in >> rs;
-                rs.prepare(session);
+                if (!rs.isServer(dup[rs.service()]))
+                    rs.prepare(session);
                 std::stringstream out;
                 out << dup[rs.service()] << ' ';
                 out << rs.address() << ' ';
@@ -171,6 +183,7 @@ namespace extras {
                     auto des = rs1.filenames()[0];
                     auto cpCmd = "cp " + src + " " + des + " ";
                     SystemException::assertion(cpCmd, __INFO__);
+                    std::cout << white << cpCmd << yellow << " rsi update successful" << std::endl;
                 };
             }
         }
@@ -244,11 +257,11 @@ namespace extras {
                     auto clients = compile(_clientTasks, _clientSession, servicesList);
                     for (std::string task : clients) {
                         std::cout << task << std::endl;
-                        internal(task);
+                        external(task);
                     }
                     decompile(servicesList, clients);
-
                     _clientSession.destroy();
+
                     break;
                 }
                 catch (std::exception& ex) {

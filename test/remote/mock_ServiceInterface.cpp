@@ -274,13 +274,18 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
                 for (std::string task : servers) {
                     std::cout << task << std::endl;
                     i_exe.external(task);
-                    // SystemException::assertion(task + " &", __INFO__);
                 }
 
                 auto response = i_pkg.package_request(serviceList);
                 lbi.send_line_block(response);
                 return response;
 
+            });
+
+    When(Method(mock, service))
+        .AlwaysDo(
+            [&i_svc](int socket) {
+                i_svc.servicesResponse(socket);
             });
 
 
