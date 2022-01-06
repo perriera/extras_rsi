@@ -31,6 +31,10 @@ using namespace  extras;
 int main(int argc, char const* argv[]) {
     try {
 
+        //
+        // parameters
+        //
+
         rsi::PortAuthority portAuthority;
         rsi::ServiceTypeMap clientTasks;
         clientTasks["upload"] = "build/uploader_client";
@@ -44,30 +48,24 @@ int main(int argc, char const* argv[]) {
         rsi::Invocation rsi(portAuthority, clientTasks, serverTasks);
         rsi.parse(argc, argv);
 
-        // //
-        // // connect to the server
-        // // 
-        // struct sockaddr_in _server_addr;
-        // auto ip = rsi.address().c_str();
-        // auto port = stoi(rsi.port());
-        // int _client_socket = rsi::connect_to_server(ip, port, _server_addr, false);
+        //
+        // connect to the server
+        // 
 
-        // //
-        // // send request to server
-        // //
-        // // auto list = rsi.servicesRequest(_client_socket);
+        struct sockaddr_in _server_addr;
+        auto ip = rsi.address().c_str();
+        auto port = stoi(rsi.port());
+        int _client_socket = rsi::connect_to_server(ip, port, _server_addr, false);
 
-        // // 
-        // // step 3. start server requests
-        // //
-        // // rsi::Session _clientSession;
-        // // _clientSession.create();
-        // // rsi.invoke(_clientSession, list);
-        // // _clientSession.destroy();
-
-        // rsi.invoke(_client_socket);
+        //
+        // invoke the server
+        //
+        rsi.invoke(_client_socket);
 
 
+        //
+        // old way
+        //
 
         std::cout << extras::start(argv[0]) << std::endl;
         extras::rsi::ServiceTypeCompilerVendor vendor;

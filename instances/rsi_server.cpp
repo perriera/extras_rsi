@@ -43,6 +43,10 @@ int main(int argc, char const* argv[]) {
 
         std::cout << extras::start(argv[0]) << std::endl;
 
+        //
+        // parameters 
+        //
+
         rsi::PortAuthority portAuthority;
         rsi::ServiceTypeMap clientTasks;
         clientTasks["upload"] = "build/uploader_client";
@@ -53,34 +57,41 @@ int main(int argc, char const* argv[]) {
         serverTasks["vendor"] = "build/vendor_server";
         serverTasks["download"] = "build/downloader_server";
 
-        // rsi::Invocation rsi(portAuthority, clientTasks, serverTasks);
-        // rsi.parse(argc, argv);
+        rsi::Invocation rsi(portAuthority, clientTasks, serverTasks);
+        rsi.parse(argc, argv);
 
-        // // 
-        // // setup server socket
-        // //
-        // struct sockaddr_in _server_addr;
-        // int _server_socket = rsi::configure_serversocket(rsi.address().c_str(), stoi(rsi.port()),
-        //     _server_addr, false);
-        // if (_server_socket == -1) {
-        //     ::close(_server_socket);
-        //     // throw RSIException("Timeout on uploader_server connect", __INFO__);
-        // }
+        //
+        // setyup the server
+        // 
 
-        // // 
-        // // accept connection
-        // //
-        // struct sockaddr_in _new_addr;
-        // socklen_t addr_size = sizeof(_new_addr);
-        // int _client_socket = ::accept(_server_socket, (struct sockaddr*)&_new_addr, &addr_size);
-        // if (_client_socket == -1) {
-        //     ::close(_client_socket);
-        //     // throw RSIException("Timeout on uploader_server accept", __INFO__);
-        // }
+        struct sockaddr_in _server_addr;
+        int _server_socket = rsi::configure_serversocket(rsi.address().c_str(), stoi(rsi.port()),
+            _server_addr, false);
+        if (_server_socket == -1) {
+            ::close(_server_socket);
+            // throw RSIException("Timeout on uploader_server connect", __INFO__);
+        }
 
-        // rsi.service(_client_socket);
+        // 
+        // accept connection
+        //
+        struct sockaddr_in _new_addr;
+        socklen_t addr_size = sizeof(_new_addr);
+        int _client_socket = ::accept(_server_socket, (struct sockaddr*)&_new_addr, &addr_size);
+        if (_client_socket == -1) {
+            ::close(_client_socket);
+            // throw RSIException("Timeout on uploader_server accept", __INFO__);
+        }
 
+        // 
+        // service the invocation of the client connection
+        // 
 
+        rsi.service(_client_socket);
+
+        //
+        // old way
+        //
 
         extras::rsi::ServiceTypeCompilerVendor vendor;
         extras::rsi::SocketPoolServer server(vendor);
