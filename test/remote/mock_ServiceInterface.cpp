@@ -291,11 +291,11 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
 
     When(Method(mock, invoke))
         .AlwaysDo(
-            [&i, &lbi, &i_exe, &i_rsv, &i_svc, &_clientTasks]() {
+            [&i, &lbi, &i_exe, &i_rsv, &i_svc, &_clientTasks](int socket) {
 
 
                 for (int attempt = 0; attempt < 3; attempt++) {
-                    auto servicesList = i_svc.servicesRequest(-1);
+                    auto servicesList = i_svc.servicesRequest(socket);
                     rsi::Session _clientSession;
                     _clientSession.create();
                     try {
@@ -326,7 +326,7 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
     //
     REQUIRE(_parameterList.size() == 0);
     _parameters.parse(argc, argv);
-    i.invoke();
+    i.invoke(-1);
 
 
     REQUIRE(fs::exists(src_file));

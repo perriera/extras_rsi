@@ -152,8 +152,8 @@ namespace extras {
              *
              */
 
-            virtual void invoke() override;
-            virtual void service() override;
+            virtual void invoke(int socket) override;
+            virtual void service(int socket) override;
 
         };
 

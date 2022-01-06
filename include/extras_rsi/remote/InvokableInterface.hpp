@@ -61,14 +61,14 @@ namespace extras {
              * @param session
              * @param list
              */
-            virtual void invoke() pure;
+            virtual void invoke(int socket) pure;
 
             /**
              * @brief service()
              * @note service the invoke'd methods
              *
              */
-            virtual void service() pure;
+            virtual void service(int socket) pure;
 
         };
 

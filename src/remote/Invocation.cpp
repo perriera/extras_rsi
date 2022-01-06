@@ -214,10 +214,10 @@ namespace extras {
          * @param session
          * @param socket
          */
-        void Invocation::invoke() {
+        void Invocation::invoke(int socket) {
 
             for (int attempt = 0; attempt < 3; attempt++) {
-                auto servicesList = servicesRequest(-1);
+                auto servicesList = servicesRequest(socket);
                 rsi::Session _clientSession;
                 _clientSession.create();
                 try {
@@ -248,8 +248,8 @@ namespace extras {
         void Invocation::internal(const ServiceType&) {}
         void Invocation::external(const ServiceType&) {}
 
-        void Invocation::service() {
-            servicesResponse(this->_client_socket);
+        void Invocation::service(int socket) {
+            servicesResponse(socket);
         }
 
 
