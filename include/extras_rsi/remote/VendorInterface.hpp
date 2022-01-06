@@ -1,7 +1,7 @@
 /**
- * @file CompilerInterface.hpp
+ * @file VendorInterface.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief CompilerInterface
+ * @brief VendorInterface
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_RESOLVABLEINTERFACE_HPP
-#define _EXPARX_RSI_RESOLVABLEINTERFACE_HPP
+#ifndef _EXPARX_RSI_VENDORINTERFACE_HPP
+#define _EXPARX_RSI_VENDORINTERFACE_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -44,7 +44,7 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief CompilerInterface
+         * @brief VendorInterface
          *
          * This interface essentially takes into consideration
          * the files to uploaded, processed and downloaded by first
@@ -53,7 +53,7 @@ namespace extras {
          * server or client portion of the RSI request.
          *
          */
-        interface CompilerInterface {
+        interface VendorInterface {
 
             /**
              * @brief clientTasks()
@@ -120,6 +120,6 @@ namespace extras {
     }
 }
 
-#endif // _EXPARX_RSI_RESOLVABLEINTERFACE_HPP
+#endif // _EXPARX_RSI_VENDORINTERFACE_HPP
 
 

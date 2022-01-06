@@ -45,7 +45,7 @@ namespace extras {
          */
         concrete class Invocation implements InvokableInterface
             with ParametersInterface
-            with CompilerInterface
+            with VendorInterface
             with ExecutableInterface
             with PackageInterface
             with ServicesInterface
@@ -76,7 +76,7 @@ namespace extras {
             virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
 
             /**
-             * @brief CompilerInterface
+             * @brief VendorInterface
              *
              */
 

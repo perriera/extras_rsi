@@ -107,10 +107,10 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
     Mock<rsi::InvokableInterface> mock;
     rsi::InvokableInterface& i = mock.get();
 
-    Mock<rsi::CompilerInterface> mock_rsv;
-    rsi::CompilerInterface& i_rsv = mock_rsv.get();
+    Mock<rsi::VendorInterface> mock_vendor;
+    rsi::VendorInterface& i_vendor = mock_vendor.get();
 
-    When(Method(mock_rsv, resolve))
+    When(Method(mock_vendor, resolve))
         .AlwaysDo(
             [&_portAuthority](
                 const rsi::ParametersInterface& parameters) {
@@ -139,7 +139,7 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
                     }
                     return serviceTypeList;
             });
-    When(Method(mock_rsv, compile))
+    When(Method(mock_vendor, compile))
         .AlwaysDo(
             [&i](const rsi::ServiceTypeMap& serviceTypes,
                 const rsi::SessionInterface& session,
@@ -163,7 +163,7 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
                     }
                     return after;
             });
-    When(Method(mock_rsv, decompile))
+    When(Method(mock_vendor, decompile))
         .AlwaysDo(
             [&i](
                 const rsi::ServiceTypeList& before,
@@ -261,16 +261,16 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
 
     When(Method(mock_svc, servicesResponse))
         .AlwaysDo(
-            [&_parameterList, &i, &i_pkg, &i_rsv, &_sentList, &_receivedList, &lbi, &_serverTasks, &i_exe](int) {
+            [&_parameterList, &i, &i_pkg, &i_vendor, &_sentList, &_receivedList, &lbi, &_serverTasks, &i_exe](int) {
 
                 auto request = lbi.read_line_block();
                 rsi::ParametersX parameters(request);
-                auto serviceList = i_rsv.resolve(parameters);
+                auto serviceList = i_vendor.resolve(parameters);
 
                 rsi::Session _serverSession;
                 _serverSession.create();
 
-                auto servers = i_rsv.compile(_serverTasks, _serverSession, serviceList);
+                auto servers = i_vendor.compile(_serverTasks, _serverSession, serviceList);
                 for (std::string task : servers) {
                     std::cout << task << std::endl;
                     i_exe.external(task);
@@ -296,7 +296,7 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
 
     When(Method(mock, invoke))
         .AlwaysDo(
-            [&i, &lbi, &i_exe, &i_rsv, &i_svc, &_clientTasks](int socket) {
+            [&i, &lbi, &i_exe, &i_vendor, &i_svc, &_clientTasks](int socket) {
 
 
                 for (int attempt = 0; attempt < 3; attempt++) {
@@ -306,12 +306,12 @@ SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
                     try {
 
                         // --- core code below ----
-                        auto clients = i_rsv.compile(_clientTasks, _clientSession, servicesList);
+                        auto clients = i_vendor.compile(_clientTasks, _clientSession, servicesList);
                         for (std::string task : clients) {
                             std::cout << task << std::endl;
                             i_exe.external(task);
                         }
-                        i_rsv.decompile(servicesList, clients);
+                        i_vendor.decompile(servicesList, clients);
 
                         _clientSession.destroy();
                         break;

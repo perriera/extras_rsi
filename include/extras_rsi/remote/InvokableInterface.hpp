@@ -32,7 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <extras_rsi/remote/ServiceInterface.hpp>
-#include <extras_rsi/remote/CompilerInterface.hpp>
+#include <extras_rsi/remote/VendorInterface.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
 #include <extras_rsi/remote/ParametersInterface.hpp>
@@ -55,7 +55,7 @@ namespace extras {
              * @note invoke the methods (remotely)
              *
              * After taking into consiration the parameters provided by
-             * the CompilerInterface, execute in sequence a series of calls
+             * the VendorInterface, execute in sequence a series of calls
              * to fully 'resolve' the objective, (of the parameters).
              *
              * @param session
