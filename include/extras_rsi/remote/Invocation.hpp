@@ -50,6 +50,9 @@ namespace extras {
             with PackageInterface
             with ServicesInterface
             with LineBlockInterface {
+
+        private:
+
             ParametersX _parameters;
             rsi::PortAuthority& _portAuthority;
             int _client_socket = -1;
@@ -57,18 +60,18 @@ namespace extras {
             const rsi::ServiceTypeMap& _serverTasks;
 
             /**
-             * @brief LineBlockInterface implementation
+             * @brief LineBlockInterface
              *
              */
+
             virtual void send_line_block(const LinePacket& msg) const override;
             virtual LinePacket read_line_block() override;
 
             /**
              * @brief PackageInterface
              *
-             * @param list
-             * @return LinePacket
              */
+
             virtual LinePacket package_request(const ServiceTypeList& list) override;
             virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
 
@@ -95,6 +98,7 @@ namespace extras {
              *
              * @param task
              */
+
             virtual void internal(const ServiceType& task) override;
             virtual void external(const ServiceType& task) override;
 
@@ -104,6 +108,7 @@ namespace extras {
              * @param socket
              * @return ServiceTypeList
              */
+
             virtual ServiceTypeList servicesRequest(int socket) override;
             virtual LinePacket servicesResponse(int socket) override;
 
@@ -114,6 +119,7 @@ namespace extras {
              *
              * @param portAuthority
              */
+
             Invocation(
                 rsi::PortAuthority& portAuthority,
                 const rsi::ServiceTypeMap& clientTasks,
@@ -123,7 +129,7 @@ namespace extras {
                 _serverTasks(serverTasks) {}
 
             /**
-             * @brief ParametersInterface implementation
+             * @brief ParametersInterface
              *
              */
 
@@ -142,7 +148,7 @@ namespace extras {
             virtual ParameterList    list() const override { return  _parameters.list(); }
 
             /**
-             * @brief InvokableInterface implementation
+             * @brief InvokableInterface
              *
              */
 
