@@ -18,24 +18,17 @@
 
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/remote/Vendor.hpp>
-#include <extras_rsi/remote/Invocation.hpp>
 #include <extras_rsi/remote/ClientServer.hpp>
-#include <extras_rsi/socketpool/Client.hpp>
 #include <extras/status/StatusLine.hpp>
-#include <extras_rsi/subsystem.hpp>
 #include <iostream>
-#include <extras_rsi/exceptions.hpp>
-#include <arpa/inet.h>
-#include <unistd.h>
 
 using namespace  extras;
 
 int main(int argc, char const* argv[]) {
+
     try {
 
-        //
-        // new way
-        //
+        std::cout << extras::start(argv[0]) << std::endl;
 
         rsi::PortAuthority portAuthority;
         rsi::Vendor vendor(portAuthority);
@@ -44,19 +37,8 @@ int main(int argc, char const* argv[]) {
         client.connect();
         client.send();
 
-        //
-        // old way
-        //
-
-        // std::cout << extras::start(argv[0]) << std::endl;
-        // extras::rsi::ServiceTypeCompilerVendor vendor;
-        // extras::rsi::SocketPoolClient client(vendor);
-        // client.parameters(argc, argv);
-        // client.connect();
-        // client.transfer();
-        // std::cout << extras::pass("File sockets allocated successfully") << std::endl;
-        // client.close();
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
+
         return 0;
     }
     catch (extras::exception& ex) {

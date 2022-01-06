@@ -16,37 +16,19 @@
  *
  */
 
-#include <extras_rsi/remote/ClientServer.hpp>
-#include <extras_rsi/remote/Vendor.hpp>
-#include <extras_rsi/socketpool/Server.hpp>
 #include <extras/status/StatusLine.hpp>
-#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/remote/Vendor.hpp>
+#include <extras_rsi/remote/ClientServer.hpp>
+#include <extras/status/StatusLine.hpp>
 #include <iostream>
-#include <extras_rsi/exceptions.hpp>
-#include <arpa/inet.h>
-#include <unistd.h>
 
 using namespace  extras;
 
-void killAllServers() {
-    // rsi::SocketPool::killServers("rsi_server");
-    rsi::SocketPool::killServers("socketpool_serv");
-    rsi::SocketPool::killServers("uploader_server");
-    rsi::SocketPool::killServers("downloader_serv");
-    rsi::SocketPool::killServers("vendor_server");
-}
-
 int main(int argc, char const* argv[]) {
-
-    // killAllServers();
 
     try {
 
         std::cout << extras::start(argv[0]) << std::endl;
-
-        //
-        // new way 
-        //
 
         rsi::PortAuthority portAuthority;
         rsi::Vendor vendor(portAuthority);
@@ -58,20 +40,6 @@ int main(int argc, char const* argv[]) {
             server.receive();
         }
 
-        //
-        // old way
-        //
-
-        // extras::rsi::ServiceTypeCompilerVendor vendor;
-        // extras::rsi::SocketPoolServer server(vendor);
-        // server.parameters(argc, argv);
-        // server.connect();
-        // while (true) {
-        //     server.accept();
-        //     server.transfer();
-        // }
-        // std::cout << extras::pass("File sockets allocated successfully") << std::endl;
-        // server.close();
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
         return 0;
     }
