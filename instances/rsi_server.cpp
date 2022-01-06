@@ -17,6 +17,7 @@
  */
 
 #include <extras_rsi/remote/Invocation.hpp>
+#include <extras_rsi/remote/Vendor.hpp>
 #include <extras_rsi/socketpool/Server.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/subsystem.hpp>
@@ -48,24 +49,16 @@ int main(int argc, char const* argv[]) {
         //
 
         rsi::PortAuthority portAuthority;
-        rsi::ServiceTypeMap clientTasks;
-        clientTasks["upload"] = "build/uploader_client";
-        clientTasks["vendor"] = "build/vendor_client";
-        clientTasks["download"] = "build/downloader_client";
-        rsi::ServiceTypeMap serverTasks;
-        serverTasks["upload"] = "build/uploader_server";
-        serverTasks["vendor"] = "build/vendor_server";
-        serverTasks["download"] = "build/downloader_server";
-
-        rsi::Invocation rsi(portAuthority, clientTasks, serverTasks);
-        rsi.parse(argc, argv);
+        rsi::Vendor vendor(portAuthority);
+        rsi::Invocation server(vendor);
+        server.parse(argc, argv);
 
         //
         // setyup the server
         // 
 
         struct sockaddr_in _server_addr;
-        int _server_socket = rsi::configure_serversocket(rsi.address().c_str(), stoi(rsi.port()),
+        int _server_socket = rsi::configure_serversocket(server.address().c_str(), stoi(server.port()),
             _server_addr, false);
         if (_server_socket == -1) {
             ::close(_server_socket);
@@ -87,22 +80,22 @@ int main(int argc, char const* argv[]) {
         // service the invocation of the client connection
         // 
 
-        rsi.service(_client_socket);
+        server.service(_client_socket);
 
         //
         // old way
         //
 
-        extras::rsi::ServiceTypeCompilerVendor vendor;
-        extras::rsi::SocketPoolServer server(vendor);
-        server.parameters(argc, argv);
-        server.connect();
-        while (true) {
-            server.accept();
-            server.transfer();
-        }
-        std::cout << extras::pass("File sockets allocated successfully") << std::endl;
-        server.close();
+        // extras::rsi::ServiceTypeCompilerVendor vendor;
+        // extras::rsi::SocketPoolServer server(vendor);
+        // server.parameters(argc, argv);
+        // server.connect();
+        // while (true) {
+        //     server.accept();
+        //     server.transfer();
+        // }
+        // std::cout << extras::pass("File sockets allocated successfully") << std::endl;
+        // server.close();
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
         return 0;
     }

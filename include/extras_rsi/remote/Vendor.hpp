@@ -52,8 +52,16 @@ namespace extras {
 
             rsi::PortAuthority& _portAuthority;
             ParametersX _parameters;
-            ServiceTypeMap _clientTasks;
-            ServiceTypeMap _serverTasks;
+            ServiceTypeMap _clientTasks{
+                {"upload", "build/uploader_client"},
+                {"vendor", "build/vendor_client"},
+                {"download", "build/downloader_client"}
+            };
+            ServiceTypeMap _serverTasks{
+                {"upload", "build/uploader_server"},
+                {"vendor", "build/vendor_server"},
+                {"download", "build/downloader_server"}
+            };
 
         public:
 

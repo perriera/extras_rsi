@@ -33,6 +33,7 @@
 #include <extras/interfaces.hpp>
 #include <extras_rsi/remote/ServiceInterface.hpp>
 #include <extras_rsi/remote/InvokableInterface.hpp>
+#include <extras_rsi/remote/VendorInterface.hpp>
 #include <extras_rsi/remote/ParametersX.hpp>
 #include <iostream>
 
@@ -54,10 +55,8 @@ namespace extras {
         private:
 
             ParametersX _parameters;
-            rsi::PortAuthority& _portAuthority;
             int _client_socket = -1;
-            ServiceTypeMap _clientTasks;
-            ServiceTypeMap _serverTasks;
+            rsi::VendorInterface& _vendor;
 
             /**
              * @brief LineBlockInterface
@@ -80,21 +79,28 @@ namespace extras {
              *
              */
 
-            virtual const ServiceTypeMap& clientTasks() override { return _clientTasks; }
-            virtual const ServiceTypeMap& serverTasks()  override { return _serverTasks; }
+            virtual const ServiceTypeMap& clientTasks() override { return _vendor.clientTasks(); }
+            virtual const ServiceTypeMap& serverTasks()  override { return _vendor.serverTasks(); }
 
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,
                 const SessionInterface& session,
                 const ServiceTypeList& list
-            ) const override;
+            ) const override {
+                return _vendor.compile(serviceTypes, session, list);
+            };
 
             virtual void decompile(
                 const ServiceTypeList& before,
                 const ServiceTypeList& after
-            ) const override;
+            ) const override {
+                return _vendor.decompile(before, after);
+            };
 
-            virtual ServiceTypeList resolve(const ParametersInterface& parameters) override;
+            virtual ServiceTypeList resolve(const ParametersInterface& parameters) override
+            {
+                return _vendor.resolve(parameters);
+            }
 
             /**
              * @brief ExecutableInterface
@@ -124,12 +130,8 @@ namespace extras {
              */
 
             Invocation(
-                rsi::PortAuthority& portAuthority,
-                const rsi::ServiceTypeMap& clientTasks,
-                const rsi::ServiceTypeMap& serverTasks)
-                : _portAuthority(portAuthority),
-                _clientTasks(clientTasks),
-                _serverTasks(serverTasks) {}
+                rsi::VendorInterface& vendor
+            ) : _vendor(vendor) {}
 
             /**
              * @brief ParametersInterface
