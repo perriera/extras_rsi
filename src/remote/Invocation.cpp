@@ -248,6 +248,10 @@ namespace extras {
         void Invocation::internal(const ServiceType&) {}
         void Invocation::external(const ServiceType&) {}
 
+        void Invocation::service() {
+            servicesResponse(this->_client_socket);
+        }
+
 
     }  // namespace rsi
 }  // namespace extras

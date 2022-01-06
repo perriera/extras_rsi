@@ -153,6 +153,7 @@ namespace extras {
              */
 
             virtual void invoke() override;
+            virtual void service() override;
 
         };
 

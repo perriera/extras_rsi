@@ -71,6 +71,7 @@ int main(int argc, char const* argv[]) {
         // handle request
         //
         // auto response = rsi.servicesResponse(_client_socket);
+        rsi.service();
 
 
 

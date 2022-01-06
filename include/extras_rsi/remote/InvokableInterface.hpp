@@ -52,7 +52,7 @@ namespace extras {
 
             /**
              * @brief invoke()
-             * @note execute the methods compiled
+             * @note invoke the methods (remotely)
              *
              * After taking into consiration the parameters provided by
              * the ResolvableInterface, execute in sequence a series of calls
@@ -62,6 +62,13 @@ namespace extras {
              * @param list
              */
             virtual void invoke() pure;
+
+            /**
+             * @brief service()
+             * @note service the invoke'd methods
+             *
+             */
+            virtual void service() pure;
 
         };
 

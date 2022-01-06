@@ -64,6 +64,8 @@ int main(int argc, char const* argv[]) {
         // rsi.invoke(_clientSession, list);
         // _clientSession.destroy();
 
+        rsi.invoke();
+
 
 
         std::cout << extras::start(argv[0]) << std::endl;
