@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/requests/RequestTypeTwo.hpp>
+#include <extras_rsi/requests/RequestTypeThree.hpp>
 #include <extras_rsi/socketpool/Parameters.hpp>
 #include <extras_rsi/socketpool/Client.hpp>
 #include <iostream>
@@ -28,7 +28,7 @@ using namespace extras;
 using namespace std;
 using namespace fakeit;
 
-SCENARIO("Mock RequestTypeCompilerInterface: TypeTwo", "[RequestTypeCompilerInterface]") {
+SCENARIO("Dock RequestTypeCompilerInterface: TypeFour", "[RequestTypeCompilerInterface]") {
 
     rsi::SocketParaneters parameters;
     rsi::PortAuthority portAuthority;
@@ -36,14 +36,8 @@ SCENARIO("Mock RequestTypeCompilerInterface: TypeTwo", "[RequestTypeCompilerInte
         "/home/perry/Projects/extras_rsi/build/socketpool_client",
         "137.184.218.130",
         "8080",
-        "data/exparx.webflow.zip",
-        "upload",
-        "data/exparx.webflow.zip",
-        "upload",
         "data/src.zip",
-        "vendor",
-        "download",
-        "data/exparx.freeformjs.zip",
+        "data/exparx.webflow.zip"
     };
 
     int argc = sizeof(argv) / sizeof(argv[0]);
@@ -59,37 +53,44 @@ SCENARIO("Mock RequestTypeCompilerInterface: TypeTwo", "[RequestTypeCompilerInte
             [&msg, &vendor, &client, &socket, &parameters](const rsi::sockets::ParametersInterface&,
                 rsi::PortAuthorityInterface& portAuthority) {
 
-                    std::vector<std::string> keywords;
-                    std::map<int, std::vector<std::string> >script;
-
-                    for (rsi::RequestType request : parameters.requests()) {
-                        auto entry = script[script.size() - 1];
-                        if (vendor.isParameter(request)) {
-                            if (entry.size() == 0)
-                                throw "No entry";
-                            script[script.size() - 1].push_back(request);
-                        }
-                        else {
-                            rsi::ParameterList list;
-                            list.push_back(request);
-                            keywords.push_back(request);
-                            script[script.size()] = list;
-                        }
-                    }
-
-                    script.erase(-1);
+                    std::vector<std::string> extra_files = parameters.requests();
 
                     rsi::RequestTypeList list;
-                    int lineNo = 0;
-                    for (auto entry : script) {
-                        auto port = portAuthority.request();
+                    {
                         std::stringstream ss;
-                        ss << keywords[lineNo++] << ' ';
+                        ss << "upload" << ' ';
                         ss << client.ip() << ' ';
-                        ss << port << ' ';
-                        entry.second.erase(entry.second.begin());
-                        for (auto parm : entry.second)
-                            ss << parm << ' ';
+                        ss << portAuthority.request() << ' ';
+                        ss << client.filename();
+                        std::string line = ss.str();
+                        list.push_back(line);
+                    }
+                    for (auto entry : extra_files) {
+                        std::stringstream ss;
+                        ss << "upload" << ' ';
+                        ss << client.ip() << ' ';
+                        ss << portAuthority.request() << ' ';
+                        ss << entry;
+                        std::string line = ss.str();
+                        list.push_back(line);
+                    }
+                    {
+                        std::stringstream ss;
+                        ss << "vendor" << ' ';
+                        ss << client.ip() << ' ';
+                        ss << portAuthority.request() << ' ';
+                        ss << client.filename() << ' ';
+                        for (auto entry : extra_files)
+                            ss << entry << ' ';
+                        std::string line = ss.str();
+                        list.push_back(line);
+                    }
+                    {
+                        std::stringstream ss;
+                        ss << "download" << ' ';
+                        ss << client.ip() << ' ';
+                        ss << portAuthority.request() << ' ';
+                        ss << client.filename();
                         std::string line = ss.str();
                         list.push_back(line);
                     }
@@ -101,9 +102,15 @@ SCENARIO("Mock RequestTypeCompilerInterface: TypeTwo", "[RequestTypeCompilerInte
     auto _compilation = i.compile(parameters, portAuthority);
     if (socket != 8080) // included for consistency
         _compilation.send_line_block("");
-    auto cmds = vendor.clients(_compilation.compilation());
-    for (auto cmd : cmds) {
-        std::cout << "msg received: " << cmd << std::endl;
+    for (auto item : _compilation.compilation())
+        std::cout << "msg received: " << item << std::endl;
+    auto clients = vendor.clients(_compilation.compilation());
+    for (auto client : clients) {
+        std::cout << "msg received: " << client << std::endl;
+    }
+    auto servers = vendor.servers(_compilation.compilation());
+    for (auto server : servers) {
+        std::cout << "msg received: " << server << std::endl;
     }
 
     Verify(Method(mock, compile));

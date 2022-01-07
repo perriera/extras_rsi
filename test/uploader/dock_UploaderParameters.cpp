@@ -26,7 +26,7 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock uploader::ParametersInterface", "[uploader::ParametersInterface]") {
+SCENARIO("Dock uploader::ParametersInterface", "[uploader::ParametersInterface]") {
 
     const char* argv[] = {
          "build/uploader_client",

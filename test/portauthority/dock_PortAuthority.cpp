@@ -16,36 +16,21 @@
  *
  */
 
-#include <extras_rsi/gadgets/StatusBar.hpp>
-#include <extras_rsi/gadgets/Spinner.hpp>
 #include <iostream>
-#include <sstream>
 
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
+#include <extras_rsi/sockets/PortAuthority.hpp>
 
 using namespace extras;
 using namespace fakeit;
 
-//
-// printf("[+]File data downloaded successfully.\n");
-//
+SCENARIO("Dock PortAuthorityInterface", "[PortAuthorityInterface]") {
+    int correct_request = 9000;
+    Mock<rsi::PortAuthorityInterface> mock;
+    When(Method(mock, request)).Return(correct_request);
 
-SCENARIO("Mock StatusBarInterface", "[StatusBarInterface]") {
-
-    rsi::StatusBarMsg good = "\033[32m\r[\033[33m+\033[32m] 25 / 50\n";
-    Mock<rsi::StatusBarInterface> mock;
-    When(Method(mock, bar))
-        .AlwaysDo(
-            [](int count, int max) {
-                std::stringstream ss;
-                ss << rsi::spinner(count) << " ";
-                ss << count << " / " << max << std::endl;
-                auto x = ss.str();
-                return ss.str();
-            });
-
-    rsi::StatusBarInterface& i = mock.get();
-    REQUIRE(i.bar(25, 50) == good);
-    Verify(Method(mock, bar));
+    rsi::PortAuthorityInterface& i = mock.get();
+    REQUIRE(i.request() == correct_request);
+    Verify(Method(mock, request));
 }

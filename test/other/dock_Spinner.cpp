@@ -16,8 +16,7 @@
  *
  */
 
-#include <extras_rsi/sockets/Semaphores.hpp>
-#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/gadgets/Spinner.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <iostream>
 #include <sstream>
@@ -28,23 +27,28 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock SemaphoreInterface", "[SemaphoreInterface]") {
+SCENARIO("Dock SpinnerInterface", "[SpinnerInterface]") {
 
-    Mock<rsi::SemaphoreInterface> mock;
-    When(Method(mock, lock))
+    rsi::SpinnerMsg good = "[/]";
+    Mock<rsi::SpinnerInterface> mock;
+    When(Method(mock, spinner))
         .AlwaysDo(
-            [](const rsi::Lock& lock) {
-                return lock;
-            });
-    When(Method(mock, unlock))
-        .AlwaysDo(
-            [](const rsi::Lock& lock) {
-                return lock;
+            [](int index) {
+                std::stringstream ss;
+                std::string spinner = "|/-\\";
+                char c = spinner[index % spinner.size()];
+                ss << extras::green << "\r[";
+                ss << extras::yellow << c;
+                ss << extras::green << "]";
+                return ss.str();
             });
 
-    rsi::SemaphoreInterface& i = mock.get();
-    i.lock(i.unlock(""));
-    i.unlock(i.lock(""));
-    Verify(Method(mock, lock));
-    Verify(Method(mock, unlock));
+    rsi::SpinnerInterface& i = mock.get();
+    auto x = i.spinner(25);
+    auto y = i.spinner(24);
+    auto z = i.spinner(26);
+    REQUIRE(x == "\033[32m\r[\033[33m/\033[32m]");
+    REQUIRE(y == "\033[32m\r[\033[33m|\033[32m]");
+    REQUIRE(z == "\033[32m\r[\033[33m-\033[32m]");
+    Verify(Method(mock, spinner));
 }

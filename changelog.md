@@ -5,8 +5,8 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v4.24.0 -m "InvokableInterface, (Working prototype)"</br>
-> > git push origin v4.24.0
+> > git tag -a v4.25.0 -m "rsi_client/rsi_server, (Working prototype)"</br>
+> > git push origin v4.25.0
 
 IMPORTANT:
 
@@ -31,6 +31,21 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 4.25.0 (2022-01-06) [RSI-20B]
+
+## Added
+
+- rsi::InvocationClient, (ClientInterface)
+- rsi::InvocationServer, (ServerInterface)
+- rsi::ExecutableInterface
+- rsi::Invocation, (InvokableInterface)
+- rsi::PackageInterface
+- rsi::ParametersInterface
+- rsi::ParametersX
+- rsi::RemoteService, (ServiceInterface)
+- rsi::ServiceTypes
+- rsi::Vendor, (VendorInterface)
 
 #### 4.24.0 (2022-01-01)
 
@@ -497,7 +512,8 @@ Updated README.md accordinging</br>
 - @brief style formatting
 - Doxygen support
 
-[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.24.0...HEAD
+[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.25.0...HEAD
+[4.25.0]: https://github.com/perriera/extras_rsi/compare/v4.24.0...v4.25.0
 [4.24.0]: https://github.com/perriera/extras_rsi/compare/v4.23.0...v4.24.0
 [4.23.0]: https://github.com/perriera/extras_rsi/compare/v4.22.1...v4.23.0
 [4.22.1]: https://github.com/perriera/extras_rsi/compare/v4.22.0...v4.22.1

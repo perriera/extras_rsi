@@ -31,7 +31,7 @@ using namespace extras;
 using namespace fakeit;
 namespace fs = std::filesystem;
 
-SCENARIO("Mock SessionInterface: clients", "[SessionInterface]") {
+SCENARIO("Dock SessionInterface: clients", "[SessionInterface]") {
 
     extras::Pathname pathname = "data/exparx.webflow.zip";
     rsi::RequestType before = "vendor 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip";

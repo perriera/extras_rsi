@@ -39,7 +39,7 @@ using namespace std::chrono;
 
 void killAllServers();
 
-SCENARIO("Mock InvokableInterface", "[InvocationInterface]") {
+SCENARIO("Dock InvokableInterface", "[InvocationInterface]") {
 
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
     SystemException::assertion("cp data/exparx.webflow.zip testit; ", __INFO__);
