@@ -1,7 +1,7 @@
 /**
- * @file ParametersInterface.hpp
+ * @file PackageInterface.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief ParametersInterface
+ * @brief PackageInterface
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_PARAMETERSINTERFACE_HPP
-#define _EXPARX_RSI_PARAMETERSINTERFACE_HPP
+#ifndef _EXPARX_RSI_PACKAGEINTERFACE_HPP
+#define _EXPARX_RSI_PACKAGEINTERFACE_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,7 +31,8 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/remote/ServiceInterface.hpp>
+#include <extras_rsi/remote/ServiceTypes.hpp>
+#include <extras_rsi/sockets/LineBlock.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
@@ -39,37 +40,38 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief ParametersInterface
+         * @brief PackageInterface
          *
          */
-        interface ParametersInterface {
+        interface PackageInterface {
 
             /**
-             * @brief parse()
-             * @note parse recognized parameters
+             * @brief package_request()
              *
-             * @param argc
-             * @param argv
+             * Package the request for transport over a socket connection,
+             * (typically as a single line). Typically, we replace all std::endl
+             * with a semicolon. As long as there are no semicolons used in the
+             * message itself, this will work, (see class specific implementation).
+             *
+             * @param list
+             * @return LinePacket
              */
-            virtual void parse(int argc, char const* argv[]) pure;
+            virtual LinePacket package_request(const ServiceTypeList& list) pure;
 
             /**
-             * @brief various parameter methods
+             * @brief unpackage_request()
              *
-             * @return Parameter
+             * Unpackage the request transported, (see above)
+             *
+             * @param list
+             * @return LinePacket
              */
-            virtual Parameter parameters() const pure;
-            virtual const Parameter& address() const pure;
-            virtual const Parameter& port() const pure;
-            virtual const Filenames& filenames() const pure;
-            virtual ParameterList list() const pure;
-
+            virtual ServiceTypeList unpackage_request(const LinePacket& package) pure;
         };
-
 
     }
 }
 
-#endif // _EXPARX_RSI_PARAMETERSINTERFACE_HPP
+#endif // _EXPARX_RSI_PACKAGEINTERFACE_HPP
 
 

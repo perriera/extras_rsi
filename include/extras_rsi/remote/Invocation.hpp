@@ -1,7 +1,7 @@
 /**
- * @file ServiceType.hpp
+ * @file Invocation.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief InvocationInterface
+ * @brief Invocation class
  * @version 0.1
  * @date 2021-11-30
  *
@@ -31,7 +31,10 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/remote/InvocationInterface.hpp>
+#include <extras_rsi/remote/ServiceInterface.hpp>
+#include <extras_rsi/remote/InvokableInterface.hpp>
+#include <extras_rsi/remote/VendorInterface.hpp>
+#include <extras_rsi/remote/ParametersX.hpp>
 #include <iostream>
 
 namespace extras {
@@ -41,21 +44,85 @@ namespace extras {
          * @brief Invocation class
          *
          */
-        concrete class Invocation implements InvocationInterface
+        concrete class Invocation implements InvokableInterface
             with ParametersInterface
+            with VendorInterface
+            with ExecutableInterface
+            with PackageInterface
+            with ServicesInterface
             with LineBlockInterface {
+
+        private:
+
             ParametersX _parameters;
-            rsi::PortAuthority& _portAuthority;
-            int _client_socket = -1;
-            const rsi::ServiceTypeMap& _clientTasks;
-            const rsi::ServiceTypeMap& _serverTasks;
+            rsi::VendorInterface& _vendor;
 
             /**
-             * @brief LineBlockInterface implementation
+             * @brief LineBlockInterface
              *
              */
+
             virtual void send_line_block(const LinePacket& msg) const override;
             virtual LinePacket read_line_block() override;
+
+            /**
+             * @brief PackageInterface
+             *
+             */
+
+            virtual LinePacket package_request(const ServiceTypeList& list) override;
+            virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
+
+            /**
+             * @brief VendorInterface
+             *
+             */
+
+            virtual const ServiceTypeMap& clientTasks() override { return _vendor.clientTasks(); }
+            virtual const ServiceTypeMap& serverTasks()  override { return _vendor.serverTasks(); }
+
+            virtual ServiceTypeList compile(
+                const ServiceTypeMap& serviceTypes,
+                const SessionInterface& session,
+                const ServiceTypeList& list
+            ) const override {
+                return _vendor.compile(serviceTypes, session, list);
+            };
+
+            virtual void decompile(
+                const ServiceTypeList& before,
+                const ServiceTypeList& after
+            ) const override {
+                return _vendor.decompile(before, after);
+            };
+
+            virtual ServiceTypeList resolve(const ParametersInterface& parameters) override
+            {
+                return _vendor.resolve(parameters);
+            }
+
+            /**
+             * @brief ExecutableInterface
+             *
+             * @param task
+             */
+
+            virtual void internal(const ServiceType& task) override;
+            virtual void external(const ServiceType& task) override;
+
+            /**
+             * @brief ServicesInterface
+             *
+             * @param socket
+             * @return ServiceTypeList
+             */
+
+            virtual ServiceTypeList servicesRequest(int socket) override;
+            virtual LinePacket servicesResponse(int socket) override;
+
+        protected:
+
+            int _client_socket = -1;
 
         public:
 
@@ -64,16 +131,13 @@ namespace extras {
              *
              * @param portAuthority
              */
+
             Invocation(
-                rsi::PortAuthority& portAuthority,
-                const rsi::ServiceTypeMap& clientTasks,
-                const rsi::ServiceTypeMap& serverTasks)
-                : _portAuthority(portAuthority),
-                _clientTasks(clientTasks),
-                _serverTasks(serverTasks) {}
+                rsi::VendorInterface& vendor
+            ) : _vendor(vendor) {}
 
             /**
-             * @brief LineBlockInterface implementation
+             * @brief ParametersInterface
              *
              */
 
@@ -92,30 +156,12 @@ namespace extras {
             virtual ParameterList    list() const override { return  _parameters.list(); }
 
             /**
-             * @brief InvocationInterface implementation
+             * @brief InvokableInterface
              *
              */
 
-            virtual ServiceTypeList servicesRequest(int socket) override;
-            virtual LinePacket servicesResponse(int socket) override;
-
-            virtual LinePacket package_request(const ServiceTypeList& list) override;
-            virtual ServiceTypeList unpackage_request(const LinePacket& package) override;
-
-            virtual ServiceTypeList compile(
-                const ServiceTypeMap& serviceTypes,
-                const SessionInterface& session,
-                const ServiceTypeList& list
-            ) const override;
-
-            virtual void decompile(
-                const ServiceTypeList& before,
-                const ServiceTypeList& after
-            ) const override;
-
-            virtual ServiceTypeList formRequests(const ParametersInterface& parameters) override;
-
-            virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) override;
+            virtual void invoke(int socket) override;
+            virtual void service(int socket) override;
 
         };
 

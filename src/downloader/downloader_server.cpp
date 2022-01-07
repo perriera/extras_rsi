@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/uploader/Downloader.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <iostream>
@@ -24,9 +24,24 @@
 
 using namespace  extras;
 
-int main(int argc, char const* argv[]) {
-    activate_deadman_switch(argv[0]);
-    auto code = extras::rsi::uploader_client(argc, argv);
-    rsi::kill_deadman_switch();
-    return code;
+int extras::rsi::downloader_server(int argc, char const* argv[]) {
+    try {
+        std::cout << extras::start(argv[0]) << std::endl;
+        extras::rsi::DownloaderServer downloader;
+        downloader.parameters(argc, argv);
+        downloader.connect();
+        downloader.transfer();
+        std::cout << extras::pass("File data downloaded successfully") << std::endl;
+        downloader.close();
+        std::cout << extras::end(argv[0]) << std::endl << std::endl;
+        return 0;
+    }
+    catch (extras::exception& ex) {
+        std::cout << ex << std::endl;
+        return -1;
+    }
+    catch (std::exception& ex) {
+        std::cout << extras::fail(ex.what()) << std::endl;
+        return -1;
+    }
 }

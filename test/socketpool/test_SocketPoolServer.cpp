@@ -46,24 +46,8 @@ using namespace std::this_thread; // sleep_for, sleep_until
 using namespace std::chrono;
 namespace fs = std::filesystem;
 
-void killServers(std::string pattern) {
-    try {
-        rsi::SocketPool::killServers(pattern);
-    }
-    catch (const extras::rsi::NoServersToKillException& ex) {
-    }
-}
-
-void killAllServers() {
-    killServers("socketpool_serv");
-    killServers("uploader_server");
-    killServers("downloader_serv");
-    killServers("vendor_server");
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("uploader_server"), extras::rsi::NoServersToKillException);
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("downloader_serv"), extras::rsi::NoServersToKillException);
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("vendor_server"), extras::rsi::NoServersToKillException);
-}
+void killServers(std::string pattern);
+void killAllServers();
 
 /**
  * @brief Test SocketPoolInterface: socketpool_server

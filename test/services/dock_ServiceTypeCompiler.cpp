@@ -37,7 +37,7 @@ using namespace fakeit;
 // msg received: build/vendor_server 137.184.218.130 9002 data/src.zip data/exparx.webflow.zip 
 // msg received: build/downloader_server 137.184.218.130 9003 data/src.zip
 
-SCENARIO("Mock ServiceTypeCompilerInterface: clients", "[ServiceTypeCompilerInterface]") {
+SCENARIO("Dock ServiceTypeCompilerInterface: clients", "[ServiceTypeCompilerInterface]") {
 
     rsi::RequestTypeList request_list = {
         "upload 137.184.218.130 9000 data/src.zip",

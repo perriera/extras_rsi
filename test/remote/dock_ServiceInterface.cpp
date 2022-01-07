@@ -16,11 +16,16 @@
  *
  */
 
-#include <extras_rsi/remote/InvocationInterface.hpp>
+#include <extras_rsi/remote/InvokableInterface.hpp>
+#include <extras_rsi/remote/Service.hpp>
+#include <extras_rsi/remote/ParametersX.hpp>
 #include <extras/strings.hpp>
 #include <iostream>
 #include <sstream>
+#include <extras/devices/ansi_colors.hpp>
 #include <filesystem>
+#include <chrono>
+#include <thread>
 
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
@@ -29,10 +34,12 @@ using namespace extras;
 using namespace std;
 using namespace fakeit;
 namespace fs = std::filesystem;
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono;
 
 void killAllServers();
 
-SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
+SCENARIO("Dock InvokableInterface", "[InvocationInterface]") {
 
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
     SystemException::assertion("cp data/exparx.webflow.zip testit; ", __INFO__);
@@ -97,9 +104,13 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     Verify(Method(mock_lbi, send_line_block));
     Verify(Method(mock_lbi, read_line_block));
 
-    Mock<rsi::InvocationInterface> mock;
-    rsi::InvocationInterface& i = mock.get();
-    When(Method(mock, formRequests))
+    Mock<rsi::InvokableInterface> mock;
+    rsi::InvokableInterface& i = mock.get();
+
+    Mock<rsi::VendorInterface> mock_vendor;
+    rsi::VendorInterface& i_vendor = mock_vendor.get();
+
+    When(Method(mock_vendor, resolve))
         .AlwaysDo(
             [&_portAuthority](
                 const rsi::ParametersInterface& parameters) {
@@ -128,7 +139,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                     }
                     return serviceTypeList;
             });
-    When(Method(mock, compile))
+    When(Method(mock_vendor, compile))
         .AlwaysDo(
             [&i](const rsi::ServiceTypeMap& serviceTypes,
                 const rsi::SessionInterface& session,
@@ -152,7 +163,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                     }
                     return after;
             });
-    When(Method(mock, decompile))
+    When(Method(mock_vendor, decompile))
         .AlwaysDo(
             [&i](
                 const rsi::ServiceTypeList& before,
@@ -174,10 +185,14 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                             auto des = rs1.filenames()[0];
                             auto cpCmd = "cp " + src + " " + des + " ";
                             SystemException::assertion(cpCmd, __INFO__);
+                            std::cout << white << cpCmd << yellow << " rsi update successful" << std::endl;
                         };
                     }
             });
-    When(Method(mock, package_request))
+
+    Mock<rsi::PackageInterface> mock_pkg;
+    rsi::PackageInterface& i_pkg = mock_pkg.get();
+    When(Method(mock_pkg, package_request))
         .AlwaysDo(
             [&_parameterList, &i, &lbi](const rsi::ServiceTypeList& list) {
                 std::stringstream ss;
@@ -186,7 +201,7 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 rsi::LinePacket packet = ss.str();
                 return packet;
             });
-    When(Method(mock, unpackage_request))
+    When(Method(mock_pkg, unpackage_request))
         .AlwaysDo(
             [&_parameterList, &i, &lbi](const rsi::LinePacket& package) {
                 auto parts = extras::str::split(package, ';');
@@ -195,9 +210,13 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                     list.push_back(item);
                 return list;
             });
-    When(Method(mock, servicesRequest))
+
+    Mock<rsi::ServicesInterface> mock_svc;
+    rsi::ServicesInterface& i_svc = mock_svc.get();
+
+    When(Method(mock_svc, servicesRequest))
         .AlwaysDo(
-            [&_parameterList, &i, &lbi, &_parameters](int socket) {
+            [&_parameterList, &i, &lbi, &i_pkg, &i_svc, &_parameters](int socket) {
                 if (socket == -2)
                     throw rsi::RSIException("unknown", __INFO__);
                 // --- core code below ----
@@ -205,38 +224,70 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
                 lbi.send_line_block(params);
                 if (socket != -1) { // real time
                     auto linePacket = lbi.read_line_block();
-                    auto serviceList = i.unpackage_request(linePacket);
+                    auto serviceList = i_pkg.unpackage_request(linePacket);
                     return serviceList;
                 }
                 // --- core code above ----
                 else {
-                    auto linePacket = i.servicesResponse(-1);
-                    auto serviceList = i.unpackage_request(linePacket);
+                    auto linePacket = i_svc.servicesResponse(-1);
+                    auto serviceList = i_pkg.unpackage_request(linePacket);
                     return serviceList;
                 } // mock
             });
-    When(Method(mock, servicesResponse))
+
+    Mock<rsi::ExecutableInterface> mock_exe;
+    rsi::ExecutableInterface& i_exe = mock_exe.get();
+
+    When(Method(mock_exe, internal))
         .AlwaysDo(
-            [&_parameterList, &i, &_sentList, &_receivedList, &lbi, &_serverTasks](int) {
+            [&i](const rsi::ServiceType& task) {
+                std::stringstream in;
+                rsi::RemoteService rs;
+                in << task;
+                in >> rs;
+                rs.internal(task);
+            });
+
+    When(Method(mock_exe, external))
+        .AlwaysDo(
+            [](const rsi::ServiceType& task) {
+                std::stringstream in;
+                rsi::RemoteService rs;
+                in << task;
+                in >> rs;
+                rs.external(task);
+            });
+
+
+    When(Method(mock_svc, servicesResponse))
+        .AlwaysDo(
+            [&_parameterList, &i, &i_pkg, &i_vendor, &_sentList, &_receivedList, &lbi, &_serverTasks, &i_exe](int) {
 
                 auto request = lbi.read_line_block();
                 rsi::ParametersX parameters(request);
-                auto serviceList = i.formRequests(parameters);
+                auto serviceList = i_vendor.resolve(parameters);
 
                 rsi::Session _serverSession;
                 _serverSession.create();
 
-                auto servers = i.compile(_serverTasks, _serverSession, serviceList);
+                auto servers = i_vendor.compile(_serverTasks, _serverSession, serviceList);
                 for (std::string task : servers) {
                     std::cout << task << std::endl;
-                    SystemException::assertion(task + " &", __INFO__);
+                    i_exe.external(task);
                 }
 
-                auto response = i.package_request(serviceList);
+                auto response = i_pkg.package_request(serviceList);
                 lbi.send_line_block(response);
                 return response;
 
             });
+
+    When(Method(mock, service))
+        .AlwaysDo(
+            [&i_svc](int socket) {
+                i_svc.servicesResponse(socket);
+            });
+
 
     // 
     // step 0. killAllServers();
@@ -245,14 +296,34 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
 
     When(Method(mock, invoke))
         .AlwaysDo(
-            [&i, &lbi, &_clientTasks](const rsi::SessionInterface& session, const rsi::ServiceTypeList& list) {
-                // --- core code below ----
-                auto clients = i.compile(_clientTasks, session, list);
-                for (std::string task : clients) {
-                    std::cout << task << std::endl;
-                    SystemException::assertion(task, __INFO__);
+            [&i, &lbi, &i_exe, &i_vendor, &i_svc, &_clientTasks](int socket) {
+
+
+                for (int attempt = 0; attempt < 3; attempt++) {
+                    auto servicesList = i_svc.servicesRequest(socket);
+                    rsi::Session _clientSession;
+                    _clientSession.create();
+                    try {
+
+                        // --- core code below ----
+                        auto clients = i_vendor.compile(_clientTasks, _clientSession, servicesList);
+                        for (std::string task : clients) {
+                            std::cout << task << std::endl;
+                            i_exe.external(task);
+                        }
+                        i_vendor.decompile(servicesList, clients);
+
+                        _clientSession.destroy();
+                        break;
+                    }
+                    catch (std::exception& ex) {
+                        std::cout << red << ex.what() << reset << std::endl;
+                        _clientSession.destroy();
+                    }
                 }
-                i.decompile(list, clients);
+
+
+
             });
 
     // 
@@ -260,21 +331,8 @@ SCENARIO("Mock InvocationInterface", "[InvocationInterface]") {
     //
     REQUIRE(_parameterList.size() == 0);
     _parameters.parse(argc, argv);
+    i.invoke(-1);
 
-    for (int attempt = 0; attempt < 3; attempt++) {
-        auto servicesList = i.servicesRequest(-1);
-        rsi::Session _clientSession;
-        _clientSession.create();
-        try {
-            i.invoke(_clientSession, servicesList);
-            _clientSession.destroy();
-            break;
-        }
-        catch (std::exception& ex) {
-            std::cout << ex.what() << std::endl;
-            _clientSession.destroy();
-        }
-    }
 
     REQUIRE(fs::exists(src_file));
     REQUIRE(fs::exists(webflow_file));

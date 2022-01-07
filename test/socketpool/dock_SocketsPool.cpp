@@ -26,7 +26,7 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock SocketPoolInterface", "[SocketPoolInterface]") {
+SCENARIO("Dock SocketPoolInterface", "[SocketPoolInterface]") {
 
     // input parameters
     rsi::SocketParaneters parameters;

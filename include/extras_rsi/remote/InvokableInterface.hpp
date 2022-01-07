@@ -1,7 +1,7 @@
 /**
  * @file ServiceType.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief InvocationInterface
+ * @brief InvokableInterface
  * @version 0.1
  * @date 2021-11-30
  *
@@ -32,6 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <extras_rsi/remote/ServiceInterface.hpp>
+#include <extras_rsi/remote/VendorInterface.hpp>
 #include <extras_rsi/sockets/Types.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
 #include <extras_rsi/remote/ParametersInterface.hpp>
@@ -44,31 +45,30 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief InvocationInterface
+         * @brief InvokableInterface
          *
          */
-        interface InvocationInterface {
+        interface InvokableInterface {
 
-            virtual LinePacket servicesResponse(int socket) pure;
-            virtual ServiceTypeList servicesRequest(int socket) pure;
+            /**
+             * @brief invoke()
+             * @note invoke the methods (remotely)
+             *
+             * After taking into consiration the parameters provided by
+             * the VendorInterface, execute in sequence a series of calls
+             * to fully 'resolve' the objective, (of the parameters).
+             *
+             * @param session
+             * @param list
+             */
+            virtual void invoke(int socket) pure;
 
-            virtual LinePacket package_request(const ServiceTypeList& list) pure;
-            virtual ServiceTypeList unpackage_request(const LinePacket& package) pure;
-
-            virtual ServiceTypeList compile(
-                const ServiceTypeMap& serviceTypes,
-                const SessionInterface& session,
-                const ServiceTypeList& list
-            ) const pure;
-
-            virtual void decompile(
-                const ServiceTypeList& before,
-                const ServiceTypeList& after
-            ) const pure;
-
-            virtual ServiceTypeList formRequests(const ParametersInterface& parameters) pure;
-
-            virtual void invoke(const SessionInterface& session, const ServiceTypeList& list) pure;
+            /**
+             * @brief service()
+             * @note service the invoke'd methods
+             *
+             */
+            virtual void service(int socket) pure;
 
         };
 

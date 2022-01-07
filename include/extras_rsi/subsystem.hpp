@@ -33,6 +33,9 @@
 #include <extras/interfaces.hpp>
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <thread>
+
 
 namespace extras {
 
@@ -69,6 +72,11 @@ namespace extras {
         void send_line(const std::string& msg, int sockfd);
 
         static constexpr int const& SIZE = 1024 * 256;
+
+        void deadman_switch(std::string msg);
+        void kill_deadman_switch();
+
+#define activate_deadman_switch(msg) std::thread t1(extras::rsi::deadman_switch, msg); t1.detach();
 
     }  // namespace rsi
 

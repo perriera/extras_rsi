@@ -48,7 +48,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 #
 # NOTE: Set C/C++ parameters for all targets in this CMakeLists.txt
 #
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic --std=c++17 -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic --std=c++17 -pthread -fPIC")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic -fPIC")
 
 # add additional project options

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_PARAMETERSINTERFACE_HPP
-#define _EXPARX_RSI_PARAMETERSINTERFACE_HPP
+#ifndef _EXPARX_RSI_CLIENTSERVERINTERFACE_HPP
+#define _EXPARX_RSI_CLIENTSERVERINTERFACE_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,7 +31,6 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/remote/ServiceInterface.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
@@ -39,30 +38,27 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief ParametersInterface
+         * @brief ClientInterface
          *
          */
-        interface ParametersInterface {
+        interface ClientInterface {
 
-            /**
-             * @brief parse()
-             * @note parse recognized parameters
-             *
-             * @param argc
-             * @param argv
-             */
-            virtual void parse(int argc, char const* argv[]) pure;
+            virtual void connect() pure;
+            virtual void close() const pure;
+            virtual void send() pure;
 
-            /**
-             * @brief various parameter methods
-             *
-             * @return Parameter
-             */
-            virtual Parameter parameters() const pure;
-            virtual const Parameter& address() const pure;
-            virtual const Parameter& port() const pure;
-            virtual const Filenames& filenames() const pure;
-            virtual ParameterList list() const pure;
+        };
+
+        /**
+         * @brief ServerInterface
+         *
+         */
+        interface ServerInterface {
+
+            virtual void connect() pure;
+            virtual void accept() pure;
+            virtual void close() const pure;
+            virtual void receive() pure;
 
         };
 
@@ -70,6 +66,6 @@ namespace extras {
     }
 }
 
-#endif // _EXPARX_RSI_PARAMETERSINTERFACE_HPP
+#endif // _EXPARX_RSI_CLIENTSERVERINTERFACE_HPP
 
 

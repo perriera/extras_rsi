@@ -26,7 +26,7 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock sockets::ParametersInterface", "[sockets::ParametersInterface]") {
+SCENARIO("Dock sockets::ParametersInterface", "[sockets::ParametersInterface]") {
 
     const char* argv[] = {
         "build/socketpool_client",

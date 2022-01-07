@@ -20,6 +20,7 @@
 #include <extras_rsi/exceptions.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
+#include <extras/filesystem/filesystem.hpp>
 #include <extras/filesystem/system.hpp>
 #include <extras_arc/parcel.hpp>
 #include <extras/status/StatusLine.hpp>
@@ -71,9 +72,26 @@ namespace extras {
         for (auto extra : this->extra_files()) {
             rsi::FileNotFoundException::assertion(extra, __INFO__);
             std::cout << extras::cyan << extras::pass(" processes file: ") << extra << std::endl;
+
+            FileSystem fs(extra);
+            auto pn = fs.pathname();
+            auto unzipCmd = "unzip -o " + extra + " -d " + pn;
+            SystemException::assertion(unzipCmd, __INFO__);
+
             auto ls1 = "ls -la " + extra;
             SystemException::assertion(ls1, __INFO__);
         }
+
+        FileSystem fs(filename());
+        auto pn = fs.pathname();
+        auto unzipCmd = "unzip -o " + filename() + " -d " + pn;
+        SystemException::assertion(unzipCmd, __INFO__);
+
+        ls1 = "ls -la " + filename();
+        SystemException::assertion(ls1, __INFO__);
+
+        // auto rezipCmd = "zip -ur " + filename() + " " + pn;
+        // SystemException::assertion(rezipCmd, __INFO__);
 
         // unlock the transfer
         std::cout << std::endl;

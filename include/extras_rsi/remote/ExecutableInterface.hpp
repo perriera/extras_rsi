@@ -1,7 +1,7 @@
 /**
- * @file ParametersInterface.hpp
+ * @file ExecutableInterface.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief ParametersInterface
+ * @brief ExecutableInterface
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_PARAMETERSINTERFACE_HPP
-#define _EXPARX_RSI_PARAMETERSINTERFACE_HPP
+#ifndef _EXPARX_RSI_EXECUTABLE_HPP
+#define _EXPARX_RSI_EXECUTABLE_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,7 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/remote/ServiceInterface.hpp>
+#include <extras_rsi/remote/ServiceTypes.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
@@ -39,37 +39,38 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief ParametersInterface
+         * @brief ExecutableInterface
          *
          */
-        interface ParametersInterface {
+        interface ExecutableInterface {
 
             /**
-             * @brief parse()
-             * @note parse recognized parameters
+             * @brief internal()
+             * @note run the service internally, (if possble)
              *
-             * @param argc
-             * @param argv
+             * This is usually achieved either by running the class directly,
+             * or through a thread, (using the C++11 style thread support)
+             *
+             * @param task
              */
-            virtual void parse(int argc, char const* argv[]) pure;
+            virtual void internal(const ServiceType& task) pure;
 
             /**
-             * @brief various parameter methods
+             * @brief external()
+             * @note run the service externally, (if possble)
              *
-             * @return Parameter
+             * This is usually achievd using the C/C++ standard library
+             * system() called, (see extras::SystemException::assertion())
+             *
+             * @param task
              */
-            virtual Parameter parameters() const pure;
-            virtual const Parameter& address() const pure;
-            virtual const Parameter& port() const pure;
-            virtual const Filenames& filenames() const pure;
-            virtual ParameterList list() const pure;
+            virtual void external(const ServiceType& task) pure;
 
         };
-
 
     }
 }
 
-#endif // _EXPARX_RSI_PARAMETERSINTERFACE_HPP
+#endif // _EXPARX_RSI_EXECUTABLE_HPP
 
 

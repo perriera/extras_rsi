@@ -28,7 +28,7 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock SemaphoreInterface: lock/unlock", "[SemaphoreInterface]") {
+SCENARIO("Dock SemaphoreInterface: lock/unlock", "[SemaphoreInterface]") {
 
     Mock<rsi::SemaphoreInterface> sema;
     Mock<rsi::UploaderInterface> uploader;

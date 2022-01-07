@@ -31,7 +31,9 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/remote/ServiceTypes.hpp>
+#include <extras_rsi/remote/ExecutableInterface.hpp>
+#include <extras_rsi/remote/PackageInterface.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
 #include <extras_rsi/services/SessionType.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
@@ -40,17 +42,6 @@
 
 namespace extras {
     namespace rsi {
-
-        /**
-         * @brief InvocationInterface
-         *
-         */
-
-        using ServiceType = std::string;
-        using ServiceTypeList = std::vector<std::string>;
-        using ServiceTypeMap = std::map<ServiceType, ServiceType>;
-        using Parameter = std::string;
-        using ParameterList = std::vector<std::string>;
 
         /**
          * @brief ServiceInterface
@@ -72,27 +63,13 @@ namespace extras {
         };
 
         /**
-         * @brief RemoteService
+         * @brief ServicesInterface
          *
          */
-        concrete class RemoteService implements ServiceInterface {
-            friend std::ostream& operator<<(std::ostream& out, const RemoteService& obj);
-            friend std::istream& operator>>(std::istream& in, RemoteService& obj);
+        interface ServicesInterface {
 
-            ServiceType _serviceType;
-            Parameter _address;
-            Parameter _port;
-            Filenames _filenameList;
-
-        public:
-            virtual const ServiceType& service() const override { return _serviceType; }
-            virtual const Parameter& address() const override { return _address; }
-            virtual const Parameter& port() const override { return _port; }
-            virtual const Filenames& filenames() const override { return _filenameList; }
-            virtual bool isUploader() const override;
-            virtual bool isServer(const Parameter& param) const override;
-            virtual void prepare(const SessionInterface& session) const override;
-            virtual void cleanup(const SessionInterface& session) const override;
+            virtual LinePacket servicesResponse(int socket) pure;
+            virtual ServiceTypeList servicesRequest(int socket) pure;
 
         };
 

@@ -39,10 +39,11 @@ int extras::rsi::configure_serversocket(const char* ip, int port,
     if (timeoutmode) {
         // Set a timeout ...
         struct timeval timeout;
-        timeout.tv_sec = 60;  // after 60 seconds connect() will timeout
+        timeout.tv_sec = 30;  // after 30 seconds connect() will timeout
         timeout.tv_usec = 0;
+        setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof(timeout));
         setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
-        std::cout << extras::pass("Server socket times out in 60 seconds") << std::endl;
+        std::cout << extras::pass("Server socket times out in 30 seconds") << std::endl;
     }
 
     // Forcefully attaching socket to the port 

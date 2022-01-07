@@ -25,7 +25,7 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Mock PoisonedFishInterface", "[PoisonedFishInterface]") {
+SCENARIO("Dock PoisonedFishInterface", "[PoisonedFishInterface]") {
 
     rsi::PoisonedFishKey correct = "1234567890";
     rsi::PoisonedFishKey random = "09887637432";
