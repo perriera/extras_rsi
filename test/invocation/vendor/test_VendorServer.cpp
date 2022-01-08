@@ -89,7 +89,7 @@ SCENARIO("Test UploaderInterface: vendor_server", "[UploaderInterface]") {
     // cleanup
     //
     killAllServers();
-    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
+    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
 
 }
 

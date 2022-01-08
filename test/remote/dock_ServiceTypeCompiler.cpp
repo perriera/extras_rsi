@@ -125,6 +125,6 @@ SCENARIO("Dock ServiceTypeCompilerInterface: clients", "[ServiceTypeCompilerInte
     Verify(Method(mock, clients));
     Verify(Method(mock, servers));
 
-    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
+    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
 
 }

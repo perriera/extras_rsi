@@ -51,6 +51,6 @@ SCENARIO("Test uploader::ParametersInterface", "[uploader::ParametersInterface]"
     REQUIRE(i.filename() == _parameters[3]);
     REQUIRE(i.extra_files() == _extra);
 
-    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
+    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
 
 }

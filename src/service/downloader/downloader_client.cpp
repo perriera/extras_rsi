@@ -36,6 +36,10 @@ int extras::rsi::downloader_client(int argc, char const* argv[]) {
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
         return 0;
     }
+    catch (extras::rsi::HelpParameterException& ex) {
+        ex.getHelp("HOWTO-download.md");
+        return -1;
+    }
     catch (extras::exception& ex) {
         std::cout << ex << std::endl;
         return -1;

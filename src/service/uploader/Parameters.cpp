@@ -38,23 +38,12 @@ namespace extras {
      *
      */
     rsi::Parameters rsi::Uploader::parameters(int argc, char const* argv[]) {
-        if (argc == 2 && rsi::Parameter(argv[1]) == "-help")
-            help();
-        if (argc < 4) {
-            cout << "parameters: <ip> <port> <filename>  | -help " << endl;
-            throw RSIException("parameters: <ip> <port> <filename> ", __INFO__);
-        }
+        rsi::HelpParameterException::assertion(argc, argv, __INFO__);
         rsi::Parameters result;
         for (int i = 0; i < argc; i++) result.push_back(argv[i]);
         _parameters = result;
         for (int i = 4; i < argc; i++) _extra_files.push_back(argv[i]);
         return _parameters;
-    }
-
-    void rsi::Uploader::getHelp(Parameter howto_filename) const {
-        FileNotFoundException::assertion(howto_filename, __INFO__);
-        string cmd = "cat " + howto_filename + " | less ";
-        SystemException::assertion(cmd.c_str(), __INFO__);
     }
 
 }  // namespace extras

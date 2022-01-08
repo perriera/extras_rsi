@@ -41,6 +41,10 @@ int main(int argc, char const* argv[]) {
 
         return 0;
     }
+    catch (extras::rsi::HelpParameterException& ex) {
+        ex.getHelp("HOWTO-RSI.md");
+        return -1;
+    }
     catch (extras::exception& ex) {
         std::cout << ex << std::endl;
         return -1;

@@ -122,5 +122,29 @@ namespace extras {
 
         }
 
+        /**
+         * @brief HelpParameterException
+         *
+         * @param argc
+         * @param argv
+         * @param ref
+         */
+        void HelpParameterException::assertion(int argc, char const* argv[], const extras::WhereAmI& ref) {
+            if (argc < 2)
+                return;
+            std::string helpParm;
+            helpParm += argv[1];
+            helpParm = extras::str::to_lower(helpParm);
+            if (extras::str::starts_with(helpParm, "-help")) {
+                throw HelpParameterException(helpParm, ref);
+            }
+        }
+
+        void HelpParameterException::getHelp(const Filename& howto_filename) {
+            FileNotFoundException::assertion(howto_filename, __INFO__);
+            std::string cmd = "cat " + howto_filename + " | less ";
+            SystemException::assertion(cmd.c_str(), __INFO__);
+        }
+
     }
 }  // namespace extras

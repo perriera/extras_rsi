@@ -73,6 +73,6 @@ SCENARIO("Test InvokableInterface: client/server", "[InvokableInterface]") {
     //
     killAllServers();
     REQUIRE_THROWS_AS(rsi::SocketPool::killServers("rsi_server"), extras::rsi::NoServersToKillException);
-    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
+    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
 }
 
