@@ -333,8 +333,9 @@ SCENARIO("Dock InvokableInterface", "[InvocationInterface]") {
     _parameters.parse(argc, argv);
     i.invoke(-1);
 
-
     REQUIRE(fs::exists(src_file));
     REQUIRE(fs::exists(webflow_file));
+
+    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
 
 }

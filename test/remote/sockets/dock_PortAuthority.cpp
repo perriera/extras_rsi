@@ -17,15 +17,16 @@
  */
 
 #include <iostream>
-
-#include "../unittesting/catch.hpp"
-#include "../unittesting/fakeit.hpp"
 #include <extras_rsi/remote/sockets/PortAuthority.hpp>
+
+#include "../../unittesting/catch.hpp"
+#include "../../unittesting/fakeit.hpp"
 
 using namespace extras;
 using namespace fakeit;
 
 SCENARIO("Dock PortAuthorityInterface", "[PortAuthorityInterface]") {
+
     int correct_request = 9000;
     Mock<rsi::PortAuthorityInterface> mock;
     When(Method(mock, request)).Return(correct_request);
@@ -33,4 +34,5 @@ SCENARIO("Dock PortAuthorityInterface", "[PortAuthorityInterface]") {
     rsi::PortAuthorityInterface& i = mock.get();
     REQUIRE(i.request() == correct_request);
     Verify(Method(mock, request));
+
 }

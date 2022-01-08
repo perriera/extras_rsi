@@ -114,4 +114,7 @@ SCENARIO("Dock RequestTypeCompilerInterface: TypeThree", "[RequestTypeCompilerIn
     }
 
     Verify(Method(mock, compile));
+
+    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
+
 }

@@ -75,5 +75,6 @@ SCENARIO("Test RequestTypeCompilerInterface: TypeThree", "[RequestTypeCompilerIn
         std::cout << "msg received: " << cmd << std::endl;
     }
 
+    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
 
 }

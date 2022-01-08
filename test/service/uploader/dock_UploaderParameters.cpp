@@ -99,4 +99,7 @@ SCENARIO("Dock uploader::ParametersInterface", "[uploader::ParametersInterface]"
     Verify(Method(mock, port));
     Verify(Method(mock, filename));
     Verify(Method(mock, extra_files));
+
+    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
+
 }

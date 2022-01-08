@@ -41,10 +41,10 @@ void killServers(std::string pattern);
 void killAllServers();
 
 /**
- * @brief Test UploaderInterface: vendor_server
+ * @brief Test UploaderInterface: vendor_client
  *
  */
-SCENARIO("Test UploaderInterface: vendor_server", "[UploaderInterface]") {
+SCENARIO("Test UploaderInterface: vendor_client", "[UploaderInterface]") {
 
     //
     // setup vendor_server
@@ -66,17 +66,7 @@ SCENARIO("Test UploaderInterface: vendor_server", "[UploaderInterface]") {
     REQUIRE(fs::exists("testit/src.zip"));
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
 
-    const char* argv[] = { "build/vendor_client", "127.0.0.1", "8080", "testit/src.zip", "testit/exparx.webflow.zip" };
-    int argc = sizeof(argv) / sizeof(argv[0]);
-
-    std::cout << extras::start(argv[0]) << std::endl;
-    extras::rsi::VendorClient vendor;
-    vendor.parameters(argc, argv);
-    vendor.connect();
-    vendor.transfer();
-    std::cout << extras::pass("File data processed successfully") << std::endl;
-    vendor.close();
-    std::cout << extras::end(argv[0]) << std::endl << std::endl;
+    SystemException::assertion("build/vendor_client 127.0.0.1 8080 testit/src.zip testit/exparx.webflow.zip", __INFO__);
 
     REQUIRE(fs::exists("testit/src.zip"));
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
@@ -89,7 +79,7 @@ SCENARIO("Test UploaderInterface: vendor_server", "[UploaderInterface]") {
     // cleanup
     //
     killAllServers();
-    SystemException::assertion("rm -rf testit", __INFO__);
+    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
 
 }
 

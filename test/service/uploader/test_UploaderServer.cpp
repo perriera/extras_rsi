@@ -116,7 +116,7 @@ SCENARIO("Test UploaderInterface: uploader_server", "[UploaderInterfaceX]") {
     // cleanup
     //
     killAllServers();
-    SystemException::assertion("rm -rf testit", __INFO__);
+    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
 
 }
 

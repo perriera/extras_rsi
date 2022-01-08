@@ -46,4 +46,7 @@ SCENARIO("Dock PoisonedFishInterface", "[PoisonedFishInterface]") {
     i.killServers();
     Verify(Method(mock, poisonedFishReceived));
     Verify(Method(mock, killServers));
+
+    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
+
 }

@@ -89,4 +89,6 @@ SCENARIO("Test SessionInterface: clients", "[SessionInterface]") {
     auto test = i.sessionType(before);
     REQUIRE(test == after);
 
+    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
+
 }

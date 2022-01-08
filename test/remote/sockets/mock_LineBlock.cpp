@@ -19,8 +19,8 @@
 #include <extras_rsi/remote/sockets/LineBlock.hpp>
 #include <iostream>
 
-#include "../unittesting/catch.hpp"
-#include "../unittesting/fakeit.hpp"
+#include "../../unittesting/catch.hpp"
+#include "../../unittesting/fakeit.hpp"
 
 using namespace extras;
 using namespace fakeit;

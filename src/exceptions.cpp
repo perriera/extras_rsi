@@ -28,8 +28,9 @@ namespace fs = std::filesystem;
 
 namespace extras {
     namespace rsi {
+
         /**
-         * @brief exceptions
+         * @brief FileNotFoundException
          *
          * @param filename
          * @param ref
@@ -40,6 +41,13 @@ namespace extras {
             if (!fs::exists(filename)) throw FileNotFoundException(filename, ref);
         }
 
+        /**
+         * @brief CantOpenStreamException
+         *
+         * @param stream
+         * @param filename
+         * @param ref
+         */
         void CantOpenStreamException::assertion(
             const std::istream& stream,
             const Filename& filename,
@@ -47,6 +55,13 @@ namespace extras {
             if (!stream.good()) throw CantOpenStreamException(filename, ref);
         }
 
+        /**
+         * @brief CantOpenStreamException
+         *
+         * @param stream
+         * @param filename
+         * @param ref
+         */
         void CantOpenStreamException::assertion(
             const std::ostream& stream,
             const Filename& filename,
@@ -54,12 +69,24 @@ namespace extras {
             if (!stream.good()) throw CantOpenStreamException(filename, ref);
         }
 
+        /**
+         * @brief RemoteBlockException
+         *
+         * @param response
+         * @param ref
+         */
         void RemoteBlockException::assertion(
             const std::string& response,
             const extras::WhereAmI& ref) {
             if (response.size() == 0) throw RemoteBlockException("no response", ref);
         }
 
+        /**
+         * @brief BadRangeFormatException
+         *
+         * @param range
+         * @param ref
+         */
         void BadRangeFormatException::assertion(
             const std::string& range,
             const extras::WhereAmI& ref) {
@@ -76,6 +103,13 @@ namespace extras {
             if (span < 0 || span>0xffff) throw BadRangeFormatException(range, ref);
         }
 
+        /**
+         * @brief NotEnoughParametersException
+         *
+         * @param argc
+         * @param minimum
+         * @param ref
+         */
         void NotEnoughParametersException::assertion(int argc, int minimum, const extras::WhereAmI& ref) {
             if (argc < minimum) {
                 std::string msg;

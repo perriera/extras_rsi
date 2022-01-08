@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/invocation/Vendor.hpp>
+#include <extras_rsi/service/Downloader.hpp>
 #include <extras_rsi/prototype/socketpool/SocketPool.hpp>
 #include <extras/strings.hpp>
 #include <filesystem>
@@ -41,45 +41,51 @@ void killServers(std::string pattern);
 void killAllServers();
 
 /**
- * @brief Test UploaderInterface: vendor_client
+ * @brief Test UploaderInterface: downloader_server
+ *
  *
  */
-SCENARIO("Test UploaderInterface: vendor_client", "[UploaderInterface]") {
+SCENARIO("Test UploaderInterface: downloader_server", "[UploaderInterface]") {
 
     //
-    // setup vendor_server
+    // setup downloader_server
     // 
     killAllServers();
     SystemException::assertion("rm -rf testit2; mkdir testit2; ", __INFO__);
-    SystemException::assertion("cp data/src.zip testit2; cp data/exparx.webflow.zip testit2; ", __INFO__);
-    REQUIRE(fs::exists("testit2/src.zip"));
+    SystemException::assertion("cp data/exparx.webflow.zip testit2; ", __INFO__);
     REQUIRE(fs::exists("testit2/exparx.webflow.zip"));
-    SystemException::assertion("build/vendor_server 127.0.0.1 8080 testit2/exparx.webflow.zip &", __INFO__);
+    SystemException::assertion("build/downloader_server 127.0.0.1 8080 testit2/exparx.webflow.zip &", __INFO__);
     sleep_for(nanoseconds(10));
     sleep_until(system_clock::now() + seconds(2));
 
     //
-    // setup vendor_client
+    // setup downloader_client
     //
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
-    SystemException::assertion("cp data/src.zip testit; cp data/exparx.webflow.zip testit; ", __INFO__);
-    REQUIRE(fs::exists("testit/src.zip"));
-    REQUIRE(fs::exists("testit/exparx.webflow.zip"));
+    REQUIRE(!fs::exists("testit/exparx.webflow.zip"));
 
-    SystemException::assertion("build/vendor_client 127.0.0.1 8080 testit/src.zip testit/exparx.webflow.zip", __INFO__);
+    const char* argv[] = { "build/downloader_client", "127.0.0.1", "8080", "testit/exparx.webflow.zip" };
+    int argc = sizeof(argv) / sizeof(argv[0]);
 
-    REQUIRE(fs::exists("testit/src.zip"));
+    std::cout << extras::start(argv[0]) << std::endl;
+    extras::rsi::DownloaderClient downloader;
+    downloader.parameters(argc, argv);
+    downloader.connect();
+    downloader.transfer();
+    std::cout << extras::pass("File data downloaded successfully") << std::endl;
+    downloader.close();
+    std::cout << extras::end(argv[0]) << std::endl << std::endl;
+
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
     sleep_for(nanoseconds(10));
     sleep_until(system_clock::now() + seconds(2));
-    REQUIRE(fs::exists("testit2/src.zip"));
-    REQUIRE(fs::exists("testit2/exparx.webflow.zip"));
+    REQUIRE(!fs::exists("testit2/exparx.webflow.zip"));
 
     //
     // cleanup
     //
     killAllServers();
-    SystemException::assertion("rm -rf testit", __INFO__);
+    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
 
 }
 

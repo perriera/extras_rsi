@@ -82,4 +82,7 @@ SCENARIO("Dock UploaderInterface: basic2", "[UploaderInterface]") {
     Verify(Method(mock, connect));
     Verify(Method(mock, transfer));
     Verify(Method(mock, close));
+
+    SystemException::assertion("rm -rf testit;rm -rf testit2;", __INFO__);
+
 }
