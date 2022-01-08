@@ -31,11 +31,11 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/sockets/LineBlock.hpp>
-#include <extras_rsi/sockets/FileBlock.hpp>
+#include <extras_rsi/remote/sockets/LineBlock.hpp>
+#include <extras_rsi/remote/sockets/FileBlock.hpp>
 #include <extras_rsi/service/Parameters.hpp>
-#include <extras_rsi/sockets/Types.hpp>
-#include <extras_rsi/sockets/Semaphores.hpp>
+#include <extras_rsi/remote/sockets/Types.hpp>
+#include <extras_rsi/remote/sockets/Semaphores.hpp>
 #include <extras/status/help.hpp>
 #include <iostream>
 #include <sstream>

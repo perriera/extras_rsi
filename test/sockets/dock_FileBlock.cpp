@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/sockets/FileBlock.hpp>
+#include <extras_rsi/remote/sockets/FileBlock.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"

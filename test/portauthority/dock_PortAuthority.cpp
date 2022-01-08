@@ -20,7 +20,7 @@
 
 #include "../unittesting/catch.hpp"
 #include "../unittesting/fakeit.hpp"
-#include <extras_rsi/sockets/PortAuthority.hpp>
+#include <extras_rsi/remote/sockets/PortAuthority.hpp>
 
 using namespace extras;
 using namespace fakeit;

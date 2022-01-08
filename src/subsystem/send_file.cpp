@@ -29,7 +29,7 @@
 #include <extras/devices/ansi_colors.hpp>
 #include <extras_rsi/gadgets/StatusBar.hpp>
 #include <extras_rsi/exceptions.hpp>
-#include <extras_rsi/sockets/SubSystem.hpp>
+#include <extras_rsi/remote/sockets/SubSystem.hpp>
 
 using namespace std;
 using namespace extras;

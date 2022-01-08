@@ -27,7 +27,7 @@
 #include <extras_rsi/gadgets/StatusBar.hpp>
 #include <extras_rsi/gadgets/Spinner.hpp>
 #include <extras_arc/parcel.hpp>
-#include <extras_rsi/sockets/SubSystem.hpp>
+#include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <extras/strings.hpp>
 #include <extras/devices/ansi_colors.hpp>
 

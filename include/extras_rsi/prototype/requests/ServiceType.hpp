@@ -31,10 +31,10 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/remote/sockets/Types.hpp>
 #include <extras_rsi/remote/SessionType.hpp>
 #include <extras_rsi/exceptions.hpp>
-#include <extras_rsi/sockets/PortAuthority.hpp>
+#include <extras_rsi/remote/sockets/PortAuthority.hpp>
 #include <iostream>
 
 namespace extras {

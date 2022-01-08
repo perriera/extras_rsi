@@ -31,7 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/remote/sockets/Types.hpp>
 #include <iostream>
 
 namespace extras {

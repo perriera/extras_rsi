@@ -18,7 +18,7 @@
 
 #include <extras_arc/bin2hex/ConvertFile.hpp>
 #include <extras_arc/parcel.hpp>
-#include <extras_rsi/sockets/Types.hpp>
+#include <extras_rsi/remote/sockets/Types.hpp>
 #include <extras/filesystem/paths.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>

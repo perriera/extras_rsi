@@ -28,7 +28,7 @@
 #include <filesystem>
 #include <chrono>
 #include <thread>
-#include <extras_rsi/sockets/SubSystem.hpp>
+#include <extras_rsi/remote/sockets/SubSystem.hpp>
 
 using namespace std;
 namespace fs = std::filesystem;

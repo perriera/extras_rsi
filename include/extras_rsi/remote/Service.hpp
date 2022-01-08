@@ -33,10 +33,10 @@
 #include <extras/interfaces.hpp>
 #include <extras_rsi/remote/ExecutableInterface.hpp>
 #include <extras_rsi/remote/ServiceInterface.hpp>
-#include <extras_rsi/sockets/Types.hpp>
-#include <extras_rsi/sockets/PortAuthority.hpp>
+#include <extras_rsi/remote/sockets/Types.hpp>
+#include <extras_rsi/remote/sockets/PortAuthority.hpp>
 #include <extras_rsi/remote/SessionType.hpp>
-#include <extras_rsi/sockets/LineBlock.hpp>
+#include <extras_rsi/remote/sockets/LineBlock.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 

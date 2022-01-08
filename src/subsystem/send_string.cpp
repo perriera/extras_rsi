@@ -22,7 +22,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <extras_rsi/sockets/SubSystem.hpp>
+#include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <string>
 
 void extras::rsi::send_string(const std::string& msg, int sockfd) {

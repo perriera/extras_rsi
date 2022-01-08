@@ -32,7 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <extras_rsi/remote/ServiceTypes.hpp>
-#include <extras_rsi/sockets/LineBlock.hpp>
+#include <extras_rsi/remote/sockets/LineBlock.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
