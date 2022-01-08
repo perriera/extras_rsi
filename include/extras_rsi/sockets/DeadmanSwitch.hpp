@@ -44,10 +44,20 @@ namespace extras {
     /**
      * @brief extras_rsi: (remote services interface)
      *
-     * The following code has been plagerized from other authors
-     * and placed here, (where is/as is) as it is code that works
-     * and serves a platform for future work when it comes to
-     * uploading files over an IP:port connection.
+     * A socket connection, (whether across the Internet or across
+     * a simple wire connecting to cans), can do down for any reason.
+     * This is often manifested as a timeout condition. There is really
+     * nothing that can be done but to stop the entire process, (so that
+     * another attempt can be made). This is the purpose of the
+     * deadman_switch, (it allows a process to terminate itself).
+     *
+     * Basically, a certain amount of time is given for a task to be executed.
+     * If that time is exceeded then the entire task is terminated.
+     *
+     * Compliments the C/C++ system() function, this works out nicely.
+     *
+     * This technique cannot be used for internal thread management, (as it
+     * is designed to take down the entire program, not just a single thread).
      *
      */
     namespace rsi {

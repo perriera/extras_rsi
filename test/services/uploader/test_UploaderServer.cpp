@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/service/Uploader.hpp>
 #include <extras_rsi/prototype/socketpool/SocketPool.hpp>
 #include <extras/strings.hpp>
 #include <filesystem>
@@ -28,7 +28,7 @@
 #include <extras_rsi/exceptions.hpp>
 #include <chrono>
 #include <thread>
-#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/service/Uploader.hpp>
 #include <extras_rsi/sockets/SubSystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/strings.hpp>

@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/vendor/Vendor.hpp>
+#include <extras_rsi/invocation/Vendor.hpp>
 #include <iostream>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/status/StatusLine.hpp>

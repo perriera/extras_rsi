@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/uploader/Downloader.hpp>
+#include <extras_rsi/service/Downloader.hpp>
 #include <extras_rsi/prototype/socketpool/SocketPool.hpp>
 #include <extras/strings.hpp>
 #include <filesystem>

@@ -16,8 +16,8 @@
  *
  */
 
-#include <extras_rsi/uploader/Parameters.hpp>
-#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/service/Parameters.hpp>
+#include <extras_rsi/service/Uploader.hpp>
 #include <iostream>
 
 #include "../../unittesting/catch.hpp"

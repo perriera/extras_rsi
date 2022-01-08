@@ -21,9 +21,9 @@
 
 #include <extras_rsi/remote/ServiceInterface.hpp>
 #include <extras_rsi/remote/Service.hpp>
-#include <extras_rsi/uploader/Downloader.hpp>
-#include <extras_rsi/uploader/Uploader.hpp>
-#include <extras_rsi/vendor/Vendor.hpp>
+#include <extras_rsi/service/Downloader.hpp>
+#include <extras_rsi/service/Uploader.hpp>
+#include <extras_rsi/invocation/Vendor.hpp>
 #include <iostream>
 #include <chrono>
 #include <thread>

@@ -17,7 +17,7 @@
  */
 
 #include <extras_rsi/sockets/Semaphores.hpp>
-#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/service/Uploader.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <iostream>
 #include <sstream>

@@ -19,7 +19,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/service/Uploader.hpp>
 #include <extras_rsi/sockets/SubSystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/strings.hpp>

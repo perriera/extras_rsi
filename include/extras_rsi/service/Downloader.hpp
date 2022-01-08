@@ -31,7 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/uploader/Uploader.hpp>
+#include <extras_rsi/service/Uploader.hpp>
 #include <iostream>
 #include <sstream>
 #include <netinet/in.h>
