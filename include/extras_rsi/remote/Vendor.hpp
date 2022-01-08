@@ -1,5 +1,5 @@
 /**
- * @file VendorInterface.hpp
+ * @file Vendor.hpp
  * @author Perry Anderson (perry@exparx.com)
  * @brief VendorInterface
  * @version 0.1

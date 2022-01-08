@@ -1,5 +1,5 @@
 /**
- * @file ServiceType.hpp
+ * @file ServiceInterface.hpp
  * @author Perry Anderson (perry@exparx.com)
  * @brief ServiceInterface
  * @version 0.1

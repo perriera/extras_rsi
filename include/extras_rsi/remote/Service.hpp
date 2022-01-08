@@ -1,7 +1,7 @@
 /**
- * @file ServiceType.hpp
+ * @file remote/Service.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief ServiceInterface
+ * @brief RemoteService
  * @version 0.1
  * @date 2021-11-30
  *

@@ -1,5 +1,5 @@
 /**
- * @file ServiceType.hpp
+ * @file InvokableInterface.hpp
  * @author Perry Anderson (perry@exparx.com)
  * @brief InvokableInterface
  * @version 0.1

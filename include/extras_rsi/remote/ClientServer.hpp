@@ -1,7 +1,7 @@
 /**
- * @file ParametersInterface.hpp
+ * @file ClientServer.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief ParametersInterface
+ * @brief InvocationClient, InvocationServer
  * @version 0.1
  * @date 2021-11-30
  *
