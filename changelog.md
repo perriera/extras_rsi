@@ -5,8 +5,8 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v4.25.0 -m "rsi_client/rsi_server, (Working prototype)"</br>
-> > git push origin v4.25.0
+> > git tag -a v5.0.0 -m "Refactored Includes"</br>
+> > git push origin v5.0.0
 
 IMPORTANT:
 
@@ -31,6 +31,13 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 5.0.0 (2022-01-07) [RSI-20B]
+
+## Refactored
+
+- Includes
+- Added prototype directory
 
 #### 4.25.0 (2022-01-06) [RSI-20B]
 
@@ -512,7 +519,8 @@ Updated README.md accordinging</br>
 - @brief style formatting
 - Doxygen support
 
-[unreleased]: https://github.com/perriera/extras_rsi/compare/v4.25.0...HEAD
+[unreleased]: https://github.com/perriera/extras_rsi/compare/v5.0.0...HEAD
+[5.0.0]: https://github.com/perriera/extras_rsi/compare/v4.25.0...v5.0.0
 [4.25.0]: https://github.com/perriera/extras_rsi/compare/v4.24.0...v4.25.0
 [4.24.0]: https://github.com/perriera/extras_rsi/compare/v4.23.0...v4.24.0
 [4.23.0]: https://github.com/perriera/extras_rsi/compare/v4.22.1...v4.23.0
