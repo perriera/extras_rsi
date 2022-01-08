@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/requests/RequestTypeThree.hpp>
+#include <extras_rsi/prototype/requests/RequestTypeThree.hpp>
 #include <extras_rsi/socketpool/Parameters.hpp>
 #include <extras_rsi/socketpool/Client.hpp>
 #include <extras_rsi/services/SessionType.hpp>

@@ -1,7 +1,7 @@
 /**
  * @file RequestType.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief RequestTypeCompilerTypeOne
+ * @brief RequestTypeCompilerTypeThree
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSIREQUESTTYPEONE_HPP
-#define _EXPARX_RSIREQUESTTYPEONE_HPP
+#ifndef _EXPARX_RSIREQUESTTYPEFOUR_HPP
+#define _EXPARX_RSIREQUESTTYPEFOUR_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,7 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/requests/RequestTypeBase.hpp>
+#include <extras_rsi/prototype/requests/RequestTypeBase.hpp>
 #include <iostream>
 
   /**
@@ -43,28 +43,23 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief RequestTypeCompilerTypeOne
+         * @brief RequestTypeCompilerTypeThree
          *
          */
-        concrete class RequestTypeCompilerTypeOne implements RequestTypeCompilerInterface {
-            int _socket = -1;
+        concrete class RequestTypeCompilerTypeFour extends RequestTypeCompilerBase {
         public:
-            RequestTypeCompilerTypeOne(int socket) : _socket(socket) {}
+            RequestTypeCompilerTypeFour(
+                const ServiceTypeCompilerInterface& compilerInterface, int socket)
+                : RequestTypeCompilerBase(compilerInterface, socket) {}
 
             virtual RequestTypeCompilation compile(
                 const rsi::sockets::ParametersInterface& client,
                 PortAuthorityInterface& portAuthority) const override;
 
-            virtual RequestTypeCompilation compile(
-                const rsi::sockets::ParametersInterface& client) const {
-                return compile(client, PortAuthority::instance());
-            }
         };
-
-
     }
 }
 
-#endif // _EXPARX_RSIREQUESTTYPEONE_HPP
+#endif // _EXPARX_RSIREQUESTTYPEFOUR_HPP
 
 

@@ -31,7 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/requests/RequestTypeBase.hpp>
+#include <extras_rsi/prototype/requests/RequestTypeBase.hpp>
 #include <iostream>
 
   /**

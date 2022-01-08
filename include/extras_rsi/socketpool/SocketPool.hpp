@@ -35,7 +35,7 @@
 #include <extras_rsi/socketpool/Parameters.hpp>
 #include <extras_rsi/socketpool/PoisonedFish.hpp>
 #include <extras_rsi/sockets/LineBlock.hpp>
-#include <extras_rsi/services/ServiceType.hpp>
+#include <extras_rsi/prototype/requests/ServiceType.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/status/help.hpp>
 #include <iostream>
