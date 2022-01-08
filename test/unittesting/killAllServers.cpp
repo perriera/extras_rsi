@@ -16,13 +16,13 @@
  *
  */
 
-#include <extras_rsi/uploader/Uploader.hpp>
-#include <extras_rsi/socketpool/SocketPool.hpp>
+#include <extras_rsi/service/Uploader.hpp>
+#include <extras_rsi/prototype/socketpool/SocketPool.hpp>
 #include <extras/strings.hpp>
 #include <filesystem>
 #include <iostream>
 #include <fstream>
-#include <extras_rsi/socketpool/Client.hpp>
+#include <extras_rsi/prototype/socketpool/Client.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <iostream>
 #include <extras_rsi/exceptions.hpp>

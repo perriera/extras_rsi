@@ -16,9 +16,9 @@
  *
  */
 
-#include <extras_rsi/uploader/Downloader.hpp>
+#include <extras_rsi/service/Downloader.hpp>
 #include <extras/status/StatusLine.hpp>
-#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/remote/sockets/DeadmanSwitch.hpp>
 #include <iostream>
 #include <extras_rsi/exceptions.hpp>
 
@@ -27,6 +27,6 @@ using namespace  extras;
 int main(int argc, char const* argv[]) {
     activate_deadman_switch(argv[0]);
     auto code = extras::rsi::downloader_server(argc, argv);
-    rsi::kill_deadman_switch();
+    deactivate_deadman_switch(argv[0]);
     return code;
 }

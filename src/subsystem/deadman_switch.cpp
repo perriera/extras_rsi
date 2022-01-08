@@ -24,10 +24,10 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <extras_rsi/gadgets/StatusBar.hpp>
-#include <extras_rsi/gadgets/Spinner.hpp>
+#include <extras_rsi/prototype/gadgets/StatusBar.hpp>
+#include <extras_rsi/prototype/gadgets/Spinner.hpp>
 #include <extras_arc/parcel.hpp>
-#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <extras/strings.hpp>
 #include <extras/devices/ansi_colors.hpp>
 

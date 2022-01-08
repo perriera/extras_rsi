@@ -23,7 +23,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <extras/strings.hpp>
 #include <string>
 

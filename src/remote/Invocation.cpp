@@ -22,7 +22,7 @@
 #include <extras_rsi/remote/Invocation.hpp>
 #include <extras_rsi/remote/Service.hpp>
 #include <extras/devices/ansi_colors.hpp>
-#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <iostream>
 
 using namespace std;

@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/sockets/LineBlock.hpp>
+#include <extras_rsi/remote/sockets/LineBlock.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"

@@ -34,9 +34,9 @@
 #include <extras_rsi/remote/ServiceTypes.hpp>
 #include <extras_rsi/remote/ExecutableInterface.hpp>
 #include <extras_rsi/remote/PackageInterface.hpp>
-#include <extras_rsi/sockets/PortAuthority.hpp>
-#include <extras_rsi/services/SessionType.hpp>
-#include <extras_rsi/sockets/LineBlock.hpp>
+#include <extras_rsi/remote/sockets/PortAuthority.hpp>
+#include <extras_rsi/remote/SessionType.hpp>
+#include <extras_rsi/remote/sockets/LineBlock.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
