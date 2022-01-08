@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/gadgets/StatusBar.hpp>
+#include <extras_rsi/prototype/gadgets/StatusBar.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/strings.hpp>
