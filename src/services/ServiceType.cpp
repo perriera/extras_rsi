@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/socketpool/Client.hpp>
+#include <extras_rsi/prototype/socketpool/Client.hpp>
 #include <extras_rsi/prototype/requests/ServiceType.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>

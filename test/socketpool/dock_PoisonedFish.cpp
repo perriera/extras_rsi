@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/socketpool/PoisonedFish.hpp>
+#include <extras_rsi/prototype/socketpool/PoisonedFish.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"

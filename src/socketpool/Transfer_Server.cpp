@@ -19,8 +19,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include <extras_rsi/socketpool/Client.hpp>
-#include <extras_rsi/socketpool/Server.hpp>
+#include <extras_rsi/prototype/socketpool/Client.hpp>
+#include <extras_rsi/prototype/socketpool/Server.hpp>
 #include <extras_rsi/prototype/requests/RequestTypeFour.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras_rsi/exceptions.hpp>

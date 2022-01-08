@@ -17,9 +17,9 @@
  */
 
 #include <extras_rsi/prototype/requests/RequestTypeThree.hpp>
-#include <extras_rsi/socketpool/Parameters.hpp>
-#include <extras_rsi/socketpool/Client.hpp>
-#include <extras_rsi/services/SessionType.hpp>
+#include <extras_rsi/prototype/socketpool/Parameters.hpp>
+#include <extras_rsi/prototype/socketpool/Client.hpp>
+#include <extras_rsi/remote/SessionType.hpp>
 #include <iostream>
 
 #include "../unittesting/catch.hpp"

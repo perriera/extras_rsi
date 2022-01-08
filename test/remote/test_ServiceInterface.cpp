@@ -17,7 +17,7 @@
  */
 
 #include <extras_rsi/remote/InvokableInterface.hpp>
-#include <extras_rsi/socketpool/SocketPool.hpp>
+#include <extras_rsi/prototype/socketpool/SocketPool.hpp>
 #include <extras_rsi/remote/Service.hpp>
 #include <extras_rsi/remote/ParametersX.hpp>
 #include <extras/strings.hpp>

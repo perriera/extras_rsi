@@ -16,8 +16,8 @@
  *
  */
 
-#include <extras_rsi/socketpool/Client.hpp>
-#include <extras_rsi/services/SessionType.hpp>
+#include <extras_rsi/prototype/socketpool/Client.hpp>
+#include <extras_rsi/remote/SessionType.hpp>
 #include <extras_rsi/subsystem.hpp>
 #include <extras/filesystem/filesystem.hpp>
 #include <extras_rsi/exceptions.hpp>

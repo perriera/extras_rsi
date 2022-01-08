@@ -32,7 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <extras_rsi/sockets/Types.hpp>
-#include <extras_rsi/services/SessionType.hpp>
+#include <extras_rsi/remote/SessionType.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras_rsi/sockets/PortAuthority.hpp>
 #include <iostream>
