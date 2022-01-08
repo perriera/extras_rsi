@@ -16,28 +16,28 @@
  *
  */
 
-#include <extras_rsi/prototype/socketpool/Client.hpp>
+#include <extras_rsi/service/Uploader.hpp>
 #include <extras/status/StatusLine.hpp>
+#include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <iostream>
 #include <extras_rsi/exceptions.hpp>
 
 using namespace  extras;
 
-int main(int argc, char const* argv[]) {
+int extras::rsi::uploader_server(int argc, char const* argv[]) {
     try {
         std::cout << extras::start(argv[0]) << std::endl;
-        extras::rsi::ServiceTypeCompilerVendor vendor;
-        extras::rsi::SocketPoolClient client(vendor);
-        client.parameters(argc, argv);
-        client.connect();
-        client.transfer();
-        std::cout << extras::pass("File sockets allocated successfully") << std::endl;
-        client.close();
+        extras::rsi::UploaderServer uploader;
+        uploader.parameters(argc, argv);
+        uploader.connect();
+        uploader.transfer();
+        std::cout << extras::pass("File data uploaded successfully") << std::endl;
+        uploader.close();
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
         return 0;
     }
     catch (extras::rsi::HelpParameterException& ex) {
-        ex.getHelp("HOWTO-socketpool.md");
+        ex.getHelp("HOWTO-upload.md");
         return -1;
     }
     catch (extras::exception& ex) {

@@ -190,4 +190,6 @@ SCENARIO("Dock SessionInterface: clients", "[SessionInterface]") {
     Verify(Method(mock, sessionType));
     Verify(Method(mock, sessionTypeList));
 
+    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
+
 }

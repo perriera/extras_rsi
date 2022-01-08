@@ -160,6 +160,17 @@ namespace extras {
             static void assertion(int argc, int minimum, const extras::WhereAmI& ref);
         };
 
+        /**
+         * @brief NotEnoughParametersException
+         *
+         */
+        concrete class HelpParameterException extends RSIException {
+        public:
+            HelpParameterException(std::string msg, const extras::WhereAmI& whereAmI)
+                : RSIException(msg.c_str(), whereAmI) {}
+            static void assertion(int argc, char const* argv[], const extras::WhereAmI& ref);
+            void getHelp(const Filename& howto_filename);
+        };
 
     }  // namespace rsi
 

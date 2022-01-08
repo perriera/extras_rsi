@@ -16,7 +16,8 @@
  *
  */
 
-#include <extras_rsi/prototype/socketpool/PoisonedFish.hpp>
+#include <extras_rsi/service/Parameters.hpp>
+#include <extras_rsi/service/Uploader.hpp>
 #include <iostream>
 
 #include "../../unittesting/catch.hpp"
@@ -25,27 +26,30 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Dock PoisonedFishInterface", "[PoisonedFishInterface]") {
+SCENARIO("Test uploader::ParametersInterface", "[uploader::ParametersInterface]") {
 
-    rsi::PoisonedFishKey correct = "1234567890";
-    rsi::PoisonedFishKey random = "09887637432";
-    Mock<rsi::PoisonedFishInterface> mock;
-    When(Method(mock, poisonedFishReceived))
-        .AlwaysDo(
-            [&correct](const rsi::PoisonedFishKey& msg) {
-                return correct == msg;
-            });
-    When(Method(mock, killServers))
-        .AlwaysDo(
-            []() {
-            });
+    const char* argv[] = {
+         "build/uploader_client",
+         "137.184.218.130",
+         "8080",
+         "data/src.zip",
+         "data/exparx.webflow.zip"
+    };
+    int argc = sizeof(argv) / sizeof(argv[0]);
+    Parameters _parameters = { argv[0], argv[1], argv[2], argv[3], argv[4] };
+    Parameters _extra = { argv[4] };
 
-    rsi::PoisonedFishInterface& i = mock.get();
-    REQUIRE(!i.poisonedFishReceived(random));
-    REQUIRE(i.poisonedFishReceived(correct));
-    i.killServers();
-    Verify(Method(mock, poisonedFishReceived));
-    Verify(Method(mock, killServers));
+    rsi::UploaderClient client;
+    // define the instance 
+    rsi::uploader::ParametersInterface& i = client;
+
+    // test the expected results
+    REQUIRE(i.parameters(argc, argv) == _parameters);
+    REQUIRE(i.program() == _parameters[0]);
+    REQUIRE(i.ip() == _parameters[1]);
+    REQUIRE(i.port() == _parameters[2]);
+    REQUIRE(i.filename() == _parameters[3]);
+    REQUIRE(i.extra_files() == _extra);
 
     SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
 

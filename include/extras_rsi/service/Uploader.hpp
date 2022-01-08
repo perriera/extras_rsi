@@ -88,14 +88,12 @@ namespace extras {
         abstract class Uploader implements UploaderInterface
             with uploader::ParametersInterface
             with LineBlockInterface
-            with FileBlockInterface
-            with HelpInterface {
+            with FileBlockInterface {
         protected:
             Parameters _parameters;
             Parameters _extra_files;
             struct sockaddr_in _server_addr;
             int _sockfd;
-            void getHelp(Parameter howto_filename) const;
 
         public:
             virtual Parameters parameters(int argc, char const* argv[]) override;
@@ -115,9 +113,6 @@ namespace extras {
                 return _extra_files;
             };
 
-            virtual void  help() const {
-                getHelp("HOWTO-upload.md");
-            }
         };
 
         /**

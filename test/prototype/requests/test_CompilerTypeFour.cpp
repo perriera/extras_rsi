@@ -72,5 +72,6 @@ SCENARIO("Test RequestTypeCompilerInterface: TypeFour", "[RequestTypeCompilerInt
         std::cout << "msg received: " << cmd << std::endl;
     }
 
+    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
 
 }

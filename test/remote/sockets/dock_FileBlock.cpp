@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/prototype/socketpool/PoisonedFish.hpp>
+#include <extras_rsi/remote/sockets/FileBlock.hpp>
 #include <iostream>
 
 #include "../../unittesting/catch.hpp"
@@ -25,28 +25,26 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Dock PoisonedFishInterface", "[PoisonedFishInterface]") {
+SCENARIO("Test FileBlockInterface: new script2", "[SocketPoolParameters]") {
 
-    rsi::PoisonedFishKey correct = "1234567890";
-    rsi::PoisonedFishKey random = "09887637432";
-    Mock<rsi::PoisonedFishInterface> mock;
-    When(Method(mock, poisonedFishReceived))
+    rsi::FilePacket filePacket = "upload data/exparx.webflow.zip";
+    rsi::FilePacket _sentFile;
+
+    Mock<rsi::FileBlockInterface> mock;
+    When(Method(mock, send_file_block))
         .AlwaysDo(
-            [&correct](const rsi::PoisonedFishKey& msg) {
-                return correct == msg;
+            [&_sentFile](const rsi::FilePacket& filePacket) {
+                _sentFile = filePacket;
             });
-    When(Method(mock, killServers))
+    When(Method(mock, write_file_block))
         .AlwaysDo(
-            []() {
+            [&_sentFile](const rsi::FilePacket&) {
+                return _sentFile;
             });
 
-    rsi::PoisonedFishInterface& i = mock.get();
-    REQUIRE(!i.poisonedFishReceived(random));
-    REQUIRE(i.poisonedFishReceived(correct));
-    i.killServers();
-    Verify(Method(mock, poisonedFishReceived));
-    Verify(Method(mock, killServers));
-
-    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
-
+    rsi::FileBlockInterface& i = mock.get();
+    i.send_file_block(filePacket);
+    REQUIRE(i.write_file_block(filePacket) == filePacket);
+    Verify(Method(mock, send_file_block));
+    Verify(Method(mock, write_file_block));
 }

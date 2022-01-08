@@ -28,8 +28,9 @@ namespace fs = std::filesystem;
 
 namespace extras {
     namespace rsi {
+
         /**
-         * @brief exceptions
+         * @brief FileNotFoundException
          *
          * @param filename
          * @param ref
@@ -40,6 +41,13 @@ namespace extras {
             if (!fs::exists(filename)) throw FileNotFoundException(filename, ref);
         }
 
+        /**
+         * @brief CantOpenStreamException
+         *
+         * @param stream
+         * @param filename
+         * @param ref
+         */
         void CantOpenStreamException::assertion(
             const std::istream& stream,
             const Filename& filename,
@@ -47,6 +55,13 @@ namespace extras {
             if (!stream.good()) throw CantOpenStreamException(filename, ref);
         }
 
+        /**
+         * @brief CantOpenStreamException
+         *
+         * @param stream
+         * @param filename
+         * @param ref
+         */
         void CantOpenStreamException::assertion(
             const std::ostream& stream,
             const Filename& filename,
@@ -54,12 +69,24 @@ namespace extras {
             if (!stream.good()) throw CantOpenStreamException(filename, ref);
         }
 
+        /**
+         * @brief RemoteBlockException
+         *
+         * @param response
+         * @param ref
+         */
         void RemoteBlockException::assertion(
             const std::string& response,
             const extras::WhereAmI& ref) {
             if (response.size() == 0) throw RemoteBlockException("no response", ref);
         }
 
+        /**
+         * @brief BadRangeFormatException
+         *
+         * @param range
+         * @param ref
+         */
         void BadRangeFormatException::assertion(
             const std::string& range,
             const extras::WhereAmI& ref) {
@@ -76,6 +103,13 @@ namespace extras {
             if (span < 0 || span>0xffff) throw BadRangeFormatException(range, ref);
         }
 
+        /**
+         * @brief NotEnoughParametersException
+         *
+         * @param argc
+         * @param minimum
+         * @param ref
+         */
         void NotEnoughParametersException::assertion(int argc, int minimum, const extras::WhereAmI& ref) {
             if (argc < minimum) {
                 std::string msg;
@@ -86,6 +120,30 @@ namespace extras {
                 throw NotEnoughParametersException(msg, ref);
             }
 
+        }
+
+        /**
+         * @brief HelpParameterException
+         *
+         * @param argc
+         * @param argv
+         * @param ref
+         */
+        void HelpParameterException::assertion(int argc, char const* argv[], const extras::WhereAmI& ref) {
+            if (argc < 2)
+                return;
+            std::string helpParm;
+            helpParm += argv[1];
+            helpParm = extras::str::to_lower(helpParm);
+            if (extras::str::starts_with(helpParm, "-help")) {
+                throw HelpParameterException(helpParm, ref);
+            }
+        }
+
+        void HelpParameterException::getHelp(const Filename& howto_filename) {
+            FileNotFoundException::assertion(howto_filename, __INFO__);
+            std::string cmd = "cat " + howto_filename + " | less ";
+            SystemException::assertion(cmd.c_str(), __INFO__);
         }
 
     }

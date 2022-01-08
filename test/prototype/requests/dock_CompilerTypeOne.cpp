@@ -80,4 +80,7 @@ SCENARIO("Dock RequestTypeCompilerInterface: TypeOne", "[RequestTypeCompilerInte
     }
 
     Verify(Method(mock, compile));
+
+    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
+
 }

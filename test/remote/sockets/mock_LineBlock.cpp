@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/prototype/socketpool/PoisonedFish.hpp>
+#include <extras_rsi/remote/sockets/LineBlock.hpp>
 #include <iostream>
 
 #include "../../unittesting/catch.hpp"
@@ -25,28 +25,26 @@
 using namespace extras;
 using namespace fakeit;
 
-SCENARIO("Dock PoisonedFishInterface", "[PoisonedFishInterface]") {
+SCENARIO("Test LineBlockInterface: new script2", "[SocketPoolParameters]") {
 
-    rsi::PoisonedFishKey correct = "1234567890";
-    rsi::PoisonedFishKey random = "09887637432";
-    Mock<rsi::PoisonedFishInterface> mock;
-    When(Method(mock, poisonedFishReceived))
+    rsi::LinePacket linePacket = "upload data/exparx.webflow.zip";
+    rsi::LinePacket _sentLine;
+
+    Mock<rsi::LineBlockInterface> mock;
+    When(Method(mock, send_line_block))
         .AlwaysDo(
-            [&correct](const rsi::PoisonedFishKey& msg) {
-                return correct == msg;
+            [&_sentLine](const rsi::LinePacket& linePacket) {
+                _sentLine = linePacket;
             });
-    When(Method(mock, killServers))
+    When(Method(mock, read_line_block))
         .AlwaysDo(
-            []() {
+            [&_sentLine]() {
+                return _sentLine;
             });
 
-    rsi::PoisonedFishInterface& i = mock.get();
-    REQUIRE(!i.poisonedFishReceived(random));
-    REQUIRE(i.poisonedFishReceived(correct));
-    i.killServers();
-    Verify(Method(mock, poisonedFishReceived));
-    Verify(Method(mock, killServers));
-
-    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
-
+    rsi::LineBlockInterface& i = mock.get();
+    i.send_line_block(linePacket);
+    REQUIRE(i.read_line_block() == linePacket);
+    Verify(Method(mock, send_line_block));
+    Verify(Method(mock, read_line_block));
 }

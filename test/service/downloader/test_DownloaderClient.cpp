@@ -16,63 +16,66 @@
  *
  */
 
-#include <extras_rsi/remote/InvokableInterface.hpp>
+#include <extras_rsi/service/Downloader.hpp>
 #include <extras_rsi/prototype/socketpool/SocketPool.hpp>
-#include <extras_rsi/remote/Service.hpp>
-#include <extras_rsi/remote/ParametersX.hpp>
 #include <extras/strings.hpp>
-#include <iostream>
-#include <sstream>
-#include <extras/devices/ansi_colors.hpp>
-#include <extras/status/StatusLine.hpp>
 #include <filesystem>
+#include <iostream>
+#include <fstream>
+#include <extras_rsi/prototype/socketpool/Client.hpp>
+#include <extras/status/StatusLine.hpp>
+#include <iostream>
+#include <extras_rsi/exceptions.hpp>
 #include <chrono>
 #include <thread>
 
-#include "../unittesting/catch.hpp"
-#include "../unittesting/fakeit.hpp"
+#include "../../unittesting/catch.hpp"
+#include "../../unittesting/fakeit.hpp"
 
 using namespace extras;
-using namespace std;
-using namespace fakeit;
-namespace fs = std::filesystem;
 using namespace std::this_thread; // sleep_for, sleep_until
 using namespace std::chrono;
+namespace fs = std::filesystem;
 
+void killServers(std::string pattern);
 void killAllServers();
 
 /**
- * @brief Test SocketPoolInterface: socketpool_server
+ * @brief Test UploaderInterface: downloader_client
+ *
  *
  */
-SCENARIO("Test InvokableInterface: client/server", "[InvokableInterface]") {
+SCENARIO("Test UploaderInterface: downloader_client", "[UploaderInterface]") {
 
     //
-    // setup rsi_server
-    //
+    // setup downloader_server
+    // 
     killAllServers();
-    SystemException::assertion("build/rsi_server 127.0.0.1:8080 9000-9500 &", __INFO__);
+    SystemException::assertion("rm -rf testit2; mkdir testit2; ", __INFO__);
+    SystemException::assertion("cp data/exparx.webflow.zip testit2; ", __INFO__);
+    REQUIRE(fs::exists("testit2/exparx.webflow.zip"));
+    SystemException::assertion("build/downloader_server 127.0.0.1 8080 testit2/exparx.webflow.zip &", __INFO__);
     sleep_for(nanoseconds(10));
     sleep_until(system_clock::now() + seconds(2));
 
     //
-    // setup rsi_client
+    // setup downloader_client
     //
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
-    SystemException::assertion("cp data/src.zip testit/; cp data/exparx.webflow.zip testit; ", __INFO__);
-    REQUIRE(fs::exists("testit/src.zip"));
-    REQUIRE(fs::exists("testit/exparx.webflow.zip"));
+    REQUIRE(!fs::exists("testit/exparx.webflow.zip"));
 
-    SystemException::assertion("build/rsi_client 127.0.0.1:8080 testit/src.zip testit/exparx.webflow.zip", __INFO__);
+    SystemException::assertion("build/downloader_client 127.0.0.1 8080 testit/exparx.webflow.zip", __INFO__);
 
-    REQUIRE(fs::exists("testit/src.zip"));
     REQUIRE(fs::exists("testit/exparx.webflow.zip"));
+    sleep_for(nanoseconds(10));
+    sleep_until(system_clock::now() + seconds(2));
+    REQUIRE(!fs::exists("testit2/exparx.webflow.zip"));
 
     //
     // cleanup
     //
     killAllServers();
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("rsi_server"), extras::rsi::NoServersToKillException);
     SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
+
 }
 
