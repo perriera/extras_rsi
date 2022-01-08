@@ -18,7 +18,7 @@
 
 #include <extras_rsi/vendor/Vendor.hpp>
 #include <extras/status/StatusLine.hpp>
-#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/sockets/SubSystem.hpp>
 #include <iostream>
 #include <extras_rsi/exceptions.hpp>
 

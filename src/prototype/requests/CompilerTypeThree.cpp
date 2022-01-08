@@ -21,7 +21,7 @@
 
 #include <extras_rsi/prototype/socketpool/Client.hpp>
 #include <extras_rsi/prototype/requests/RequestTypeThree.hpp>
-#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/sockets/SubSystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 

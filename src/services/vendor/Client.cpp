@@ -20,7 +20,7 @@
 #include <iostream>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/status/StatusLine.hpp>
-#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/sockets/SubSystem.hpp>
 
 using namespace std;
 

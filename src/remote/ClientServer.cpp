@@ -18,7 +18,7 @@
 
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <extras_rsi/subsystem.hpp>
+#include <extras_rsi/sockets/SubSystem.hpp>
 #include <extras_rsi/remote/ClientServer.hpp>
 #include <iostream>
 

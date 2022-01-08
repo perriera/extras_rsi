@@ -73,11 +73,6 @@ namespace extras {
 
         static constexpr int const& SIZE = 1024 * 256;
 
-        void deadman_switch(std::string msg);
-        void kill_deadman_switch();
-
-#define activate_deadman_switch(msg) std::thread t1(extras::rsi::deadman_switch, msg); t1.detach();
-
     }  // namespace rsi
 
 }  // namespace extras

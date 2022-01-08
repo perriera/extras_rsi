@@ -32,7 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <iostream>
-#include <extras_rsi/rsiexception.hpp>
+#include <extras_rsi/exceptions.hpp>
 
 namespace extras {
     namespace rsi {
