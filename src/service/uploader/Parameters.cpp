@@ -38,7 +38,7 @@ namespace extras {
      *
      */
     rsi::Parameters rsi::Uploader::parameters(int argc, char const* argv[]) {
-        rsi::HelpParameterException::assertion(argc, argv, __INFO__);
+        HelpParameterException::assertion(argc, argv, __INFO__);
         rsi::Parameters result;
         for (int i = 0; i < argc; i++) result.push_back(argv[i]);
         _parameters = result;

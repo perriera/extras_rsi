@@ -66,8 +66,8 @@ namespace extras {
          * @param argv
          */
         void ParametersX::parse(int argc, char const* argv[]) {
-            rsi::HelpParameterException::assertion(argc, argv, __INFO__);
-            rsi::NotEnoughParametersException::assertion(argc, 3, __INFO__);
+            HelpParameterException::assertion(argc, argv, __INFO__);
+            NotEnoughParametersException::assertion(argc, 3, __INFO__);
             rsi::ParameterList _parameterList;
             for (auto i = 1; i < argc; i++)
                 _parameterList.push_back(argv[i]);

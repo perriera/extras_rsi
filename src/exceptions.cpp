@@ -103,48 +103,6 @@ namespace extras {
             if (span < 0 || span>0xffff) throw BadRangeFormatException(range, ref);
         }
 
-        /**
-         * @brief NotEnoughParametersException
-         *
-         * @param argc
-         * @param minimum
-         * @param ref
-         */
-        void NotEnoughParametersException::assertion(int argc, int minimum, const extras::WhereAmI& ref) {
-            if (argc < minimum) {
-                std::string msg;
-                msg += argc;
-                msg += " given, ";
-                msg += minimum;
-                msg += " expected, (at least) ";
-                throw NotEnoughParametersException(msg, ref);
-            }
-
-        }
-
-        /**
-         * @brief HelpParameterException
-         *
-         * @param argc
-         * @param argv
-         * @param ref
-         */
-        void HelpParameterException::assertion(int argc, char const* argv[], const extras::WhereAmI& ref) {
-            if (argc < 2)
-                return;
-            std::string helpParm;
-            helpParm += argv[1];
-            helpParm = extras::str::to_lower(helpParm);
-            if (extras::str::starts_with(helpParm, "-help")) {
-                throw HelpParameterException(helpParm, ref);
-            }
-        }
-
-        void HelpParameterException::getHelp(const Filename& howto_filename) {
-            FileNotFoundException::assertion(howto_filename, __INFO__);
-            std::string cmd = "cat " + howto_filename + " | less ";
-            SystemException::assertion(cmd.c_str(), __INFO__);
-        }
 
     }
 }  // namespace extras

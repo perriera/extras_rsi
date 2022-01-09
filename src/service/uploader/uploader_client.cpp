@@ -36,7 +36,7 @@ int extras::rsi::uploader_client(int argc, char const* argv[]) {
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
         return 0;
     }
-    catch (extras::rsi::HelpParameterException& ex) {
+    catch (extras::HelpParameterException& ex) {
         ex.getHelp("HOWTO-upload.md");
         return -1;
     }
