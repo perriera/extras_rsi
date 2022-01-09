@@ -77,7 +77,7 @@ namespace extras {
 
         public:
 
-            InvocationServer(rsi::VendorInterface& vendor, bool timeout = true)
+            InvocationServer(rsi::VendorInterface& vendor, bool timeout = false)
                 : Invocation(vendor), _timeout(timeout) {};
 
             virtual void connect() override;
