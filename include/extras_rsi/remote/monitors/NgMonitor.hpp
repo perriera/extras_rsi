@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_MONITOR_FILE_HPP
-#define _EXPARX_RSI_MONITOR_FILE_HPP
+#ifndef _EXPARX_RSI_MONITOR_NG_HPP
+#define _EXPARX_RSI_MONITOR_NG_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,7 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/remote/CausalityInterface.hpp>
+#include <extras_rsi/remote/monitors/File.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
@@ -39,44 +39,29 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief Monitor
-         *
-         */
-        concrete class FileMonitor implements CausalityInterface {
-
-        protected:
-            Pathname _pathname;
-            int _watchDog = 2;
-
-        public:
-
-            FileMonitor(const Pathname& pathname, int watchDog = 2)
-                :_pathname(pathname), _watchDog(watchDog) {}
-
-            virtual void cause() override;
-            virtual void effect() override;
-            virtual void reset() override;
-
-        };
-
-        /**
          * @brief
          *
          */
-        concrete class PassiveFileMonitor extends FileMonitor {
+        concrete class NgMonitor extends FileMonitor {
 
-            std::chrono::_V2::system_clock::time_point _timeMarker;
+            Pathname _srcDir;
 
         public:
 
-            PassiveFileMonitor(const Pathname& pathname, int watchDog = 2);
-            virtual void cause() override;
+            NgMonitor(
+                const Pathname& webflowZip,
+                const Pathname& srcDir,
+                int watchDog = 2);
+
+            virtual void effect() override;
+            virtual void reset() override;
+
         };
 
 
     }
 }
 
-#endif // _EXPARX_RSI_MONITOR_FILE_HPP
+#endif // _EXPARX_RSI_MONITOR_NG_HPP
 
 
