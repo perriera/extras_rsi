@@ -21,8 +21,8 @@
 #include <iostream>
 #include <sstream>
 
-#include "../unittesting/catch.hpp"
-#include "../unittesting/fakeit.hpp"
+#include "../../unittesting/catch.hpp"
+#include "../../unittesting/fakeit.hpp"
 
 using namespace extras;
 using namespace fakeit;

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_MONITOR_HPP
-#define _EXPARX_RSI_MONITOR_HPP
+#ifndef _EXPARX_RSI_MONITOR_BASIC_HPP
+#define _EXPARX_RSI_MONITOR_BASIC_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -56,6 +56,6 @@ namespace extras {
     }
 }
 
-#endif // _EXPARX_RSI_MONITOR_HPP
+#endif // _EXPARX_RSI_MONITOR_BASIC_HPP
 
 
