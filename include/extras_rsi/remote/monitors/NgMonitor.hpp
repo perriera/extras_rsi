@@ -45,12 +45,14 @@ namespace extras {
         concrete class NgMonitor extends FileMonitor {
 
             Pathname _srcDir;
+            Parameter _rsiIP;
 
         public:
 
             NgMonitor(
                 const Pathname& webflowZip,
                 const Pathname& srcDir,
+                const Parameter& rsiIP,
                 int watchDog = 2);
 
             virtual void effect() override;

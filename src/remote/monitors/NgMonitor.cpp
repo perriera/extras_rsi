@@ -17,8 +17,10 @@
  */
 
 #include <extras_rsi/remote/monitors/NgMonitor.hpp>
+#include <extras_arc/zipper.hpp>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <filesystem>
 #include <chrono>
 #include <thread>
@@ -41,17 +43,26 @@ namespace extras {
         NgMonitor::NgMonitor(
             const Pathname& webflowZip,
             const Pathname& srcDir,
+            const Parameter& rsiIP,
             int watchDog)
             : FileMonitor(webflowZip, watchDog),
-            _srcDir(srcDir) {}
+            _srcDir(srcDir), _rsiIP(rsiIP) {}
 
         /**
          * @brief effect()
          *
          */
         void NgMonitor::effect() {
-            auto lsCmd = "ls -la " + _pathname;
-            SystemException::assertion(lsCmd, __INFO__);
+            auto zipFile = _srcDir + "src.zip";
+            arc::Zipper zipper(zipFile, _srcDir);
+            zipper.create();
+            stringstream ss;
+            ss << "build/rsi_client " << _rsiIP << " ";
+            ss << zipFile << " ";
+            ss << _pathname << " ";
+            auto rsiCmd = ss.str();
+            SystemException::assertion(rsiCmd, __INFO__);
+            zipper.append();
             reset();
         }
 
@@ -60,8 +71,10 @@ namespace extras {
          *
          */
         void NgMonitor::reset() {
-            auto rmCmd = "rm " + _pathname;
-            SystemException::assertion(rmCmd, __INFO__);
+            auto rmWebflow = "rm " + _pathname;
+            SystemException::assertion(rmWebflow, __INFO__);
+            auto rmSrcZip = "rm " + _srcDir + "src.zip";
+            SystemException::assertion(rmSrcZip, __INFO__);
         }
 
     }  // namespace extras

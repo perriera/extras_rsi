@@ -26,6 +26,28 @@
 #include "../../unittesting/catch.hpp"
 #include "../../unittesting/fakeit.hpp"
 
+#include <extras_rsi/remote/InvokableInterface.hpp>
+#include <extras_rsi/prototype/socketpool/SocketPool.hpp>
+#include <extras_rsi/remote/Service.hpp>
+#include <extras_rsi/remote/ParametersX.hpp>
+#include <extras/strings.hpp>
+#include <iostream>
+#include <sstream>
+#include <extras/devices/ansi_colors.hpp>
+#include <extras/status/StatusLine.hpp>
+#include <filesystem>
+#include <chrono>
+#include <thread>
+
+using namespace extras;
+using namespace std;
+using namespace fakeit;
+namespace fs = std::filesystem;
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono;
+
+void killAllServers();
+
 using namespace extras;
 using namespace fakeit;
 using namespace std;
@@ -54,8 +76,18 @@ SCENARIO("Test NgMonitor", "[CausalityInterface]") {
     REQUIRE(fs::exists("testit/src.zip"));
     zipper.create();
     REQUIRE(fs::exists("testit/src.zip"));
+    SystemException::assertion("rm testit/src.zip", __INFO__);
+    REQUIRE(!fs::exists("testit/src.zip"));
 
-    rsi::NgMonitor monitor(webflow, srcDir);
+    //
+    // setup rsi_server
+    //
+    killAllServers();
+    SystemException::assertion("build/rsi_server 127.0.0.1:8080 9000-9500 &", __INFO__);
+    sleep_for(nanoseconds(10));
+    sleep_until(system_clock::now() + seconds(2));
+
+    rsi::NgMonitor monitor(webflow, srcDir, "127.0.0.1:8080");
     rsi::CausalityInterface& i = monitor;
 
     REQUIRE(fs::exists(webflow));
@@ -63,6 +95,19 @@ SCENARIO("Test NgMonitor", "[CausalityInterface]") {
     REQUIRE(!fs::exists(webflow));
     i.cause();
     REQUIRE(!fs::exists(webflow));
+
+    REQUIRE(!fs::exists("testit/src.zip"));
+    REQUIRE(!fs::exists("testit/exparx.webflow.zip"));
+    REQUIRE(fs::exists("testit/src"));
+
+    //
+    // cleanup
+    //
+    killAllServers();
+    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("rsi_server"), extras::rsi::NoServersToKillException);
+    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
+
+
 
     SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
 
