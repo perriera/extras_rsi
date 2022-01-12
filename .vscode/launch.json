@@ -36,7 +36,7 @@
       "request": "launch",
       "program": "${workspaceFolder}/build/ng_monitor",
       "args": [
-        "127.0.0.1:8080",
+        "137.184.218.130:8080",
         "/home/perry/Downloads/exparx.webflow.zip",
         "/home/perry/Projects/testit/"
       ],

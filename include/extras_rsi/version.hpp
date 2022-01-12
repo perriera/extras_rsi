@@ -31,8 +31,8 @@
  */
 
 #define RSI_VER_MAJOR 5
-#define RSI_VER_MINOR 1
-#define RSI_VER_PATCH 1
+#define RSI_VER_MINOR 2
+#define RSI_VER_PATCH 0
 
 #define EXTRAS_RSI_VERSION \
   (RSI_VER_MAJOR * 10000 + RSI_VER_MINOR * 100 + RSI_VER_PATCH)
