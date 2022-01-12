@@ -32,6 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <extras_rsi/remote/monitors/File.hpp>
+#include <extras_rsi/remote/ParametersX.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
@@ -42,21 +43,48 @@ namespace extras {
          * @brief
          *
          */
-        concrete class NgMonitor extends FileMonitor {
+        concrete class NgMonitor extends FileMonitor
+            with ParametersInterface {
 
             Pathname _srcDir;
             Parameter _rsiIP;
+            ParametersX _paraneters;
 
         public:
 
-            NgMonitor(
-                const Pathname& webflowZip,
-                const Pathname& srcDir,
-                const Parameter& rsiIP,
-                int watchDog = 2);
-
+            /**
+             * @brief CausalityInterface
+             *
+             */
             virtual void effect() override;
             virtual void reset() override;
+
+            /**
+             * @brief ParametersInterface
+             *
+             */
+            virtual void parse(int argc, char const* argv[]) override;
+
+            virtual Parameter parameters() const override
+            {
+                return _paraneters.parameters();
+            }
+            virtual const Parameter& address() const override
+            {
+                return _paraneters.address();
+            }
+            virtual const Parameter& port() const override
+            {
+                return _paraneters.port();
+            }
+            virtual const Filenames& filenames() const override
+            {
+                return _paraneters.filenames();
+            }
+            virtual ParameterList list() const override
+            {
+                return _paraneters.list();
+            }
 
         };
 

@@ -34,19 +34,20 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief Construct a new Ng Monitor:: Ng Monitor object
+         * @brief parse()
          *
-         * @param webflowZip
-         * @param srcDir
-         * @param watchDog
+         * @param argc
+         * @param argv
          */
-        NgMonitor::NgMonitor(
-            const Pathname& webflowZip,
-            const Pathname& srcDir,
-            const Parameter& rsiIP,
-            int watchDog)
-            : FileMonitor(webflowZip, watchDog),
-            _srcDir(srcDir), _rsiIP(rsiIP) {}
+        void NgMonitor::parse(int argc, char const* argv[]) {
+            NotEnoughParametersException::assertion(argc, 4, __INFO__);
+            _paraneters.parse(argc, argv);
+            _pathname = _paraneters.filenames()[0];
+            _srcDir = _paraneters.filenames()[1];
+            _rsiIP = _paraneters.address();
+            _rsiIP += ":";
+            _rsiIP += _paraneters.port();
+        }
 
         /**
          * @brief effect()

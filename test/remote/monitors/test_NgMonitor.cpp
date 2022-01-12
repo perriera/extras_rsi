@@ -18,26 +18,17 @@
 
 #include <extras_rsi/remote/monitors/NgMonitor.hpp>
 #include <extras/devices/ansi_colors.hpp>
-#include <iostream>
-#include <sstream>
-#include <filesystem>
-#include <extras_arc/zipper.hpp>
-
-#include "../../unittesting/catch.hpp"
-#include "../../unittesting/fakeit.hpp"
-
-#include <extras_rsi/remote/InvokableInterface.hpp>
 #include <extras_rsi/prototype/socketpool/SocketPool.hpp>
 #include <extras_rsi/remote/Service.hpp>
-#include <extras_rsi/remote/ParametersX.hpp>
-#include <extras/strings.hpp>
+#include <extras_arc/zipper.hpp>
 #include <iostream>
 #include <sstream>
-#include <extras/devices/ansi_colors.hpp>
-#include <extras/status/StatusLine.hpp>
 #include <filesystem>
 #include <chrono>
 #include <thread>
+
+#include "../../unittesting/catch.hpp"
+#include "../../unittesting/fakeit.hpp"
 
 using namespace extras;
 using namespace std;
@@ -48,10 +39,6 @@ using namespace std::chrono;
 
 void killAllServers();
 
-using namespace extras;
-using namespace fakeit;
-using namespace std;
-namespace fs = std::filesystem;
 
 SCENARIO("Test NgMonitor", "[CausalityInterface]") {
 
@@ -85,10 +72,23 @@ SCENARIO("Test NgMonitor", "[CausalityInterface]") {
     killAllServers();
     SystemException::assertion("build/rsi_server 127.0.0.1:8080 9000-9500 &", __INFO__);
     sleep_for(nanoseconds(10));
-    sleep_until(system_clock::now() + seconds(2));
 
-    rsi::NgMonitor monitor(webflow, srcDir, "127.0.0.1:8080");
+    const char* argv[] = {
+        "build/rsi",
+        "127.0.0.1:8080",
+        webflow.c_str(),
+        srcDir.c_str()
+    };
+    int argc = sizeof(argv) / sizeof(argv[0]);
+
+    rsi::NgMonitor monitor;
     rsi::CausalityInterface& i = monitor;
+
+    monitor.parse(argc, argv);
+
+    REQUIRE(fs::exists("testit/src/app/app.component.ts"));
+    fs::remove("testit/src/app/app.component.ts");
+    REQUIRE(!fs::exists("testit/src/app/app.component.ts"));
 
     REQUIRE(fs::exists(webflow));
     i.cause();
@@ -100,15 +100,13 @@ SCENARIO("Test NgMonitor", "[CausalityInterface]") {
     REQUIRE(!fs::exists("testit/exparx.webflow.zip"));
     REQUIRE(fs::exists("testit/src"));
 
+    REQUIRE(!fs::exists("testit/src/app/app.component.ts"));
+
     //
     // cleanup
     //
     killAllServers();
     REQUIRE_THROWS_AS(rsi::SocketPool::killServers("rsi_server"), extras::rsi::NoServersToKillException);
-    SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
-
-
-
     SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
 
 }

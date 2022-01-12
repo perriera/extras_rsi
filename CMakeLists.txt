@@ -224,6 +224,15 @@ target_link_libraries(vendor_server PRIVATE ${PROJECT_NAME} stdc++fs extras extr
 endif()
 
 #
+# vendor_client/server 
+#
+if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
+add_executable(ng_monitor instances/ng_monitor.cpp) 
+target_include_directories(ng_monitor PUBLIC ${INCLUDES})
+target_link_libraries(ng_monitor PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+endif()
+
+#
 # NOTE: Install all shared libraries & executables
 #
 install(TARGETS 

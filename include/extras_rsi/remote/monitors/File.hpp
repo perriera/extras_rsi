@@ -50,9 +50,14 @@ namespace extras {
 
         public:
 
+            FileMonitor() {}
             FileMonitor(const Pathname& pathname, int watchDog = 2)
                 :_pathname(pathname), _watchDog(watchDog) {}
 
+            /**
+             * @brief CausalityInterface
+             *
+             */
             virtual void cause() override;
             virtual void effect() override;
             virtual void reset() override;
@@ -69,7 +74,13 @@ namespace extras {
 
         public:
 
+            PassiveFileMonitor() {}
             PassiveFileMonitor(const Pathname& pathname, int watchDog = 2);
+
+            /**
+             * @brief CausalityInterface
+             *
+             */
             virtual void cause() override;
         };
 
