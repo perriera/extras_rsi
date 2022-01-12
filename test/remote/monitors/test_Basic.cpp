@@ -1,18 +1,4 @@
 /**
-* @file version.hpp
-* @author Matt Williams (mattltf@protonmail.com)
-* @brief Adds version support for Cmake script
-* @version 3.2.0
-* @date 2021-08-08
-*
-* @copyright (C) August 8, 2021 Matt Williams
-*
-*/
-
-#ifndef _RSI_VERSION_HPP
-#define _RSI_VERSION_HPP
-
-/**
  * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
  *
  * Copyright (C) November 22, 2021 EXPARX INCORPORATED
@@ -30,11 +16,22 @@
  *
  */
 
-#define RSI_VER_MAJOR 5
-#define RSI_VER_MINOR 2
-#define RSI_VER_PATCH 0
+#include <extras_rsi/remote/monitors/Basic.hpp>
+#include <extras/devices/ansi_colors.hpp>
+#include <iostream>
+#include <sstream>
 
-#define EXTRAS_RSI_VERSION \
-  (RSI_VER_MAJOR * 10000 + RSI_VER_MINOR * 100 + RSI_VER_PATCH)
+#include "../../unittesting/catch.hpp"
+#include "../../unittesting/fakeit.hpp"
 
-#endif// _RSI_VERSION_HPP
+using namespace extras;
+using namespace fakeit;
+
+SCENARIO("Test Basic Monitor", "[CausalityInterface]") {
+
+    rsi::Monitor monitor;
+    rsi::CausalityInterface& i = monitor;
+
+    i.cause();
+
+}

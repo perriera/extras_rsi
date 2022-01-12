@@ -14,7 +14,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build/run-unittests-extras_rsi",
-      "args": ["[InvokableInterface]"],
+      "args": ["[CausalityInterface]"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
@@ -28,6 +28,31 @@
         }
       ],
       "preLaunchTask": "Build C++ project",
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
+    {
+      "name": "ng_monitor",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/ng_monitor",
+      "args": [
+        "137.184.218.130:8080",
+        "/home/perry/Downloads/exparx.webflow.zip",
+        "/home/perry/Projects/testit/"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "Build C++ project (for uploader_client)",
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {
