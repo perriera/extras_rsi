@@ -30,14 +30,10 @@ int main(int argc, char const* argv[]) {
 
         std::cout << extras::start(argv[0]) << std::endl;
 
-        // // rsi::NgMonitor monitor(webflow, srcDir, "127.0.0.1:8080");
-
-        // rsi::PortAuthority portAuthority;
-        // rsi::Vendor vendor(portAuthority);
-        // rsi::InvocationClient client(vendor);
-        // client.parse(argc, argv);
-        // client.connect();
-        // client.send();
+        rsi::NgMonitor monitor;
+        monitor.parse(argc, argv);
+        while (true)
+            monitor.cause();
 
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
 
