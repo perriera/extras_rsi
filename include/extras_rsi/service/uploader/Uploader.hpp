@@ -34,7 +34,7 @@
 #include <extras_rsi/service/uploader/UploaderInterface.hpp>
 #include <extras_rsi/remote/sockets/LineBlock.hpp>
 #include <extras_rsi/remote/sockets/FileBlock.hpp>
-#include <extras_rsi/service/Parameters.hpp>
+#include <extras_rsi/service/uploader/Parameters.hpp>
 #include <extras_rsi/remote/sockets/Types.hpp>
 #include <extras_rsi/remote/sockets/Semaphores.hpp>
 #include <extras/status/help.hpp>
@@ -83,16 +83,6 @@ namespace extras {
             };
 
         };
-
-        /**
-         * @brief uploader_client / uploader_server
-         *
-         * @param argc
-         * @param argv
-         * @return int
-         */
-        int uploader_client(int argc, char const* argv[]);
-        int uploader_server(int argc, char const* argv[]);
 
     }  // namespace rsi
 

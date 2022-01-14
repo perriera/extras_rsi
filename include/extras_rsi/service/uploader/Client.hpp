@@ -45,7 +45,6 @@ namespace extras {
          */
         concrete class UploaderClient extends Uploader with virtual SemaphoreInterface {
         protected:
-            std::string client_dir = "data/client/";
 
             virtual Lock lock(const Lock& lock)  override;
             virtual Lock unlock(const Lock& lock)  override;
@@ -58,6 +57,15 @@ namespace extras {
             virtual void send_line_block(const LinePacket& msg) const override;
             virtual LinePacket read_line_block() override;
         };
+
+        /**
+         * @brief uploader_client
+         *
+         * @param argc
+         * @param argv
+         * @return int
+         */
+        int uploader_client(int argc, char const* argv[]);
 
     }  // namespace rsi
 

@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/service/Parameters.hpp>
+#include <extras_rsi/service/uploader/Parameters.hpp>
 #include <extras_rsi/service/uploader/Client.hpp>
 #include <extras_rsi/service/uploader/Server.hpp>
 #include <iostream>

@@ -16,7 +16,8 @@
  *
  */
 
-#include <extras_rsi/service/Downloader.hpp>
+#include <extras_rsi/service/downloader/Client.hpp>
+#include <extras_rsi/service/downloader/Server.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <extras/status/StatusLine.hpp>

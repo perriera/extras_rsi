@@ -1,7 +1,7 @@
 /**
- * @file Uploader.hpp
+ * @file Downloader.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief UploaderInterface, Uploader class
+ * @brief DownloaderClient class, DownloaderServer class
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSISERVICES_UPLOADER_SERVER_HPP
-#define _EXPARX_RSISERVICES_UPLOADER_SERVER_HPP
+#ifndef _EXPARX_RSISERVICES_DOWNLOADER_SERVER_HPP
+#define _EXPARX_RSISERVICES_DOWNLOADER_SERVER_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,48 +31,38 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/service/uploader/Uploader.hpp>
+#include <extras_rsi/service/uploader/Client.hpp>
+#include <extras_rsi/service/uploader/Server.hpp>
+#include <iostream>
+#include <sstream>
+#include <netinet/in.h>
+#include <sys/socket.h>
 
 namespace extras {
     namespace rsi {
 
-
         /**
-         * @brief concrete class UploaderServer
-         *
-         *   build/rsi_client 127.0.0.1 8080 transfer send.txt
-         *   ss >> prg >> filename >> ip >> port;
+         * @brief concrete class DownloaderServer
          *
          */
-        concrete class UploaderServer extends Uploader with virtual SemaphoreInterface {
-
-        protected:
-            struct sockaddr_in _new_addr;
-            int _new_sock;
-
+        concrete class DownloaderServer extends UploaderServer with virtual SemaphoreInterface {
             virtual Lock lock(const Lock& lock)  override;
             virtual Lock unlock(const Lock& lock)  override;
         public:
-            virtual void connect() override;
             virtual void transfer() override;
-            virtual void close() const override;
-            virtual void send_file_block(const FilePacket& filename) const override;
-            virtual FilePacket write_file_block(const FilePacket& filename) const override;
-            virtual void send_line_block(const UploaderStatus& msg) const override;
-            virtual UploaderStatus read_line_block()  override;
         };
 
         /**
-         * @brief uploader_server
+         * @brief downloader_server
          *
          * @param argc
          * @param argv
          * @return int
          */
-        int uploader_server(int argc, char const* argv[]);
+        int downloader_server(int argc, char const* argv[]);
 
     }  // namespace rsi
 
 }  // namespace extras
 
-#endif  // _EXPARX_RSISERVICES_UPLOADER_SERVER_HPP
+#endif  // _EXPARX_RSISERVICES_DOWNLOADER_SERVER_HPP
