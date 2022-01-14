@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/invocation/generic/Vendor.hpp>
+#include <extras_rsi/invocation/vendor/Generic.hpp>
 #include <extras_rsi/prototype/socketpool/SocketPool.hpp>
 #include <extras/strings.hpp>
 #include <filesystem>

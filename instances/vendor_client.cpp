@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/invocation/generic/Vendor.hpp>
+#include <extras_rsi/invocation/vendor/Generic.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/remote/sockets/DeadmanSwitch.hpp>
 #include <iostream>
