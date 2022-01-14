@@ -40,26 +40,51 @@ namespace extras {
         /**
          * @brief concrete class UploaderServer
          *
-         *   build/rsi_client 127.0.0.1 8080 transfer send.txt
-         *   ss >> prg >> filename >> ip >> port;
+         *   (See test_UploaderServer.cpp)
          *
          */
-        concrete class UploaderServer extends Uploader with virtual SemaphoreInterface {
+        concrete class UploaderServer extends Uploader
+            with virtual SemaphoreInterface {
 
         protected:
             struct sockaddr_in _new_addr;
             int _new_sock;
 
+            /**
+             * @brief SemaphoreInterface
+             *
+             * @param lock
+             * @return Lock
+             */
             virtual Lock lock(const Lock& lock)  override;
             virtual Lock unlock(const Lock& lock)  override;
+
+            /**
+             * @brief FileBlockInterface
+             *
+             * @param filename
+             */
+            virtual void send_file_block(const FilePacket& filename) const override;
+            virtual FilePacket write_file_block(const FilePacket& filename) const override;
+
+            /**
+             * @brief LineBlockInterface
+             *
+             * @param msg
+             */
+            virtual void send_line_block(const UploaderStatus& msg) const override;
+            virtual UploaderStatus read_line_block()  override;
+
         public:
+
+            /**
+             * @brief UploaderInterface
+             *
+             */
             virtual void connect() override;
             virtual void transfer() override;
             virtual void close() const override;
-            virtual void send_file_block(const FilePacket& filename) const override;
-            virtual FilePacket write_file_block(const FilePacket& filename) const override;
-            virtual void send_line_block(const UploaderStatus& msg) const override;
-            virtual UploaderStatus read_line_block()  override;
+
         };
 
         /**
