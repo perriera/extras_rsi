@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSISERVICES_DOWNLOADER_HPP
-#define _EXPARX_RSISERVICES_DOWNLOADER_HPP
+#ifndef _EXPARX_RSISERVICES_DOWNLOADER_CLIENT_HPP
+#define _EXPARX_RSISERVICES_DOWNLOADER_CLIENT_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,7 +31,8 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/service/Uploader.hpp>
+#include <extras_rsi/service/uploader/Client.hpp>
+#include <extras_rsi/service/uploader/Server.hpp>
 #include <iostream>
 #include <sstream>
 #include <netinet/in.h>
@@ -52,28 +53,16 @@ namespace extras {
         };
 
         /**
-         * @brief concrete class DownloaderServer
-         *
-         */
-        concrete class DownloaderServer extends UploaderServer with virtual SemaphoreInterface {
-            virtual Lock lock(const Lock& lock)  override;
-            virtual Lock unlock(const Lock& lock)  override;
-        public:
-            virtual void transfer() override;
-        };
-
-        /**
-         * @brief downloader_client / downloader_server
+         * @brief downloader_client
          *
          * @param argc
          * @param argv
          * @return int
          */
         int downloader_client(int argc, char const* argv[]);
-        int downloader_server(int argc, char const* argv[]);
 
     }  // namespace rsi
 
 }  // namespace extras
 
-#endif  // _EXPARX_RSISERVICES_DOWNLOADER_HPP
+#endif  // _EXPARX_RSISERVICES_DOWNLOADER_CLIENT_HPP

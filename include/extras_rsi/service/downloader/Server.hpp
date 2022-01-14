@@ -1,7 +1,7 @@
 /**
- * @file Vendor.hpp
+ * @file Downloader.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief VendorClient, VendorServer
+ * @brief DownloaderClient class, DownloaderServer class
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSISERVICES_VENDOR_HPP
-#define _EXPARX_RSISERVICES_VENDOR_HPP
+#ifndef _EXPARX_RSISERVICES_DOWNLOADER_SERVER_HPP
+#define _EXPARX_RSISERVICES_DOWNLOADER_SERVER_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -42,35 +42,27 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief concrete class VendorClient
+         * @brief concrete class DownloaderServer
          *
          */
-        concrete class VendorClient extends UploaderClient {
+        concrete class DownloaderServer extends UploaderServer with virtual SemaphoreInterface {
+            virtual Lock lock(const Lock& lock)  override;
+            virtual Lock unlock(const Lock& lock)  override;
         public:
             virtual void transfer() override;
         };
 
         /**
-         * @brief concrete class VendorServer
-         *
-         */
-        concrete class VendorServer extends UploaderServer {
-        public:
-            virtual void transfer() override;
-        };
-
-        /**
-         * @brief vendor_client / vendor_server
+         * @brief downloader_server
          *
          * @param argc
          * @param argv
          * @return int
          */
-        int vendor_client(int argc, char const* argv[]);
-        int vendor_server(int argc, char const* argv[]);
+        int downloader_server(int argc, char const* argv[]);
 
     }  // namespace rsi
 
 }  // namespace extras
 
-#endif  // _EXPARX_RSISERVICES_VENDOR_HPP
+#endif  // _EXPARX_RSISERVICES_DOWNLOADER_SERVER_HPP

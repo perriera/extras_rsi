@@ -18,7 +18,7 @@
 
 
 #include <extras_rsi/remote/sockets/Semaphores.hpp>
-#include <extras_rsi/service/Uploader.hpp>
+#include <extras_rsi/service/uploader/Uploader.hpp>
 #include <extras_arc/wrap.hpp>
 #include <extras_arc/bin2hex/ConvertFile.hpp>
 #include <extras/devices/ansi_colors.hpp>
