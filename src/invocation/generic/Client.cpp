@@ -16,7 +16,8 @@
  *
  */
 
-#include <extras_rsi/invocation/vendor/Generic.hpp>
+#include <extras_rsi/invocation/vendor/Client.hpp>
+#include <extras_rsi/invocation/vendor/Server.hpp>
 #include <iostream>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/status/StatusLine.hpp>
