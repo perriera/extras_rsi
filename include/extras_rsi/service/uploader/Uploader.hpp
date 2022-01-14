@@ -49,15 +49,13 @@ namespace extras {
         /**
          * @brief abstract class Uploader
          *
-         * ex.
-         *   build/uploader_client data/exparx.webflow.zip 137.184.218.130 8080
-         *   ss >> prg >> filename >> ip >> port;
-         *
          */
-        abstract class Uploader implements UploaderInterface
+        abstract class Uploader
+            implements UploaderInterface
             with uploader::ParametersInterface
             with LineBlockInterface
             with FileBlockInterface {
+
         protected:
             Parameters _parameters;
             Parameters _extra_files;

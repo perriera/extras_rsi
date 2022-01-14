@@ -44,12 +44,31 @@ namespace extras {
         /**
          * @brief concrete class DownloaderServer
          *
+         *   (See test_DownloaderClient.cpp)
+         *
          */
-        concrete class DownloaderServer extends UploaderServer with virtual SemaphoreInterface {
+        concrete class DownloaderServer extends UploaderServer
+            with virtual SemaphoreInterface {
+
+            /**
+             * @brief SemaphoreInterface
+             *
+             * @param lock
+             * @return Lock
+             */
             virtual Lock lock(const Lock& lock)  override;
             virtual Lock unlock(const Lock& lock)  override;
+
         public:
+
+            /**
+             * @brief UploaderInterface
+             *
+             * @param lock
+             * @return Lock
+             */
             virtual void transfer() override;
+
         };
 
         /**
