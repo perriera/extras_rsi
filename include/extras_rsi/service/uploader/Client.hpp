@@ -1,7 +1,7 @@
 /**
- * @file Downloader.hpp
+ * @file Uploader.hpp
  * @author Perry Anderson (perry@exparx.com)
- * @brief DownloaderClient class, DownloaderServer class
+ * @brief UploaderInterface, Uploader class
  * @version 0.1
  * @date 2021-11-30
  *
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSISERVICES_DOWNLOADER_HPP
-#define _EXPARX_RSISERVICES_DOWNLOADER_HPP
+#ifndef _EXPARX_RSISERVICES_UPLOADER_CLIENT_HPP
+#define _EXPARX_RSISERVICES_UPLOADER_CLIENT_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,50 +31,36 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/service/uploader/Client.hpp>
-#include <extras_rsi/service/uploader/Server.hpp>
-#include <iostream>
-#include <sstream>
-#include <netinet/in.h>
-#include <sys/socket.h>
+#include <extras_rsi/service/uploader/Uploader.hpp>
 
 namespace extras {
     namespace rsi {
 
         /**
-         * @brief concrete class DownloaderClient
+         * @brief concrete class UploaderClient
+         *
+         *   build/rsi_client 127.0.0.1 8080 transfer send.txt
+         *   ss >> prg >> filename >> ip >> port;
          *
          */
-        concrete class DownloaderClient extends UploaderClient with virtual SemaphoreInterface {
+        concrete class UploaderClient extends Uploader with virtual SemaphoreInterface {
+        protected:
+            std::string client_dir = "data/client/";
+
             virtual Lock lock(const Lock& lock)  override;
             virtual Lock unlock(const Lock& lock)  override;
         public:
+            virtual void connect() override;
             virtual void transfer() override;
+            virtual void close() const override;
+            virtual void send_file_block(const Filename& filename) const override;
+            virtual Filename write_file_block(const Filename& filename) const override;
+            virtual void send_line_block(const LinePacket& msg) const override;
+            virtual LinePacket read_line_block() override;
         };
-
-        /**
-         * @brief concrete class DownloaderServer
-         *
-         */
-        concrete class DownloaderServer extends UploaderServer with virtual SemaphoreInterface {
-            virtual Lock lock(const Lock& lock)  override;
-            virtual Lock unlock(const Lock& lock)  override;
-        public:
-            virtual void transfer() override;
-        };
-
-        /**
-         * @brief downloader_client / downloader_server
-         *
-         * @param argc
-         * @param argv
-         * @return int
-         */
-        int downloader_client(int argc, char const* argv[]);
-        int downloader_server(int argc, char const* argv[]);
 
     }  // namespace rsi
 
 }  // namespace extras
 
-#endif  // _EXPARX_RSISERVICES_DOWNLOADER_HPP
+#endif  // _EXPARX_RSISERVICES_UPLOADER_CLIENT_HPP

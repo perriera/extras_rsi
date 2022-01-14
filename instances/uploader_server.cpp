@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/service/Uploader.hpp>
+#include <extras_rsi/service/uploader/Uploader.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/remote/sockets/DeadmanSwitch.hpp>
 #include <iostream>

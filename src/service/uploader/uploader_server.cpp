@@ -16,7 +16,8 @@
  *
  */
 
-#include <extras_rsi/service/Uploader.hpp>
+#include <extras_rsi/service/uploader/Client.hpp>
+#include <extras_rsi/service/uploader/Server.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <iostream>

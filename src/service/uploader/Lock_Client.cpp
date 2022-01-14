@@ -19,7 +19,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include <extras_rsi/service/Uploader.hpp>
+#include <extras_rsi/service/uploader/Client.hpp>
+#include <extras_rsi/service/uploader/Server.hpp>
 #include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/strings.hpp>

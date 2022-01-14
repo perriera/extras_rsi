@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/service/Uploader.hpp>
+#include <extras_rsi/service/uploader/Uploader.hpp>
 #include <extras/strings.hpp>
 #include <extras_arc/wrap.hpp>
 #include <extras_arc/parcel.hpp>

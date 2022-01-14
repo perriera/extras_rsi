@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/service/Uploader.hpp>
+#include <extras_rsi/service/uploader/Uploader.hpp>
 #include <extras_rsi/service/Downloader.hpp>
 #include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <extras_rsi/exceptions.hpp>

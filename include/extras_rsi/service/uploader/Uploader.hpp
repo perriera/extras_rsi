@@ -31,7 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/service/UploaderInterface.hpp>
+#include <extras_rsi/service/uploader/UploaderInterface.hpp>
 #include <extras_rsi/remote/sockets/LineBlock.hpp>
 #include <extras_rsi/remote/sockets/FileBlock.hpp>
 #include <extras_rsi/service/Parameters.hpp>
@@ -82,55 +82,6 @@ namespace extras {
                 return _extra_files;
             };
 
-        };
-
-        /**
-         * @brief concrete class UploaderClient
-         *
-         *   build/rsi_client 127.0.0.1 8080 transfer send.txt
-         *   ss >> prg >> filename >> ip >> port;
-         *
-         */
-        concrete class UploaderClient extends Uploader with virtual SemaphoreInterface {
-        protected:
-            std::string client_dir = "data/client/";
-
-            virtual Lock lock(const Lock& lock)  override;
-            virtual Lock unlock(const Lock& lock)  override;
-        public:
-            virtual void connect() override;
-            virtual void transfer() override;
-            virtual void close() const override;
-            virtual void send_file_block(const Filename& filename) const override;
-            virtual Filename write_file_block(const Filename& filename) const override;
-            virtual void send_line_block(const LinePacket& msg) const override;
-            virtual LinePacket read_line_block() override;
-        };
-
-        /**
-         * @brief concrete class UploaderServer
-         *
-         *   build/rsi_client 127.0.0.1 8080 transfer send.txt
-         *   ss >> prg >> filename >> ip >> port;
-         *
-         */
-        concrete class UploaderServer extends Uploader with virtual SemaphoreInterface {
-
-        protected:
-            std::string server_dir = "data/server/";
-            struct sockaddr_in _new_addr;
-            int _new_sock;
-
-            virtual Lock lock(const Lock& lock)  override;
-            virtual Lock unlock(const Lock& lock)  override;
-        public:
-            virtual void connect() override;
-            virtual void transfer() override;
-            virtual void close() const override;
-            virtual void send_file_block(const FilePacket& filename) const override;
-            virtual FilePacket write_file_block(const FilePacket& filename) const override;
-            virtual void send_line_block(const UploaderStatus& msg) const override;
-            virtual UploaderStatus read_line_block()  override;
         };
 
         /**
