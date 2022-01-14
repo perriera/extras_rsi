@@ -16,7 +16,8 @@
  *
  */
 
-#include <extras_rsi/remote/monitors/NgMonitor.hpp>
+#include <extras_rsi/invocation/monitor/NgMonitor.hpp>
+
 #include <extras/devices/ansi_colors.hpp>
 #include <extras_rsi/prototype/socketpool/SocketPool.hpp>
 #include <extras_rsi/remote/Service.hpp>

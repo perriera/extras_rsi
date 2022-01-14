@@ -16,7 +16,8 @@
  *
  */
 
-#include <extras_rsi/invocation/Vendor.hpp>
+#include <extras_rsi/invocation/vendor/Client.hpp>
+#include <extras_rsi/invocation/vendor/Server.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/remote/sockets/SubSystem.hpp>
 #include <iostream>
@@ -24,10 +25,10 @@
 
 using namespace  extras;
 
-int extras::rsi::vendor_server(int argc, char const* argv[]) {
+int extras::rsi::vendor_client(int argc, char const* argv[]) {
     try {
         std::cout << extras::start(argv[0]) << std::endl;
-        extras::rsi::VendorServer vendor;
+        extras::rsi::VendorClient vendor;
         vendor.parameters(argc, argv);
         vendor.connect();
         vendor.transfer();

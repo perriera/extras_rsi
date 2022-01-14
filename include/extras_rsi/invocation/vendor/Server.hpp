@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSISERVICES_VENDOR_HPP
-#define _EXPARX_RSISERVICES_VENDOR_HPP
+#ifndef _EXPARX_RSISERVICES_VENDOR_SERVER_HPP
+#define _EXPARX_RSISERVICES_VENDOR_SERVER_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -42,15 +42,6 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief concrete class VendorClient
-         *
-         */
-        concrete class VendorClient extends UploaderClient {
-        public:
-            virtual void transfer() override;
-        };
-
-        /**
          * @brief concrete class VendorServer
          *
          */
@@ -60,17 +51,16 @@ namespace extras {
         };
 
         /**
-         * @brief vendor_client / vendor_server
+         * @brief vendor_server
          *
          * @param argc
          * @param argv
          * @return int
          */
-        int vendor_client(int argc, char const* argv[]);
         int vendor_server(int argc, char const* argv[]);
 
     }  // namespace rsi
 
 }  // namespace extras
 
-#endif  // _EXPARX_RSISERVICES_VENDOR_HPP
+#endif  // _EXPARX_RSISERVICES_VENDOR_SERVER_HPP

@@ -19,7 +19,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include <extras_rsi/remote/Vendor.hpp>
+#include <extras_rsi/invocation/vendor/Vendor.hpp>
 #include <extras_rsi/remote/Service.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras_rsi/remote/sockets/SubSystem.hpp>

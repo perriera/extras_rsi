@@ -16,7 +16,8 @@
  *
  */
 
-#include <extras_rsi/remote/monitors/NgMonitor.hpp>
+#include <extras_rsi/invocation/monitor/NgMonitor.hpp>
+
 #include <extras_arc/zipper.hpp>
 #include <iostream>
 #include <fstream>
