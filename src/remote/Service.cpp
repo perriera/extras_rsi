@@ -24,7 +24,7 @@
 #include <extras_rsi/service/downloader/Client.hpp>
 #include <extras_rsi/service/downloader/Server.hpp>
 #include <extras_rsi/service/uploader/Uploader.hpp>
-#include <extras_rsi/invocation/Vendor.hpp>
+#include <extras_rsi/invocation/generic/Vendor.hpp>
 #include <iostream>
 #include <chrono>
 #include <thread>

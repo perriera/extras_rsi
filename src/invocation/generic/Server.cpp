@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/invocation/Vendor.hpp>
+#include <extras_rsi/invocation/generic/Vendor.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
