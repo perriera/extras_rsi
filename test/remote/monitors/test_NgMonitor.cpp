@@ -40,7 +40,7 @@ using namespace std::chrono;
 void killAllServers();
 
 
-SCENARIO("Test NgMonitor", "[CausalityInterface]") {
+SCENARIO("Test NgMonitor", "[NgMonitor]") {
 
     SystemException::assertion("rm -rf testit; mkdir testit; ", __INFO__);
     SystemException::assertion("cp data/exparx.webflow.zip testit; ", __INFO__);

@@ -5,8 +5,8 @@
 > and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).</br>
 > To add a tag to the git repository do:
 >
-> > git tag -a v5.2.0 -m "ng_monitor, (working prototype)"</br>
-> > git push origin v5.2.0
+> > git tag -a v5.3.0 -m "Added INSTALL.md"</br>
+> > git push origin v5.3.0
 
 IMPORTANT:
 
@@ -31,6 +31,12 @@ Correct URL for github, (for source compare)</br>
 Adding mock test cases </br>
 Adding unit test cases </br>
 Updated README.md accordinging</br>
+
+#### 5.3.0 (2022-01-13)
+
+## Added
+
+- Added INSTALL.md
 
 #### 5.2.0 (2022-01-11)
 
@@ -539,7 +545,8 @@ Updated README.md accordinging</br>
 - @brief style formatting
 - Doxygen support
 
-[unreleased]: https://github.com/perriera/extras_rsi/compare/v5.2.0...HEAD
+[unreleased]: https://github.com/perriera/extras_rsi/compare/v5.3.0...HEAD
+[5.3.0]: https://github.com/perriera/extras_rsi/compare/v5.2.0...v5.3.0
 [5.2.0]: https://github.com/perriera/extras_rsi/compare/v5.1.1...v5.2.0
 [5.1.1]: https://github.com/perriera/extras_rsi/compare/v5.1.0...v5.1.1
 [5.1.0]: https://github.com/perriera/extras_rsi/compare/v5.0.0...v5.1.0

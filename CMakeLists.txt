@@ -241,6 +241,7 @@ install(TARGETS
   uploader_client uploader_server 
   vendor_client vendor_server 
   downloader_client downloader_server 
+  ng_monitor
   ${PROJECT_NAME}
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
