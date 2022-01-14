@@ -31,6 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
+#include <extras_rsi/service/UploaderInterface.hpp>
 #include <extras_rsi/remote/sockets/LineBlock.hpp>
 #include <extras_rsi/remote/sockets/FileBlock.hpp>
 #include <extras_rsi/service/Parameters.hpp>
@@ -44,38 +45,6 @@
 
 namespace extras {
     namespace rsi {
-        /**
-         * @brief UploaderInterface
-         *
-         *   build/rsi_client 127.0.0.1 8080 transfer send.txt
-         *   ss >> prg >> filename >> ip >> port;
-         *
-         */
-
-        using UploaderStatus = std::string;
-
-        interface UploaderInterface {
-
-            /**
-             * @brief connect()
-             * @note do whatever socket connection is required, (using the parameters
-             * collected earlier)
-             */
-            virtual void connect() pure;
-
-            /**
-             * @brief transfer()
-             * @note this is where the magic happens, depending what type of class you
-             * are this method performs the data transfer, (or initiates it)
-             */
-            virtual void transfer() pure;
-
-            /**
-             * @brief transfer()
-             * @note safely closes all sockets
-             */
-            virtual void close() const pure;
-        };
 
         /**
          * @brief abstract class Uploader
