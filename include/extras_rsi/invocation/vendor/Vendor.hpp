@@ -63,19 +63,10 @@ namespace extras {
                 {"download", "build/downloader_server"}
             };
 
-        public:
-
-            Vendor(
-                rsi::PortAuthority& portAuthority
-            ) : _portAuthority(portAuthority) {}
-
             /**
              * @brief VendorInterface
              *
              */
-
-            virtual const ServiceTypeMap& clientTasks() override { return _clientTasks; }
-            virtual const ServiceTypeMap& serverTasks()  override { return _serverTasks; }
 
             virtual ServiceTypeList compile(
                 const ServiceTypeMap& serviceTypes,
@@ -89,6 +80,15 @@ namespace extras {
             ) const override;
 
             virtual ServiceTypeList resolve(const ParametersInterface& parameters) override;
+
+            virtual const ServiceTypeMap& clientTasks() override { return _clientTasks; }
+            virtual const ServiceTypeMap& serverTasks()  override { return _serverTasks; }
+
+        public:
+
+            Vendor(
+                rsi::PortAuthority& portAuthority
+            ) : _portAuthority(portAuthority) {}
 
         };
 
