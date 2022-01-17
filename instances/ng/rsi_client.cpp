@@ -31,8 +31,8 @@ int main(int argc, char const* argv[]) {
         std::cout << extras::start(argv[0]) << std::endl;
 
         rsi::PortAuthority portAuthority;
-        rsi::Monitor monitor(portAuthority);
-        rsi::InvocationClient client(monitor);
+        rsi::NgVendor ngVendor(portAuthority);
+        rsi::InvocationClient client(ngVendor);
         client.parse(argc, argv);
         client.connect();
         client.send();

@@ -45,7 +45,7 @@ namespace extras {
          * compilation formula
          *
          */
-        class Monitor extends Vendor {
+        class NgVendor extends Vendor {
 
         private:
 
@@ -67,7 +67,7 @@ namespace extras {
 
         public:
 
-            Monitor(
+            NgVendor(
                 rsi::PortAuthority& portAuthority
             ) : Vendor(portAuthority) {}
 
