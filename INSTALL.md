@@ -27,9 +27,11 @@ Consider adding this directory to PATH or, if you prefer to suppress this warnin
 
 Add this to the end of `~/.bashrc `
 
-    export PATH=/home/[your_user_name_here](https://www.ibm.com/docs/en/db2/9.7?topic=rules-user-user-id-group-naming)/.local/bin:${PATH}
+    export PATH=/home/`[your_directory_here]`/.local/bin:${PATH}
     export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
-    export CPM_SOURCE_CACHE=/home/[your_user_name_here](https://www.ibm.com/docs/en/db2/9.7?topic=rules-user-user-id-group-naming)/.cache/CPM
+    export CPM_SOURCE_CACHE=/home/`[your_directory_here]`/.cache/CPM
+
+**Note**: Where it says `[your_directory_here]` add your name according to [Linux username standards](https://www.ibm.com/docs/en/db2/9.7?topic=rules-user-user-id-group-naming)
 
 ## Visual Studio Code extensions
 
