@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/invocation/monitor/NgMonitor.hpp>
+#include <extras_rsi/invocation/ng/NgMonitor.hpp>
 
 #include <extras_arc/zipper.hpp>
 #include <iostream>
@@ -59,7 +59,7 @@ namespace extras {
             arc::Zipper zipper(zipFile, _srcDir);
             zipper.create();
             stringstream ss;
-            ss << "build/rsi_client " << _rsiIP << " ";
+            ss << "build/ng_rsi_client " << _rsiIP << " ";
             ss << zipFile << " ";
             ss << _pathname << " ";
             auto rsiCmd = ss.str();

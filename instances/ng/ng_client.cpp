@@ -1,18 +1,4 @@
 /**
-* @file version.hpp
-* @author Matt Williams (mattltf@protonmail.com)
-* @brief Adds version support for Cmake script
-* @version 3.2.0
-* @date 2021-08-08
-*
-* @copyright (C) August 8, 2021 Matt Williams
-*
-*/
-
-#ifndef _RSI_VERSION_HPP
-#define _RSI_VERSION_HPP
-
-/**
  * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
  *
  * Copyright (C) November 22, 2021 EXPARX INCORPORATED
@@ -30,11 +16,17 @@
  *
  */
 
-#define RSI_VER_MAJOR 5
-#define RSI_VER_MINOR 7
-#define RSI_VER_PATCH 0
+#include <extras_rsi/invocation/ng/NgClient.hpp>
+#include <extras/status/StatusLine.hpp>
+#include <extras_rsi/remote/sockets/DeadmanSwitch.hpp>
+#include <iostream>
+#include <extras_rsi/exceptions.hpp>
 
-#define EXTRAS_RSI_VERSION \
-  (RSI_VER_MAJOR * 10000 + RSI_VER_MINOR * 100 + RSI_VER_PATCH)
+using namespace  extras;
 
-#endif// _RSI_VERSION_HPP
+int main(int argc, char const* argv[]) {
+    activate_deadman_switch(argv[0]);
+    auto code = extras::rsi::ng_client(argc, argv);
+    rsi::kill_deadman_switch();
+    return code;
+}

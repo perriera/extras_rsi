@@ -17,8 +17,8 @@
  */
 
 #include <extras/status/StatusLine.hpp>
-#include <extras_rsi/invocation/monitor/NgMonitor.hpp>
-
+#include <extras_rsi/invocation/ng/NgVendor.hpp>
+#include <extras_rsi/remote/ClientServer.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <iostream>
 
@@ -30,10 +30,12 @@ int main(int argc, char const* argv[]) {
 
         std::cout << extras::start(argv[0]) << std::endl;
 
-        rsi::NgMonitor monitor;
-        monitor.parse(argc, argv);
-        while (true)
-            monitor.cause();
+        rsi::PortAuthority portAuthority;
+        rsi::NgVendor ngVendor(portAuthority);
+        rsi::InvocationClient client(ngVendor);
+        client.parse(argc, argv);
+        client.connect();
+        client.send();
 
         std::cout << extras::end(argv[0]) << std::endl << std::endl;
 

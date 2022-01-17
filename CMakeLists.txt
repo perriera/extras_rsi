@@ -162,11 +162,11 @@ endif()
 # rsi_client/server
 #
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
-add_executable(rsi_client instances/rsi_client.cpp) 
+add_executable(rsi_client instances/vendor/rsi_client.cpp) 
 target_include_directories(rsi_client PUBLIC ${INCLUDES})
 target_link_libraries(rsi_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 
-add_executable(rsi_server instances/rsi_server.cpp) 
+add_executable(rsi_server instances/vendor/rsi_server.cpp) 
 target_include_directories(rsi_server PUBLIC ${INCLUDES})
 target_link_libraries(rsi_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 endif()
@@ -175,11 +175,11 @@ endif()
 # socketpool_client/server
 #
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
-add_executable(socketpool_client instances/socketpool_client.cpp) 
+add_executable(socketpool_client instances/prototype/socketpool_client.cpp) 
 target_include_directories(socketpool_client PUBLIC ${INCLUDES})
 target_link_libraries(socketpool_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 
-add_executable(socketpool_server instances/socketpool_server.cpp) 
+add_executable(socketpool_server instances/prototype/socketpool_server.cpp) 
 target_include_directories(socketpool_server PUBLIC ${INCLUDES})
 target_link_libraries(socketpool_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 endif()
@@ -188,11 +188,11 @@ endif()
 # uploader_client/server
 #
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
-add_executable(uploader_client instances/uploader_client.cpp) 
+add_executable(uploader_client instances/services/uploader_client.cpp) 
 target_include_directories(uploader_client PUBLIC ${INCLUDES})
 target_link_libraries(uploader_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 
-add_executable(uploader_server instances/uploader_server.cpp) 
+add_executable(uploader_server instances/services/uploader_server.cpp) 
 target_include_directories(uploader_server PUBLIC ${INCLUDES})
 target_link_libraries(uploader_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 endif()
@@ -201,11 +201,11 @@ endif()
 # downloader_client/server
 #
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
-add_executable(downloader_client instances/downloader_client.cpp) 
+add_executable(downloader_client instances/services/downloader_client.cpp) 
 target_include_directories(downloader_client PUBLIC ${INCLUDES})
 target_link_libraries(downloader_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 
-add_executable(downloader_server instances/downloader_server.cpp) 
+add_executable(downloader_server instances/services/downloader_server.cpp) 
 target_include_directories(downloader_server PUBLIC ${INCLUDES})
 target_link_libraries(downloader_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 endif()
@@ -214,11 +214,11 @@ endif()
 # vendor_client/server 
 #
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
-add_executable(vendor_client instances/vendor_client.cpp) 
+add_executable(vendor_client instances/vendor/vendor_client.cpp) 
 target_include_directories(vendor_client PUBLIC ${INCLUDES})
 target_link_libraries(vendor_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 
-add_executable(vendor_server instances/vendor_server.cpp) 
+add_executable(vendor_server instances/vendor/vendor_server.cpp) 
 target_include_directories(vendor_server PUBLIC ${INCLUDES})
 target_link_libraries(vendor_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 endif()
@@ -227,9 +227,25 @@ endif()
 # vendor_client/server 
 #
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
-add_executable(ng_monitor instances/ng_monitor.cpp) 
+add_executable(ng_monitor instances/ng/monitor.cpp) 
 target_include_directories(ng_monitor PUBLIC ${INCLUDES})
 target_link_libraries(ng_monitor PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(ng_rsi_client instances/ng/rsi_client.cpp) 
+target_include_directories(ng_rsi_client PUBLIC ${INCLUDES})
+target_link_libraries(ng_rsi_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(ng_rsi_server instances/ng/rsi_server.cpp) 
+target_include_directories(ng_rsi_server PUBLIC ${INCLUDES})
+target_link_libraries(ng_rsi_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(ng_client instances/ng/ng_client.cpp) 
+target_include_directories(ng_client PUBLIC ${INCLUDES})
+target_link_libraries(ng_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(ng_server instances/ng/ng_server.cpp) 
+target_include_directories(ng_server PUBLIC ${INCLUDES})
+target_link_libraries(ng_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 endif()
 
 #
@@ -241,7 +257,7 @@ install(TARGETS
   uploader_client uploader_server 
   vendor_client vendor_server 
   downloader_client downloader_server 
-  ng_monitor
+  ng_monitor ng_rsi_client ng_rsi_server ng_client ng_server
   ${PROJECT_NAME}
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
