@@ -16,7 +16,7 @@
  *
  */
 
-#include <extras_rsi/invocation/vendor/Client.hpp>
+#include <extras_rsi/invocation/ng/NgServer.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <extras_rsi/remote/sockets/DeadmanSwitch.hpp>
 #include <iostream>
@@ -26,7 +26,9 @@ using namespace  extras;
 
 int main(int argc, char const* argv[]) {
     activate_deadman_switch(argv[0]);
-    auto code = extras::rsi::vendor_client(argc, argv);
+    auto code = extras::rsi::ng_server(argc, argv);
     rsi::kill_deadman_switch();
     return code;
 }
+
+

@@ -51,13 +51,13 @@ namespace extras {
         };
 
         /**
-         * @brief monitor_client
+         * @brief ng_client
          *
          * @param argc
          * @param argv
          * @return int
          */
-        int monitor_client(int argc, char const* argv[]);
+        int ng_client(int argc, char const* argv[]);
 
     }  // namespace rsi
 

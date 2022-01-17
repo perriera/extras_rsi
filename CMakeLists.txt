@@ -239,13 +239,13 @@ add_executable(ng_rsi_server instances/ng/rsi_server.cpp)
 target_include_directories(ng_rsi_server PUBLIC ${INCLUDES})
 target_link_libraries(ng_rsi_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 
-add_executable(ng_vendor_client instances/ng/vendor_client.cpp) 
-target_include_directories(ng_vendor_client PUBLIC ${INCLUDES})
-target_link_libraries(ng_vendor_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+add_executable(ng_client instances/ng/ng_client.cpp) 
+target_include_directories(ng_client PUBLIC ${INCLUDES})
+target_link_libraries(ng_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 
-add_executable(ng_vendor_server instances/ng/vendor_server.cpp) 
-target_include_directories(ng_vendor_server PUBLIC ${INCLUDES})
-target_link_libraries(ng_vendor_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+add_executable(ng_server instances/ng/ng_server.cpp) 
+target_include_directories(ng_server PUBLIC ${INCLUDES})
+target_link_libraries(ng_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 endif()
 
 #
@@ -257,7 +257,7 @@ install(TARGETS
   uploader_client uploader_server 
   vendor_client vendor_server 
   downloader_client downloader_server 
-  ng_monitor ng_rsi_client ng_rsi_server ng_vendor_client ng_vendor_server
+  ng_monitor ng_rsi_client ng_rsi_server ng_client ng_server
   ${PROJECT_NAME}
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
