@@ -59,7 +59,7 @@ namespace extras {
             arc::Zipper zipper(zipFile, _srcDir);
             zipper.create();
             stringstream ss;
-            ss << "build/ng_client " << _rsiIP << " ";
+            ss << "build/ng_rsi_client " << _rsiIP << " ";
             ss << zipFile << " ";
             ss << _pathname << " ";
             auto rsiCmd = ss.str();
