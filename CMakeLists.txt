@@ -227,9 +227,25 @@ endif()
 # vendor_client/server 
 #
 if(NOT MAKE_EXPARX_RSI_LIBRARY_ONLY OR MAKE_EXPARX_RSI_LIBRARY_TOOLS)
-add_executable(ng_monitor instances/ng_monitor.cpp) 
+add_executable(ng_monitor instances/ng/monitor.cpp) 
 target_include_directories(ng_monitor PUBLIC ${INCLUDES})
 target_link_libraries(ng_monitor PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(ng_rsi_client instances/ng/rsi_client.cpp) 
+target_include_directories(ng_rsi_client PUBLIC ${INCLUDES})
+target_link_libraries(ng_rsi_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(ng_rsi_server instances/ng/rsi_server.cpp) 
+target_include_directories(ng_rsi_server PUBLIC ${INCLUDES})
+target_link_libraries(ng_rsi_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(ng_vendor_client instances/ng/vendor_client.cpp) 
+target_include_directories(ng_vendor_client PUBLIC ${INCLUDES})
+target_link_libraries(ng_vendor_client PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
+
+add_executable(ng_vendor_server instances/ng/vendor_server.cpp) 
+target_include_directories(ng_vendor_server PUBLIC ${INCLUDES})
+target_link_libraries(ng_vendor_server PRIVATE ${PROJECT_NAME} stdc++fs extras extras_arc)
 endif()
 
 #
@@ -241,7 +257,7 @@ install(TARGETS
   uploader_client uploader_server 
   vendor_client vendor_server 
   downloader_client downloader_server 
-  ng_monitor
+  ng_monitor ng_rsi_client ng_rsi_server ng_vendor_client ng_vendor_server
   ${PROJECT_NAME}
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)

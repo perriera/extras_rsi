@@ -68,10 +68,10 @@ SCENARIO("Test NgMonitor", "[NgMonitor]") {
     REQUIRE(!fs::exists("testit/src.zip"));
 
     //
-    // setup rsi_server
+    // setup ng_server
     //
     killAllServers();
-    SystemException::assertion("build/rsi_server 127.0.0.1:8080 9000-9500 &", __INFO__);
+    SystemException::assertion("build/ng_server 127.0.0.1:8080 9000-9500 &", __INFO__);
     sleep_for(nanoseconds(10));
 
     const char* argv[] = {
@@ -107,7 +107,7 @@ SCENARIO("Test NgMonitor", "[NgMonitor]") {
     // cleanup
     //
     killAllServers();
-    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("rsi_server"), extras::rsi::NoServersToKillException);
+    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("ng_server"), extras::rsi::NoServersToKillException);
     SystemException::assertion("rm -rf testit;rm -rf testit2;rm -rf runtime;", __INFO__);
 
 }

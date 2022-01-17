@@ -27,7 +27,9 @@ Consider adding this directory to PATH or, if you prefer to suppress this warnin
 
 Add this to the end of `~/.bashrc `
 
-    export PATH=/home/perry/.local/bin:${PATH}
+    export PATH=/home/[your_user_name_here](https://www.ibm.com/docs/en/db2/9.7?topic=rules-user-user-id-group-naming)/.local/bin:${PATH}
+    export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
+    export CPM_SOURCE_CACHE=/home/[your_user_name_here](https://www.ibm.com/docs/en/db2/9.7?topic=rules-user-user-id-group-naming)/.cache/CPM
 
 ## Visual Studio Code extensions
 

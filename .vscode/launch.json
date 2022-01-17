@@ -56,6 +56,27 @@
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {
+      "name": "ng_server",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/ng_server",
+      "args": ["exparx.webflow.zip", "127.0.0.1", "9000"],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "Build C++ project (for vendor_server)",
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
+    {
       "name": "rsi_client",
       "type": "cppdbg",
       "request": "launch",

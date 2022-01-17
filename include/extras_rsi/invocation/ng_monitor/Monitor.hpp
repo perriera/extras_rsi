@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef _EXPARX_RSI_VENDOR_HPP
-#define _EXPARX_RSI_VENDOR_HPP
+#ifndef _EXPARX_RSI_MONITOR_HPP
+#define _EXPARX_RSI_MONITOR_HPP
 
  /**
   * @brief the "MIT/X Consortium License", (adapted for EXPARX.COM)
@@ -31,8 +31,7 @@
   */
 
 #include <extras/interfaces.hpp>
-#include <extras_rsi/invocation/vendor/VendorInterface.hpp>
-#include <extras_rsi/remote/ParametersX.hpp>
+#include <extras_rsi/invocation/vendor/Vendor.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <iostream>
 
@@ -46,40 +45,20 @@ namespace extras {
          * compilation formula
          *
          */
-        class Vendor implements VendorInterface {
+        class Monitor extends Vendor {
 
         private:
 
-            rsi::PortAuthority& _portAuthority;
-            ParametersX _parameters;
             ServiceTypeMap _clientTasks{
                 {"upload", "build/uploader_client"},
-                {"vendor", "build/vendor_client"},
+                {"vendor", "build/ng_client"},
                 {"download", "build/downloader_client"}
             };
             ServiceTypeMap _serverTasks{
                 {"upload", "build/uploader_server"},
-                {"vendor", "build/vendor_server"},
+                {"vendor", "build/ng_server"},
                 {"download", "build/downloader_server"}
             };
-
-            /**
-             * @brief VendorInterface
-             *
-             */
-
-            virtual ServiceTypeList compile(
-                const ServiceTypeMap& serviceTypes,
-                const SessionInterface& session,
-                const ServiceTypeList& list
-            ) const override;
-
-            virtual void decompile(
-                const ServiceTypeList& before,
-                const ServiceTypeList& after
-            ) const override;
-
-            virtual ServiceTypeList resolve(const ParametersInterface& parameters) override;
 
         protected:
 
@@ -88,15 +67,15 @@ namespace extras {
 
         public:
 
-            Vendor(
+            Monitor(
                 rsi::PortAuthority& portAuthority
-            ) : _portAuthority(portAuthority) {}
+            ) : Vendor(portAuthority) {}
 
         };
 
     }
 }
 
-#endif // _EXPARX_RSI_VENDOR_HPP
+#endif // _EXPARX_RSI_MONITOR_HPP
 
 
