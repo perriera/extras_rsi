@@ -23,6 +23,8 @@ Once pip is installed:
 WARNING: The scripts cmake, cpack and ctest are installed in '/home/perry/.local/bin' which is not on PATH.
 Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
 
+## Recommended Environment Variable additions
+
     vi ~/.bashrc
 
 Add this to the end of `~/.bashrc `
