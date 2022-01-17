@@ -16,8 +16,8 @@
  *
  */
 
-#include <extras_rsi/invocation/ng_monitor/Client.hpp>
-#include <extras_rsi/invocation/ng_monitor/Server.hpp>
+#include <extras_rsi/invocation/ng/Client.hpp>
+#include <extras_rsi/invocation/ng/Server.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
