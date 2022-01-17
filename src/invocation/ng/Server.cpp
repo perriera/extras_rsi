@@ -79,6 +79,12 @@ namespace extras {
             auto unzipCmd = "unzip -o " + extra + " -d " + pn;
             SystemException::assertion(unzipCmd, __INFO__);
 
+            std::cout << extras::cyan << extras::pass(" RUNNING JAVA CODE HERE!!!! ") << extra << std::endl;
+            std::cout << extras::cyan << extras::pass(" RUNNING JAVA CODE HERE!!!! ") << extra << std::endl;
+            std::cout << extras::cyan << extras::pass(" RUNNING JAVA CODE HERE!!!! ") << extra << std::endl;
+            std::cout << extras::cyan << extras::pass(" RUNNING JAVA CODE HERE!!!! ") << extra << std::endl;
+            std::cout << extras::cyan << extras::pass(" RUNNING JAVA CODE HERE!!!! ") << extra << std::endl;
+
             auto ls1 = "ls -la " + extra;
             SystemException::assertion(ls1, __INFO__);
         }
