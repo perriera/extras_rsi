@@ -32,7 +32,7 @@
 
 #include <extras/interfaces.hpp>
 #include <extras_rsi/remote/ServiceInterface.hpp>
-#include <extras_rsi/invocation/vendor/VendorInterface.hpp>
+#include <extras_rsi/remote/VendorInterface.hpp>
 #include <extras_rsi/remote/sockets/Types.hpp>
 #include <extras_rsi/remote/sockets/PortAuthority.hpp>
 #include <extras_rsi/remote/ParametersInterface.hpp>

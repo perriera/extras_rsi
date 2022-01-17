@@ -33,7 +33,7 @@
 #include <extras/interfaces.hpp>
 #include <extras_rsi/remote/ServiceInterface.hpp>
 #include <extras_rsi/remote/InvokableInterface.hpp>
-#include <extras_rsi/invocation/vendor/VendorInterface.hpp>
+#include <extras_rsi/remote/VendorInterface.hpp>
 #include <extras_rsi/remote/ParametersX.hpp>
 #include <iostream>
 
