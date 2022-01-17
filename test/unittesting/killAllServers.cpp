@@ -51,6 +51,7 @@ void killAllServers() {
     killServers("uploader_server");
     killServers("downloader_serv");
     killServers("vendor_server");
+    REQUIRE_THROWS_AS(rsi::SocketPool::killServers("rsi_server"), extras::rsi::NoServersToKillException);
     REQUIRE_THROWS_AS(rsi::SocketPool::killServers("socketpool_serv"), extras::rsi::NoServersToKillException);
     REQUIRE_THROWS_AS(rsi::SocketPool::killServers("uploader_server"), extras::rsi::NoServersToKillException);
     REQUIRE_THROWS_AS(rsi::SocketPool::killServers("downloader_serv"), extras::rsi::NoServersToKillException);
