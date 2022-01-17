@@ -16,8 +16,8 @@
  *
  */
 
-#include <extras_rsi/invocation/ng/Client.hpp>
-#include <extras_rsi/invocation/ng/Server.hpp>
+#include <extras_rsi/invocation/ng/NgClient.hpp>
+#include <extras_rsi/invocation/ng/NgServer.hpp>
 #include <iostream>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/status/StatusLine.hpp>
@@ -31,7 +31,7 @@ namespace extras {
      *  @brief Vendor Client/Server ::transfer()
      *
      */
-    void rsi::MonitorClient::transfer() {
+    void rsi::NgClient::transfer() {
 
         std::string msg = "vendor started";
         send_line_block(msg);

@@ -42,10 +42,10 @@ namespace extras {
     namespace rsi {
 
         /**
-         * @brief concrete class MonitorClient
+         * @brief concrete class NgClient
          *
          */
-        concrete class MonitorClient extends UploaderClient {
+        concrete class NgClient extends UploaderClient {
         public:
             virtual void transfer() override;
         };

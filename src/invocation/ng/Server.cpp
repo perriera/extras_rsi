@@ -16,8 +16,8 @@
  *
  */
 
-#include <extras_rsi/invocation/ng/Client.hpp>
-#include <extras_rsi/invocation/ng/Server.hpp>
+#include <extras_rsi/invocation/ng/NgClient.hpp>
+#include <extras_rsi/invocation/ng/NgServer.hpp>
 #include <extras_rsi/exceptions.hpp>
 #include <extras/devices/ansi_colors.hpp>
 #include <extras/filesystem/paths.hpp>
@@ -58,7 +58,7 @@ namespace extras {
      *
      */
 
-    void rsi::MonitorServer::transfer() {
+    void rsi::NgServer::transfer() {
 
         // lock the transfer
         std::string line = read_line_block();
