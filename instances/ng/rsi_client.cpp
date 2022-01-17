@@ -17,7 +17,7 @@
  */
 
 #include <extras/status/StatusLine.hpp>
-#include <extras_rsi/invocation/ng/Monitor.hpp>
+#include <extras_rsi/invocation/ng/NgVendor.hpp>
 #include <extras_rsi/remote/ClientServer.hpp>
 #include <extras/status/StatusLine.hpp>
 #include <iostream>
